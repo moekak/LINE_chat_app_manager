@@ -1,0 +1,435 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Zen+Kaku+Gothic+New&display=swap");
+
+:root {
+    ---bg-blue: #20a8d7;
+    --bg-dark-blue: #384042;
+    --bg-dark-blue2: #5d696c;
+    --bg-dark-blue-hover: #202526;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    position: relative;
+    /* overflow-x: hidden; */
+}
+a{
+      color: inherit;
+      text-decoration: none;
+}
+p {
+    margin: 0;
+    color: #212529;
+}
+p, ul {
+    margin: 0 !important;
+}
+/* utility classes */
+.p-10 {
+    padding: 10px;
+}
+.p-15 {
+    padding: 15px;
+}
+.p-20 {
+    padding: 20px;
+}
+.ptb-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.ptb-15 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.ptb-20 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.prl-10 {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.prl-15 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.prl-20 {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+/* Margin utility classes */
+.m-10 {
+    margin: 10px;
+}
+.m-20 {
+    margin: 20px;
+}
+
+/* Other utility classes */
+.txt-white {
+    color: white;
+}
+.txt-gray {
+    color: rgba(255, 255, 255, 0.748);
+}
+.bg-blue {
+    background-color: var(---bg-blue);
+}
+.bg-white{
+      background-color: #fff;
+}
+.bg-lightgray{
+      background-color: #f1f4f8;
+}
+.font-25 {
+    font-size: 25px;
+}
+.txt-center {
+    text-align: center;
+}
+.shadow-bottom {
+    box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.3);
+}
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0000009a;
+    z-index: 998;
+}
+.hidden{
+    display: none !important;
+}
+
+/* アラート */
+.alert_danger{
+    font-size: 14px !important;
+}
+.success_alert {
+    position: absolute;
+    width: 42%;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    font-size: 15px;
+}
+
+/* nav セクション */
+.nav__area {
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--bg-dark-blue);
+    z-index: 995;
+}
+.nav__item-option {
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+.nav__item-option-border{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.507);
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav__item-option__message-icon{
+    width: 25px;
+}
+.nav__item-option:hover {
+    background-color: var(--bg-dark-blue-hover);
+}
+
+
+/* navセクション second */
+.nav__area-second{
+    position: absolute;
+    top: 8.25%;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--bg-dark-blue2);
+    transform: translateX(-100%);
+    transition: .5s ease-in-out;
+}
+/* dashboard セクション */
+.dashboard {
+    display: flex;
+}
+.dashboard__wrapper-main{
+    min-height: 100vh;
+}
+.dashboard__wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.dashboard__wrapper-top {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 994;
+}
+.dashboard__wrapper-top--box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dashboard__wrapper-top--box-img {
+    width: 35px;
+    height: 35px;
+}
+.dashboard__wrapper-top--menu-icon{
+    width: 30px;
+}
+.dashboard__wrapper-table-area{
+    padding: 40px 100px 20px 100px;
+    
+}
+.dashboard__wrapper-table-area:nth-child(5){
+    padding-bottom: 40px;
+}
+.dashboard__wrapper-table-ttl{
+    display: flex;
+    justify-content: space-between;
+}
+.dashboard__wrapper-table-icon{
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+}
+.dashboard__wrapper-table-box{
+    background-color: #f9f9fa; 
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-bottom: 1px;
+}
+.dashboard__wrapper-table{
+    padding: 18px 30px 10px 30px;
+    background-color: #fff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.operation_icon{
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+.operation_icon img{
+    width: 20px;
+}
+.operation_icon:nth-child(1){
+    background-color: #20a8d7;
+}
+.operation_icon:nth-child(2){
+    background-color: #f9bb3b;
+}
+.operation_icon:nth-child(3), .js_delete_account_btn{
+    background-color: #ff5555;
+}
+.js_send_message_btn{
+    background-color: #2ecc71 !important;
+}
+.operation{
+    display: flex;
+}
+
+/* ログアウト */
+.logout_btn{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+
+/* modal セクション */
+.modal__container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #fff;
+    min-width: 440px;
+    z-index: 999;
+    padding: 30px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.modal__container_no_bg{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    min-width: 440px;
+    z-index: 999;
+    padding: 30px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; 
+}
+.modal__container-ttl {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.modal__container-btn {
+    border: none;
+    background-color: #20a8d7;
+    color: #fff;
+    border-radius: 5px;
+    padding: 7px 25px;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+
+
+/*  */
+.delete_account-btn-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+    gap: 10px;
+}
+.delete_account-btn{
+    width: 100%;
+}
+.btn-box{
+    width: 50%;
+    padding: 4px;
+    border: 1px solid gray;
+    border-radius: 120px;
+}
+.btn-box button{
+    border: none;
+    background-color: inherit;
+    border-radius: 120px;
+}
+.delete-btn{
+    background-color: red;
+    color: #fff;
+    border: none;
+}
+
+.message_count {
+    font-size: 12px;
+    color: #fff;
+    background-color: red;
+    padding: 5px;
+    border-radius: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.dropdown_style{
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    color: blue;
+}
+.dropdown_style:hover{
+    background-color: none !important;
+    border: none !important;
+}
+.dropdown_style:active{
+    background-color: none;
+    border: none;
+}
+
+/* loader */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    z-index: 998;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+
+
+/* 一斉送信モーダル */
+/* .broadcast_message_area{
+    display: flex;
+} */
+.broadcasting_message_modal{
+    max-height: 650px;
+    overflow: auto;
+}
+.drag-handle {
+    cursor: move; /* フォールバック */
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+}
+.drag-handle:active {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+.card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+.displayImg{
+    width: 100%;
+}
+.broadcast_message_submit_btn-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.card-header-left{
+    display: flex;
+    align-items: center;
+}
+.card-header p{
+    cursor: pointer;
+}
+
+.disabled_btn {
+    opacity: 50%;
+    pointer-events: none;
+}

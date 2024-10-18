@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "mix": "mix"
+    },
+    "devDependencies": {
+        "axios": "^1.6.4",
+        "laravel-vite-plugin": "^1.0",
+        "vite": "^5.0"
+    },
+    "dependencies": {
+        "laravel-echo": "^1.16.1",
+        "laravel-mix": "^6.0.49",
+        "pusher-js": "^8.4.0-rc2",
+        "socket.io-client": "^4.7.5"
+    }
+}
