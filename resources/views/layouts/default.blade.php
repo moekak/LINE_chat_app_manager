@@ -22,6 +22,11 @@
                         <div class="nav__item-option ptb-20 prl-20">
                               <p class="nav__item-option__txt txt-gray"><a href="{{route("dashboard")}}">アカウント一覧</a></p>
                         </div>
+                        @if (Route::currentRouteName() == "account.show")
+                              <div class="nav__item-option ptb-20 prl-20">
+                                    <p class="nav__item-option__txt txt-gray"><a href="{{route("account.block.user", ["id" => Route::current()->parameter('id')])}}">ブロックアカウント一覧</a></p>
+                              </div>
+                        @endif
                         <div class="nav__item-option ptb-20 prl-20">
                               <p class="nav__item-option__txt txt-gray" id="js_create_account_btn">アカウント追加</p>
                         </div>

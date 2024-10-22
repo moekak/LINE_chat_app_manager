@@ -7,7 +7,7 @@ import { fetchSpecificUserInfo } from "./module/component/fetchUserData.js";
 import { initializeAccountBlockModal } from "./module/component/accountModalInitializers.js";
 
 // ブロックモーダル初期化
-initializeAccountBlockModal()
+initializeAccountBlockModal(socket)
 
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "admin")
@@ -52,3 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
 close_modal()
 
 
+
+
+// ユーザーブロック

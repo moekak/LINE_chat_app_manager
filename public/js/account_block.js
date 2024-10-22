@@ -2843,52 +2843,6 @@ var formateDateToAsia = function formateDateToAsia() {
 
 /***/ }),
 
-/***/ "./resources/js/module/util/messageService.js":
-/*!****************************************************!*\
-  !*** ./resources/js/module/util/messageService.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   cleanHtmlContent: () => (/* binding */ cleanHtmlContent),
-/* harmony export */   prepareMessageData: () => (/* binding */ prepareMessageData)
-/* harmony export */ });
-var prepareMessageData = function prepareMessageData() {
-  // サーバーに送信するデータをすべて取得する
-  var body = document.querySelector(".js_message_input").value;
-  var formatted_body = body.replace(/\n/g, '<br>'); // 改行文字を <br> タグに置き換える
-  var admin_account_id = document.getElementById("js_account_id").value;
-  return {
-    body: body,
-    formatted_body: formatted_body,
-    admin_account_id: admin_account_id
-  };
-};
-
-//<br> タグを含むすべての HTML タグを除去し、適切な改行を維持する
-var cleanHtmlContent = function cleanHtmlContent(html) {
-  // 1. <br>タグを改行文字に置換
-  var text = html.replace(/<br\s*\/?>/gi, '\n');
-
-  // 2. その他のHTMLタグを除去
-  text = text.replace(/<[^>]+>/g, '');
-
-  // 3. HTMLエンティティをデコード
-  var textarea = document.createElement('textarea');
-  textarea.innerHTML = text;
-  text = textarea.value;
-
-  // 4. 連続する改行を1つの改行に置換
-  text = text.replace(/\n{3,}/g, '\n\n');
-
-  // 5. 前後の空白を除去
-  return text.trim();
-};
-
-/***/ }),
-
 /***/ "./resources/js/module/util/socket.js":
 /*!********************************************!*\
   !*** ./resources/js/module/util/socket.js ***!
@@ -7369,120 +7323,15 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!***********************************!*\
-  !*** ./resources/js/dashboard.js ***!
-  \***********************************/
+/*!***************************************!*\
+  !*** ./resources/js/account_block.js ***!
+  \***************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/component/accountModalInitializers.js */ "./resources/js/module/component/accountModalInitializers.js");
-/* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
-/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
-/* harmony import */ var _module_util_messageService_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/util/messageService.js */ "./resources/js/module/util/messageService.js");
-/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
 
 
-
-
-
-
-
-// 
-// モーダル初期設定
-
-// アカウント編集モーダル処理
-(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeAccountEditModal)();
-// 一斉送信フロント処理
-(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeBroadcastMessageModal)();
-// アカウント削除処理
-(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeAccountDeletionModal)();
-// モーダルを閉じる処理
-(0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__.close_modal)();
-
-// アカウント作成モーダル処理
-var create_btn = document.getElementById("js_create_account_btn");
-var create_modal = document.getElementById("js_create_account_modal");
-create_btn.addEventListener("click", function () {
-  (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__.open_modal)(create_modal);
-});
-
-// アカウント編集のloader表示
-var submitForms = document.querySelectorAll(".js_loader");
-var loader = document.querySelector(".loader");
-submitForms.forEach(function (submitForm) {
-  submitForm.addEventListener("submit", function () {
-    submitForm.classList.add("hidden");
-    (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__.open_modal)(loader);
-  });
-});
-
-// ページがロードされた後に5秒待ってメッセージを非表示にする
-document.addEventListener("DOMContentLoaded", function () {
-  var alert = document.getElementById("js_alert_success");
-  if (alert) {
-    setTimeout(function () {
-      alert.style.display = "none";
-    }, 4000); // フェードアウトの完了を待って非表示にする
-  }
-});
-var admin_id = document.getElementById("js_admin_account_id").value;
-(0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__.registerUser)(admin_id, "user");
-// サーバーへの接続確認
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].on('connect', function () {
-  console.log('サーバーに接続されました（chat.jsからの確認）');
-});
-
-// チャットメッセージを受信した際
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type, admin_login_id) {
-  (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(actual_sender_id, actual_receiver_id, sender_type, admin_login_id);
-});
-// チャット画像を受信した際
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].on("send_image", function (sender_id, receiver_id, sender_type, admin_login_id) {
-  (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(sender_id, receiver_id, sender_type, admin_login_id);
-});
-
-// 一斉送信処理
-// document.querySelector(".js_message_submit_btn").addEventListener("click", ()=>{
-
-//     const { body,  formatted_body, admin_account_id} = prepareMessageData()
-//     const data = {
-//         "content": body,
-//         "admin_id": admin_account_id
-//     }
-
-//     fetchPostOperation(data, "/api/broadcast_message/store")
-//     .then((res)=>{
-//         document.getElementById("js_boradcasting_modal").classList.add("hidden")
-//         document.querySelector(".bg").classList.add("hidden")
-
-//         const success_el = document.getElementById("js_alert_success")
-//         success_el.style.display = "block";
-//         success_el.innerHTML = "一斉送信に成功しました"
-//         document.querySelector(".js_message_input").value = ""
-
-//         setTimeout(() => {
-//             success_el.style.display = "none"
-//         }, 2000);
-//         const created_at = res["created_at"];
-
-//         socket.emit("broadcast message", {formatted_body, admin_account_id, created_at})
-
-//     })
-// })
-
-// アカウント削除キャンセル処理
-(0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.initializeAccountStatusManager)();
-
-//ステータス変更成功の文言を出す処理
-var status_update = localStorage.getItem("status_update");
-if (status_update) {
-  var success_alert = document.getElementById("js_alert_success");
-  localStorage.removeItem("status_update");
-  success_alert.innerHTML = "アカウントのステータス変更に成功しました。";
-  success_alert.style.display = "block";
-  setTimeout(function () {
-    success_alert.style.display = "none";
-  }, 2000);
-}
+(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeAccountBlockModal)(_module_util_socket_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
 })();
 
 /******/ })()

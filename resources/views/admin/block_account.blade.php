@@ -19,7 +19,7 @@
 	<div class="dashboard__wrapper-table-area">
 		<div class="dashboard__wrapper-table-box p-20">
 			<div class="dashboard__wrapper-table-ttl">
-				<p>ユーザー一覧</p>
+				<p>ブロックユーザー一覧</p>
 			</div>  
 		</div>
 		<div class="dashboard__wrapper-table">
@@ -28,28 +28,19 @@
 				<tr>
 					<th scope="col"></th>
 					<th scope="col">ユーザー名</th>
-					<th scope="col">未読数</th>
 					<th scope="col">最新受信日</th>
 					<th scope="col">作成日時</th>
 					<th scope="col">管理</th>
 				</tr>
 				</thead>
 				<tbody class="js_table">
-				@foreach ($chat_users as $chat_user)
+				@foreach ($block_lists as $chat_user)
 					<tr data-id={{$chat_user["uuid"]}} class="js_chatUser_id">
 					<th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
 					<td w20><?= $chat_user["line_name"]?></td>
-					
-					<td  data-id={{$chat_user->id}}>
-						<div class="message_count js_message_count" style="display: {{ $chat_user['message_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
-							{{ $chat_user["message_count"]}}
-						</div>
-					</td>
 					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"]->format('Y-m-d H:i') : ""}}</td>
 					<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 					<td class="operation">
-						<button class="operation_icon"><a href="https://line-chat.tokyo/<?= $id?>/<?=$chat_user["id"]?>"><img src="{{asset("img/icons8-message-24.png")}}" alt=""></a></button>
-						<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
 						<button class="operation_icon js_block_btn" data-uuid={{$chat_user["uuid"]}} data-name={{$chat_user["line_name"]}} data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
 					</td>
 					</tr>
@@ -93,17 +84,16 @@
 		<div class="cancel-btn btn-box js_delete_account_cancel">
 			<button class="delete_account-btn" readonly>キャンセル</button>
 		</div>
-		<form action="{{route('account.block', ['id' => 'ID_PLACEHOLDER'])}}" method="get" class="btn-box delete-btn js_block_account_from">
+		<form action="{{route('account.unblock', ['id' => 'ID_PLACEHOLDER'])}}" method="get" class="btn-box delete-btn js_block_account_from">
 			@csrf
 			<button class="delete_account-btn" type="submit" style="color: #fff;" readonly>ブロック</button>
 		</form>
 </div>
 </section>
-    
+
 @endsection
 
 @section('content')
-    
 @endsection
 
 @section('script')
@@ -134,6 +124,5 @@
 
 @endif
 
-<script src="{{ mix("js/account_show.js")}}"></script>
-    
+<script src="{{ mix("js/account_block.js")}}"></script>
 @endsection

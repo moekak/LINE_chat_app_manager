@@ -77,7 +77,7 @@ export const initializeAccountDeletionModal= () =>{
 }
 
 // ユーザーブロックモーダルの初期化
-export const initializeAccountBlockModal = () =>{
+export const initializeAccountBlockModal = (socket) =>{
       const block_btns = document.querySelectorAll(".js_block_btn")
       const blockModal = document.getElementById("js_block_account_modal")
 
@@ -85,9 +85,19 @@ export const initializeAccountBlockModal = () =>{
             btn.addEventListener("click", (e)=>{
                   let id = e.currentTarget.getAttribute("data-id");
                   let name = e.currentTarget.getAttribute("data-name")
+                  let lineID = e.currentTarget.getAttribute("data-uuid")
+
                   setActionUrl(id, "js_block_account_from")
                   setAccountName(name, "js_account_name")
                   open_modal(blockModal)
+
+                  // ブロックボタンをクリックしたら
+                  const blockForm = document.querySelector(".js_block_account_from")
+                  blockForm.addEventListener("submit", ()=>{
+                        console.log("submit!!!!!");
+                        socket.emit("block user", lineID)
+                        console.log("submit2!!!!!");
+                  })
             })
       })
 }

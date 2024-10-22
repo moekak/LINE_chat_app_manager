@@ -7,6 +7,7 @@ mix.js('resources/js/app.js', 'public/js')
    .js("resources/js/dashboard.js", "public/js")
    .js("resources/js/broadcastMessage.js", "public/js")
    .js("resources/js/account_show.js", "public/js")
+   .js("resources/js/account_block.js", "public/js")
 
    .setPublicPath('public')
 //    .webpackConfig({

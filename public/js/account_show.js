@@ -2341,16 +2341,25 @@ var initializeAccountDeletionModal = function initializeAccountDeletionModal() {
 };
 
 // ユーザーブロックモーダルの初期化
-var initializeAccountBlockModal = function initializeAccountBlockModal() {
+var initializeAccountBlockModal = function initializeAccountBlockModal(socket) {
   var block_btns = document.querySelectorAll(".js_block_btn");
   var blockModal = document.getElementById("js_block_account_modal");
   block_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       var id = e.currentTarget.getAttribute("data-id");
       var name = e.currentTarget.getAttribute("data-name");
+      var lineID = e.currentTarget.getAttribute("data-uuid");
       (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.setActionUrl)(id, "js_block_account_from");
       (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.setAccountName)(name, "js_account_name");
       (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(blockModal);
+
+      // ブロックボタンをクリックしたら
+      var blockForm = document.querySelector(".js_block_account_from");
+      blockForm.addEventListener("submit", function () {
+        console.log("submit!!!!!");
+        socket.emit("block user", lineID);
+        console.log("submit2!!!!!");
+      });
     });
   });
 };
@@ -7357,7 +7366,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // ブロックモーダル初期化
-(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeAccountBlockModal)();
+(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeAccountBlockModal)(_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
 var admin_id = document.getElementById("js_admin_account_id").value;
 (0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__.registerUser)(admin_id, "admin");
 // サーバーへの接続確認
@@ -7393,6 +7402,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_modal)();
+
+// ユーザーブロック
 })();
 
 /******/ })()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserDataRequest;
+use App\Models\BlockChatUser;
 use App\Models\ChatUser;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
@@ -36,7 +37,6 @@ class ChatUserController extends Controller
         $validated = $request->validated();
 
         $userData = ChatUser::findOrFail($id);
-
         $userData->update(["line_name" => $validated["account_name"]]);
 
         return redirect()->route("account.show", ["id" => $userData["account_id"]])->with("success", "ユーザー情報の更新に成功しました。");
@@ -44,7 +44,15 @@ class ChatUserController extends Controller
 
     public function block(string $id){
         $user = ChatUser::findOrFail($id);
-        $user->update(["is_blocked" => "1"]);
-        return redirect()->route("account.show", ["id" => $id])->with("success", "ユーザーのブロックに成功しました。");
+
+        if($user){
+            BlockChatUser::create(["chat_user_id" => $id]);
+            return redirect()->route("account.show", ["id" => $user["account_id"]])->with("success", "ユーザーのブロックに成功しました。");    
+        }else{
+            BlockChatUser::create(["chat_user_id" => $id]);
+            return redirect()->route("account.show", ["id" => $user["account_id"]])->with("success", "ユーザーのブロックに失敗しました。");    
+        }
+
+        
     }
 }

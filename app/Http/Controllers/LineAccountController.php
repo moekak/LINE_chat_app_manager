@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateLineAccountRequest;
 use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
+use App\Models\BlockChatUser;
 use App\Models\ChatUser;
 use App\Models\LineAccount;
 use App\Models\SecondAccount;
@@ -27,8 +28,13 @@ class LineAccountController extends Controller
         foreach($line_accounts as $account){
             // アカウントごとの最新メッセージ時間を取得
             $latest_message_date = $messageCountService->getLatestUserMessageDate($account->id);
+
             // アカウントごとのユーザーをすべて取得
             $users = ChatUser::where("account_id", $account->id)->get();
+        
+    
+
+
             $totalCount = 0;
 
             foreach($users as $user){
@@ -113,26 +119,33 @@ class LineAccountController extends Controller
         $user = Auth::user();
         $user_uuid = UserEntity::where("related_id", $id)->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
-        $line_accounts = LineAccount::with("chatUser")->where("user_id", $user->id)->where("id", $id)->get();
+        // $line_accounts = LineAccount::with("chatUser")->where("user_id", $user->id)->where("id", $id)->get();
+
+
+        $users = ChatUser::leftJoin('block_chat_users', "chat_users.id", "=", "block_chat_users.chat_user_id")
+            ->where(function ($query) {
+                $query->whereNull('block_chat_users.is_blocked')
+                    ->orWhere('block_chat_users.is_blocked', '0');
+            })
+            ->where("chat_users.account_id", $id)
+            ->select("chat_users.id", "chat_users.user_id", "chat_users.account_id", "chat_users.line_name", "chat_users.created_at")
+            ->get();
 
 
 
-        $allUsers = [];
-        foreach($line_accounts as $chatUsers){
-            foreach($chatUsers->chatUser as $user){
-                $allUsers[]= $user;
-                $user["latest_message_date"] = $messageCountService->getLatestUserMessageDate($id, $user->id);
-                $user["message_count"] = $messageCountService->selectTotalMessageCount($id, $user->id);
-                $user["uuid"] = UserEntity::where("related_id", $user->id)->value("entity_uuid");
-            }
+        foreach($users as $user){
+            $user["latest_message_date"] = $messageCountService->getLatestUserMessageDate($id, $user->id);
+            $user["message_count"] = $messageCountService->selectTotalMessageCount($id, $user->id);
+            $user["uuid"] = UserEntity::where("related_id", $user->id)->value("entity_uuid");
         }
+    
 
         // message_countが多い順に並び変え
-        usort($allUsers, function($a, $b) {
-            return $b['message_count'] - $a['message_count']; // 降順にするため、$b - $a
-        });
+        // usort($users, function($a, $b) {
+        //     return $b['message_count'] - $a['message_count']; // 降順にするため、$b - $a
+        // });
 
-        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_data" => $account_data, "chat_users" => $allUsers, "id" => $id]);
+        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_data" => $account_data, "chat_users" => $users, "id" => $id]);
     }
 
     /**
@@ -162,10 +175,7 @@ class LineAccountController extends Controller
         Log::debug($line_account->toArray());
         $line_account->update(["account_name" => $validated["account_name"], "account_url" => $validated["account_url"]]);
 
-        
-
- 
-
+    
         if($request->input("second_account_id")){
             $second_account = SecondAccount::where("current_account_id", $id)->first();
             if($second_account){

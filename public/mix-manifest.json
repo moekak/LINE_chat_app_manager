@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/broadcastMessage.js": "/js/broadcastMessage.js",
-    "/js/account_show.js": "/js/account_show.js"
+    "/js/account_show.js": "/js/account_show.js",
+    "/js/account_block.js": "/js/account_block.js"
 }
