@@ -12,6 +12,7 @@ use App\Models\SecondAccount;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LineAccountController extends Controller
@@ -31,10 +32,6 @@ class LineAccountController extends Controller
 
             // アカウントごとのユーザーをすべて取得
             $users = ChatUser::where("account_id", $account->id)->get();
-        
-    
-
-
             $totalCount = 0;
 
             foreach($users as $user){
@@ -82,8 +79,6 @@ class LineAccountController extends Controller
         return view("admin.dashboard", [ "line_accounts" => $formatted_line_accounts, "user" => $user, "account_status" => $account_status, "second_accounts" => $second_accounts]);
     }
 
-
-
     public function create(CreateLineAccountRequest $request)
     {   
         $user_id = Auth::user();
@@ -119,19 +114,21 @@ class LineAccountController extends Controller
         $user = Auth::user();
         $user_uuid = UserEntity::where("related_id", $id)->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
-        // $line_accounts = LineAccount::with("chatUser")->where("user_id", $user->id)->where("id", $id)->get();
 
-
-        $users = ChatUser::leftJoin('block_chat_users', "chat_users.id", "=", "block_chat_users.chat_user_id")
-            ->where(function ($query) {
-                $query->whereNull('block_chat_users.is_blocked')
-                    ->orWhere('block_chat_users.is_blocked', '0');
+        $users = ChatUser::whereNotIn('id', function($query) {
+                // サブクエリ
+                $query->select('chat_user_id')
+                    ->from('block_chat_users')
+                    ->whereIn('id', function($subQuery) {
+                        $subQuery->select('id')
+                                ->from('block_chat_users')
+                                ->where("is_blocked", '1')
+                                ->latest()
+                                ->groupBy('chat_user_id');
+                    });
             })
-            ->where("chat_users.account_id", $id)
-            ->select("chat_users.id", "chat_users.user_id", "chat_users.account_id", "chat_users.line_name", "chat_users.created_at")
+            ->where('account_id', $id)
             ->get();
-
-
 
         foreach($users as $user){
             $user["latest_message_date"] = $messageCountService->getLatestUserMessageDate($id, $user->id);
@@ -139,12 +136,6 @@ class LineAccountController extends Controller
             $user["uuid"] = UserEntity::where("related_id", $user->id)->value("entity_uuid");
         }
     
-
-        // message_countが多い順に並び変え
-        // usort($users, function($a, $b) {
-        //     return $b['message_count'] - $a['message_count']; // 降順にするため、$b - $a
-        // });
-
         return view("admin.account_show", ["user_uuid" => $user_uuid, "account_data" => $account_data, "chat_users" => $users, "id" => $id]);
     }
 
@@ -160,7 +151,6 @@ class LineAccountController extends Controller
         if($second_account["id"]){
             $second_account["account_name"] = LineAccount::where("id",  $second_account["id"])->value("account_name") ;
         }
-        
         return response()->json(["account_data" => $account_data, "second_account" => $second_account]);
     }
 
@@ -175,7 +165,6 @@ class LineAccountController extends Controller
         Log::debug($line_account->toArray());
         $line_account->update(["account_name" => $validated["account_name"], "account_url" => $validated["account_url"]]);
 
-    
         if($request->input("second_account_id")){
             $second_account = SecondAccount::where("current_account_id", $id)->first();
             if($second_account){
@@ -185,12 +174,10 @@ class LineAccountController extends Controller
                     "current_account_id" => $id,
                     "second_account_id" => $validated["second_account_id"],
                 ];
-    
                 SecondAccount::create($second_account_data);
             }
         }
         
-
         return redirect()->route("dashboard")->with("success", "アカウント情報の更新に成功しました。");
     }
 
@@ -218,7 +205,6 @@ class LineAccountController extends Controller
         $line_account = LineAccount::findOrFail($account_id);
         // フロントに返す文言
         $is_success = "";
-
         // アカウントがあった場合、ステータスを変更する
         if($line_account){
             $line_account->update(["account_status" => $status_id]);
@@ -238,9 +224,6 @@ class LineAccountController extends Controller
         }else{
             $is_success = false;
         }
-
-    
-
         return response()->json($is_success);
     }
     
