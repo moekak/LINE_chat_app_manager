@@ -99,11 +99,8 @@ class LineAccountController extends Controller
                 "current_account_id" => $line_account->id,
                 "second_account_id" => $validated["second_account_id"],
             ];
-
             SecondAccount::create($second_account_data);
         }
-
-
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
 
@@ -121,10 +118,10 @@ class LineAccountController extends Controller
                     ->from('block_chat_users')
                     ->whereIn('id', function($subQuery) {
                         $subQuery->select('id')
-                                ->from('block_chat_users')
-                                ->where("is_blocked", '1')
-                                ->latest()
-                                ->groupBy('chat_user_id');
+                            ->from('block_chat_users')
+                            ->where("is_blocked", '1')
+                            ->latest()
+                            ->groupBy('chat_user_id');
                     });
             })
             ->where('account_id', $id)
