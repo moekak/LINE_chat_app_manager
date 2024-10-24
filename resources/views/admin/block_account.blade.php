@@ -76,9 +76,14 @@
 </section>
 {{-- ユーザーブロック確認モーダル --}}
 <section class="modal__container js_modal hidden" id="js_block_account_modal" style="width: 500px;">
-	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">本当にこのユーザーをブロックしますか？</h2>
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi aliquid beatae veritatis iusto consequatur fugiat at perspiciatis deserunt reprehenderit, molestiae nam voluptas praesentium cum error repudiandae, aspernatur repellat nulla iste.</p>
-	<div style="margin-top: 15px"></div>
+	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">本当にこのユーザーをブロック解除しますか？</h2>
+	<p>ユーザーのブロックを解除すると、以下の機能が利用可能になります：<br>
+		<li>メッセージの送受信</li>
+		<li>一斉メッセージの送信</li>
+		<br>
+		ブロックを解除してもよろしいですか？
+	</p>
+	<div style="margin-top: 2px"></div>
 	<p>ユーザー名：<span id="js_account_name"></span></p>
 	<div class="delete_account-btn-container">
 		<div class="cancel-btn btn-box js_delete_account_cancel">
