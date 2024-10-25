@@ -1,7 +1,6 @@
 
-import { close_modal } from "./module/component/modalOperation.js";
-import { changeDisplayOrder, handleEditUserName, setActionUrl} from "./module/component/accountUIOperations.js";
-import { fetchGetOperation } from "./module/util/fetch.js";
+import { close_modal, close_modal_by_click } from "./module/component/modalOperation.js";
+import { changeDisplayOrder} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import { fetchSpecificUserInfo } from "./module/component/fetchUserData.js";
 import { initializeAccountBlockModal } from "./module/component/accountModalInitializers.js";
@@ -53,5 +52,8 @@ close_modal()
 
 
 
+// ブロックキャンセル処理
+const btn = document.querySelector(".js_block_cancel")
+const modal = document.getElementById("js_block_account_modal")
+close_modal_by_click(modal, btn)
 
-// ユーザーブロック

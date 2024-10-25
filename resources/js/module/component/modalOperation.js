@@ -24,3 +24,11 @@ export const close_modal = () =>{
             }
       })
 }
+
+export const close_modal_by_click = (modal, btn) =>{
+      const bg  =  document.querySelector(".bg")
+      btn.addEventListener("click", ()=>{
+            bg.classList.add("hidden")
+            modal.classList.add("hidden")
+      })
+}

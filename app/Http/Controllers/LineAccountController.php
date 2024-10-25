@@ -31,7 +31,14 @@ class LineAccountController extends Controller
             $latest_message_date = $messageCountService->getLatestUserMessageDate($account->id);
 
             // アカウントごとのユーザーをすべて取得
-            $users = ChatUser::where("account_id", $account->id)->get();
+            $users = ChatUser::where("account_id", $account->id)
+                    ->whereNotIn("id", function($query){
+                        $query->select("chat_user_id")
+                                ->from("block_chat_users")
+                                ->where("is_blocked", '1')
+                                ->get();
+                    })
+                    ->get();
             $totalCount = 0;
 
             foreach($users as $user){

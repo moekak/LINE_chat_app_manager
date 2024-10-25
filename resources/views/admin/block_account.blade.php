@@ -41,7 +41,7 @@
 					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"]->format('Y-m-d H:i') : ""}}</td>
 					<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 					<td class="operation">
-						<button class="operation_icon js_block_btn" data-uuid={{$chat_user["uuid"]}} data-name={{$chat_user["line_name"]}} data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
+						<button class="operation_icon js_block_btn" data-uuid='{{$chat_user["uuid"]}}' data-name='{{$chat_user["line_name"]}}' data-id='{{$chat_user["id"]}}'><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
 					</td>
 					</tr>
 				@endforeach
@@ -87,7 +87,7 @@
 	<p>ユーザー名：<span id="js_account_name"></span></p>
 	<div class="delete_account-btn-container">
 		<div class="cancel-btn btn-box js_delete_account_cancel">
-			<button class="delete_account-btn" readonly>キャンセル</button>
+			<button class="delete_account-btn js_block_cancel" readonly>キャンセル</button>
 		</div>
 		<form action="{{route('account.unblock', ['id' => 'ID_PLACEHOLDER'])}}" method="get" class="btn-box delete-btn js_block_account_from">
 			@csrf

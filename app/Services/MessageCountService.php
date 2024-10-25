@@ -109,7 +109,9 @@ class MessageCountService{
         }
 
     }
-    public function selectTotalMessageCount($admin_id, $user_id){
+    public function selectTotalMessageCount($admin_id, $user_id, $periods = []){
+        $messageService = new MessageService();
+        $block_history =  $messageService->hasUserBlockHistroy($user_id);
         // 最新の既読メッセージIDを取得
         $message_read = MessageReadUser::where("admin_id", $admin_id)
             ->where("chat_user_id", $user_id)
@@ -121,14 +123,58 @@ class MessageCountService{
         $count = 0;
 
         if($message_read== null){
-            $count = UserMessage::where("user_id", $user_id)->where("admin_id", $admin_id)->count() + UserMessageImage::where("user_id", $user_id)->where("admin_id", $admin_id)->count();
+            $count = $this->selectUserMessageCount($user_id, $admin_id, $block_history, $message_read) + $this->selectUserMessageImageCount($user_id, $admin_id, $block_history, $message_read);
         }else if($message_read->message_id == $latest_message_id){
             $count = 0;
         }else{
-            $count = UserMessage::where("user_id", $user_id)->where("admin_id", $admin_id)->where('message_id', '>', $message_read->message_id)->count() + UserMessageImage::where("user_id", $user_id)->where("admin_id", $admin_id)->where('message_id', '>', $message_read->message_id)->count() ;
+            $count = $this->selectUserMessageCount($user_id, $admin_id, $block_history, $message_read) + $this->selectUserMessageImageCount($user_id, $admin_id, $block_history, $message_read);
         }
 
         return $count;
     } 
+
+
+    public function selectUserMessageCount($user_id, $admin_id, $periods, $message_read){
+
+        $query = UserMessage::where("user_id", $user_id)
+                ->where("admin_id", $admin_id);
+
+        if($message_read){
+            $query->where('message_id', '>', $message_read->message_id);
+        }
+
+        if($periods){
+            $query->where(function($q) use ($periods){
+                foreach($periods as $period){
+                    $q->whereNotBetween("created_at", [
+                        $period["start"],
+                        $period["end"]
+                    ]);
+                };
+            });
+        }
+        return $query->count();
+    }
+
+    public function selectUserMessageImageCount($user_id, $admin_id, $periods, $message_read){
+        $query = UserMessageImage::where("user_id", $user_id)
+                ->where("admin_id", $admin_id);
+
+        if($message_read){
+            $query->where('message_id', '>', $message_read->message_id);
+        }
+
+        if($periods){
+            $query->where(function($q) use ($periods){
+                foreach($periods as $period){
+                    $q->whereNotBetween("created_at", [
+                        $period["start"],
+                        $period["end"]
+                    ]);
+                };
+            });
+        }
+        return $query->count();
+    }
 }
 

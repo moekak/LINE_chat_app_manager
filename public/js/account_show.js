@@ -2356,9 +2356,7 @@ var initializeAccountBlockModal = function initializeAccountBlockModal(socket) {
       // ブロックボタンをクリックしたら
       var blockForm = document.querySelector(".js_block_account_from");
       blockForm.addEventListener("submit", function () {
-        console.log("submit!!!!!");
         socket.emit("block user", lineID);
-        console.log("submit2!!!!!");
       });
     });
   });
@@ -2702,6 +2700,7 @@ var fetchSpecificUserInfo = function fetchSpecificUserInfo(btn, modal) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
+/* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
 /* harmony export */ });
 var open_modal = function open_modal(modal) {
@@ -2724,6 +2723,13 @@ var close_modal = function close_modal() {
         alert.style.display = "none";
       });
     }
+  });
+};
+var close_modal_by_click = function close_modal_by_click(modal, btn) {
+  var bg = document.querySelector(".bg");
+  btn.addEventListener("click", function () {
+    bg.classList.add("hidden");
+    modal.classList.add("hidden");
   });
 };
 
@@ -7354,11 +7360,9 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
 /* harmony import */ var _module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
-/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
-/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
-/* harmony import */ var _module_component_fetchUserData_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/component/fetchUserData.js */ "./resources/js/module/component/fetchUserData.js");
-/* harmony import */ var _module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/component/accountModalInitializers.js */ "./resources/js/module/component/accountModalInitializers.js");
-
+/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var _module_component_fetchUserData_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/component/fetchUserData.js */ "./resources/js/module/component/fetchUserData.js");
+/* harmony import */ var _module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/component/accountModalInitializers.js */ "./resources/js/module/component/accountModalInitializers.js");
 
 
 
@@ -7366,21 +7370,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // ブロックモーダル初期化
-(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeAccountBlockModal)(_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
+(0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_4__.initializeAccountBlockModal)(_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var admin_id = document.getElementById("js_admin_account_id").value;
-(0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__.registerUser)(admin_id, "admin");
+(0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__.registerUser)(admin_id, "admin");
 // サーバーへの接続確認
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on('connect', function () {
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on('connect', function () {
   console.log('サーバーに接続されました（chat.jsからの確認）');
 });
 
 // チャットメッセージを受信した際
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type) {
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type) {
   // メッセージカウントの表示をリアルタイムで更新する
   (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.changeDisplayOrder)(actual_sender_id, actual_receiver_id, sender_type);
 });
 // チャット画像を受信した際
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("send_image", function (sender_id, receiver_id, sender_type) {
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on("send_image", function (sender_id, receiver_id, sender_type) {
   // メッセージカウントの表示をリアルタイムで更新する
   (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.changeDisplayOrder)(sender_id, receiver_id, sender_type);
 });
@@ -7389,7 +7393,7 @@ _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("send_image", 
 var edit_btns = document.querySelectorAll(".js_edit_user_btn");
 var editModal = document.getElementById("js_edit_account_modal");
 edit_btns.forEach(function (edit_btn) {
-  (0,_module_component_fetchUserData_js__WEBPACK_IMPORTED_MODULE_4__.fetchSpecificUserInfo)(edit_btn, editModal);
+  (0,_module_component_fetchUserData_js__WEBPACK_IMPORTED_MODULE_3__.fetchSpecificUserInfo)(edit_btn, editModal);
 });
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
@@ -7403,7 +7407,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_modal)();
 
-// ユーザーブロック
+// ブロックキャンセル処理
+var btn = document.querySelector(".js_block_cancel");
+var modal = document.getElementById("js_block_account_modal");
+(0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_modal_by_click)(modal, btn);
 })();
 
 /******/ })()

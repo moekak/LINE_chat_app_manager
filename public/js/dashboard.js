@@ -2356,9 +2356,7 @@ var initializeAccountBlockModal = function initializeAccountBlockModal(socket) {
       // ブロックボタンをクリックしたら
       var blockForm = document.querySelector(".js_block_account_from");
       blockForm.addEventListener("submit", function () {
-        console.log("submit!!!!!");
         socket.emit("block user", lineID);
-        console.log("submit2!!!!!");
       });
     });
   });
@@ -2677,6 +2675,7 @@ var createBroadcastMessageRow = function createBroadcastMessageRow(data) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
+/* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
 /* harmony export */ });
 var open_modal = function open_modal(modal) {
@@ -2699,6 +2698,13 @@ var close_modal = function close_modal() {
         alert.style.display = "none";
       });
     }
+  });
+};
+var close_modal_by_click = function close_modal_by_click(modal, btn) {
+  var bg = document.querySelector(".bg");
+  btn.addEventListener("click", function () {
+    bg.classList.add("hidden");
+    modal.classList.add("hidden");
   });
 };
 

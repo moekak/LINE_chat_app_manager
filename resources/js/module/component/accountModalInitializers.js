@@ -94,9 +94,7 @@ export const initializeAccountBlockModal = (socket) =>{
                   // ブロックボタンをクリックしたら
                   const blockForm = document.querySelector(".js_block_account_from")
                   blockForm.addEventListener("submit", ()=>{
-                        console.log("submit!!!!!");
                         socket.emit("block user", lineID)
-                        console.log("submit2!!!!!");
                   })
             })
       })
