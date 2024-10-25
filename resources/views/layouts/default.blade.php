@@ -27,9 +27,14 @@
                                     <p class="nav__item-option__txt txt-gray"><a href="{{route("account.block.user", ["id" => Route::current()->parameter('id')])}}">ブロックアカウント一覧</a></p>
                               </div>
                         @endif
-                        <div class="nav__item-option ptb-20 prl-20">
-                              <p class="nav__item-option__txt txt-gray" id="js_create_account_btn">アカウント追加</p>
-                        </div>
+                        @if (Route::currentRouteName() == "dashboard")
+                              <div class="nav__item-option ptb-20 prl-20">
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_account_btn">アカウント追加</p>
+                              </div>
+                              <div class="nav__item-option ptb-20 prl-20">
+                                    <p class="nav__item-option__txt txt-gray" id="js_update_line_btn">LINE送信文言変更</p>
+                              </div>
+                        @endif
                         <div class="nav__item-option ptb-20 prl-20">
                               <form action="{{route("logout")}}" method="post">
                                     @csrf
@@ -60,7 +65,6 @@
                               <img src="{{asset("img/icons8-user-icon-48.png")}}" alt="" class="dashboard__wrapper-top--box-img">  
                               <p class="dashboard__wrapper-top-txt">{{$user->name}}</p>
                         </div>
-
                   </div>
                   @yield('main')
             </section>

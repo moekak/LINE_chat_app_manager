@@ -30,7 +30,7 @@
 					<th scope="col">ユーザー名</th>
 					<th scope="col">最新受信日</th>
 					<th scope="col">作成日時</th>
-					<th scope="col">管理</th>
+					<th scope="col">解除</th>
 				</tr>
 				</thead>
 				<tbody class="js_table">
@@ -91,7 +91,7 @@
 		</div>
 		<form action="{{route('account.unblock', ['id' => 'ID_PLACEHOLDER'])}}" method="get" class="btn-box delete-btn js_block_account_from">
 			@csrf
-			<button class="delete_account-btn" type="submit" style="color: #fff;" readonly>ブロック</button>
+			<button class="delete_account-btn" type="submit" style="color: #fff;" readonly>ブロック解除</button>
 		</form>
 </div>
 </section>
