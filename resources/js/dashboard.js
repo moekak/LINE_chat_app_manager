@@ -1,4 +1,4 @@
-import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal } from "./module/component/accountModalInitializers.js";
+import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeLineMessageUpdationModal } from "./module/component/accountModalInitializers.js";
 import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
 import {  fetchPostOperation } from "./module/util/fetch.js"
@@ -14,6 +14,8 @@ initializeAccountEditModal()
 initializeBroadcastMessageModal()
 // アカウント削除処理
 initializeAccountDeletionModal()
+// LINE送信文言変更モーダル処理
+initializeLineMessageUpdationModal()
 // モーダルを閉じる処理
 close_modal();
 

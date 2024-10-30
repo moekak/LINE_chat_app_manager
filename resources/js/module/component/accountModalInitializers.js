@@ -1,6 +1,7 @@
 import { fetchGetOperation } from "../util/fetch.js"
 import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accountUIOperations.js"
 import { open_modal } from "./modalOperation.js"
+import { setLineMessageForUpdating } from "./uiManager.js"
 
 // アカウント編集モーダルの初期化
 export const initializeAccountEditModal =() =>{
@@ -97,5 +98,32 @@ export const initializeAccountBlockModal = (socket) =>{
                         socket.emit("block user", lineID)
                   })
             })
+      })
+}
+
+
+
+// LINE送信文言変更モダールの初期化
+export const initializeLineMessageUpdationModal= () =>{
+      const update_btn            = document.getElementById("js_update_line_btn")
+      const update_message_modal    = document.getElementById("js_update_message_modal")
+      const loader = document.querySelector(".loader")
+
+      update_btn.addEventListener("click", (e)=>{
+            // 削除したいアカウントのIDを取得する
+            let admin_id = e.currentTarget.getAttribute("data-id");
+            setActionUrl(admin_id, "js_update_sendingMsg")
+            open_modal(loader)
+
+            // 編集したいアカウントの情報を非同期で取得する
+            fetchGetOperation(`/api/line/message/${admin_id}`)
+            .then((res) => {
+                  setLineMessageForUpdating(res)
+                  .then(() => {
+                        // 編集モーダルの表示
+                        open_modal(update_message_modal);
+                  });
+            }) 
+
       })
 }

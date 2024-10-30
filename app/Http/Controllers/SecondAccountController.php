@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 class SecondAccountController extends Controller
 {
     public function create(CreateSecondAccountRequest $request){
-        Log::debug("22222");
         $validated = $request->validated();
         SecondAccount::create($validated);
 

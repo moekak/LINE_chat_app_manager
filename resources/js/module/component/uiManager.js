@@ -156,6 +156,14 @@ const setAccountDataForEditing = (res) => {
       });
 };
 
+export const setLineMessageForUpdating = (res) =>{
+      return new Promise((resolve) => {
+            const message_Input = document.querySelector(".js_line_message_input")
+            message_Input.value = res
+            resolve()
+      });
+}
+
 // アカウントを編集するための初期処理
 export const initializeAccountEditModal =() =>{
       const edit_btns = document.querySelectorAll(".js_edit_account_btn")

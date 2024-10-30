@@ -32,7 +32,7 @@
                                     <p class="nav__item-option__txt txt-gray" id="js_create_account_btn">アカウント追加</p>
                               </div>
                               <div class="nav__item-option ptb-20 prl-20">
-                                    <p class="nav__item-option__txt txt-gray" id="js_update_line_btn">LINE送信文言変更</p>
+                                    <p class="nav__item-option__txt txt-gray" id="js_update_line_btn" data-id="{{$user->id}}">LINE送信文言変更</p>
                               </div>
                         @endif
                         <div class="nav__item-option ptb-20 prl-20">

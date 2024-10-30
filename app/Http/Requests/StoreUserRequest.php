@@ -29,13 +29,13 @@ class StoreUserRequest extends FormRequest
 
 
     public function messages(): array
-{
-    return [
-        'name.required' => 'ユーザーネームは必須項目です。',
-        'name.unique' => 'このユーザーネームは既に使用されています。',
-        'password.required' => 'パスワードは必須項目です。',
-        'password.min' => 'パスワードは6文字以上で設定してください。',
-    ];
-}
+    {
+        return [
+            'name.required' => 'ユーザーネームは必須項目です。',
+            'name.unique' => 'このユーザーネームは既に使用されています。',
+            'password.required' => 'パスワードは必須項目です。',
+            'password.min' => 'パスワードは6文字以上で設定してください。',
+        ];
+    }
 
 }
