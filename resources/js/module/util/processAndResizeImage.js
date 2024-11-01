@@ -6,17 +6,9 @@ export const resizeImage = (file, maxWidth = 160) => {
                   img.src = e.target.result;
       
                   img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        
-                        const scaleSize = maxWidth / img.width;
-                        canvas.width = maxWidth;
-                        canvas.height = img.height * scaleSize;
-            
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             
                         // 圧縮を省略し、元の形式とクオリティを維持
-                        const resizedImage = canvas.toDataURL(file.type);
+                        const resizedImage = e.target.result;
                         resolve(resizedImage);
                   };
       
