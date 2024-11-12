@@ -41,3 +41,4 @@ Route::post("/user/update/{id}", [ChatUserController::class, "update"])->name("u
 
 Route::get("/account/block/{id}", [ChatUserController::class, "block"])->name("account.block")->middleware("auth");
 Route::post("/line/message/update/{id}", [LineMessageController::class, "update"])->name("message.update")->middleware("auth");
+

@@ -2,8 +2,6 @@ import { initializeAccountDeletionModal, initializeAccountEditModal, initializeB
 import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
-import socket2 from "./module/util/socket_lineAccount.js";
-import { fetchPostOperation } from "./module/util/fetch.js";
 
 // モーダル初期設定
 // アカウント編集モーダル処理
@@ -80,37 +78,33 @@ if(status_update){
 }
 
 
-// アカウント追加処理
-const submit_form =document.getElementById("js_add_account_form")
+// // アカウント追加処理
+// const submit_form =document.getElementById("js_add_account_form")
 
-submit_form.addEventListener("submit", (e)=>{
-    e.preventDefault()
+// submit_form.addEventListener("submit", (e)=>{
+//     e.preventDefault()
 
-    let account_name = document.querySelector(".js_account_name_input").value 
-    let channel_access_token = document.querySelector(".js_channel_access_token_input").value
-    let channel_secret = document.querySelector(".js_channel_secret_input").value
-    let url = document.querySelector(".js_url_input").value
-    let status = document.querySelector(".js_status_select").value
-    let second_account_id = document.querySelector(".js_second_account_id")
+//     let account_name = document.querySelector(".js_account_name_input").value 
+//     let channel_access_token = document.querySelector(".js_channel_access_token_input").value
+//     let channel_secret = document.querySelector(".js_channel_secret_input").value
+//     let url = document.querySelector(".js_url_input").value
+//     let status = document.querySelector(".js_status_select").value
+//     let second_account_id = document.querySelector(".js_second_account_id")
 
-    const data = {
-        "account_name" : account_name,
-        "account_url": url,
-        "channelsecret" : channel_secret,
-        "channelaccesstoken" : channel_access_token,
-        "account_status" : status,
-        "second_account_id" : second_account_id
-    }
+//     const data = {
+//         "account_name" : account_name,
+//         "account_url": url,
+//         "channelsecret" : channel_secret,
+//         "channelaccesstoken" : channel_access_token,
+//         "account_status" : status,
+//         "second_account_id" : second_account_id
+//     }
 
-    socket2.on('connect', () => {
-        console.log('サーバーに接続されましたyooooo');
-    });
+//     console.log(data);
 
-    console.log(data);
-
-    setInterval(()=>{
-        submit_form.submit() 
-    }, 3000)
+//     setInterval(()=>{
+//         submit_form.submit() 
+//     }, 3000)
 
     
-})
+// })

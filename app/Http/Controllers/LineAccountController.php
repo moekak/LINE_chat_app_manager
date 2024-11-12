@@ -11,6 +11,7 @@ use App\Models\SecondAccount;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class LineAccountController extends Controller
@@ -124,6 +125,20 @@ class LineAccountController extends Controller
             SecondAccount::create($second_account_data);
         }
 
+        // node.jsに通知を送信
+        try{
+            Http::post("https://chat-bot.tokyo/notify", [
+                "channel_access_token" => $validated["channelaccesstoken"], 
+                "channel_secret" => $validated["channelsecret"]
+            ]);
+            Http::post("https://line-chat.tokyo:3000/notify", [
+                "channel_access_token" => $validated["channelaccesstoken"], 
+                "channel_secret" => $validated["channelsecret"]
+            ]);
+        } catch (\Error $e) {
+            Log::debug($e);
+        }
+        
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
 

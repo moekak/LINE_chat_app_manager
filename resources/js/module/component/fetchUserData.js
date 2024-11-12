@@ -1,3 +1,6 @@
+import { fetchGetOperation } from "../util/fetch.js"
+import { handleEditUserName, setActionUrl } from "./accountUIOperations.js"
+
 export const fetchSpecificUserInfo = (btn, modal) =>{
     btn.addEventListener("click", (e)=>{
         // 編集するユーザーidを取得する
