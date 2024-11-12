@@ -3156,52 +3156,6 @@ var formateDateToAsia = function formateDateToAsia() {
 
 /***/ }),
 
-/***/ "./resources/js/module/util/messageService.js":
-/*!****************************************************!*\
-  !*** ./resources/js/module/util/messageService.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   cleanHtmlContent: () => (/* binding */ cleanHtmlContent),
-/* harmony export */   prepareMessageData: () => (/* binding */ prepareMessageData)
-/* harmony export */ });
-var prepareMessageData = function prepareMessageData() {
-  // サーバーに送信するデータをすべて取得する
-  var body = document.querySelector(".js_message_input").value;
-  var formatted_body = body.replace(/\n/g, '<br>'); // 改行文字を <br> タグに置き換える
-  var admin_account_id = document.getElementById("js_account_id").value;
-  return {
-    body: body,
-    formatted_body: formatted_body,
-    admin_account_id: admin_account_id
-  };
-};
-
-//<br> タグを含むすべての HTML タグを除去し、適切な改行を維持する
-var cleanHtmlContent = function cleanHtmlContent(html) {
-  // 1. <br>タグを改行文字に置換
-  var text = html.replace(/<br\s*\/?>/gi, '\n');
-
-  // 2. その他のHTMLタグを除去
-  text = text.replace(/<[^>]+>/g, '');
-
-  // 3. HTMLエンティティをデコード
-  var textarea = document.createElement('textarea');
-  textarea.innerHTML = text;
-  text = textarea.value;
-
-  // 4. 連続する改行を1つの改行に置換
-  text = text.replace(/\n{3,}/g, '\n\n');
-
-  // 5. 前後の空白を除去
-  return text.trim();
-};
-
-/***/ }),
-
 /***/ "./resources/js/module/util/socket.js":
 /*!********************************************!*\
   !*** ./resources/js/module/util/socket.js ***!
@@ -3236,6 +3190,41 @@ var registerUser = function registerUser(admin_id, type) {
   socket.emit("register", "".concat(type).concat(admin_id));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (socket);
+
+/***/ }),
+
+/***/ "./resources/js/module/util/socket_lineAccount.js":
+/*!********************************************************!*\
+  !*** ./resources/js/module/util/socket_lineAccount.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/esm/index.js");
+
+
+// Socket.IOサーバーへの接続を設定
+var socket2 = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])('https://chat-bot.tokyo:3001', {
+  reconnection: true,
+  // 自動再接続を有効にする
+  reconnectionDelay: 1000,
+  // 再接続の遅延時間 (ミリ秒)
+  reconnectionDelayMax: 5000,
+  // 再接続の最大遅延時間 (ミリ秒)
+  reconnectionAttempts: Infinity,
+  // 再接続の試行回数 (無限に設定)
+  transports: ['websocket', 'polling']
+});
+
+// 接続が確立されたときに実行される
+socket2.on('connect', function () {
+  console.log('サーバーに接続されましたyoooooo');
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (socket2);
 
 /***/ }),
 
@@ -7689,9 +7678,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/component/accountModalInitializers.js */ "./resources/js/module/component/accountModalInitializers.js");
 /* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
 /* harmony import */ var _module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
-/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
-/* harmony import */ var _module_util_messageService_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/util/messageService.js */ "./resources/js/module/util/messageService.js");
-/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var _module_util_socket_lineAccount_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/util/socket_lineAccount.js */ "./resources/js/module/util/socket_lineAccount.js");
+/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
 
 
 
@@ -7699,9 +7688,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// 
 // モーダル初期設定
-
 // アカウント編集モーダル処理
 (0,_module_component_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeAccountEditModal)();
 // 一斉送信フロント処理
@@ -7740,49 +7727,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 var admin_id = document.getElementById("js_admin_account_id").value;
-(0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__.registerUser)(admin_id, "user");
+(0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__.registerUser)(admin_id, "user");
 // サーバーへの接続確認
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].on('connect', function () {
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on('connect', function () {
   console.log('サーバーに接続されました（chat.jsからの確認）');
 });
 
 // チャットメッセージを受信した際
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type, admin_login_id) {
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type, admin_login_id) {
   (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(actual_sender_id, actual_receiver_id, sender_type, admin_login_id);
 });
 // チャット画像を受信した際
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].on("send_image", function (sender_id, receiver_id, sender_type, admin_login_id) {
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("send_image", function (sender_id, receiver_id, sender_type, admin_login_id) {
   (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(sender_id, receiver_id, sender_type, admin_login_id);
 });
-
-// 一斉送信処理
-// document.querySelector(".js_message_submit_btn").addEventListener("click", ()=>{
-
-//     const { body,  formatted_body, admin_account_id} = prepareMessageData()
-//     const data = {
-//         "content": body,
-//         "admin_id": admin_account_id
-//     }
-
-//     fetchPostOperation(data, "/api/broadcast_message/store")
-//     .then((res)=>{
-//         document.getElementById("js_boradcasting_modal").classList.add("hidden")
-//         document.querySelector(".bg").classList.add("hidden")
-
-//         const success_el = document.getElementById("js_alert_success")
-//         success_el.style.display = "block";
-//         success_el.innerHTML = "一斉送信に成功しました"
-//         document.querySelector(".js_message_input").value = ""
-
-//         setTimeout(() => {
-//             success_el.style.display = "none"
-//         }, 2000);
-//         const created_at = res["created_at"];
-
-//         socket.emit("broadcast message", {formatted_body, admin_account_id, created_at})
-
-//     })
-// })
 
 // アカウント削除キャンセル処理
 (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.initializeAccountStatusManager)();
@@ -7798,6 +7756,33 @@ if (status_update) {
     success_alert.style.display = "none";
   }, 2000);
 }
+
+// アカウント追加処理
+var submit_form = document.getElementById("js_add_account_form");
+submit_form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  var account_name = document.querySelector(".js_account_name_input").value;
+  var channel_access_token = document.querySelector(".js_channel_access_token_input").value;
+  var channel_secret = document.querySelector(".js_channel_secret_input").value;
+  var url = document.querySelector(".js_url_input").value;
+  var status = document.querySelector(".js_status_select").value;
+  var second_account_id = document.querySelector(".js_second_account_id");
+  var data = {
+    "account_name": account_name,
+    "account_url": url,
+    "channelsecret": channel_secret,
+    "channelaccesstoken": channel_access_token,
+    "account_status": status,
+    "second_account_id": second_account_id
+  };
+  _module_util_socket_lineAccount_js__WEBPACK_IMPORTED_MODULE_4__["default"].on('connect', function () {
+    console.log('サーバーに接続されましたyooooo');
+  });
+  console.log(data);
+  setInterval(function () {
+    submit_form.submit();
+  }, 3000);
+});
 })();
 
 /******/ })()

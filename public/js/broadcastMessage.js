@@ -2630,15 +2630,8 @@ var resizeImage = function resizeImage(file) {
       var img = new Image();
       img.src = e.target.result;
       img.onload = function () {
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
-        var scaleSize = maxWidth / img.width;
-        canvas.width = maxWidth;
-        canvas.height = img.height * scaleSize;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
         // 圧縮を省略し、元の形式とクオリティを維持
-        var resizedImage = canvas.toDataURL(file.type);
+        var resizedImage = e.target.result;
         resolve(resizedImage);
       };
       img.onerror = function () {

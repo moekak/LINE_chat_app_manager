@@ -6,7 +6,7 @@ let socket = io('https://line-chat.tokyo:3000', {
       reconnectionDelay: 1000,    // 再接続の遅延時間 (ミリ秒)
       reconnectionDelayMax : 5000, // 再接続の最大遅延時間 (ミリ秒)
       reconnectionAttempts: Infinity // 再接続の試行回数 (無限に設定)
-  });
+});
 
 // 接続が確立されたときに実行される
 socket.on('connect', () => {

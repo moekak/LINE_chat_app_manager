@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateLineAccountRequest;
 use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
-use App\Models\BlockChatUser;
 use App\Models\ChatUser;
 use App\Models\LineAccount;
 use App\Models\SecondAccount;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LineAccountController extends Controller
@@ -88,11 +86,28 @@ class LineAccountController extends Controller
 
     public function create(CreateLineAccountRequest $request)
     {   
+
         $user_id = Auth::user();
         $validated = $request->validated();
 
-        $validated["user_id"] = $user_id->id;
-        $line_account = LineAccount::create($validated);
+        //Illuminate\Http\Client\Responseオブジェクトの形
+        $lineResponse = $request->getLineApiResponse();
+        // json()メソッドを使用することでPHPの配列に変換
+        $accountId= $lineResponse->json("userId");
+        $pictureUrl= $lineResponse->json("pictureUrl");
+
+        $lineAccountData = [
+            "user_id" => $user_id->id,
+            "account_id" => $accountId,
+            "channel_access_token" => $validated["channelaccesstoken"],
+            "channel_secret" => $validated["channelsecret"],
+            "account_name" => $validated["account_name"],
+            "account_url" => $validated["account_url"],
+            "user_picture" => $pictureUrl,
+            "account_status" => $validated["account_status"]
+        ];
+
+        $line_account = LineAccount::create($lineAccountData);
 
         $data = [
             "related_id" => $line_account->id,
@@ -108,6 +123,7 @@ class LineAccountController extends Controller
             ];
             SecondAccount::create($second_account_data);
         }
+
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
 

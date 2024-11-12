@@ -1,13 +1,11 @@
 import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeLineMessageUpdationModal } from "./module/component/accountModalInitializers.js";
 import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
-import {  fetchPostOperation } from "./module/util/fetch.js"
-import { prepareMessageData } from "./module/util/messageService.js";
 import socket, { registerUser } from "./module/util/socket.js";
+import socket2 from "./module/util/socket_lineAccount.js";
+import { fetchPostOperation } from "./module/util/fetch.js";
 
-// 
 // モーダル初期設定
-
 // アカウント編集モーダル処理
 initializeAccountEditModal()
 // 一斉送信フロント処理
@@ -39,8 +37,6 @@ submitForms.forEach((submitForm)=>{
     })
 })
 
-
-
 // ページがロードされた後に5秒待ってメッセージを非表示にする
 document.addEventListener("DOMContentLoaded", function () {
     var alert = document.getElementById("js_alert_success");
@@ -51,18 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
-
-
-
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "user")
   // サーバーへの接続確認
 socket.on('connect', () => {
     console.log('サーバーに接続されました（chat.jsからの確認）');
 });
-
-
 
 // チャットメッセージを受信した際
 socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type, admin_login_id)=>{
@@ -72,36 +62,6 @@ socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type, ad
 socket.on("send_image", (sender_id, receiver_id, sender_type, admin_login_id)=>{
     changeAccountDisplayOrder(sender_id, receiver_id, sender_type, admin_login_id)
 })
-
-
-// 一斉送信処理
-// document.querySelector(".js_message_submit_btn").addEventListener("click", ()=>{
-    
-//     const { body,  formatted_body, admin_account_id} = prepareMessageData()
-//     const data = {
-//         "content": body,
-//         "admin_id": admin_account_id
-//     }
-
-//     fetchPostOperation(data, "/api/broadcast_message/store")
-//     .then((res)=>{
-//         document.getElementById("js_boradcasting_modal").classList.add("hidden")
-//         document.querySelector(".bg").classList.add("hidden")
-
-//         const success_el = document.getElementById("js_alert_success")
-//         success_el.style.display = "block";
-//         success_el.innerHTML = "一斉送信に成功しました"
-//         document.querySelector(".js_message_input").value = ""
-
-//         setTimeout(() => {
-//             success_el.style.display = "none"
-//         }, 2000);
-//         const created_at = res["created_at"];
-
-//         socket.emit("broadcast message", {formatted_body, admin_account_id, created_at})
-        
-//     })
-// })
 
 
 // アカウント削除キャンセル処理
@@ -117,5 +77,40 @@ if(status_update){
     setTimeout(() => {
         success_alert.style.display = "none"
     }, 2000);
-    
 }
+
+
+// アカウント追加処理
+const submit_form =document.getElementById("js_add_account_form")
+
+submit_form.addEventListener("submit", (e)=>{
+    e.preventDefault()
+
+    let account_name = document.querySelector(".js_account_name_input").value 
+    let channel_access_token = document.querySelector(".js_channel_access_token_input").value
+    let channel_secret = document.querySelector(".js_channel_secret_input").value
+    let url = document.querySelector(".js_url_input").value
+    let status = document.querySelector(".js_status_select").value
+    let second_account_id = document.querySelector(".js_second_account_id")
+
+    const data = {
+        "account_name" : account_name,
+        "account_url": url,
+        "channelsecret" : channel_secret,
+        "channelaccesstoken" : channel_access_token,
+        "account_status" : status,
+        "second_account_id" : second_account_id
+    }
+
+    socket2.on('connect', () => {
+        console.log('サーバーに接続されましたyooooo');
+    });
+
+    console.log(data);
+
+    setInterval(()=>{
+        submit_form.submit() 
+    }, 3000)
+
+    
+})

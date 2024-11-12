@@ -18,3 +18,4 @@ Route::get("/account/{account_id}/status/{status_id}/current_stautus/{current_st
 Route::get("/line/message/{admin_id}", [LineMessageController::class, "getMessage"]);
 
 Route::post("/broadcast_message/store", [BroadcastMessageController::class, "store"]);
+// Route::post("/lineAccount/create", [LineAccountController::class, "create"]);
