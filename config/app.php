@@ -124,7 +124,8 @@ return [
     ],
 
     "system_url" =>[
-        "line_bot_url" => 'https://line-chat-bot.tokyo/notify'
+        "line_bot_url" => 'https://line-chat-bot.tokyo/notify',
+        "line_chat_socket_url" => 'https://line-chat-socket.tokyo:3000/notify',
     ] 
 
 ];

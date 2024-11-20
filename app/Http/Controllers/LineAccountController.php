@@ -47,7 +47,7 @@ class LineAccountController extends Controller
             }
 
             $account["total_count"]         = $totalCount;
-            $account["uuid"]                = UserEntity::where("related_id", $account->id)->value("entity_uuid");
+            $account["uuid"]                = UserEntity::where("related_id", $account->id)->where("entity_type", "admin")->value("entity_uuid");
             $account["latest_message_date"] = $latest_message_date ?? "";
         }
 
@@ -133,10 +133,10 @@ class LineAccountController extends Controller
                 "channel_access_token" => $validated["channelaccesstoken"], 
                 "channel_secret" => $validated["channelsecret"]
             ]);
-            // Http::post("https://line-chat.tokyo:3000/notify", [
-            //     "channel_access_token" => $validated["channelaccesstoken"], 
-            //     "channel_secret" => $validated["channelsecret"]
-            // ]);
+            Http::post(config('app.system_url.line_chat_socket_url'), [
+                "channel_access_token" => $validated["channelaccesstoken"], 
+                "channel_secret" => $validated["channelsecret"]
+            ]);
         } catch (\Error $e) {
             Log::debug($e);
         }
@@ -149,7 +149,7 @@ class LineAccountController extends Controller
 
         $messageCountService = new MessageCountService();
         $user = Auth::user();
-        $user_uuid = UserEntity::where("related_id", $id)->value("entity_uuid");
+        $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
 
         $users = ChatUser::whereNotIn('id', function($query) {
