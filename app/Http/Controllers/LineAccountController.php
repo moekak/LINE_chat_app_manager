@@ -18,7 +18,6 @@ class LineAccountController extends Controller
 {
 
     public function index(){
-
         $messageCountService = new MessageCountService();
 
         $user = Auth::user();
@@ -88,6 +87,7 @@ class LineAccountController extends Controller
     public function create(CreateLineAccountRequest $request)
     {   
 
+    
         $user_id = Auth::user();
         $validated = $request->validated();
 
@@ -126,15 +126,17 @@ class LineAccountController extends Controller
         }
 
         // node.jsに通知を送信
+
+      
         try{
-            Http::post("https://chat-bot.tokyo/notify", [
+            Http::post(config('app.system_url.line_bot_url'), [
                 "channel_access_token" => $validated["channelaccesstoken"], 
                 "channel_secret" => $validated["channelsecret"]
             ]);
-            Http::post("https://line-chat.tokyo:3000/notify", [
-                "channel_access_token" => $validated["channelaccesstoken"], 
-                "channel_secret" => $validated["channelsecret"]
-            ]);
+            // Http::post("https://line-chat.tokyo:3000/notify", [
+            //     "channel_access_token" => $validated["channelaccesstoken"], 
+            //     "channel_secret" => $validated["channelsecret"]
+            // ]);
         } catch (\Error $e) {
             Log::debug($e);
         }

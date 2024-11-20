@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    "system_url" =>[
+        "line_bot_url" => 'https://line-chat-bot.tokyo/notify'
+    ] 
+
 ];
