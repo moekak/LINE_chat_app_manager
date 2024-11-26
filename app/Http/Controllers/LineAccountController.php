@@ -125,21 +125,21 @@ class LineAccountController extends Controller
             SecondAccount::create($second_account_data);
         }
 
-        // node.jsに通知を送信
+        // // node.jsに通知を送信
 
       
-        try{
-            Http::post(config('app.system_url.line_bot_url'), [
-                "channel_access_token" => $validated["channelaccesstoken"], 
-                "channel_secret" => $validated["channelsecret"]
-            ]);
-            Http::post(config('app.system_url.line_chat_socket_url'), [
-                "channel_access_token" => $validated["channelaccesstoken"], 
-                "channel_secret" => $validated["channelsecret"]
-            ]);
-        } catch (\Error $e) {
-            Log::debug($e);
-        }
+        // try{
+        //     Http::post(config('app.system_url.line_bot_url'), [
+        //         "channel_access_token" => $validated["channelaccesstoken"], 
+        //         "channel_secret" => $validated["channelsecret"]
+        //     ]);
+        //     Http::post(config('app.system_url.line_chat_socket_url'), [
+        //         "channel_access_token" => $validated["channelaccesstoken"], 
+        //         "channel_secret" => $validated["channelsecret"]
+        //     ]);
+        // } catch (\Error $e) {
+        //     Log::debug($e);
+        // }
         
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
