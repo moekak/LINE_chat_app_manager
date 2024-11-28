@@ -18,6 +18,8 @@ socket.on('connect', () => {
 
 // チャットメッセージを受信した際
 socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type)=>{
+      console.log("get message");
+      
       // メッセージカウントの表示をリアルタイムで更新する
       changeDisplayOrder(actual_sender_id, actual_receiver_id, sender_type)
 })

@@ -16,6 +16,13 @@ Route::get('/', function () {
 });
 
 
+Route::get('/healthcheck', function () {
+    return response('OK', 200)
+        ->header('Content-Type', 'text/plain');
+});
+
+
+
 Route::get("/dashboard", [LineAccountController::class, "index"])->name("dashboard")->middleware("auth");
 Route::get("/signup", [UserController::class, "create"])->name("signup")->middleware("guest");
 Route::post("/signup/store", [UserController::class, "store"])->name("users.store")->middleware("guest");

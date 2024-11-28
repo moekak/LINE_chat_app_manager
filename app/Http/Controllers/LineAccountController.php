@@ -18,7 +18,6 @@ class LineAccountController extends Controller
 {
 
     public function index(){
-
         $messageCountService = new MessageCountService();
 
         $user = Auth::user();
@@ -48,7 +47,7 @@ class LineAccountController extends Controller
             }
 
             $account["total_count"]         = $totalCount;
-            $account["uuid"]                = UserEntity::where("related_id", $account->id)->value("entity_uuid");
+            $account["uuid"]                = UserEntity::where("related_id", $account->id)->where("entity_type", "admin")->value("entity_uuid");
             $account["latest_message_date"] = $latest_message_date ?? "";
         }
 
@@ -88,6 +87,7 @@ class LineAccountController extends Controller
     public function create(CreateLineAccountRequest $request)
     {   
 
+    
         $user_id = Auth::user();
         $validated = $request->validated();
 
@@ -125,19 +125,21 @@ class LineAccountController extends Controller
             SecondAccount::create($second_account_data);
         }
 
-        // node.jsに通知を送信
-        try{
-            Http::post("https://chat-bot.tokyo/notify", [
-                "channel_access_token" => $validated["channelaccesstoken"], 
-                "channel_secret" => $validated["channelsecret"]
-            ]);
-            Http::post("https://line-chat.tokyo:3000/notify", [
-                "channel_access_token" => $validated["channelaccesstoken"], 
-                "channel_secret" => $validated["channelsecret"]
-            ]);
-        } catch (\Error $e) {
-            Log::debug($e);
-        }
+        // // node.jsに通知を送信
+
+      
+        // try{
+        //     Http::post(config('app.system_url.line_bot_url'), [
+        //         "channel_access_token" => $validated["channelaccesstoken"], 
+        //         "channel_secret" => $validated["channelsecret"]
+        //     ]);
+        //     Http::post(config('app.system_url.line_chat_socket_url'), [
+        //         "channel_access_token" => $validated["channelaccesstoken"], 
+        //         "channel_secret" => $validated["channelsecret"]
+        //     ]);
+        // } catch (\Error $e) {
+        //     Log::debug($e);
+        // }
         
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
@@ -147,7 +149,7 @@ class LineAccountController extends Controller
 
         $messageCountService = new MessageCountService();
         $user = Auth::user();
-        $user_uuid = UserEntity::where("related_id", $id)->value("entity_uuid");
+        $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
 
         $users = ChatUser::whereNotIn('id', function($query) {
