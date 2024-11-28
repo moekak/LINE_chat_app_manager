@@ -2256,6 +2256,23 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
+/***/ "./resources/js/config/config.js":
+/*!***************************************!*\
+  !*** ./resources/js/config/config.js ***!
+  \***************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://chat-socket.info:3000'
+});
+
+/***/ }),
+
 /***/ "./resources/js/module/component/accountModalInitializers.js":
 /*!*******************************************************************!*\
   !*** ./resources/js/module/component/accountModalInitializers.js ***!
@@ -2452,6 +2469,8 @@ var changeDisplayOrder = function changeDisplayOrder(sender_id, receiver_id, sen
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var element = _step.value;
         var id = element.getAttribute("data-id");
+        console.log("id: ".concat(id));
+        console.log("senderID: ".concat(sender_id));
         if (id == sender_id) {
           var newCloneDiv = element.cloneNode(true);
           var message_count_element = newCloneDiv.querySelector(".js_message_count");
@@ -2477,13 +2496,16 @@ var changeDisplayOrder = function changeDisplayOrder(sender_id, receiver_id, sen
 var changeAccountDisplayOrder = function changeAccountDisplayOrder(sender_id, receiver_id, sender_type, admin_login_id) {
   if (sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id) {
     var elemets = document.querySelectorAll(".js_account_id");
+    console.log("elemets: ".concat(elemets));
     var _iterator2 = _createForOfIteratorHelper(elemets),
       _step2;
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var element = _step2.value;
         var account_id = element.getAttribute("data-id");
+        console.log(account_id);
         if (account_id == receiver_id) {
+          console.log("yey");
           var parentElement = element.parentElement;
           var newClonedDiv = element.cloneNode(true);
           var count_elment = newClonedDiv.querySelector(".js_total_count");
@@ -2679,7 +2701,7 @@ var createMessageRow = function createMessageRow(res, admin_account_id, sender_u
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["message_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(sender_uuid, " class=\"js_chatUser_id\">\n            <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n            <td w20>").concat(res[0]["line_name"], "</td>\n            <td data-id=").concat(res[0]["id"], ">\n                  <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["message_count"], "</div>\n            </td>\n            <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n            <td>").concat(createdAtTokyo, "</td>\n            <td class=\"operation\">\n                  <button class=\"operation_icon\"><a href=\"https://line-chat.tokyo/").concat(admin_account_id, "/").concat(res[0]["id"], "\"><img src=\"/img/icons8-message-24.png\" alt=\"\"></a></button>\n                  <button class=\"operation_icon\"><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                  <button class=\"operation_icon js_block_btn\"><img src=\"/img/icons8-no-entry-24.png\"\" alt=\"\"></button>\n            </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(sender_uuid, " class=\"js_chatUser_id\">\n            <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n            <td w20>").concat(res[0]["line_name"], "</td>\n            <td data-id=").concat(res[0]["id"], ">\n                  <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["message_count"], "</div>\n            </td>\n            <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n            <td>").concat(createdAtTokyo, "</td>\n            <td class=\"operation\">\n                  <button class=\"operation_icon\"><a href=\"https://chat-system.info/").concat(admin_account_id, "/").concat(res[0]["id"], "\"><img src=\"/img/icons8-message-24.png\" alt=\"\"></a></button>\n                  <button class=\"operation_icon\"><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                  <button class=\"operation_icon js_block_btn\"><img src=\"/img/icons8-no-entry-24.png\"\" alt=\"\"></button>\n            </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data) {
   // 改行を<br>タグに変換
@@ -2700,14 +2722,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   fetchSpecificUserInfo: () => (/* binding */ fetchSpecificUserInfo)
 /* harmony export */ });
+/* harmony import */ var _util_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/fetch.js */ "./resources/js/module/util/fetch.js");
+/* harmony import */ var _accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
+
+
 var fetchSpecificUserInfo = function fetchSpecificUserInfo(btn, modal) {
   btn.addEventListener("click", function (e) {
     // 編集するユーザーidを取得する
     var user_id = e.currentTarget.getAttribute("data-id");
-    setActionUrl(user_id, "js_edit_account_form");
-    fetchGetOperation("/api/user/".concat(user_id)).then(function (res) {
+    (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.setActionUrl)(user_id, "js_edit_account_form");
+    (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_0__.fetchGetOperation)("/api/user/".concat(user_id)).then(function (res) {
       // ユーザーの情報をAPIを使用して取得
-      handleEditUserName(res, modal);
+      (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleEditUserName)(res, modal);
     });
   });
 };
@@ -3194,10 +3220,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   registerUser: () => (/* binding */ registerUser)
 /* harmony export */ });
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/esm/index.js");
+/* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config/config.js */ "./resources/js/config/config.js");
+
 
 
 // Socket.IOサーバーへの接続を設定
-var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])('https://line-chat.tokyo:3000', {
+var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])(_config_config_js__WEBPACK_IMPORTED_MODULE_1__["default"].socketUrl, {
   reconnection: true,
   // 自動再接続を有効にする
   reconnectionDelay: 1000,
@@ -7687,6 +7715,8 @@ _module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on('connect', fun
 
 // チャットメッセージを受信した際
 _module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type) {
+  console.log("get message");
+
   // メッセージカウントの表示をリアルタイムで更新する
   (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.changeDisplayOrder)(actual_sender_id, actual_receiver_id, sender_type);
 });
