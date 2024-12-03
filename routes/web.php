@@ -11,19 +11,14 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SecondAccountController;
 use App\Http\Controllers\UserBlockController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::get('/healthcheck', function () {
-    return response('OK', 200)
-        ->header('Content-Type', 'text/plain');
+    return response('OK', 200);
 });
 
 
 
-Route::get("/dashboard", [LineAccountController::class, "index"])->name("dashboard")->middleware("auth");
+Route::get("/", [LineAccountController::class, "index"])->name("dashboard")->middleware("auth");
 Route::get("/signup", [UserController::class, "create"])->name("signup")->middleware("guest");
 Route::post("/signup/store", [UserController::class, "store"])->name("users.store")->middleware("guest");
 Route::get("/login", [AuthController::class, "showLoginForm"])->name("admin.login")->middleware("guest");

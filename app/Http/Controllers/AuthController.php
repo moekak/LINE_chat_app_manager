@@ -21,7 +21,6 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-
     
         // ログイン情報が正しいか
         // Auth::attemptメソッドでログイン情報が正しいか検証
@@ -31,7 +30,7 @@ class AuthController extends Controller
     
             // ミドルウェアに対応したリダイレクト(後述)
             // 下記はredirect('/admin/blogs')に類似
-            return redirect()->intended('dashboard');
+            return redirect()->intended('/');
         }
     
         // ログイン情報が正しくない場合のみ実行される処理(return すると以降の処理は実行されないため)

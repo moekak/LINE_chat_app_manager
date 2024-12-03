@@ -1,7 +1,8 @@
 import io from 'socket.io-client';
+import config from '../../config/config';
 
 // Socket.IOサーバーへの接続を設定
-let socket2 = io('https://chat-bot.tokyo', {  // ベースURLのみ指定
+let socket2 = io(config.socketUrl, {  // ベースURLのみ指定
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,

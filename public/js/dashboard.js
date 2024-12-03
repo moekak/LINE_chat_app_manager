@@ -2256,6 +2256,23 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
+/***/ "./resources/js/config/config.js":
+/*!***************************************!*\
+  !*** ./resources/js/config/config.js ***!
+  \***************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://chat-socket.info:3000'
+});
+
+/***/ }),
+
 /***/ "./resources/js/module/component/accountModalInitializers.js":
 /*!*******************************************************************!*\
   !*** ./resources/js/module/component/accountModalInitializers.js ***!
@@ -2452,6 +2469,8 @@ var changeDisplayOrder = function changeDisplayOrder(sender_id, receiver_id, sen
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var element = _step.value;
         var id = element.getAttribute("data-id");
+        console.log("id: ".concat(id));
+        console.log("senderID: ".concat(sender_id));
         if (id == sender_id) {
           var newCloneDiv = element.cloneNode(true);
           var message_count_element = newCloneDiv.querySelector(".js_message_count");
@@ -2477,13 +2496,16 @@ var changeDisplayOrder = function changeDisplayOrder(sender_id, receiver_id, sen
 var changeAccountDisplayOrder = function changeAccountDisplayOrder(sender_id, receiver_id, sender_type, admin_login_id) {
   if (sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id) {
     var elemets = document.querySelectorAll(".js_account_id");
+    console.log("elemets: ".concat(elemets));
     var _iterator2 = _createForOfIteratorHelper(elemets),
       _step2;
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var element = _step2.value;
         var account_id = element.getAttribute("data-id");
+        console.log(account_id);
         if (account_id == receiver_id) {
+          console.log("yey");
           var parentElement = element.parentElement;
           var newClonedDiv = element.cloneNode(true);
           var count_elment = newClonedDiv.querySelector(".js_total_count");
@@ -2679,7 +2701,7 @@ var createMessageRow = function createMessageRow(res, admin_account_id, sender_u
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["message_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(sender_uuid, " class=\"js_chatUser_id\">\n            <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n            <td w20>").concat(res[0]["line_name"], "</td>\n            <td data-id=").concat(res[0]["id"], ">\n                  <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["message_count"], "</div>\n            </td>\n            <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n            <td>").concat(createdAtTokyo, "</td>\n            <td class=\"operation\">\n                  <button class=\"operation_icon\"><a href=\"https://line-chat.tokyo/").concat(admin_account_id, "/").concat(res[0]["id"], "\"><img src=\"/img/icons8-message-24.png\" alt=\"\"></a></button>\n                  <button class=\"operation_icon\"><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                  <button class=\"operation_icon js_block_btn\"><img src=\"/img/icons8-no-entry-24.png\"\" alt=\"\"></button>\n            </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(sender_uuid, " class=\"js_chatUser_id\">\n            <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n            <td w20>").concat(res[0]["line_name"], "</td>\n            <td data-id=").concat(res[0]["id"], ">\n                  <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["message_count"], "</div>\n            </td>\n            <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n            <td>").concat(createdAtTokyo, "</td>\n            <td class=\"operation\">\n                  <button class=\"operation_icon\"><a href=\"https://chat-system.info/").concat(admin_account_id, "/").concat(res[0]["id"], "\"><img src=\"/img/icons8-message-24.png\" alt=\"\"></a></button>\n                  <button class=\"operation_icon\"><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                  <button class=\"operation_icon js_block_btn\"><img src=\"/img/icons8-no-entry-24.png\"\" alt=\"\"></button>\n            </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data) {
   // 改行を<br>タグに変換
@@ -3169,10 +3191,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   registerUser: () => (/* binding */ registerUser)
 /* harmony export */ });
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/esm/index.js");
+/* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config/config.js */ "./resources/js/config/config.js");
+
 
 
 // Socket.IOサーバーへの接続を設定
-var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])('https://line-chat.tokyo:3000', {
+var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])(_config_config_js__WEBPACK_IMPORTED_MODULE_1__["default"].socketUrl, {
   reconnection: true,
   // 自動再接続を有効にする
   reconnectionDelay: 1000,
@@ -3190,41 +3214,6 @@ var registerUser = function registerUser(admin_id, type) {
   socket.emit("register", "".concat(type).concat(admin_id));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (socket);
-
-/***/ }),
-
-/***/ "./resources/js/module/util/socket_lineAccount.js":
-/*!********************************************************!*\
-  !*** ./resources/js/module/util/socket_lineAccount.js ***!
-  \********************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/esm/index.js");
-
-
-// Socket.IOサーバーへの接続を設定
-var socket2 = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])('https://chat-bot.tokyo:3001', {
-  reconnection: true,
-  // 自動再接続を有効にする
-  reconnectionDelay: 1000,
-  // 再接続の遅延時間 (ミリ秒)
-  reconnectionDelayMax: 5000,
-  // 再接続の最大遅延時間 (ミリ秒)
-  reconnectionAttempts: Infinity,
-  // 再接続の試行回数 (無限に設定)
-  transports: ['websocket', 'polling']
-});
-
-// 接続が確立されたときに実行される
-socket2.on('connect', function () {
-  console.log('サーバーに接続されましたyoooooo');
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (socket2);
 
 /***/ }),
 
@@ -7679,10 +7668,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
 /* harmony import */ var _module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
 /* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
-/* harmony import */ var _module_util_socket_lineAccount_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/util/socket_lineAccount.js */ "./resources/js/module/util/socket_lineAccount.js");
-/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
-
-
 
 
 
@@ -7757,32 +7742,35 @@ if (status_update) {
   }, 2000);
 }
 
-// アカウント追加処理
-var submit_form = document.getElementById("js_add_account_form");
-submit_form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  var account_name = document.querySelector(".js_account_name_input").value;
-  var channel_access_token = document.querySelector(".js_channel_access_token_input").value;
-  var channel_secret = document.querySelector(".js_channel_secret_input").value;
-  var url = document.querySelector(".js_url_input").value;
-  var status = document.querySelector(".js_status_select").value;
-  var second_account_id = document.querySelector(".js_second_account_id");
-  var data = {
-    "account_name": account_name,
-    "account_url": url,
-    "channelsecret": channel_secret,
-    "channelaccesstoken": channel_access_token,
-    "account_status": status,
-    "second_account_id": second_account_id
-  };
-  _module_util_socket_lineAccount_js__WEBPACK_IMPORTED_MODULE_4__["default"].on('connect', function () {
-    console.log('サーバーに接続されましたyooooo');
-  });
-  console.log(data);
-  setInterval(function () {
-    submit_form.submit();
-  }, 3000);
-});
+// // アカウント追加処理
+// const submit_form =document.getElementById("js_add_account_form")
+
+// submit_form.addEventListener("submit", (e)=>{
+//     e.preventDefault()
+
+//     let account_name = document.querySelector(".js_account_name_input").value 
+//     let channel_access_token = document.querySelector(".js_channel_access_token_input").value
+//     let channel_secret = document.querySelector(".js_channel_secret_input").value
+//     let url = document.querySelector(".js_url_input").value
+//     let status = document.querySelector(".js_status_select").value
+//     let second_account_id = document.querySelector(".js_second_account_id")
+
+//     const data = {
+//         "account_name" : account_name,
+//         "account_url": url,
+//         "channelsecret" : channel_secret,
+//         "channelaccesstoken" : channel_access_token,
+//         "account_status" : status,
+//         "second_account_id" : second_account_id
+//     }
+
+//     console.log(data);
+
+//     setInterval(()=>{
+//         submit_form.submit() 
+//     }, 3000)
+
+// })
 })();
 
 /******/ })()
