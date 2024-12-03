@@ -48,7 +48,7 @@
 					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"]->format('Y-m-d H:i') : ""}}</td>
 					<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 					<td class="operation">
-						<button class="operation_icon"><a href="https://chat-system.tokyo/<?= $id?>/<?=$chat_user["id"]?>"><img src="{{asset("img/icons8-message-24.png")}}" alt=""></a></button>
+						<button class="operation_icon"><a href="https://chat-system.info/<?= $id?>/<?=$chat_user["id"]?>"><img src="{{asset("img/icons8-message-24.png")}}" alt=""></a></button>
 						<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
 						<button class="operation_icon js_block_btn" data-uuid={{$chat_user["uuid"]}} data-name={{$chat_user["line_name"]}} data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
 					</td>

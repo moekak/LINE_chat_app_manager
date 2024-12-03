@@ -114,12 +114,12 @@
                   <input type="text" class="form-control js_account_name_input" id="formGroupExampleInput" name="account_name" value="{{old("account_name")}}">
             </div>
             <div class="col-md-6">
-                  <label for="formGroupExampleInput" class="form-label">チャネルアクセストークン<span style="color: red; font-size: 13px;">※</span></label>
-                  <input type="text" class="form-control js_channel_access_token_input" id="formGroupExampleInput" name="channelaccesstoken" value="{{old("channelaccesstoken")}}">
-            </div>
-            <div class="col-12">
                   <label for="formGroupExampleInput" class="form-label">チャネルシークレット<span style="color: red; font-size: 13px;">※</span></label>
                   <input type="text" class="form-control js_channel_secret_input" id="formGroupExampleInput" name="channelsecret" value="{{old("channelsecret")}}">
+            </div>
+            <div class="col-12">
+                  <label for="formGroupExampleInput" class="form-label">チャネルアクセストークン<span style="color: red; font-size: 13px;">※</span></label>
+                  <input type="text" class="form-control js_channel_access_token_input" id="formGroupExampleInput" name="channelaccesstoken" value="{{old("channelaccesstoken")}}">
             </div>
 
             <div class="col-md-6">

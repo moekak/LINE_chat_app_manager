@@ -17,7 +17,7 @@ export const createMessageRow = (res, admin_account_id, sender_uuid) =>{
             <td class="js_latest_message_date">${latestMessageDate}</td>
             <td>${createdAtTokyo}</td>
             <td class="operation">
-                  <button class="operation_icon"><a href="https://chat-system.tokyo/${admin_account_id}/${res[0]["id"]}"><img src="/img/icons8-message-24.png" alt=""></a></button>
+                  <button class="operation_icon"><a href="https://chat-system.info/${admin_account_id}/${res[0]["id"]}"><img src="/img/icons8-message-24.png" alt=""></a></button>
                   <button class="operation_icon"><img src="/img/icons8-edit-24.png" alt=""></button>
                   <button class="operation_icon js_block_btn"><img src="/img/icons8-no-entry-24.png"" alt=""></button>
             </td>
