@@ -2290,9 +2290,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
 
-var displayMessageToList = function displayMessageToList(message, src, index) {
+var displayMessageToList = function displayMessageToList(message, src, index, className, id) {
   // メッセージ表示リストの親要素を取得
-  var parentElement = document.querySelector(".js_accordion_wrapper");
+  var parentElement = document.querySelector(".".concat(className));
   // 親要素の子要素をすべて取得し、その数を取得する
   var elementLength = parentElement.querySelectorAll(".js_card").length;
   // テキストが最大文字超えていたら...にする
@@ -2322,11 +2322,11 @@ var displayMessageToList = function displayMessageToList(message, src, index) {
     type: type,
     index: index
   };
-  var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createBroadcastMessageRow)(data);
+  var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createBroadcastMessageRow)(data, id);
   parentElement.insertAdjacentHTML('beforeend', template);
 };
-var dragAndDrop = function dragAndDrop() {
-  var elem = document.getElementById("accordion");
+var dragAndDrop = function dragAndDrop(id) {
+  var elem = document.getElementById(id);
   Sortable.create(elem, {
     animation: 150,
     handle: '.drag-handle'
@@ -2334,10 +2334,10 @@ var dragAndDrop = function dragAndDrop() {
 };
 
 // メッセージ表示リストから削除する処理
-var deleteList = function deleteList() {
-  var upload = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+var deleteList = function deleteList(id) {
+  var upload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   var delete_btns = document.querySelectorAll(".js_deleteList");
-  var accordion = document.getElementById("accordion");
+  var accordion = document.getElementById(id);
   delete_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       if (upload) {
@@ -2352,10 +2352,10 @@ var deleteList = function deleteList() {
 };
 
 // 送信ボタンを押す前の値があるかのチェック
-var hasValue = function hasValue() {
-  var accordion = document.getElementById("accordion");
+var hasValue = function hasValue(id) {
+  var accordion = document.getElementById(id);
   var lists = accordion.querySelectorAll(".js_card");
-  console.log(lists.length);
+  console.log(lists);
   return lists.length > 0;
 };
 var hideErrorMsg = function hideErrorMsg() {
@@ -2385,10 +2385,10 @@ var createMessageRow = function createMessageRow(res, admin_account_id, sender_u
   var display = res[0]["message_count"] > 0 ? "flex" : "none";
   return "\n            <tr data-id=".concat(sender_uuid, " class=\"js_chatUser_id\">\n            <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n            <td w20>").concat(res[0]["line_name"], "</td>\n            <td data-id=").concat(res[0]["id"], ">\n                  <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["message_count"], "</div>\n            </td>\n            <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n            <td>").concat(createdAtTokyo, "</td>\n            <td class=\"operation\">\n                  <button class=\"operation_icon\"><a href=\"https://chat-system.info/").concat(admin_account_id, "/").concat(res[0]["id"], "\"><img src=\"/img/icons8-message-24.png\" alt=\"\"></a></button>\n                  <button class=\"operation_icon\"><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                  <button class=\"operation_icon js_block_btn\"><img src=\"/img/icons8-no-entry-24.png\"\" alt=\"\"></button>\n            </td>\n            </tr>\n      ");
 };
-var createBroadcastMessageRow = function createBroadcastMessageRow(data) {
+var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
   var displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : "<img data-file-index='".concat(data.index, "' src='").concat(data.display, "' class=\"displayImg js_img\">");
-  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header\" id=\"heading".concat(data.elementLength, "\">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#accordion\">\n                        <div class=\"card-body js_data\"data-id=\"").concat(data.elementLength + 1, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
+  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header\" id=\"heading".concat(data.elementLength, "\">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\"data-id=\"").concat(data.elementLength + 1, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
 };
 
 /***/ }),
@@ -2722,9 +2722,7 @@ var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])(_confi
 });
 
 // 接続が確立されたときに実行される
-socket.on('connect', function () {
-  console.log('サーバーに接続されました');
-});
+
 var registerUser = function registerUser(admin_id, type) {
   socket.emit("register", "".concat(type).concat(admin_id));
 };
@@ -7211,15 +7209,15 @@ broadcastMessageInput.addEventListener("input", function (e) {
 });
 display_btn.addEventListener("click", function () {
   if (broadcastMessage.length > 0) {
-    (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.displayMessageToList)(broadcastMessage, null, null);
-    (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.deleteList)();
-    (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)();
+    (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.displayMessageToList)(broadcastMessage, null, null, "js_accordion_wrapper", "accordion");
+    (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.deleteList)("accordion");
+    (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)("accordion");
     broadcastMessage = "";
     broadcastMessageInput.value = "";
   }
 });
 window.onload = function (e) {
-  (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)();
+  (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)("accordion");
 };
 var fileStorage = {}; // Fileオブジェクトを保存するためのオブジェクト
 var uploads = document.querySelectorAll(".js_upload");
@@ -7234,8 +7232,8 @@ uploads.forEach(function (upload, index) {
             // 選択されたファイルにアクセス
             file = e.target.files[0]; // FileオブジェクトのままURLを作成
             objectURL = URL.createObjectURL(file); // `displayMessageToList` にファイルのURLを渡して表示する
-            (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.displayMessageToList)(null, objectURL, index);
-            (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.deleteList)(upload);
+            (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.displayMessageToList)(null, objectURL, index, "js_accordion_wrapper", "accordion");
+            (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.deleteList)("accordion", upload);
             // ファイルをリサイズし、Blobオブジェクトを取得
             _context.next = 7;
             return (0,_module_util_processAndResizeImage_js__WEBPACK_IMPORTED_MODULE_4__.resizeImage)(file);
@@ -7247,7 +7245,7 @@ uploads.forEach(function (upload, index) {
             // URL.revokeObjectURL(objectURL);
 
             // ドラッグ＆ドロップの初期化
-            (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)();
+            (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)("accordion");
           case 10:
           case "end":
             return _context.stop();
@@ -7264,7 +7262,7 @@ uploads.forEach(function (upload, index) {
 
 var submit_btn = document.querySelector(".js_message_submit_btn");
 submit_btn.addEventListener("click", function () {
-  if ((0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.hasValue)()) {
+  if ((0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.hasValue)("accordion")) {
     var data = document.querySelectorAll(".js_data");
     var sendingData = {
       content: [],
@@ -7317,9 +7315,6 @@ submit_btn.addEventListener("click", function () {
           admin_account_id: admin_account_id,
           created_at: created_at
         });
-      } else {
-        // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        console.log("fail!!!!");
       }
     });
   } else {

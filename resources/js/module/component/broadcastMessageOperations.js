@@ -1,9 +1,9 @@
 import { createBroadcastMessageRow } from "./elementTemplate.js";
 
-export const displayMessageToList = (message, src, index) =>{
+export const displayMessageToList = (message, src, index, className, id) =>{
     
     // メッセージ表示リストの親要素を取得
-    const parentElement = document.querySelector(".js_accordion_wrapper");
+    const parentElement = document.querySelector(`.${className}`);
     // 親要素の子要素をすべて取得し、その数を取得する
     let elementLength = parentElement.querySelectorAll(".js_card").length
     // テキストが最大文字超えていたら...にする
@@ -29,12 +29,12 @@ export const displayMessageToList = (message, src, index) =>{
     
     // HTML作成し、親要素に挿入する
     const data = {heading, display, elementLength, type, index}
-    const template = createBroadcastMessageRow(data);
+    const template = createBroadcastMessageRow(data, id);
     parentElement.insertAdjacentHTML('beforeend', template);
 }
 
-export const dragAndDrop = () =>{
-	const elem = document.getElementById("accordion");
+export const dragAndDrop = (id) =>{
+	const elem = document.getElementById(id);
 	Sortable.create(elem, {
 		animation: 150,
         handle: '.drag-handle',
@@ -42,9 +42,9 @@ export const dragAndDrop = () =>{
 }
 
 // メッセージ表示リストから削除する処理
-export const deleteList = (upload = null) =>{
+export const deleteList = (id, upload = null, ) =>{
     let delete_btns = document.querySelectorAll(".js_deleteList")
-    const accordion = document.getElementById("accordion")
+    const accordion = document.getElementById(id)
 
     
     delete_btns.forEach((btn)=>{
@@ -66,10 +66,12 @@ export const deleteList = (upload = null) =>{
 
 
 // 送信ボタンを押す前の値があるかのチェック
-export const hasValue = ()=>{
-    const accordion = document.getElementById("accordion")
+export const hasValue = (id)=>{
+    const accordion = document.getElementById(id)
     const lists = accordion.querySelectorAll(".js_card")
-    console.log(lists.length);
+
+    console.log(lists);
+    
     return lists.length > 0
 }
 

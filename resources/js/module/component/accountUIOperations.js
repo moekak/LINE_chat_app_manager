@@ -29,9 +29,6 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
 
             for (let element of elements) {
                   let id = element.getAttribute("data-id");
-                  console.log(`id: ${id}`);
-                  console.log(`senderID: ${sender_id}`);
-                  
                   if(id == sender_id){
                         const newCloneDiv = element.cloneNode(true)
                         const message_count_element = newCloneDiv.querySelector(".js_message_count")
@@ -61,17 +58,10 @@ export const changeAccountDisplayOrder = (sender_id, receiver_id, sender_type, a
       if(sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id){
             const elemets = document.querySelectorAll(".js_account_id")
 
-            console.log(`elemets: ${elemets}`);
-            
-
             for (let element of elemets){
                   let account_id = element.getAttribute("data-id");
 
-                  console.log(account_id);
-            
                   if(account_id == receiver_id){
-
-                        console.log("yey");
                         
                         const parentElement = element.parentElement
                         const newClonedDiv = element.cloneNode(true);
@@ -122,8 +112,6 @@ export const handleEditUserName = async (res, modal, type)=>{
 export const setActionUrl = (id, className) =>{
       let form = document.querySelector(`.${className}`)
       let action  = form.getAttribute("action");
-
-      console.log(action);
       
       // URLに既存のIDが含まれているかを正規表現で探す
       // パターン: 数字がID部分に相当する (例: /update/26 のようなURL)
@@ -226,9 +214,6 @@ export const initializeAccountStatusManager =()=>{
                         });
                         localStorage.setItem("status_update", "success")
                         window.location.reload()
-                  }else{
-                        console.log("ステータス変更に失敗しました。");
-                        
                   }
                   
             })

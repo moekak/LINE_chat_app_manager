@@ -25,7 +25,7 @@ export const createMessageRow = (res, admin_account_id, sender_uuid) =>{
       `
 }
 
-export const createBroadcastMessageRow = (data) =>{
+export const createBroadcastMessageRow = (data, id) =>{
       // 改行を<br>タグに変換
       const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img data-file-index='${data.index}' src='${data.display}' class="displayImg js_img">`
 
@@ -43,7 +43,7 @@ export const createBroadcastMessageRow = (data) =>{
                         <p class="js_deleteList">×</p>
                   </div>
             
-                  <div id="collapse${data.elementLength}" class="collapse" aria-labelledby="heading${data.elementLength}" data-parent="#accordion">
+                  <div id="collapse${data.elementLength}" class="collapse" aria-labelledby="heading${data.elementLength}" data-parent="#${id}">
                         <div class="card-body js_data"data-id="${data.elementLength + 1}">${displayedData}</div>
                   </div>
             </div>

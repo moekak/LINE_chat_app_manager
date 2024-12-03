@@ -10,9 +10,7 @@ let socket = io(config.socketUrl, {
 });
 
 // 接続が確立されたときに実行される
-socket.on('connect', () => {
-      console.log('サーバーに接続されました');
-});
+
 
 
 export const registerUser = (admin_id, type) =>{

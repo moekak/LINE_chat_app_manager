@@ -86,8 +86,6 @@ class LineAccountController extends Controller
 
     public function create(CreateLineAccountRequest $request)
     {   
-
-    
         $user_id = Auth::user();
         $validated = $request->validated();
 
@@ -126,21 +124,6 @@ class LineAccountController extends Controller
         }
 
         // // node.jsに通知を送信
-
-      
-        // try{
-        //     Http::post(config('app.system_url.line_bot_url'), [
-        //         "channel_access_token" => $validated["channelaccesstoken"], 
-        //         "channel_secret" => $validated["channelsecret"]
-        //     ]);
-        //     Http::post(config('app.system_url.line_chat_socket_url'), [
-        //         "channel_access_token" => $validated["channelaccesstoken"], 
-        //         "channel_secret" => $validated["channelsecret"]
-        //     ]);
-        // } catch (\Error $e) {
-        //     Log::debug($e);
-        // }
-        
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
 

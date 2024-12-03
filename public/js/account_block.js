@@ -2306,12 +2306,10 @@ var initializeAccountEditModal = function initializeAccountEditModal() {
     btn.addEventListener("click", function (e) {
       // valueを空にする
       document.querySelector(".js_account_id_input").value = "";
-      console.log(document.querySelector(".js_account_id_input").value);
 
       // 編集をしたいアカウントのIDを取得する
       var target_btn = e.currentTarget;
       var account_id = target_btn.getAttribute("data-id");
-      console.log("account_id" + account_id);
 
       // formのactionの設定
       (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.setActionUrl)(account_id, "js_edit_account_form");
@@ -2469,8 +2467,6 @@ var changeDisplayOrder = function changeDisplayOrder(sender_id, receiver_id, sen
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var element = _step.value;
         var id = element.getAttribute("data-id");
-        console.log("id: ".concat(id));
-        console.log("senderID: ".concat(sender_id));
         if (id == sender_id) {
           var newCloneDiv = element.cloneNode(true);
           var message_count_element = newCloneDiv.querySelector(".js_message_count");
@@ -2496,16 +2492,13 @@ var changeDisplayOrder = function changeDisplayOrder(sender_id, receiver_id, sen
 var changeAccountDisplayOrder = function changeAccountDisplayOrder(sender_id, receiver_id, sender_type, admin_login_id) {
   if (sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id) {
     var elemets = document.querySelectorAll(".js_account_id");
-    console.log("elemets: ".concat(elemets));
     var _iterator2 = _createForOfIteratorHelper(elemets),
       _step2;
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var element = _step2.value;
         var account_id = element.getAttribute("data-id");
-        console.log(account_id);
         if (account_id == receiver_id) {
-          console.log("yey");
           var parentElement = element.parentElement;
           var newClonedDiv = element.cloneNode(true);
           var count_elment = newClonedDiv.querySelector(".js_total_count");
@@ -2580,7 +2573,6 @@ var handleEditUserName = /*#__PURE__*/function () {
 var setActionUrl = function setActionUrl(id, className) {
   var form = document.querySelector(".".concat(className));
   var action = form.getAttribute("action");
-  console.log(action);
 
   // URLに既存のIDが含まれているかを正規表現で探す
   // パターン: 数字がID部分に相当する (例: /update/26 のようなURL)
@@ -2674,8 +2666,6 @@ var initializeAccountStatusManager = function initializeAccountStatusManager() {
         });
         localStorage.setItem("status_update", "success");
         window.location.reload();
-      } else {
-        console.log("ステータス変更に失敗しました。");
       }
     });
   };
@@ -2703,10 +2693,10 @@ var createMessageRow = function createMessageRow(res, admin_account_id, sender_u
   var display = res[0]["message_count"] > 0 ? "flex" : "none";
   return "\n            <tr data-id=".concat(sender_uuid, " class=\"js_chatUser_id\">\n            <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n            <td w20>").concat(res[0]["line_name"], "</td>\n            <td data-id=").concat(res[0]["id"], ">\n                  <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["message_count"], "</div>\n            </td>\n            <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n            <td>").concat(createdAtTokyo, "</td>\n            <td class=\"operation\">\n                  <button class=\"operation_icon\"><a href=\"https://chat-system.info/").concat(admin_account_id, "/").concat(res[0]["id"], "\"><img src=\"/img/icons8-message-24.png\" alt=\"\"></a></button>\n                  <button class=\"operation_icon\"><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                  <button class=\"operation_icon js_block_btn\"><img src=\"/img/icons8-no-entry-24.png\"\" alt=\"\"></button>\n            </td>\n            </tr>\n      ");
 };
-var createBroadcastMessageRow = function createBroadcastMessageRow(data) {
+var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
   var displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : "<img data-file-index='".concat(data.index, "' src='").concat(data.display, "' class=\"displayImg js_img\">");
-  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header\" id=\"heading".concat(data.elementLength, "\">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#accordion\">\n                        <div class=\"card-body js_data\"data-id=\"").concat(data.elementLength + 1, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
+  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header\" id=\"heading".concat(data.elementLength, "\">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\"data-id=\"").concat(data.elementLength + 1, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
 };
 
 /***/ }),
@@ -3207,9 +3197,7 @@ var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])(_confi
 });
 
 // 接続が確立されたときに実行される
-socket.on('connect', function () {
-  console.log('サーバーに接続されました');
-});
+
 var registerUser = function registerUser(admin_id, type) {
   socket.emit("register", "".concat(type).concat(admin_id));
 };
