@@ -8,7 +8,6 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
       <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-      @yield('styles')
 
 </head>
 
@@ -25,6 +24,9 @@
                         @if (Route::currentRouteName() == "account.show")
                               <div class="nav__item-option ptb-20 prl-20">
                                     <p class="nav__item-option__txt txt-gray"><a href="{{route("account.block.user", ["id" => Route::current()->parameter('id')])}}">ブロックアカウント一覧</a></p>
+                              </div>
+                              <div class="nav__item-option ptb-20 prl-20">
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_message_btn">初回メッセージ設定</p>
                               </div>
                         @endif
                         @if (Route::currentRouteName() == "dashboard")

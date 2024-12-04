@@ -1,8 +1,4 @@
 @extends('layouts.default')
-@section('styles')
-      <meta name="csrf-token" content="{{ csrf_token() }}">
-      <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-@endsection
 
 @section('title2')
       <h2>Dashboard</h2><p></p>
@@ -10,7 +6,6 @@
 @section('main')
 <input type="hidden" value="{{$user->id}}" id="js_admin_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
-
       @php
             // セッションに 'success' キーが存在するかチェック
             if (session("success")) {
@@ -149,7 +144,6 @@
                   <button type="submit" class="modal__container-btn">追加</button> 
             </div>
       </form>
-
 </section>
 {{-- 編集モーダル --}}
 <section class="modal__container js_modal js_loader  hidden" id="js_edit_account_modal">
@@ -282,6 +276,8 @@
             <button type="submit" class="modal__container-btn">追加</button>
       </form>
 </section>
+
+
 @endsection
 @section('script')
 <script src="{{ mix("js/dashboard.js")}}"></script>

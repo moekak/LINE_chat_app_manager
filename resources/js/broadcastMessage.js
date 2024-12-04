@@ -25,16 +25,16 @@ broadcastMessageInput.addEventListener("input", (e)=>{
 
 display_btn.addEventListener("click", ()=>{
     if(broadcastMessage.length > 0){
-        displayMessageToList(broadcastMessage, null, null)
-        deleteList()
-        dragAndDrop()
+        displayMessageToList(broadcastMessage, null, null, "js_accordion_wrapper", "accordion")
+        deleteList("accordion")
+        dragAndDrop("accordion")
         broadcastMessage = ""
         broadcastMessageInput.value = ""
     }
 })
 
 window.onload = (e)=>{
-	dragAndDrop()
+	dragAndDrop("accordion")
 }
 
 
@@ -51,8 +51,8 @@ uploads.forEach((upload, index) => {
         const objectURL = URL.createObjectURL(file);
 
         // `displayMessageToList` にファイルのURLを渡して表示する
-        displayMessageToList(null, objectURL, index);
-        deleteList(upload)
+        displayMessageToList(null, objectURL, index, "js_accordion_wrapper", "accordion");
+        deleteList("accordion", upload)
         // ファイルをリサイズし、Blobオブジェクトを取得
         const resizedBlob = await resizeImage(file);
         // リサイズされたBlobオブジェクトを保存
@@ -62,7 +62,7 @@ uploads.forEach((upload, index) => {
                 
 
         // ドラッグ＆ドロップの初期化
-        dragAndDrop();
+        dragAndDrop("accordion");
     });
 });
 
@@ -71,7 +71,7 @@ uploads.forEach((upload, index) => {
 
 const submit_btn = document.querySelector(".js_message_submit_btn")
 submit_btn.addEventListener("click", ()=>{
-    if(hasValue()){
+    if(hasValue("accordion")){
         const data = document.querySelectorAll(".js_data")
         const sendingData = {
             content: [],
@@ -121,9 +121,6 @@ submit_btn.addEventListener("click", ()=>{
     
                 const created_at = res["created_at"]
                 socket.emit("broadcast message", {sendingDatatoBackEnd, admin_account_id, created_at})
-            }else{
-                // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                console.log("fail!!!!")
             }
         })
     }else{

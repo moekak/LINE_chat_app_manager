@@ -11,14 +11,9 @@ initializeAccountBlockModal(socket)
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "admin")
 // サーバーへの接続確認
-socket.on('connect', () => {
-      console.log('サーバーに接続されました（chat.jsからの確認）');
-});
-
 
 // チャットメッセージを受信した際
 socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type)=>{
-      console.log("get message");
       
       // メッセージカウントの表示をリアルタイムで更新する
       changeDisplayOrder(actual_sender_id, actual_receiver_id, sender_type)

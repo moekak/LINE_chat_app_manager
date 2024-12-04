@@ -1,8 +1,4 @@
 @extends('layouts.default')
-@section('styles')
-	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-@endsection
 
 @section('title2')
 	<h2>Dashboard</h2><p></p>
@@ -10,12 +6,22 @@
 @section('main')
 <input type="hidden" value="{{$user_uuid}}" id="js_admin_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
-	@if (session("success"))
-            <div class="alert alert-success alert-dismissible fade show success_alert" role="alert" id="js_alert_success">
-            {{session("success")}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>     
-	@endif
+	@php
+		// セッションに 'success' キーが存在するかチェック
+		if (session("success")) {
+			// 成功メッセージがある場合、アラートを表示
+			$style = "block";
+			$text = session("success");
+		} else {
+			// 成功メッセージがない場合、アラートを非表示に
+			$style = "none";
+			$text = "";
+		}
+	@endphp
+	<div class="alert alert-success alert-dismissible fade show success_alert" style="display: {{$style}}; width: max-content;" role="alert" id="js_alert_success">
+		{{$text}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>  
 	<div class="dashboard__wrapper-table-area">
 		<div class="dashboard__wrapper-table-box p-20">
 			<div class="dashboard__wrapper-table-ttl">
@@ -104,6 +110,39 @@
 		</form>
 </div>
 </section>
+
+
+{{-- 初回あいさつモーダル --}}
+<section class="modal__container js_modal broadcasting_message_modal hidden" id="js_greeting_modal" style="width: 530px;">
+	<h3 class="modal__container-ttl">初回メッセージ登録</h3>
+	<div class="alert alert-secondary" style="font-size: 14px;" role="alert">
+		ユーザー名を挿入する際は、{名前}としてください。<br>
+		例). {名前}さん、初めまして！
+	</div>
+
+	<div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
+		<ul>
+			<li class="alert_danger">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
+		</ul>   
+	</div>  
+
+	<div class="broadcast_message_area">
+		<div class="broascast_message-list">
+			<div id="accordion_greeting" class="js_accordion_wrapper_greeting">
+		</div>
+		<div class="mb-3 mt-3">
+			<label for="formGroupExampleInput" class="form-label">本文 <span style="color: red; font-size: 13px;">※</span></label>
+			<textarea class="form-control js_greeting_input" id="exampleFormControlTextarea1" rows="6" name="body">{{ old('body') }}</textarea>
+			<div class="mt-3"></div>
+			<input type="file" class="js_upload">
+		</div>
+		<input type="hidden" name="admin_account_id" value={{Route::current()->parameter('id');}} id="js_greeting_account_id">
+		<div class="broadcast_message_submit_btn-box">
+			<button type="submit" class="modal__container-btn js_greeting_display_btn disabled_btn">追加</button>  
+			<button type="submit" class="modal__container-btn js_greeting_submit_btn">送信</button>  
+		</div>
+	</div>      
+</section>
 @endsection
 
 @section('content')
@@ -138,5 +177,7 @@
 @endif
 
 <script src="{{ mix("js/account_show.js")}}"></script>
+<script src="{{ mix("js/greetingMessage.js")}}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     
 @endsection

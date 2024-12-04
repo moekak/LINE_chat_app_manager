@@ -1,8 +1,4 @@
 @extends('layouts.default')
-@section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-@endsection
 
 @section('title2')
     <h2>Dashboard</h2><p></p>

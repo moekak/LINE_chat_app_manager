@@ -86,8 +86,6 @@ class LineAccountController extends Controller
 
     public function create(CreateLineAccountRequest $request)
     {   
-
-    
         $user_id = Auth::user();
         $validated = $request->validated();
 
@@ -124,7 +122,8 @@ class LineAccountController extends Controller
             ];
             SecondAccount::create($second_account_data);
         }
-        
+
+        // // node.jsに通知を送信
         return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
     }
 

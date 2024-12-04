@@ -7,9 +7,6 @@ use App\Models\BlockChatUser;
 use App\Models\ChatUser;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class ChatUserController extends Controller
 {
@@ -28,6 +25,7 @@ class ChatUserController extends Controller
         return response()->json([$chatUser, "admin_account_id" => $receiver_uuid], 200);
     }
 
+
     public function getUserName($user_id){
         $userData = ChatUser::findOrfail($user_id);
         return response()->json($userData);
@@ -35,10 +33,8 @@ class ChatUserController extends Controller
 
     public function update(UpdateUserDataRequest $request, $id){
         $validated = $request->validated();
-
         $userData = ChatUser::findOrFail($id);
         $userData->update(["line_name" => $validated["account_name"]]);
-
         return redirect()->route("account.show", ["id" => $userData["account_id"]])->with("success", "ユーザー情報の更新に成功しました。");
     }
 
@@ -51,8 +47,6 @@ class ChatUserController extends Controller
         }else{
             BlockChatUser::create(["chat_user_id" => $id]);
             return redirect()->route("account.show", ["id" => $user["account_id"]])->with("success", "ユーザーのブロックに失敗しました。");    
-        }
-
-        
+        }  
     }
 }

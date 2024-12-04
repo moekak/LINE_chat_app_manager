@@ -14,14 +14,10 @@ export const initializeAccountEditModal =() =>{
             btn.addEventListener("click", (e) => {
                   // valueを空にする
                   document.querySelector(".js_account_id_input").value = ""
-                  console.log(document.querySelector(".js_account_id_input").value);
                   
                   // 編集をしたいアカウントのIDを取得する
                   let target_btn = e.currentTarget;
                   let account_id = target_btn.getAttribute("data-id");
-
-                  console.log("account_id" + account_id);
-                  
                   
                   // formのactionの設定
                   setActionUrl(account_id, "js_edit_account_form")
