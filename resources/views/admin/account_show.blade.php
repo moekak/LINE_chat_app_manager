@@ -5,6 +5,7 @@
 @endsection
 @section('main')
 <input type="hidden" value="{{$user_uuid}}" id="js_admin_account_id">
+<input type="hidden" value={{Route::current()->parameter('id');}} id="js_line_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
 	@php
 		// セッションに 'success' キーが存在するかチェック
@@ -61,7 +62,12 @@
 					</tr>
 				@endforeach
 				</tbody>
+				
 			</table>
+			<div class="loader-container">
+				<div class="loader2 js_loader hidden"></div>
+			</div>
+			
 		</div>
 	</div>
 </div>

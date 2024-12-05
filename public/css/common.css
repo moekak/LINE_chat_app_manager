@@ -222,9 +222,11 @@ p, ul {
     margin-bottom: 1px;
 }
 .dashboard__wrapper-table{
-    padding: 18px 30px 10px 30px;
+    padding: 18px 30px 50px 30px;
     background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    max-height: 100vh;
+    overflow: auto;
 }
 .operation_icon{
     border: none;
@@ -378,6 +380,21 @@ p, ul {
     -ms-transform: translate(-50%, -50%);
     z-index: 998;
 }
+.loader2 {
+    width: 40px;
+    height: 40px;
+    border: 5px solid gray;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+.loader-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 @keyframes rotation {
     0% {
@@ -433,3 +450,6 @@ p, ul {
     opacity: 50%;
     pointer-events: none;
 }
+
+
+

@@ -11,7 +11,6 @@ use App\Models\SecondAccount;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class LineAccountController extends Controller
@@ -30,13 +29,13 @@ class LineAccountController extends Controller
 
             // アカウントごとのユーザーをすべて取得
             $users = ChatUser::where("account_id", $account->id)
-                    ->whereNotIn("id", function($query){
-                        $query->select("chat_user_id")
-                                ->from("block_chat_users")
-                                ->where("is_blocked", '1')
-                                ->get();
-                    })
-                    ->get();
+                ->whereNotIn("id", function($query){
+                    $query->select("chat_user_id")
+                            ->from("block_chat_users")
+                            ->where("is_blocked", '1')
+                            ->get();
+                })
+                ->get();
             $totalCount = 0;
 
             foreach($users as $user){
@@ -135,7 +134,7 @@ class LineAccountController extends Controller
         $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
 
-        $users = ChatUser::whereNotIn('id', function($query) {
+        $users = ChatUser::limit(20)->whereNotIn('id', function($query) {
                 // サブクエリ
                 $query->select('chat_user_id')
                     ->from('block_chat_users')
@@ -245,6 +244,39 @@ class LineAccountController extends Controller
             $is_success = false;
         }
         return response()->json($is_success);
+    }
+
+
+
+    public function fetchScrollData(string $admin_id, $start){
+        Log::debug($admin_id);
+        $messageCountService = new MessageCountService();
+        $length = 10;
+
+        $users = ChatUser::whereNotIn('id', function($query) {
+                // サブクエリ
+                $query->select('chat_user_id')
+                    ->from('block_chat_users')
+                    ->whereIn('id', function($subQuery) {
+                        $subQuery->select('id')
+                            ->from('block_chat_users')
+                            ->where("is_blocked", '1')
+                            ->latest()
+                            ->groupBy('chat_user_id');
+                    });
+            })
+            ->where('account_id', $admin_id)
+            ->skip($start) // $start 件目からスキップ
+            ->take($length) // $length 件取得
+            ->get();
+
+        foreach($users as $user){
+            $user["latest_message_date"] = $messageCountService->getLatestUserMessageDate($admin_id, $user->id);
+            $user["message_count"] = $messageCountService->selectTotalMessageCount($admin_id, $user->id);
+            $user["uuid"] = UserEntity::where("related_id", $user->id)->value("entity_uuid");
+        }
+    
+        return response()->json($users);
     }
     
 }

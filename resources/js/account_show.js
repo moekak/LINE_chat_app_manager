@@ -4,6 +4,8 @@ import { changeDisplayOrder} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import { fetchSpecificUserInfo } from "./module/component/fetchUserData.js";
 import { initializeAccountBlockModal } from "./module/component/accountModalInitializers.js";
+import InfiniteScroll from "./module/util/InfiniteScroll.js";
+
 
 // ブロックモーダル初期化
 initializeAccountBlockModal(socket)
@@ -53,4 +55,15 @@ close_modal()
 const btn = document.querySelector(".js_block_cancel")
 const modal = document.getElementById("js_block_account_modal")
 close_modal_by_click(modal, btn)
+
+
+{
+      const element = document.querySelector(".dashboard__wrapper-table");
+      const loader = document.querySelector(".js_loader")
+
+      new InfiniteScroll(element, loader)
+
+}
+
+
 

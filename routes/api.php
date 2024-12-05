@@ -19,3 +19,7 @@ Route::get("/line/message/{admin_id}", [LineMessageController::class, "getMessag
 Route::post("/broadcast_message/store", [BroadcastMessageController::class, "store"]);
 Route::post("/greeting_message/store", [GreetingMessageController::class, "store"]);
 Route::post("/decrypt", [DecryptDataController::class, "decryptData"]);
+
+
+
+Route::get("/user/lists/{admin_id}/{start}", [LineAccountController::class, "fetchScrollData"]);
