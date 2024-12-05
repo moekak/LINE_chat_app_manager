@@ -18,7 +18,7 @@ class InfiniteScroll{
             if(!this.hasNoValue && !this.isFetchFlag){
                   const {scrollTop, scrollHeight, clientHeight} = this.element
                   // 一番下までスクロールしたかを判定
-                  if (scrollTop + clientHeight >= scrollHeight) {
+                  if (scrollTop + clientHeight + 50 >= scrollHeight) {
                         this.isFetchFlag = true
                         this.loader.classList.remove("hidden")
                         let parentElement =document.querySelector(".js_table")
@@ -26,8 +26,13 @@ class InfiniteScroll{
                         const admin_id = document.getElementById("js_line_account_id").value 
                         const url = `/api/user/lists/${admin_id}/${start}`
       
+                        console.log(start);
+                        
                         try {
                               const response = await fetchGetOperation(url);
+
+                              console.log(response);
+                              
       
                               if (response.length === 0) {
                                     this.hasNoValue = true; // もうデータがない場合は停止
@@ -44,10 +49,11 @@ class InfiniteScroll{
                               this.loader.classList.add("hidden");
                         }
                   }else{
+                        // console.log("not bottom");
+                        
                         this.loader.classList.add("hidden")  
                   }
             }
-
       }
 }
 

@@ -18,4 +18,8 @@ class ChatUser extends Model
     public function lineAccount(){
         return $this->belongsTo(LineAccount::class, "account_id");
     }
+
+    public function userEntity(){
+        return $this->hasOne(UserEntity::class, "related_id", "id");
+    }
 }

@@ -3090,13 +3090,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 var InfiniteScroll = /*#__PURE__*/function () {
-  function InfiniteScroll(element, loader, url) {
+  function InfiniteScroll(element, loader) {
     _classCallCheck(this, InfiniteScroll);
     this.element = element;
     this.hasNoValue = false;
     this.isFetchFlag = false;
     this.loader = loader;
-    this.url = url;
 
     // コンストラクタで定義された this を使用するメソッドをイベントリスナーやコールバックとして使用する場合、bind(this) が必要
     this.element.addEventListener("scroll", this.handleScroll.bind(this));
@@ -3110,12 +3109,12 @@ var InfiniteScroll = /*#__PURE__*/function () {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               if (!(!this.hasNoValue && !this.isFetchFlag)) {
-                _context.next = 26;
+                _context.next = 28;
                 break;
               }
               _this$element = this.element, scrollTop = _this$element.scrollTop, scrollHeight = _this$element.scrollHeight, clientHeight = _this$element.clientHeight; // 一番下までスクロールしたかを判定
-              if (!(scrollTop + clientHeight >= scrollHeight)) {
-                _context.next = 25;
+              if (!(scrollTop + clientHeight + 20 >= scrollHeight)) {
+                _context.next = 27;
                 break;
               }
               this.isFetchFlag = true;
@@ -3124,11 +3123,13 @@ var InfiniteScroll = /*#__PURE__*/function () {
               start = document.querySelectorAll(".js_chatUser_id").length;
               admin_id = document.getElementById("js_line_account_id").value;
               url = "/api/user/lists/".concat(admin_id, "/").concat(start);
-              _context.prev = 9;
-              _context.next = 12;
+              console.log(start);
+              _context.prev = 10;
+              _context.next = 13;
               return (0,_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)(url);
-            case 12:
+            case 13:
               response = _context.sent;
+              console.log(response);
               if (response.length === 0) {
                 this.hasNoValue = true; // もうデータがない場合は停止
                 this.loader.classList.add("hidden");
@@ -3137,27 +3138,29 @@ var InfiniteScroll = /*#__PURE__*/function () {
                   parentElement.insertAdjacentHTML("beforeend", (0,_component_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createMessageRowForFetch)(res, res["account_id"], res["uuid"]));
                 });
               }
-              _context.next = 19;
+              _context.next = 21;
               break;
-            case 16:
-              _context.prev = 16;
-              _context.t0 = _context["catch"](9);
+            case 18:
+              _context.prev = 18;
+              _context.t0 = _context["catch"](10);
               console.error("Failed to fetch data:", _context.t0);
-            case 19:
-              _context.prev = 19;
+            case 21:
+              _context.prev = 21;
               this.isFetchFlag = false;
               this.loader.classList.add("hidden");
-              return _context.finish(19);
-            case 23:
-              _context.next = 26;
-              break;
+              return _context.finish(21);
             case 25:
+              _context.next = 28;
+              break;
+            case 27:
+              // console.log("not bottom");
+
               this.loader.classList.add("hidden");
-            case 26:
+            case 28:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[9, 16, 19, 23]]);
+        }, _callee, this, [[10, 18, 21, 25]]);
       }));
       function handleScroll() {
         return _handleScroll.apply(this, arguments);
@@ -7848,60 +7851,8 @@ var modal = document.getElementById("js_block_account_modal");
 {
   var element = document.querySelector(".dashboard__wrapper-table");
   var loader = document.querySelector(".js_loader");
-  var start = document.querySelectorAll(".js_chatUser_id").length;
-  var _admin_id = document.getElementById("js_line_account_id").value;
-  var url = "/api/user/lists/".concat(_admin_id, "/").concat(start);
-  new _module_util_InfiniteScroll_js__WEBPACK_IMPORTED_MODULE_5__["default"](element, loader, url);
+  new _module_util_InfiniteScroll_js__WEBPACK_IMPORTED_MODULE_5__["default"](element, loader);
 }
-
-// let scrollCount = 0
-// let hasNoValue = false
-// let isFetchFlag = false
-
-// element.addEventListener("scroll", () => {
-//       if(!hasNoValue && !isFetchFlag){
-//             // 現在のスクロール位置
-//             const scrollTop = element.scrollTop;
-//             // 要素全体のスクロール可能な高さ
-//             const scrollHeight = element.scrollHeight;
-//             // 要素の表示領域の高さ
-//             const clientHeight = element.clientHeight;
-
-//             // 一番下までスクロールしたかを判定
-//             if (scrollTop + clientHeight >= scrollHeight) {
-//                   isFetchFlag = true
-//                   loader2.classList.remove("hidden")
-//                   const start = document.querySelectorAll(".js_chatUser_id").length
-
-//                   console.log(`start: ${start}`);
-
-//                   const admin_id = document.getElementById("js_line_account_id").value
-//                   let parentElement =document.querySelector(".js_table")
-
-//                   fetchGetOperation(`/api/user/lists/${admin_id}/${start}`)
-//                   .then((res)=>{
-//                         if(res.length === 0) {
-//                               loader2.classList.add("hidden")  
-//                               hasNoValue = true
-//                         }
-//                         console.log(res);
-
-//                         res.forEach((res)=>{
-//                               parentElement.insertAdjacentHTML('beforeend', createMessageRowForFetch(res, res["account_id"], res["uuid"]));
-//                         })
-//                   })
-//                   .finally(()=>{
-//                         isFetchFlag = false
-//                         loader2.classList.add("hidden") 
-//                   })
-//             }else{
-//                   loader2.classList.add("hidden")  
-//             }
-//       }
-
-//       console.log(scrollCount);
-
-// });
 })();
 
 /******/ })()

@@ -24,70 +24,260 @@
       </div>     
 
 
-      @foreach ($line_accounts as $status => $accounts)
-            <div class="dashboard__wrapper-table-area">
+      {{-- @foreach ($line_accounts as $status => $accounts) --}}
+      <div class="dashboard__wrapper-table-area">
 
-                  <div class="dashboard__wrapper-table-box p-20">
-                        <div class="dashboard__wrapper-table-ttl">
-                              <p>{{$status}}アカウント一覧</p>
-                              {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
-                        </div>  
-                  </div>
-                  <div class="dashboard__wrapper-table">
-                        <table class="table table-striped">
-                              <thead>
-                                    <tr>
-                                          <th scope="col"></th>
-                                          <th scope="col">アカウント名</th>
-                                          <th scope="col">未読数</th>
-                                          <th scope="col">ステータス</th>
-                                          <th scope="col">最新受信日</th>
-                                          <th scope="col">作成日時</th>
-                                          <th scope="col">管理</th>
-                                    </tr>
-                              </thead>
-                              <tbody class="js_table">
-                                    
-                                    @foreach ($accounts as $account)
-                                          <tr class="js_account_id" data-id="{{$account["uuid"]}}">
-                                                <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-                                                <td w20><?= $account["account_name"]?></td>
-
-                                                <td class=" text-center total_message-count">
-                                                      <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["total_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
-                                                            {{ $account["total_count"] }}
-                                                      </div>
-                                                </td>
-                                                <td data-id={{$account["id"]}} class="js_status" style="color: #008000; cursor: pointer;">
-                                                      <div class="btn-group">
-                                                            <button class="btn btn-secondary btn-sm dropdown-toggle js_status_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                  {{$status}}
-                                                            </button>
-                                                            <ul class="dropdown-menu">
-                                                                  @foreach ($account_status as $other_status)
-                                                                        @if ($other_status->status !== $status)
-                                                                              <li class="dropdown-item js_status_choices" data-current-status={{$status}} data-status-name={{$other_status->status}}  data-status-id={{$other_status->id}} data-account-id={{{$account["id"]}}}>{{$other_status->status}}</li> 
-                                                                        @endif
-                                                                  @endforeach
-                                                            </ul>
-                                                      </div>
-                                                </td>
-                                                <td class="js_latest_message_date">{{$account["latest_message_date"] ? $account["latest_message_date"]->format('Y-m-d H:i') : ""}}</td>
-                                                <td>{{$account["created_at"]->format('Y-m-d H:i')}}</td>
-                                                <td class="operation">
-                                                      <a href="{{route("account.show", ["id" => $account["id"]])}}"><button class="operation_icon"><img src="{{asset("img/icons8-user-24.png")}}" alt=""></button></a>
-                                                      <button class="operation_icon js_edit_account_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
-                                                      <button class="operation_icon js_send_message_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-send-24.png")}}" alt=""></button>
-                                                      <button class="operation_icon js_delete_account_btn" type="submit" data-id=<?= $account["id"]?> data-name={{$account["account_name"]}}><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>
-                                                </td>
-                                          </tr>
-                                    @endforeach
-                              
-                              </tbody>
-                        </table>
-                  </div> 
+            <div class="dashboard__wrapper-table-box p-20">
+                  <div class="dashboard__wrapper-table-ttl">
+                        <p>使用中アカウント一覧</p>
+                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
+                  </div>  
             </div>
-      @endforeach
+            <div class="dashboard__wrapper-table">
+                  <table class="table table-striped">
+                        <thead>
+                              <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">アカウント名</th>
+                                    <th scope="col">未読数</th>
+                                    <th scope="col">ステータス</th>
+                                    <th scope="col">最新受信日</th>
+                                    <th scope="col">作成日時</th>
+                                    <th scope="col">管理</th>
+                              </tr>
+                        </thead>
+                        <tbody class="js_table">
+                              
+                              @foreach ($active_accounts as $account)
+                              {{-- @php
+                                  print_r($account["userEntity"]["entity_uuid"]);
+                                  exit;
+                              @endphp --}}
+                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
+                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
+                                          <td w20><?= $account["account_name"]?></td>
+
+                                          <td class=" text-center total_message-count">
+                                                <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
+                                                      {{ $account["unread_count"] }}
+                                                </div>
+                                          </td>
+                                          <td data-id={{$account["id"]}} class="js_status" style="color: #008000; cursor: pointer;">
+                                                <div class="btn-group">
+                                                      <button class="btn btn-secondary btn-sm dropdown-toggle js_status_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            使用中
+                                                      </button>
+                                                      <ul class="dropdown-menu">
+                                                            @foreach ($account_status as $other_status)
+                                                                  @if ($other_status->status !== "使用中")
+                                                                        <li class="dropdown-item js_status_choices" data-current-status="使用中" data-status-name={{$other_status->status}}  data-status-id={{$other_status->id}} data-account-id={{{$account["id"]}}}>{{$other_status->status}}</li> 
+                                                                  @endif
+                                                            @endforeach
+                                                      </ul>
+                                                </div>
+                                          </td>
+                                          <td class="js_latest_message_date">{{$account["latest_message_date"] ?? ""}}</td>
+                                          <td>{{$account["created_at"]->format('Y-m-d H:i')}}</td>
+                                          <td class="operation">
+                                                <a href="{{route("account.show", ["id" => $account["id"]])}}"><button class="operation_icon"><img src="{{asset("img/icons8-user-24.png")}}" alt=""></button></a>
+                                                <button class="operation_icon js_edit_account_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_send_message_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-send-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_delete_account_btn" type="submit" data-id=<?= $account["id"]?> data-name={{$account["account_name"]}}><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>
+                                          </td>
+                                    </tr>
+                              @endforeach
+                        
+                        </tbody>
+                  </table>
+            </div> 
+      </div>
+      <div class="dashboard__wrapper-table-area">
+
+            <div class="dashboard__wrapper-table-box p-20">
+                  <div class="dashboard__wrapper-table-ttl">
+                        <p>未使用アカウント一覧</p>
+                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
+                  </div>  
+            </div>
+            <div class="dashboard__wrapper-table">
+                  <table class="table table-striped">
+                        <thead>
+                              <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">アカウント名</th>
+                                    <th scope="col">未読数</th>
+                                    <th scope="col">ステータス</th>
+                                    <th scope="col">最新受信日</th>
+                                    <th scope="col">作成日時</th>
+                                    <th scope="col">管理</th>
+                              </tr>
+                        </thead>
+                        <tbody class="js_table">
+                              
+                              @foreach ($inactive_accounts as $account)
+                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
+                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
+                                          <td w20><?= $account["account_name"]?></td>
+
+                                          <td class=" text-center total_message-count">
+                                                <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
+                                                      {{ $account["unread_count"] }}
+                                                </div>
+                                          </td>
+                                          <td data-id={{$account["id"]}} class="js_status" style="color: #008000; cursor: pointer;">
+                                                <div class="btn-group">
+                                                      <button class="btn btn-secondary btn-sm dropdown-toggle js_status_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            未使用
+                                                      </button>
+                                                      <ul class="dropdown-menu">
+                                                            @foreach ($account_status as $other_status)
+                                                                  @if ($other_status->status !== "未使用")
+                                                                        <li class="dropdown-item js_status_choices" data-current-status="未使用" data-status-name={{$other_status->status}}  data-status-id={{$other_status->id}} data-account-id={{{$account["id"]}}}>{{$other_status->status}}</li> 
+                                                                  @endif
+                                                            @endforeach
+                                                      </ul>
+                                                </div>
+                                          </td>
+                                          <td class="js_latest_message_date">{{$account["latest_message_date"] ?? ""}}</td>
+                                          <td>{{$account["created_at"]->format('Y-m-d H:i')}}</td>
+                                          <td class="operation">
+                                                <a href="{{route("account.show", ["id" => $account["id"]])}}"><button class="operation_icon"><img src="{{asset("img/icons8-user-24.png")}}" alt=""></button></a>
+                                                <button class="operation_icon js_edit_account_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_send_message_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-send-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_delete_account_btn" type="submit" data-id=<?= $account["id"]?> data-name={{$account["account_name"]}}><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>
+                                          </td>
+                                    </tr>
+                              @endforeach
+                        
+                        </tbody>
+                  </table>
+            </div> 
+      </div>
+      <div class="dashboard__wrapper-table-area">
+
+            <div class="dashboard__wrapper-table-box p-20">
+                  <div class="dashboard__wrapper-table-ttl">
+                        <p>停止アカウント一覧</p>
+                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
+                  </div>  
+            </div>
+            <div class="dashboard__wrapper-table">
+                  <table class="table table-striped">
+                        <thead>
+                              <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">アカウント名</th>
+                                    <th scope="col">未読数</th>
+                                    <th scope="col">ステータス</th>
+                                    <th scope="col">最新受信日</th>
+                                    <th scope="col">作成日時</th>
+                                    <th scope="col">管理</th>
+                              </tr>
+                        </thead>
+                        <tbody class="js_table">
+                              
+                              @foreach ($suspended_accounts as $account)
+                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
+                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
+                                          <td w20><?= $account["account_name"]?></td>
+
+                                          <td class=" text-center total_message-count">
+                                                <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
+                                                      {{ $account["unread_count"] }}
+                                                </div>
+                                          </td>
+                                          <td data-id={{$account["id"]}} class="js_status" style="color: #008000; cursor: pointer;">
+                                                <div class="btn-group">
+                                                      <button class="btn btn-secondary btn-sm dropdown-toggle js_status_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            停止
+                                                      </button>
+                                                      <ul class="dropdown-menu">
+                                                            @foreach ($account_status as $other_status)
+                                                                  @if ($other_status->status !== "停止")
+                                                                        <li class="dropdown-item js_status_choices" data-current-status="停止" data-status-name={{$other_status->status}}  data-status-id={{$other_status->id}} data-account-id={{{$account["id"]}}}>{{$other_status->status}}</li> 
+                                                                  @endif
+                                                            @endforeach
+                                                      </ul>
+                                                </div>
+                                          </td>
+                                          <td class="js_latest_message_date">{{$account["latest_message_date"] ?? ""}}</td>
+                                          <td>{{$account["created_at"]->format('Y-m-d H:i')}}</td>
+                                          <td class="operation">
+                                                <a href="{{route("account.show", ["id" => $account["id"]])}}"><button class="operation_icon"><img src="{{asset("img/icons8-user-24.png")}}" alt=""></button></a>
+                                                <button class="operation_icon js_edit_account_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_send_message_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-send-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_delete_account_btn" type="submit" data-id=<?= $account["id"]?> data-name={{$account["account_name"]}}><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>
+                                          </td>
+                                    </tr>
+                              @endforeach
+                        
+                        </tbody>
+                  </table>
+            </div> 
+      </div>
+      <div class="dashboard__wrapper-table-area">
+
+            <div class="dashboard__wrapper-table-box p-20">
+                  <div class="dashboard__wrapper-table-ttl">
+                        <p>バンアカウント一覧</p>
+                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
+                  </div>  
+            </div>
+            <div class="dashboard__wrapper-table">
+                  <table class="table table-striped">
+                        <thead>
+                              <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">アカウント名</th>
+                                    <th scope="col">未読数</th>
+                                    <th scope="col">ステータス</th>
+                                    <th scope="col">最新受信日</th>
+                                    <th scope="col">作成日時</th>
+                                    <th scope="col">管理</th>
+                              </tr>
+                        </thead>
+                        <tbody class="js_table">
+                              
+                              @foreach ($banned_accounts as $account)
+                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
+                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
+                                          <td w20><?= $account["account_name"]?></td>
+
+                                          <td class=" text-center total_message-count">
+                                                <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
+                                                      {{ $account["unread_count"] }}
+                                                </div>
+                                          </td>
+                                          <td data-id={{$account["id"]}} class="js_status" style="color: #008000; cursor: pointer;">
+                                                <div class="btn-group">
+                                                      <button class="btn btn-secondary btn-sm dropdown-toggle js_status_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            バン
+                                                      </button>
+                                                      <ul class="dropdown-menu">
+                                                            @foreach ($account_status as $other_status)
+                                                                  @if ($other_status->status !== "バン")
+                                                                        <li class="dropdown-item js_status_choices" data-current-status="バン" data-status-name={{$other_status->status}}  data-status-id={{$other_status->id}} data-account-id={{{$account["id"]}}}>{{$other_status->status}}</li> 
+                                                                  @endif
+                                                            @endforeach
+                                                      </ul>
+                                                </div>
+                                          </td>
+                                          <td class="js_latest_message_date">{{$account["latest_message_date"] ?? ""}}</td>
+                                          <td>{{$account["created_at"]->format('Y-m-d H:i')}}</td>
+                                          <td class="operation">
+                                                <a href="{{route("account.show", ["id" => $account["id"]])}}"><button class="operation_icon"><img src="{{asset("img/icons8-user-24.png")}}" alt=""></button></a>
+                                                <button class="operation_icon js_edit_account_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_send_message_btn" data-id=<?= $account["id"]?>><img src="{{asset("img/icons8-send-24.png")}}" alt=""></button>
+                                                <button class="operation_icon js_delete_account_btn" type="submit" data-id=<?= $account["id"]?> data-name={{$account["account_name"]}}><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>
+                                          </td>
+                                    </tr>
+                              @endforeach
+                        
+                        </tbody>
+                  </table>
+            </div> 
+      </div>
+      {{-- @endforeach --}}
 </div>
 
 {{-- 追加モーダル --}}

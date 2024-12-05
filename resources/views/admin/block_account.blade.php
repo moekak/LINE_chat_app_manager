@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title2')
+@section('title')
 	<h2>Dashboard</h2><p></p>
 @endsection
 @section('main')

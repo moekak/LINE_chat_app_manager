@@ -225,8 +225,8 @@ p, ul {
     padding: 18px 30px 50px 30px;
     background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    max-height: 100vh;
     overflow: auto;
+    max-height: 73vh;
 }
 .operation_icon{
     border: none;

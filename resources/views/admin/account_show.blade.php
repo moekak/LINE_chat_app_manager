@@ -1,7 +1,20 @@
 @extends('layouts.default')
 
-@section('title2')
-	<h2>Dashboard</h2><p></p>
+@section('title')
+	Dashboard
+@endsection
+@section('style')
+	<style>
+		body{
+			overflow: hidden;
+			max-height: 100vh;
+		}
+		.dashboard__wrapper-table-area{
+			padding: 40px 100px 20px 100px;
+			height: 90vh;
+			
+		}
+	</style>
 @endsection
 @section('main')
 <input type="hidden" value="{{$user_uuid}}" id="js_admin_account_id">

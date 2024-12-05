@@ -37,4 +37,10 @@ class LineAccount extends Model
         $this->attributes['channel_secret'] = Crypt::encryptString($value);
     }
 
+    public function userEntity(){
+        return $this->hasOne(UserEntity::class, "related_id", "id");
+    }
+
+
+
 }

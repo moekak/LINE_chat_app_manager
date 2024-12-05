@@ -11,6 +11,8 @@ use App\Models\SecondAccount;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LineAccountController extends Controller
@@ -20,67 +22,143 @@ class LineAccountController extends Controller
         $messageCountService = new MessageCountService();
 
         $user = Auth::user();
-        $line_accounts  = LineAccount::where("user_id", $user->id)->get();
+        // 公式LINEアカウントをすべて取得する(LINEAccount)
+
+        // ステータスごとのアカウントを1つのクエリで取得
+        $accounts = LineAccount::query()
+            ->where('user_id', $user->id)
+            ->select([
+                "line_accounts.id",
+                "line_accounts.account_name",
+                "line_accounts.created_at",
+                "line_accounts.account_status",
+                DB::raw('DATE_FORMAT(
+                    (SELECT MAX(latest_date)
+                    FROM (
+                        SELECT created_at as latest_date
+                        FROM user_messages
+                        WHERE user_messages.admin_id = line_accounts.id
+                        UNION ALL
+                        SELECT created_at as latest_date
+                        FROM user_message_images
+                        WHERE user_message_images.admin_id = line_accounts.id
+                    ) as combined_dates), "%Y-%m-%d %H:%i"
+                ) as latest_message_date')
+            ])
+            ->where('account_status', '1')
+            // ->limit(10)
+            ->unionAll(
+                LineAccount::query()
+                    ->where('user_id', $user->id)
+                    ->select([
+                        "line_accounts.id",
+                        "line_accounts.account_name",
+                        "line_accounts.created_at",
+                        "line_accounts.account_status",
+                        DB::raw('DATE_FORMAT(
+                            (SELECT MAX(latest_date)
+                            FROM (
+                                SELECT created_at as latest_date
+                                FROM user_messages
+                                WHERE user_messages.admin_id = line_accounts.id
+                                UNION ALL
+                                SELECT created_at as latest_date
+                                FROM user_message_images
+                                WHERE user_message_images.admin_id = line_accounts.id
+                            ) as combined_dates), "%Y-%m-%d %H:%i"
+                        ) as latest_message_date')
+                    ])
+                    ->where('account_status', '2')
+                    // ->limit(10)
+            )
+            ->unionAll(
+                LineAccount::query()
+                    ->where('user_id', $user->id)
+                    ->select([
+                        "line_accounts.id",
+                        "line_accounts.account_name",
+                        "line_accounts.created_at",
+                        "line_accounts.account_status",
+                        DB::raw('DATE_FORMAT(
+                            (SELECT MAX(latest_date)
+                            FROM (
+                                SELECT created_at as latest_date
+                                FROM user_messages
+                                WHERE user_messages.admin_id = line_accounts.id
+                                UNION ALL
+                                SELECT created_at as latest_date
+                                FROM user_message_images
+                                WHERE user_message_images.admin_id = line_accounts.id
+                            ) as combined_dates), "%Y-%m-%d %H:%i"
+                        ) as latest_message_date')
+                    ])
+                    ->where('account_status', '3')
+                    // ->limit(10)
+            )
+            ->unionAll(
+                LineAccount::query()
+                    ->where('user_id', $user->id)
+                    ->select([
+                        "line_accounts.id",
+                        "line_accounts.account_name",
+                        "line_accounts.created_at",
+                        "line_accounts.account_status",
+                        DB::raw('DATE_FORMAT(
+                            (SELECT MAX(latest_date)
+                            FROM (
+                                SELECT created_at as latest_date
+                                FROM user_messages
+                                WHERE user_messages.admin_id = line_accounts.id
+                                UNION ALL
+                                SELECT created_at as latest_date
+                                FROM user_message_images
+                                WHERE user_message_images.admin_id = line_accounts.id
+                            ) as combined_dates), "%Y-%m-%d %H:%i"
+                        ) as latest_message_date')
+                    ])
+                    ->where('account_status', '4')
+                    // ->limit(10)
+            )
+            ->with(['userEntity' => function($query) {
+                $query->select('id', 'related_id', 'entity_uuid')
+                    ->where('entity_type', 'admin');
+            }])
+            ->get();
+
+
+
+        //// 先にオブジェクトとしてアクセス
+        $admin_ids = $accounts->map(function($account) {
+            return $account['id']; // 配列アクセスを使用
+        })->toArray();
+
+    
+
+        // 未読数を一括取得
+        $unreadCounts = $messageCountService->getUnreadCountsByAdminIds($admin_ids);
+
+        // 未読数をマージしてからグループ化
+        $accounts = $accounts->map(function($account) use ($unreadCounts) {
+            $account['unread_count'] = $unreadCounts[$account['id']] ?? 0;
+            return $account;
+        })->groupBy('account_status');
+
+        $active_accounts = $accounts["1"] ?? collect();
+        $inactive_accounts = $accounts["2"] ?? collect();
+        $suspended_accounts = $accounts["3"] ?? collect();
+        $banned_accounts = $accounts["4"] ?? collect();
+
+
+        // 予備アカウントを取得する(LINEAccount)
         $second_accounts = LineAccount::where("user_id", $user->id)->whereIn("account_status", ["2", "3"])->get();
 
-        foreach($line_accounts as $account){
-            // アカウントごとの最新メッセージ時間を取得
-            $latest_message_date = $messageCountService->getLatestUserMessageDate($account->id);
 
-            // アカウントごとのユーザーをすべて取得
-            $users = ChatUser::where("account_id", $account->id)
-                ->whereNotIn("id", function($query){
-                    $query->select("chat_user_id")
-                            ->from("block_chat_users")
-                            ->where("is_blocked", '1')
-                            ->get();
-                })
-                ->get();
-            $totalCount = 0;
+        // アカウントのステータスの種類をすべて取得(キャッシュ取得)
+        $account_status = Cache::remember('account_status', 60*24, function() {
+            return AccountStatus::all();
+        });
 
-            foreach($users as $user){
-                // 未読数のメッセージ数を取得
-                $totalCount += $messageCountService->selectTotalMessageCount($account->id, $user->id);
-                // チャットユーザーuuidの取得
-                $user["uuid"] = UserEntity::where("related_id", $user->id);
-            }
-
-            $account["total_count"]         = $totalCount;
-            $account["uuid"]                = UserEntity::where("related_id", $account->id)->where("entity_type", "admin")->value("entity_uuid");
-            $account["latest_message_date"] = $latest_message_date ?? "";
-        }
-
-        // total_countの多い順にソート
-        $line_accounts = $line_accounts->sortByDesc('total_count');
-
-        $formatted_line_accounts = [
-            "使用中" => [],
-            "未使用" => [],
-            "停止" => [],
-            "バン" => []
-        ];
-        
-
-        foreach($line_accounts as $account){
-            // echo $account->account_status;
-            // echo "<br>";
-            if($account->account_status == "1"){
-                $formatted_line_accounts["使用中"][] = $account;
-            }
-            if($account->account_status == "2"){
-                $formatted_line_accounts["未使用"][] = $account;
-            }
-            if($account->account_status == "3"){
-                $formatted_line_accounts["停止"][] = $account;
-            }
-            if($account->account_status == "4"){
-                $formatted_line_accounts["バン"][] = $account;
-            }
-        }
-
-        // アカウントのステータスの種類をすべて取得
-        $account_status = AccountStatus::all();
-        return view("admin.dashboard", [ "line_accounts" => $formatted_line_accounts, "user" => $user, "account_status" => $account_status, "second_accounts" => $second_accounts]);
+        return view("admin.dashboard", [ "active_accounts" => $active_accounts, "inactive_accounts" => $inactive_accounts, "suspended_accounts" => $suspended_accounts, "banned_accounts" => $banned_accounts, "user" => $user, "account_status" => $account_status, "second_accounts" => $second_accounts]);
     }
 
     public function create(CreateLineAccountRequest $request)
