@@ -33,7 +33,7 @@ class LineAccountController extends Controller
                 "line_accounts.created_at",
                 "line_accounts.account_status",
                 DB::raw('DATE_FORMAT(
-                    (SELECT MAX(latest_date)
+                    (SELECT MAX(latest_date) 
                     FROM (
                         SELECT created_at as latest_date
                         FROM user_messages

@@ -194,8 +194,8 @@ class MessageCountService{
             ->get()
             ->keyBy('admin_id');  // chat_user_idのグループ化は不要
 
-            // 2. テキストメッセージの未読数を一括集計
-            $textCounts = UserMessage::whereIn('admin_id', $admin_ids)
+        // 2. テキストメッセージの未読数を一括集計
+        $textCounts = UserMessage::whereIn('admin_id', $admin_ids)
             ->select('admin_id',
                     DB::raw('COUNT(*) as message_count'),
                     DB::raw('MAX(message_id) as max_message_id'))
@@ -203,8 +203,8 @@ class MessageCountService{
             ->get()
             ->keyBy('admin_id');
 
-            // 3. 画像メッセージの未読数を一括集計
-            $imageCounts = UserMessageImage::whereIn('admin_id', $admin_ids)
+        // 3. 画像メッセージの未読数を一括集計
+        $imageCounts = UserMessageImage::whereIn('admin_id', $admin_ids)
             ->select('admin_id',
                     DB::raw('COUNT(*) as message_count'),
                     DB::raw('MAX(message_id) as max_message_id'))
@@ -215,22 +215,20 @@ class MessageCountService{
         // 4. 結果を集計（エラーハンドリングを強化）
         $unreadCounts = [];
         foreach ($admin_ids as $admin_id) {
-        $lastReadId = $lastReads->get($admin_id)?->last_read_message_id ?? 0;
+            $lastReadId = $lastReads->get($admin_id)?->last_read_message_id ?? 0;
 
-        $textCount = $textCounts->get($admin_id);
-        $imageCount = $imageCounts->get($admin_id);
+            $textCount = $textCounts->get($admin_id);
+            $imageCount = $imageCounts->get($admin_id);
 
-        $textUnread = ($textCount && $textCount->max_message_id > $lastReadId) 
-            ? $textCount->message_count : 0;
-            
-        $imageUnread = ($imageCount && $imageCount->max_message_id > $lastReadId) 
-            ? $imageCount->message_count : 0;
+            $textUnread = ($textCount && $textCount->max_message_id > $lastReadId) ? $textCount->message_count : 0;
+                
+            $imageUnread = ($imageCount && $imageCount->max_message_id > $lastReadId) ? $imageCount->message_count : 0;
 
-        $unreadCounts[$admin_id] = $textUnread + $imageUnread;
+            $unreadCounts[$admin_id] = $textUnread + $imageUnread;
         }
 
         return $unreadCounts;
-     }
+    }
 }
 
 
