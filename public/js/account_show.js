@@ -3113,7 +3113,7 @@ var InfiniteScroll = /*#__PURE__*/function () {
                 break;
               }
               _this$element = this.element, scrollTop = _this$element.scrollTop, scrollHeight = _this$element.scrollHeight, clientHeight = _this$element.clientHeight; // 一番下までスクロールしたかを判定
-              if (!(scrollTop + clientHeight + 20 >= scrollHeight)) {
+              if (!(scrollTop + clientHeight + 50 >= scrollHeight)) {
                 _context.next = 27;
                 break;
               }
@@ -7851,7 +7851,10 @@ var modal = document.getElementById("js_block_account_modal");
 {
   var element = document.querySelector(".dashboard__wrapper-table");
   var loader = document.querySelector(".js_loader");
-  new _module_util_InfiniteScroll_js__WEBPACK_IMPORTED_MODULE_5__["default"](element, loader);
+  var start = document.querySelectorAll(".js_chatUser_id").length;
+  var _admin_id = document.getElementById("js_line_account_id").value;
+  var url = "/api/user/lists/".concat(_admin_id, "/").concat(start);
+  new _module_util_InfiniteScroll_js__WEBPACK_IMPORTED_MODULE_5__["default"](element, loader, url);
 }
 })();
 

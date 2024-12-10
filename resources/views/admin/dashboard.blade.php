@@ -49,10 +49,6 @@
                         <tbody class="js_table">
                               
                               @foreach ($active_accounts as $account)
-                              {{-- @php
-                                  print_r($account["userEntity"]["entity_uuid"]);
-                                  exit;
-                              @endphp --}}
                                     <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
                                           <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
                                           <td w20><?= $account["account_name"]?></td>

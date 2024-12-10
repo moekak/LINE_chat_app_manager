@@ -111,6 +111,15 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+        'options' => [
+            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_PERSISTENT => true,
+        ],
+        'pool' => [
+            'min_connections' => 5,
+            'max_connections' => 20,
+            'wait_timeout' => 20,
+        ]
 
     ],
 

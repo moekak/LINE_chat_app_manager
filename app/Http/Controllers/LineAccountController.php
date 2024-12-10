@@ -15,17 +15,15 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+
 class LineAccountController extends Controller
 {
 
+    const MESSAGES_PER_PAGE = 20;
     public function index(){
-        $messageCountService = new MessageCountService();
-
         $user = Auth::user();
-        // 公式LINEアカウントをすべて取得する(LINEAccount)
-
         // ステータスごとのアカウントを1つのクエリで取得
-        $accounts = LineAccount::query()
+        $subQuery = LineAccount::query()
             ->where('user_id', $user->id)
             ->select([
                 "line_accounts.id",
@@ -43,105 +41,27 @@ class LineAccountController extends Controller
                         FROM user_message_images
                         WHERE user_message_images.admin_id = line_accounts.id
                     ) as combined_dates), "%Y-%m-%d %H:%i"
-                ) as latest_message_date')
+                ) as latest_message_date'),
+                DB::raw('(
+                    SELECT COALESCE(SUM(unread_count), 0)
+                    FROM user_message_reads
+                    WHERE admin_account_id = line_accounts.id
+                ) as unread_count')
             ])
-            ->where('account_status', '1')
-            // ->limit(10)
-            ->unionAll(
-                LineAccount::query()
-                    ->where('user_id', $user->id)
-                    ->select([
-                        "line_accounts.id",
-                        "line_accounts.account_name",
-                        "line_accounts.created_at",
-                        "line_accounts.account_status",
-                        DB::raw('DATE_FORMAT(
-                            (SELECT MAX(latest_date)
-                            FROM (
-                                SELECT created_at as latest_date
-                                FROM user_messages
-                                WHERE user_messages.admin_id = line_accounts.id
-                                UNION ALL
-                                SELECT created_at as latest_date
-                                FROM user_message_images
-                                WHERE user_message_images.admin_id = line_accounts.id
-                            ) as combined_dates), "%Y-%m-%d %H:%i"
-                        ) as latest_message_date')
-                    ])
-                    ->where('account_status', '2')
-                    // ->limit(10)
-            )
-            ->unionAll(
-                LineAccount::query()
-                    ->where('user_id', $user->id)
-                    ->select([
-                        "line_accounts.id",
-                        "line_accounts.account_name",
-                        "line_accounts.created_at",
-                        "line_accounts.account_status",
-                        DB::raw('DATE_FORMAT(
-                            (SELECT MAX(latest_date)
-                            FROM (
-                                SELECT created_at as latest_date
-                                FROM user_messages
-                                WHERE user_messages.admin_id = line_accounts.id
-                                UNION ALL
-                                SELECT created_at as latest_date
-                                FROM user_message_images
-                                WHERE user_message_images.admin_id = line_accounts.id
-                            ) as combined_dates), "%Y-%m-%d %H:%i"
-                        ) as latest_message_date')
-                    ])
-                    ->where('account_status', '3')
-                    // ->limit(10)
-            )
-            ->unionAll(
-                LineAccount::query()
-                    ->where('user_id', $user->id)
-                    ->select([
-                        "line_accounts.id",
-                        "line_accounts.account_name",
-                        "line_accounts.created_at",
-                        "line_accounts.account_status",
-                        DB::raw('DATE_FORMAT(
-                            (SELECT MAX(latest_date)
-                            FROM (
-                                SELECT created_at as latest_date
-                                FROM user_messages
-                                WHERE user_messages.admin_id = line_accounts.id
-                                UNION ALL
-                                SELECT created_at as latest_date
-                                FROM user_message_images
-                                WHERE user_message_images.admin_id = line_accounts.id
-                            ) as combined_dates), "%Y-%m-%d %H:%i"
-                        ) as latest_message_date')
-                    ])
-                    ->where('account_status', '4')
-                    // ->limit(10)
-            )
-            ->with(['userEntity' => function($query) {
-                $query->select('id', 'related_id', 'entity_uuid')
-                    ->where('entity_type', 'admin');
-            }])
-            ->get();
+            ->whereIn('account_status', ['1', '2', '3', '4']);
+            // ->limit(self::MESSAGES_PER_PAGE);
 
-
-
-        //// 先にオブジェクトとしてアクセス
-        $admin_ids = $accounts->map(function($account) {
-            return $account['id']; // 配列アクセスを使用
-        })->toArray();
-
-    
-
-        // 未読数を一括取得
-        $unreadCounts = $messageCountService->getUnreadCountsByAdminIds($admin_ids);
-
-        // 未読数をマージしてからグループ化
-        $accounts = $accounts->map(function($account) use ($unreadCounts) {
-            $account['unread_count'] = $unreadCounts[$account['id']] ?? 0;
-            return $account;
-        })->groupBy('account_status');
+            // メインクエリ
+            $accounts = LineAccount::from(DB::raw("({$subQuery->toSql()}) as grouped_accounts"))
+                ->mergeBindings($subQuery->getQuery())
+                ->with(['userEntity' => function($query) {
+                    $query->select('id', 'related_id', 'entity_uuid')
+                        ->where('entity_type', 'admin');
+                }])
+                ->orderBy('account_status')
+                ->orderBy('unread_count', 'desc')  
+                ->get()
+                ->groupBy('account_status');
 
         $active_accounts = $accounts["1"] ?? collect();
         $inactive_accounts = $accounts["2"] ?? collect();
@@ -149,10 +69,10 @@ class LineAccountController extends Controller
         $banned_accounts = $accounts["4"] ?? collect();
 
 
+
+
         // 予備アカウントを取得する(LINEAccount)
         $second_accounts = LineAccount::where("user_id", $user->id)->whereIn("account_status", ["2", "3"])->get();
-
-
         // アカウントのステータスの種類をすべて取得(キャッシュ取得)
         $account_status = Cache::remember('account_status', 60*24, function() {
             return AccountStatus::all();
