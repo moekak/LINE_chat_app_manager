@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\AdminMessage;
-use App\Models\AdminMessageImage;
 use App\Models\UserMessage;
 use App\Models\UserMessageImage;
 use App\Models\UserMessageRead;
@@ -24,7 +22,7 @@ class MessageCountService{
             $messageImageQuery->where("user_id", $user_id);
         }
 
-         // メッセージIDを取得
+        // メッセージIDを取得
         $current_message_data         = $messageQuery->first();
         $current_message_image_data  = $messageImageQuery->first();
 
@@ -32,44 +30,6 @@ class MessageCountService{
     }
 
 
-
-    // public function getLatesetUserMessageID($user_id, $admin_id){
-    //     $current_message_id = UserMessage::where("user_id", $user_id)->where("admin_id", $admin_id)->orderBy("created_at", "desc")->value("message_id");
-    //     $current_message_image_id = UserMessageImage::where("user_id", $user_id)->where("admin_id", $admin_id)->orderBy("created_at", "desc")->value("message_id");
-    //     $latest_message_id = 0;
-
-    //     if ($current_message_id !== null && $current_message_image_id !== null) {
-    //         // 両方の値がある場合、大きい方を取得
-    //         $latest_message_id = max($current_message_id, $current_message_image_id);
-    //     } elseif ($current_message_id !== null) {
-    //         // `UserMessage`のIDがある場合、それを採用
-    //         $latest_message_id = $current_message_id;
-    //     } elseif ($current_message_image_id !== null) {
-    //         // `UserMessageImage`のIDがある場合、それを採用
-    //         $latest_message_id = $current_message_image_id;
-    //     }
-
-    //     return $latest_message_id;
-    // }
-
-    // public function getLatesetAdminMessageID($user_id, $admin_id){
-    //     $current_message_id = AdminMessage::where("user_id", $user_id)->where("admin_id", $admin_id)->orderBy("created_at", "desc")->value("message_id");
-    //     $current_message_image_id = AdminMessageImage::where("user_id", $user_id)->where("admin_id", $admin_id)->orderBy("created_at", "desc")->value("message_id");
-    //     $latest_message_id = 0;
-
-    //     if ($current_message_id !== null && $current_message_image_id !== null) {
-    //         // 両方の値がある場合、大きい方を取得
-    //         $latest_message_id = max($current_message_id, $current_message_image_id);
-    //     } elseif ($current_message_id !== null) {
-    //         // `UserMessage`のIDがある場合、それを採用
-    //         $latest_message_id = $current_message_id;
-    //     } elseif ($current_message_image_id !== null) {
-    //         // `UserMessageImage`のIDがある場合、それを採用
-    //         $latest_message_id = $current_message_image_id;
-    //     }
-
-    //     return $latest_message_id;
-    // }
 
 
     public function getLatestUserMessageDate($admin_id, $user_id = null){
@@ -111,49 +71,6 @@ class MessageCountService{
         return $unread_count;
     } 
 
-
-    // public function selectUserMessageCount($user_id, $admin_id, $periods, $message_read){
-
-    //     $query = UserMessage::where("user_id", $user_id)
-    //             ->where("admin_id", $admin_id);
-
-    //     if($message_read){
-    //         $query->where('message_id', '>', $message_read->message_id);
-    //     }
-
-    //     if($periods){
-    //         $query->where(function($q) use ($periods){
-    //             foreach($periods as $period){
-    //                 $q->whereNotBetween("created_at", [
-    //                     $period["start"],
-    //                     $period["end"]
-    //                 ]);
-    //             };
-    //         });
-    //     }
-    //     return $query->count();
-    // }
-
-    // public function selectUserMessageImageCount($user_id, $admin_id, $periods, $message_read){
-    //     $query = UserMessageImage::where("user_id", $user_id)
-    //             ->where("admin_id", $admin_id);
-
-    //     if($message_read){
-    //         $query->where('message_id', '>', $message_read->message_id);
-    //     }
-
-    //     if($periods){
-    //         $query->where(function($q) use ($periods){
-    //             foreach($periods as $period){
-    //                 $q->whereNotBetween("created_at", [
-    //                     $period["start"],
-    //                     $period["end"]
-    //                 ]);
-    //             };
-    //         });
-    //     }
-    //     return $query->count();
-    // }
 }
 
 

@@ -1,7 +1,7 @@
 import { fetchGetOperation } from "../util/fetch.js"
 import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accountUIOperations.js"
 import { open_modal } from "./modalOperation.js"
-import { setLineMessageForUpdating } from "./uiManager.js"
+import { setLineMessageForUpdating } from "./accountUIOperations.js"
 
 // アカウント編集モーダルの初期化
 export const initializeAccountEditModal =() =>{

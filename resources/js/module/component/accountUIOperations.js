@@ -169,6 +169,17 @@ export const setAccountDataForEditing = (res) => {
       });
 };
 
+
+
+export const setLineMessageForUpdating = (res) =>{
+      return new Promise((resolve) => {
+            const message_Input = document.querySelector(".js_line_message_input")
+            message_Input.value = res
+            resolve()
+      });
+}
+
+
 // ステータス変更処理
 export const initializeAccountStatusManager =()=>{
       const statuses = document.querySelectorAll(".js_status_choices")

@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-
 class LineAccountController extends Controller
 {
 
     const MESSAGES_PER_PAGE = 20;
     public function index(){
         $user = Auth::user();
-        // ステータスごとのアカウントを1つのクエリで取得
-        $subQuery = LineAccount::query()
+        $statuses = ['1', '2', '3', '4'];
+
+        $baseQuery = LineAccount::query()
             ->where('user_id', $user->id)
             ->select([
                 "line_accounts.id",
@@ -47,21 +47,36 @@ class LineAccountController extends Controller
                     FROM user_message_reads
                     WHERE admin_account_id = line_accounts.id
                 ) as unread_count')
-            ])
-            ->whereIn('account_status', ['1', '2', '3', '4']);
-            // ->limit(self::MESSAGES_PER_PAGE);
+            ]);
 
-            // メインクエリ
-            $accounts = LineAccount::from(DB::raw("({$subQuery->toSql()}) as grouped_accounts"))
-                ->mergeBindings($subQuery->getQuery())
-                ->with(['userEntity' => function($query) {
-                    $query->select('id', 'related_id', 'entity_uuid')
-                        ->where('entity_type', 'admin');
-                }])
-                ->orderBy('account_status')
-                ->orderBy('unread_count', 'desc')  
-                ->get()
-                ->groupBy('account_status');
+        // 最初のクエリを作成
+        $firstQuery = clone $baseQuery;
+        $firstQuery->where('account_status', $statuses[0])
+            ->limit(self::MESSAGES_PER_PAGE);
+
+        $subQuery = $firstQuery;
+
+        // 残りのステータスのクエリを追加
+        for ($i = 1; $i < count($statuses); $i++) {
+            $nextQuery = clone $baseQuery;
+            $nextQuery->where('account_status', $statuses[$i])
+                ->limit(self::MESSAGES_PER_PAGE);
+            
+            $subQuery = $subQuery->unionAll($nextQuery);
+        }
+
+        // メインクエリ
+        $accounts = LineAccount::from(DB::raw("({$subQuery->toSql()}) as grouped_accounts"))
+            ->mergeBindings($subQuery->getQuery())
+            ->with(['userEntity' => function($query) {
+                $query->select('id', 'related_id', 'entity_uuid')
+                    ->where('entity_type', 'admin');
+            }])
+            ->orderBy('account_status')
+            ->orderBy('unread_count', 'desc')  
+            ->orderBy('created_at', 'desc')  // 作成日時の降順
+            ->get()
+            ->groupBy('account_status');
 
         $active_accounts = $accounts["1"] ?? collect();
         $inactive_accounts = $accounts["2"] ?? collect();
@@ -132,7 +147,7 @@ class LineAccountController extends Controller
         $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
 
-        $users = ChatUser::limit(20)->whereNotIn('id', function($query) {
+        $users = ChatUser::limit(15)->whereNotIn('id', function($query) {
                 // サブクエリ
                 $query->select('chat_user_id')
                     ->from('block_chat_users')
@@ -275,6 +290,59 @@ class LineAccountController extends Controller
         }
     
         return response()->json($users);
+    }
+
+
+    public function fetchScrollAcocuntData(string $admin_id, string $status_id, $start){
+        try{
+
+            $accountData = LineAccount::query()
+                ->where('user_id', $admin_id)
+                ->select([
+                    "line_accounts.id",
+                    "line_accounts.account_name",
+                    "line_accounts.created_at",
+                    "line_accounts.account_status",
+                    DB::raw('DATE_FORMAT(
+                        (SELECT MAX(latest_date) 
+                        FROM (
+                            SELECT created_at as latest_date
+                            FROM user_messages
+                            WHERE user_messages.admin_id = line_accounts.id
+                            UNION ALL
+                            SELECT created_at as latest_date
+                            FROM user_message_images
+                            WHERE user_message_images.admin_id = line_accounts.id
+                        ) as combined_dates), "%Y-%m-%d %H:%i"
+                    ) as latest_message_date'),
+                    DB::raw('(
+                        SELECT COALESCE(SUM(unread_count), 0)
+                        FROM user_message_reads
+                        WHERE admin_account_id = line_accounts.id
+                    ) as unread_count'),
+                    DB::raw('(
+                        SELECT entity_uuid 
+                        FROM user_entities 
+                        WHERE related_id = line_accounts.id
+                        AND entity_type = "admin"
+                    ) as entity_uuid')
+                ])
+                ->where("account_status", $status_id)
+                ->orderBy('unread_count', 'desc')  // 未読数でソート
+                ->orderBy('created_at', 'desc')  // 作成日時の降順
+                ->skip($start)
+                ->take(self::MESSAGES_PER_PAGE)
+                ->get();
+
+            $categories = Cache::remember('account_status', 60*24, function() {
+                return AccountStatus::all();
+            });
+            return response()->json(["accountData" => $accountData, "categories" => $categories]);
+        }catch(\Exception $e){
+            Log::debug($e);
+        }
+        
+
     }
     
 }

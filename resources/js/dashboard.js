@@ -2,6 +2,7 @@ import { initializeAccountDeletionModal, initializeAccountEditModal, initializeB
 import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
+import InfiniteScroll from "./module/util/InfiniteScroll.js";
 
 // モーダル初期設定
 // アカウント編集モーダル処理
@@ -72,6 +73,21 @@ if(status_update){
     setTimeout(() => {
         success_alert.style.display = "none"
     }, 2000);
+}
+
+
+
+// 無限スクロール処理
+{
+    const elements = document.querySelectorAll(".dashboard__wrapper-table");
+    const admin_id = document.getElementById("js_admin_account_id").value 
+    const fileType = "dashboard"
+    
+    elements.forEach((element)=>{
+        const base_url = `/api/account/lists/${admin_id}/${element.getAttribute("data-status-id")}`
+        const parentElement = document.querySelector(`.js_parentEl${element.getAttribute("data-status-id")}`)
+        new InfiniteScroll(element, base_url, parentElement, fileType)
+    })
 }
 
 

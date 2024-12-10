@@ -5,6 +5,7 @@
 @endsection
 @section('main')
 <input type="hidden" value="{{$user->id}}" id="js_admin_account_id">
+<input type="hidden" value={{Route::current()->parameter('id');}} id="js_line_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
       @php
             // セッションに 'success' キーが存在するかチェック
@@ -26,14 +27,13 @@
 
       {{-- @foreach ($line_accounts as $status => $accounts) --}}
       <div class="dashboard__wrapper-table-area">
-
             <div class="dashboard__wrapper-table-box p-20">
                   <div class="dashboard__wrapper-table-ttl">
                         <p>使用中アカウント一覧</p>
                         {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
-            <div class="dashboard__wrapper-table">
+            <div class="dashboard__wrapper-table" data-status-id="1">
                   <table class="table table-striped">
                         <thead>
                               <tr>
@@ -46,10 +46,10 @@
                                     <th scope="col">管理</th>
                               </tr>
                         </thead>
-                        <tbody class="js_table">
+                        <tbody class="js_table js_parentEl1">
                               
                               @foreach ($active_accounts as $account)
-                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
+                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}"　>
                                           <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
                                           <td w20><?= $account["account_name"]?></td>
 
@@ -85,6 +85,9 @@
                         
                         </tbody>
                   </table>
+                  <div class="loader-container">
+				<div class="loader2 js_loader hidden"></div>
+			</div>
             </div> 
       </div>
       <div class="dashboard__wrapper-table-area">
@@ -95,7 +98,7 @@
                         {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
-            <div class="dashboard__wrapper-table">
+            <div class="dashboard__wrapper-table" data-status-id="2">
                   <table class="table table-striped">
                         <thead>
                               <tr>
@@ -108,7 +111,7 @@
                                     <th scope="col">管理</th>
                               </tr>
                         </thead>
-                        <tbody class="js_table">
+                        <tbody class="js_table js_parentEl2">
                               
                               @foreach ($inactive_accounts as $account)
                                     <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
@@ -147,6 +150,9 @@
                         
                         </tbody>
                   </table>
+                  <div class="loader-container">
+				<div class="loader2 js_loader hidden"></div>
+			</div>
             </div> 
       </div>
       <div class="dashboard__wrapper-table-area">
@@ -157,7 +163,7 @@
                         {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
-            <div class="dashboard__wrapper-table">
+            <div class="dashboard__wrapper-table" data-status-id="3">
                   <table class="table table-striped">
                         <thead>
                               <tr>
@@ -170,7 +176,7 @@
                                     <th scope="col">管理</th>
                               </tr>
                         </thead>
-                        <tbody class="js_table">
+                        <tbody class="js_table js_parentEl3" >
                               
                               @foreach ($suspended_accounts as $account)
                                     <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
@@ -209,6 +215,9 @@
                         
                         </tbody>
                   </table>
+                  <div class="loader-container">
+				<div class="loader2 js_loader hidden"></div>
+			</div>
             </div> 
       </div>
       <div class="dashboard__wrapper-table-area">
@@ -219,7 +228,7 @@
                         {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
-            <div class="dashboard__wrapper-table">
+            <div class="dashboard__wrapper-table" data-status-id="4">
                   <table class="table table-striped">
                         <thead>
                               <tr>
@@ -232,7 +241,7 @@
                                     <th scope="col">管理</th>
                               </tr>
                         </thead>
-                        <tbody class="js_table">
+                        <tbody class="js_table js_parentEl4">
                               
                               @foreach ($banned_accounts as $account)
                                     <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
@@ -271,6 +280,9 @@
                         
                         </tbody>
                   </table>
+                  <div class="loader-container">
+				<div class="loader2 js_loader hidden"></div>
+			</div>
             </div> 
       </div>
       {{-- @endforeach --}}

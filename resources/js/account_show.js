@@ -56,15 +56,15 @@ const btn = document.querySelector(".js_block_cancel")
 const modal = document.getElementById("js_block_account_modal")
 close_modal_by_click(modal, btn)
 
-
+// 無限スクロール処理
 {
       const element = document.querySelector(".dashboard__wrapper-table");
-      const loader = document.querySelector(".js_loader")
-      const start = document.querySelectorAll(".js_chatUser_id").length
       const admin_id = document.getElementById("js_line_account_id").value 
-      const url = `/api/user/lists/${admin_id}/${start}`
-
-      new InfiniteScroll(element, loader, url)
+      const base_url = `/api/user/lists/${admin_id}`
+      const parentElement = document.querySelector(".js_table")
+      const fileType = "accountShow"
+      
+      new InfiniteScroll(element, base_url, parentElement, fileType)
 
 }
 

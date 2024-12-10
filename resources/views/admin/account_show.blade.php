@@ -172,9 +172,6 @@
 @if ($errors->any())
 	@php
 		$currentRoute = session('route_name');
-
-		dump($currentRoute);
-
 	@endphp
 	@if ($currentRoute === 'user.edit')
 		<script>
@@ -188,11 +185,8 @@
 				
 				action = action.replace(':id', id);
 				form.setAttribute('action', action)
-
 		</script>
-	
 	@endif
-
 @endif
 
 <script src="{{ mix("js/account_show.js")}}"></script>

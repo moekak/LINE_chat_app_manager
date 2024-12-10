@@ -74,4 +74,51 @@ export const createBroadcastMessageRow = (data, id) =>{
       `
 }
 
+export const createAccountDataRow = (res, categories) =>{
+      const style = res["unread_count"] > 0 ? "flex" : "none";
+      const statusMap = {
+            "1": "使用中",
+            "2": "未使用",
+            "3": "停止",
+            "4": "バン"
+      };
+      const status = statusMap[res["account_status"]];
+      const createdAtTokyo = formateDateToAsia(res["created_at"])
+      return `
+            <tr class="js_account_id" data-id="${res["entity_uuid"]}">
+                  <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
+                  <td w20>${res["account_name"]}</td>
+
+                  <td class=" text-center total_message-count">
+                        <div class="message_count js_mesage_count js_total_count" style="display: ${style}; font-weight: bold;">${res["unread_count"]}</div>
+                  </td>
+                  <td data-id=${res["id"]} class="js_status" style="color: #008000; cursor: pointer;">
+                        <div class="btn-group">
+                              <button class="btn btn-secondary btn-sm dropdown-toggle js_status_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ${status}
+                              </button>
+                              <ul class="dropdown-menu">
+                                    ${categories.filter(category => category.status !== status).map(category => `
+                                                <li class="dropdown-item js_status_choices" 
+                                                      data-current-status="${status}"
+                                                      data-status-name="${category.status}"
+                                                      data-status-id="${category.id}"
+                                                      data-account-id="${res["id"]}">
+                                                      ${category.status}
+                                                </li>
+                                    `).join('')}
+                              </ul>
+                        </div>
+                  </td>
+                  <td class="js_latest_message_date">${res["latest_message_date"] ?? ""}</td>
+                  <td>${createdAtTokyo}</td>
+                  <td class="operation">
+                        <a href="https://chat-manager.info/account/show/${res["id"]}"><button class="operation_icon"><img src="/img/icons8-user-24.png" alt=""></button></a>
+                        <button class="operation_icon js_edit_account_btn" data-id=${res["id"]}><img src="/img/icons8-edit-24.png" alt=""></button>
+                        <button class="operation_icon js_send_message_btn" data-id=${res["id"]}><img src="/img/icons8-send-24.png" alt=""></button>
+                        <button class="operation_icon js_delete_account_btn" type="submit" data-id=${res["id"]} data-name=${res["account_name"]}><img src="/img/icons8-delete-24.png" alt=""></button>
+                  </td>
+            </tr>
+      `
+}
 
