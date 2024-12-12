@@ -29,6 +29,8 @@ class UserBlockController extends Controller
         $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
             return [$userId => $messageService->hasUserBlockHistroy($userId)];
         });
+
+
         
         $block_users = ChatUser::whereIn("id", $block_users_ids)
             ->where('account_id', $id)

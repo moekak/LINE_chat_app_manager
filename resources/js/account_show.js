@@ -2,13 +2,11 @@
 import { close_modal, close_modal_by_click } from "./module/component/modalOperation.js";
 import { changeDisplayOrder} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
-import { fetchSpecificUserInfo } from "./module/component/fetchUserData.js";
-import { initializeAccountBlockModal } from "./module/component/accountModalInitializers.js";
+import { initializeUserModals } from "./module/component/accountModalInitializers.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
 
-
-// ブロックモーダル初期化
-initializeAccountBlockModal(socket)
+//ユーザー管理に関連するモーダルの初期化
+initializeUserModals(socket)
 
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "admin")
@@ -24,17 +22,6 @@ socket.on("send_image", (sender_id, receiver_id, sender_type)=>{
       // メッセージカウントの表示をリアルタイムで更新する
       changeDisplayOrder(sender_id, receiver_id, sender_type)
 })
-
-
-
-// ユーザー編集処理
-const edit_btns = document.querySelectorAll(".js_edit_user_btn")
-const editModal = document.getElementById("js_edit_account_modal")
-
-edit_btns.forEach((edit_btn)=>{
-      fetchSpecificUserInfo(edit_btn, editModal)
-})
-
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
 document.addEventListener("DOMContentLoaded", function () {

@@ -5,9 +5,12 @@ export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
       const latestMessageDate = res["latest_message_date"] ? formateDateToAsia(res["latest_message_date"]) : ""
 
       const display = res["unread_count"] > 0 ? "flex" : "none"
+
+      console.log(res);
+      
       
       return `
-            <tr data-id=${sender_uuid} class="js_chatUser_id">
+            <tr data-id=${res["entity_uuid"]} class="js_chatUser_id">
                   <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value=${res["id"]}></th>
                   <td w20>${res["line_name"]}</td>
                   <td data-id=${res["id"]}>
@@ -28,9 +31,12 @@ export const createMessageRow = (res, admin_account_id, sender_uuid) =>{
       const latestMessageDate = formateDateToAsia()
 
       const display = res[0]["unread_count"] > 0 ? "flex" : "none"
+
+      console.log(res);
+      
       
       return `
-            <tr data-id=${sender_uuid} class="js_chatUser_id">
+            <tr data-id=${res[0]["entity_uuid"]} class="js_chatUser_id">
                   <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value=${res[0]["id"]}></th>
                   <td w20>${res[0]["line_name"]}</td>
                   <td data-id=${res[0]["id"]}>

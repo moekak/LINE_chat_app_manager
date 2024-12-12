@@ -21,7 +21,7 @@ class ChatUserController extends Controller
         // created_atをAsia/Tokyoに変換し、フォーマット
         $chatUser->created_at = $chatUser->created_at->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
 
-        $chatUser["message_count"] = $message_count;
+        $chatUser["unread_count"] = $message_count;
         return response()->json([$chatUser, "admin_account_id" => $receiver_uuid], 200);
     }
 

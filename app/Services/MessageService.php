@@ -42,12 +42,28 @@ class MessageService{
                         ];
                   }
             }
-
-            // print_r($periods);
-            // exit;
-
             return $periods;
       }
+      public function buildBlockConditionsForAccount(array $blockPeriods, string $column): string {
+            $conditions = [];
+                  
+                  foreach ($blockPeriods as $userId => $userPeriods) {
+                  // userPeriodsは配列の配列なので、さらにループが必要
+                  foreach ($userPeriods as $period) {
+                        if (!isset($period['start']) || !isset($period['end'])) {
+                              continue;
+                        }
+                        
+                        // Carbonオブジェクトのままなので->format()を使用
+                        $start = $period['start']->format('Y-m-d H:i:s');
+                        $end = $period['end']->format('Y-m-d H:i:s');
+                        $conditions[] = "($column BETWEEN '$start' AND '$end')";
+                  }
+            }
+                  
+            return empty($conditions) ? '1=0' : implode(' OR ', $conditions);
+      }
+
 
 
 }

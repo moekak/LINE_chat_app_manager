@@ -1,8 +1,7 @@
 
-import { initializeAccountBlockModal, initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal } from "../component/accountModalInitializers.js";
+import {initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeUserModals } from "../component/accountModalInitializers.js";
 import { initializeAccountStatusManager } from "../component/accountUIOperations.js";
 import {createAccountDataRow, createMessageRowForFetch} from "../component/elementTemplate.js";
-import { fetchSpecificUserInfo } from "../component/fetchUserData.js";
 import { fetchPostOperation } from "./fetch.js";
 import socket from "./socket.js";
 import accountStateManager from "./AccountStateManager.js";
@@ -39,6 +38,7 @@ class InfiniteScroll{
                               "dataCount": this.dataCount,
                               "accountList" : this.fileType == "accountShow" ? this.userAccount : this.accountList
                         }
+
                         try {
                               const response = await fetchPostOperation(data, this.baseUrl);
                               const hasNoData = response["accountData"] ? response["accountData"].length === 0 : response.length === 0
@@ -53,18 +53,8 @@ class InfiniteScroll{
                                           response.forEach((res) => {
                                                 this.parentElement.insertAdjacentHTML("beforeend",createMessageRowForFetch(res, res["account_id"], res["uuid"]));
                                           });
-                                          
-                                          // ユーザー編集処理
-                                          const edit_btns = document.querySelectorAll(".js_edit_user_btn")
-                                          const editModal = document.getElementById("js_edit_account_modal")
-
-                                          edit_btns.forEach((edit_btn)=>{
-                                                fetchSpecificUserInfo(edit_btn, editModal)
-                                          })
-                                          
-                                          // ブロックモーダル初期化
-                                          initializeAccountBlockModal(socket)
-
+                                           //ユーザー管理に関連するモーダルの初期化
+                                          initializeUserModals(socket)
                                     }else{
                                           response["accountData"].forEach((res)=>{
                                                 this.parentElement.insertAdjacentHTML("beforeend", createAccountDataRow(res, response["categories"]));

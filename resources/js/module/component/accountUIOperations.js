@@ -1,8 +1,9 @@
 import DynamicListManager from "../util/DynamicListManager.js";
 import { fetchGetOperation } from "../util/fetch.js";
 import { formateDateToAsia } from "../util/formatDate.js";
+import socket from "../util/socket.js";
 import userStateManager from "../util/UserStateManager.js";
-import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal } from "./accountModalInitializers.js";
+import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeUserModals } from "./accountModalInitializers.js";
 import { createMessageRow } from "./elementTemplate.js";
 import { open_modal } from "./modalOperation.js";
 
@@ -28,7 +29,7 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
       if(sender_type == "user"){
             const elements          = document.querySelectorAll(".js_chatUser_id")
             const parentElement     = document.querySelector(".js_table")
-            console.log(sender_id);
+            console.log(sender_id + " sender id");
             
 
             for (let element of elements) {
@@ -46,18 +47,16 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
                         parentElement.removeChild(element)
                         return 
                   }
-
             }
 
             fetchGetOperation(`/api/user/${sender_id}/account/${receiver_id}`)
                   .then((res)=>{
-                        console.log(res);
-                        console.log(sender_id);
-                        
-                        
                         parentElement.insertAdjacentHTML('afterbegin', createMessageRow(res, res["admin_account_id"], sender_id));
                         userStateManager.setState(res[0]["id"])
                   })
+
+            //ユーザー管理に関連するモーダルの初期化
+            initializeUserModals(socket)
       }
       
 }
@@ -72,6 +71,8 @@ export const changeAccountDisplayOrder = (sender_id, receiver_id, sender_type, a
             
             for (let element of elemets){
                   let account_id = element.getAttribute("data-id");
+                  console.log(account_id);
+                  
                   if(account_id == receiver_id){
                         console.log("same");
                         

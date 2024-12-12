@@ -2,6 +2,7 @@ import { fetchGetOperation } from "../util/fetch.js"
 import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accountUIOperations.js"
 import { open_modal } from "./modalOperation.js"
 import { setLineMessageForUpdating } from "./accountUIOperations.js"
+import { fetchSpecificUserInfo } from "./fetchUserData.js"
 
 // アカウント編集モーダルの初期化
 export const initializeAccountEditModal =() =>{
@@ -122,4 +123,16 @@ export const initializeLineMessageUpdationModal= () =>{
             }) 
 
       })
+}
+export const initializeUserModals = (socket)=> {
+      // ユーザー編集処理
+      const edit_btns = document.querySelectorAll(".js_edit_user_btn")
+      const editModal = document.getElementById("js_edit_account_modal")
+
+      edit_btns.forEach((edit_btn)=>{
+            fetchSpecificUserInfo(edit_btn, editModal)
+      })
+      
+      // ブロックモーダル初期化
+      initializeAccountBlockModal(socket)
 }

@@ -114,7 +114,7 @@
                         <tbody class="js_table js_parentEl2">
                               
                               @foreach ($inactive_accounts as $account)
-                                    <tr class="js_account_id" data-id="{{$account["entity_uuid"]}}">
+                                    <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
                                           <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
                                           <td w20><?= $account["account_name"]?></td>
 
@@ -244,7 +244,7 @@
                         <tbody class="js_table js_parentEl4">
                               
                               @foreach ($banned_accounts as $account)
-                                    <tr class="js_account_id" data-id="{{$account["userEntity"]["entity_uuid"]}}">
+                                    <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
                                           <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
                                           <td w20><?= $account["account_name"]?></td>
 
