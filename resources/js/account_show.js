@@ -16,7 +16,6 @@ registerUser(admin_id, "admin")
 
 // チャットメッセージを受信した際
 socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type)=>{
-      
       // メッセージカウントの表示をリアルタイムで更新する
       changeDisplayOrder(actual_sender_id, actual_receiver_id, sender_type)
 })

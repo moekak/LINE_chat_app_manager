@@ -3,6 +3,7 @@ import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
+import DynamicListManager from "./module/util/DynamicListManager.js";
 
 // モーダル初期設定
 // アカウント編集モーダル処理
@@ -15,6 +16,7 @@ initializeAccountDeletionModal()
 initializeLineMessageUpdationModal()
 // モーダルを閉じる処理
 close_modal();
+
 
 // アカウント作成モーダル処理
 const create_btn    = document.getElementById("js_create_account_btn")

@@ -23,5 +23,6 @@ Route::post("/decrypt", [DecryptDataController::class, "decryptData"]);
 
 
 
-Route::get("/user/lists/{admin_id}/{start}", [LineAccountController::class, "fetchScrollData"]);
-Route::get("/account/lists/{admin_id}/{status_id}/{start}", [LineAccountController::class, "fetchScrollAcocuntData"]);
+Route::post("/user/lists/{admin_id}", [LineAccountController::class, "fetchScrollData"]);
+Route::post("/account/lists/{admin_id}/{status_id}", [LineAccountController::class, "fetchScrollAcocuntData"]);
+Route::post("/fetch/account", [LineAccountController::class, "fetchSpecificAccount"]);

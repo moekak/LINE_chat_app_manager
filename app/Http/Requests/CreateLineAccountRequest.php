@@ -77,6 +77,7 @@ class CreateLineAccountRequest extends FormRequest
                         }
 
                     } catch (\Exception $e) {
+                        Log::debug($e);
                         $fail('チャネルアクセストークンを確認できませんでした。');
                     }
 

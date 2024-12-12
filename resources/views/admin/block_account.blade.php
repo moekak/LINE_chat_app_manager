@@ -31,10 +31,10 @@
 				</thead>
 				<tbody class="js_table">
 				@foreach ($block_lists as $chat_user)
-					<tr data-id={{$chat_user["uuid"]}} class="js_chatUser_id">
+					<tr data-id={{$chat_user["entity_uuid"]}} class="js_chatUser_id">
 					<th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
 					<td w20><?= $chat_user["line_name"]?></td>
-					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"]->format('Y-m-d H:i') : ""}}</td>
+					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
 					<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 					<td class="operation">
 						<button class="operation_icon js_block_btn" data-uuid='{{$chat_user["uuid"]}}' data-name='{{$chat_user["line_name"]}}' data-id='{{$chat_user["id"]}}'><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>

@@ -1,5 +1,7 @@
+import DynamicListManager from "../util/DynamicListManager.js";
 import { fetchGetOperation } from "../util/fetch.js";
 import { formateDateToAsia } from "../util/formatDate.js";
+import userStateManager from "../util/UserStateManager.js";
 import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal } from "./accountModalInitializers.js";
 import { createMessageRow } from "./elementTemplate.js";
 import { open_modal } from "./modalOperation.js";
@@ -26,6 +28,8 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
       if(sender_type == "user"){
             const elements          = document.querySelectorAll(".js_chatUser_id")
             const parentElement     = document.querySelector(".js_table")
+            console.log(sender_id);
+            
 
             for (let element of elements) {
                   let id = element.getAttribute("data-id");
@@ -47,7 +51,12 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
 
             fetchGetOperation(`/api/user/${sender_id}/account/${receiver_id}`)
                   .then((res)=>{
+                        console.log(res);
+                        console.log(sender_id);
+                        
+                        
                         parentElement.insertAdjacentHTML('afterbegin', createMessageRow(res, res["admin_account_id"], sender_id));
+                        userStateManager.setState(res[0]["id"])
                   })
       }
       
@@ -55,14 +64,18 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
 
 
 export const changeAccountDisplayOrder = (sender_id, receiver_id, sender_type, admin_login_id) =>{
+      let hasAccount = false;
       if(sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id){
             const elemets = document.querySelectorAll(".js_account_id")
 
+            console.log(receiver_id);
+            
             for (let element of elemets){
                   let account_id = element.getAttribute("data-id");
-
                   if(account_id == receiver_id){
+                        console.log("same");
                         
+                        hasAccount == true
                         const parentElement = element.parentElement
                         const newClonedDiv = element.cloneNode(true);
                         const count_elment = newClonedDiv.querySelector(".js_total_count");
@@ -87,7 +100,11 @@ export const changeAccountDisplayOrder = (sender_id, receiver_id, sender_type, a
                   }
             }
 
-            
+            if(!hasAccount){
+                  const data = {"account_uuid": receiver_id}
+                  const dynamicListManager = new DynamicListManager(data, "/api/fetch/account");
+                  dynamicListManager.fetchData() 
+            }
       }
 }
 
@@ -110,6 +127,7 @@ export const handleEditUserName = async (res, modal, type)=>{
 
 // アカウント削除処理
 export const setActionUrl = (id, className) =>{
+
       let form = document.querySelector(`.${className}`)
       let action  = form.getAttribute("action");
       
@@ -129,6 +147,8 @@ export const setActionUrl = (id, className) =>{
 
       action = action.replace("ID_PLACEHOLDER", id);
       form.setAttribute("action", action);
+
+      
 }
 // アカウント削除処理
 export const setActionFullUrl = (id, className) =>{

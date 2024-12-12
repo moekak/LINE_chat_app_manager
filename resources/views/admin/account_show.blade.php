@@ -56,21 +56,21 @@
 				</thead>
 				<tbody class="js_table">
 				@foreach ($chat_users as $chat_user)
-					<tr data-id={{$chat_user["uuid"]}} class="js_chatUser_id">
+					<tr data-id={{$chat_user["entity_uuid"]}} class="js_chatUser_id">
 					<th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
 					<td w20><?= $chat_user["line_name"]?></td>
 					
 					<td  data-id={{$chat_user->id}}>
-						<div class="message_count js_message_count" style="display: {{ $chat_user['message_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
-							{{ $chat_user["message_count"]}}
+						<div class="message_count js_message_count" style="display: {{ $chat_user['unread_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
+							{{ $chat_user["unread_count"]}}
 						</div>
 					</td>
-					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"]->format('Y-m-d H:i') : ""}}</td>
-					<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
+					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
+					<td><?= $chat_user["created_at"] ?></td>
 					<td class="operation">
 						<button class="operation_icon"><a href="https://chat-system.info/<?= $id?>/<?=$chat_user["id"]?>"><img src="{{asset("img/icons8-message-24.png")}}" alt=""></a></button>
 						<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
-						<button class="operation_icon js_block_btn" data-uuid={{$chat_user["uuid"]}} data-name={{$chat_user["line_name"]}} data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
+						<button class="operation_icon js_block_btn" data-uuid="{{$chat_user["entity_uuid"]}}" data-name="{{$chat_user["line_name"]}}" data-id="{{$chat_user["id"]}}"><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
 					</td>
 					</tr>
 				@endforeach
@@ -97,7 +97,7 @@
 		</ul>   
 	</div>  
 	@endif
-	<form action="{{route("user.update", ["id"=> ":id"])}}" method="post" class="js_edit_account_form">
+	<form action="{{route("user.update", ["id"=> "ID_PLACEHOLDER"])}}" method="post" class="js_edit_account_form">
 		@csrf
 		<div class="mb-3">
 			<label for="formGroupExampleInput" class="form-label ">ユーザー名 <span style="color: red; font-size: 13px;">※</span></label>
