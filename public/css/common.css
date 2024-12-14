@@ -242,6 +242,9 @@ p, ul {
 .operation_icon:nth-child(1){
     background-color: #20a8d7;
 }
+.js_redirect_btn{
+    background-color: #20a8d7;
+}
 .operation_icon:nth-child(2){
     background-color: #f9bb3b;
 }

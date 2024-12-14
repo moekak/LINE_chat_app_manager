@@ -1,6 +1,6 @@
 
 import {initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeUserModals } from "../component/accountModalInitializers.js";
-import { initializeAccountStatusManager } from "../component/accountUIOperations.js";
+import { handleChatRedirect, initializeAccountStatusManager } from "../component/accountUIOperations.js";
 import {createAccountDataRow, createMessageRowForFetch} from "../component/elementTemplate.js";
 import { fetchPostOperation } from "./fetch.js";
 import socket from "./socket.js";
@@ -51,10 +51,11 @@ class InfiniteScroll{
                                     
                                     if(this.fileType === "accountShow"){
                                           response.forEach((res) => {
-                                                this.parentElement.insertAdjacentHTML("beforeend",createMessageRowForFetch(res, res["account_id"], res["uuid"]));
+                                                this.parentElement.insertAdjacentHTML("beforeend",createMessageRowForFetch(res, res["account_id"]));
                                           });
                                            //ユーザー管理に関連するモーダルの初期化
                                           initializeUserModals(socket)
+                                          await handleChatRedirect()
                                     }else{
                                           response["accountData"].forEach((res)=>{
                                                 this.parentElement.insertAdjacentHTML("beforeend", createAccountDataRow(res, response["categories"]));
@@ -67,6 +68,7 @@ class InfiniteScroll{
                                           initializeAccountDeletionModal()
                                           // ステータス変更
                                           initializeAccountStatusManager()
+                                          await handleChatRedirect()
                                     }
                               }
                         } catch (error) {

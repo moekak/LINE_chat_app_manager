@@ -19,14 +19,19 @@ export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
                   <td class="js_latest_message_date">${latestMessageDate}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                        <button class="operation_icon"><a href="https://chat-system.info/${admin_account_id}/${res["id"]}"><img src="/img/icons8-message-24.png" alt=""></a></button>
+                        <form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
+                              <input type="hidden" name="admin_id" class="js_admin_el">
+                              <input type="hidden" name="user_id" class="js_user_el">
+                              <input type="hidden" name="token" class="js_token">
+                              <button type="submit" class="operation_icon js_redirect_btn" data-user-id="${res["id"]}" data-admin-id=${admin_account_id}><img src="/img/icons8-message-24.png" alt=""></button>
+                        </form>
                         <button class="operation_icon js_edit_user_btn" data-id=${res["id"]}><img src="/img/icons8-edit-24.png" alt=""></button>
                         <button class="operation_icon js_block_btn" data-uuid=${res["entity_uuid"]} data-name=${res["line_name"]} data-id=${res["id"]}><img src="/img/icons8-no-entry-24.png" alt=""></button>
                   </td>
             </tr>
       `
 }
-export const createMessageRow = (res, admin_account_id, sender_uuid) =>{
+export const createMessageRow = (res, admin_account_id) =>{
       const createdAtTokyo = formateDateToAsia(res[0]["created_at"])
       const latestMessageDate = formateDateToAsia()
 
@@ -45,7 +50,12 @@ export const createMessageRow = (res, admin_account_id, sender_uuid) =>{
                   <td class="js_latest_message_date">${latestMessageDate}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                        <button class="operation_icon"><a href="https://chat-system.info/${admin_account_id}/${res[0]["id"]}"><img src="/img/icons8-message-24.png" alt=""></a></button>
+                        <form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
+                              <input type="hidden" name="admin_id" class="js_admin_el">
+                              <input type="hidden" name="user_id" class="js_user_el">
+                              <input type="hidden" name="token" class="js_token">
+                              <button type="submit" class="operation_icon js_redirect_btn" data-user-id="${res[0]["id"]}" data-admin-id=${admin_account_id}><img src="/img/icons8-message-24.png" alt=""></button>
+                        </form>
                         <button class="operation_icon js_edit_user_btn" data-id=${res[0]["id"]}><img src="/img/icons8-edit-24.png" alt=""></button>
                         <button class="operation_icon js_block_btn" data-uuid=${res[0]["entity_uuid"]} data-name=${res[0]["line_name"]} data-id=${res[0]["id"]}><img src="/img/icons8-no-entry-24.png" alt=""></button>
                   </td>

@@ -117,8 +117,8 @@ return [
         ],
         'pool' => [
             'min_connections' => 5,
-            'max_connections' => 20,
-            'wait_timeout' => 20,
+            'max_connections' => 50,
+            'wait_timeout' => 10,
         ]
 
     ],

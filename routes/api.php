@@ -6,6 +6,7 @@ use App\Http\Controllers\DecryptDataController;
 use App\Http\Controllers\GreetingMessageController;
 use App\Http\Controllers\LineAccountController;
 use App\Http\Controllers\LineMessageController;
+use App\Http\Controllers\RedirectTokenController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,3 +27,5 @@ Route::post("/decrypt", [DecryptDataController::class, "decryptData"]);
 Route::post("/user/lists/{admin_id}", [LineAccountController::class, "fetchScrollData"]);
 Route::post("/account/lists/{admin_id}/{status_id}", [LineAccountController::class, "fetchScrollAcocuntData"]);
 Route::post("/fetch/account", [LineAccountController::class, "fetchSpecificAccount"]);
+
+Route::get("/token/generate", [RedirectTokenController::class, "fetchToken"]);

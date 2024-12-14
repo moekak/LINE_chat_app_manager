@@ -1,9 +1,10 @@
 
 import { close_modal, close_modal_by_click } from "./module/component/modalOperation.js";
-import { changeDisplayOrder} from "./module/component/accountUIOperations.js";
+import { changeDisplayOrder, handleChatRedirect} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import { initializeUserModals } from "./module/component/accountModalInitializers.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
+import { fetchGetOperation } from "./module/util/fetch.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -13,14 +14,14 @@ registerUser(admin_id, "admin")
 // サーバーへの接続確認
 
 // チャットメッセージを受信した際
-socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type)=>{
+socket.on("chat message", async (actual_sender_id, actual_receiver_id, sender_type)=>{
       // メッセージカウントの表示をリアルタイムで更新する
-      changeDisplayOrder(actual_sender_id, actual_receiver_id, sender_type)
+      await changeDisplayOrder(actual_sender_id, actual_receiver_id, sender_type)
 })
 // チャット画像を受信した際
-socket.on("send_image", (sender_id, receiver_id, sender_type)=>{
+socket.on("send_image",async  (sender_id, receiver_id, sender_type)=>{
       // メッセージカウントの表示をリアルタイムで更新する
-      changeDisplayOrder(sender_id, receiver_id, sender_type)
+      await changeDisplayOrder(sender_id, receiver_id, sender_type)
 })
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
@@ -54,5 +55,10 @@ close_modal_by_click(modal, btn)
 
 }
 
+//サイト遷移の処理
+{
+
+      handleChatRedirect()
+}
 
 

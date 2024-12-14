@@ -25,7 +25,7 @@ export const increateMessageCount = (sender_id, type) => {
 
 
 // 管理画面のshowページのユーザー表示更新(リアルタイムで)
-export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
+export const changeDisplayOrder = async (sender_id, receiver_id, sender_type) =>{
       if(sender_type == "user"){
             const elements          = document.querySelectorAll(".js_chatUser_id")
             const parentElement     = document.querySelector(".js_table")
@@ -49,14 +49,13 @@ export const changeDisplayOrder = (sender_id, receiver_id, sender_type) =>{
                   }
             }
 
-            fetchGetOperation(`/api/user/${sender_id}/account/${receiver_id}`)
-                  .then((res)=>{
-                        parentElement.insertAdjacentHTML('afterbegin', createMessageRow(res, res["admin_account_id"], sender_id));
-                        userStateManager.setState(res[0]["id"])
-                  })
+            const response = await fetchGetOperation(`/api/user/${sender_id}/account/${receiver_id}`)
+            parentElement.insertAdjacentHTML('afterbegin', createMessageRow(response, response["admin_account_id"]));
+            userStateManager.setState(response[0]["id"])
 
             //ユーザー管理に関連するモーダルの初期化
             initializeUserModals(socket)
+            await handleChatRedirect()
       }
       
 }
@@ -251,3 +250,30 @@ export const initializeAccountStatusManager =()=>{
             })
       }
 }
+
+
+export const handleChatRedirect = async () => {
+      const redirect_btns = document.querySelectorAll(".js_redirect_btn");
+      redirect_btns.forEach((btn) => {
+            btn.addEventListener("click", async (e) => {
+                  let admin_id = e.currentTarget.getAttribute("data-admin-id")
+                  let user_id = e.currentTarget.getAttribute("data-user-id")
+                  e.preventDefault();
+                  await submitRedirectForm(admin_id, user_id);
+            });
+      });
+};
+      
+const submitRedirectForm = async (adminId, userId) => {
+      const token = await fetchGetOperation("/api/token/generate");
+      const tokenElement = document.querySelector(".js_token");
+      const user_id = document.querySelector(".js_user_el")
+      const admin_id = document.querySelector(".js_admin_el")
+
+      tokenElement.value = token;
+      user_id.value= userId
+      admin_id.value= adminId
+
+      const form = document.querySelector(".js_redirect_form");
+      form.submit();
+};
