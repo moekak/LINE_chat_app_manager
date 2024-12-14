@@ -23,14 +23,7 @@ class UserBlockController extends Controller
     {
 
         // ブロックユーザー一覧を取得
-        // 配列を返す(pluck)
-        $messageService = new MessageService();
         $block_users_ids = BlockChatUser::where("is_blocked", "1")->pluck("chat_user_id");
-        $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
-            return [$userId => $messageService->hasUserBlockHistroy($userId)];
-        });
-
-
         
         $block_users = ChatUser::whereIn("id", $block_users_ids)
             ->where('account_id', $id)
@@ -40,43 +33,16 @@ class UserBlockController extends Controller
                 'chat_users.line_name',
                 'chat_users.id',
             ])
-            ->get()
-            ->map(function ($user) use ($blockPeriodsList, $messageService) {
-                // ユーザーのブロック期間を取得
-                $blockPeriods = $blockPeriodsList->get($user->id, []);
+            ->selectSub(
+                DB::table('message_summaries')
+                    ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
+                    ->whereRaw('admin_id = ?', [$id])
+                    ->whereColumn('user_id', 'chat_users.id')
+                    ->limit(1),  // 最新の1件のみ取得
+                'latest_message_date'
+            )
+            ->get();
 
-                if (!empty($blockPeriods)) {
-                    // 動的条件を生成
-                    $conditions = $messageService->buildBlockConditions($blockPeriods, 'created_at');
-                } else {
-                    $conditions = null; // 条件がない場合
-                }
-
-                // 最新メッセージ日時を動的に取得
-                $latestMessageDate = DB::table('user_messages')
-                    ->select('created_at')
-                    ->where('user_id', $user->id)
-                    ->when($conditions, function ($query, $conditions) {
-                        // ブロック期間があれば条件を追加
-                        return $query->whereRaw("NOT ($conditions)");
-                    })
-                    ->unionAll(
-                        DB::table('user_message_images')
-                            ->select('created_at')
-                            ->where('user_id', $user->id)
-                            ->when($conditions, function ($query, $conditions) {
-                                return $query->whereRaw("NOT ($conditions)");
-                            })
-                    )
-                    ->max('created_at');
-
-                // 結果をフォーマット
-                $user->latest_message_date = $latestMessageDate
-                    ? Carbon::parse($latestMessageDate)->format('Y-m-d H:i')
-                    : null;
-
-                return $user;
-            });
 
         // userUUIDと管理者アカウントのデータを取得
         $user = Auth::user();
@@ -87,39 +53,6 @@ class UserBlockController extends Controller
         return view("admin.block_account", ["block_lists" => $block_users, "user_uuid"=> $user_uuid, "account_data" => $account_data]);
     }
 
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -133,11 +66,4 @@ class UserBlockController extends Controller
         return redirect()->route("account.block.user", ['id' => $admin_id])->with("success", "ブロック解除に成功しました");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

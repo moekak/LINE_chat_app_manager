@@ -23,12 +23,6 @@ class LineAccountController extends Controller
 
     const MESSAGES_PER_PAGE = 20;
     public function index(){
-        $messageService = new MessageService();
-        // まず全てのブロック情報を取得
-        $block_users_ids = BlockChatUser::pluck("chat_user_id");
-        $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
-            return [$userId => $messageService->hasUserBlockHistroy($userId)];
-        });
         $user = Auth::user();
 
         $accounts = LineAccount::query()
@@ -39,48 +33,21 @@ class LineAccountController extends Controller
                 "line_accounts.created_at",
                 "line_accounts.account_status",
             ])
-            ->selectSub(function ($query) use ($blockPeriodsList, $messageService) {
-                $query->selectRaw('DATE_FORMAT(
-                    (SELECT MAX(latest_date) 
-                    FROM (
-                        SELECT m.created_at as latest_date
-                        FROM user_messages m
-                        INNER JOIN chat_users cu ON m.user_id = cu.id
-                        WHERE m.admin_id = line_accounts.id
-                        AND NOT EXISTS (
-                            SELECT 1 FROM chat_users cu2 
-                            WHERE cu2.id = m.user_id 
-                            AND EXISTS (
-                                SELECT 1 FROM block_chat_users b 
-                                WHERE b.chat_user_id = cu2.id 
-                                AND b.is_blocked = 1 
-                                AND (' . $messageService->buildBlockConditionsForAccount($blockPeriodsList->toArray(), 'm.created_at') . ')
-                            )
-                        )
-                        UNION ALL
-                        SELECT mi.created_at as latest_date
-                        FROM user_message_images mi
-                        INNER JOIN chat_users cu ON mi.user_id = cu.id
-                        WHERE mi.admin_id = line_accounts.id
-                        AND NOT EXISTS (
-                            SELECT 1 FROM chat_users cu2 
-                            WHERE cu2.id = mi.user_id 
-                            AND EXISTS (
-                                SELECT 1 FROM block_chat_users b 
-                                WHERE b.chat_user_id = cu2.id 
-                                AND b.is_blocked = 1 
-                                AND (' . $messageService->buildBlockConditionsForAccount($blockPeriodsList->toArray(), 'mi.created_at') . ')
-                            )
-                        )
-                    ) as combined_dates), "%Y-%m-%d %H:%i"
-                )');
-            }, 'latest_message_date')
             // 既存のselectSub部分は変更なし
             ->selectSub(
                 DB::table('user_message_reads')
                     ->select(DB::raw('COALESCE(SUM(unread_count), 0)'))
                     ->whereColumn('admin_account_id', 'line_accounts.id'),
                 'unread_count'
+            )
+            ->selectSub(
+                DB::table('message_summaries')
+                    ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
+                    ->whereColumn('admin_id', 'line_accounts.id')
+                    ->whereNotNull('latest_user_message_date')  // nullを除外
+                    ->orderBy('latest_user_message_date', 'desc')  // 日付で降順ソート
+                    ->limit(1),  // 最新の1件のみ取得
+                'latest_message_date'
             )
             ->addSelect([
                 'entity_uuid' => DB::table('user_entities')
@@ -158,15 +125,9 @@ class LineAccountController extends Controller
 
     public function show(string $id)
     {
-        $messageService = new MessageService();
         $user = Auth::user();
         $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
         $account_data = LineAccount::where("user_id", $user->id)->get();
-        $block_users_ids = BlockChatUser::pluck("chat_user_id");
-        $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
-            return [$userId => $messageService->hasUserBlockHistroy($userId)];
-        });
-
 
         $users = ChatUser::whereNotIn('id', function($query) {
                 // サブクエリ
@@ -202,46 +163,18 @@ class LineAccountController extends Controller
                     ->limit(1),
                 'unread_count'
             )
+            ->selectSub(
+                DB::table('message_summaries')
+                    ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
+                    ->whereRaw('admin_id = ?', [$id])
+                    ->whereColumn('user_id', 'chat_users.id')
+                    ->limit(1),  // 最新の1件のみ取得
+                'latest_message_date'
+            )
             ->orderBy('unread_count', 'desc')
             ->orderBy('created_at', 'desc')
             ->take(self::MESSAGES_PER_PAGE)
-            ->get()
-            ->map(function ($user) use ($blockPeriodsList, $messageService) {
-                // ユーザーのブロック期間を取得
-                $blockPeriods = $blockPeriodsList->get($user->id, []);
-
-                if (!empty($blockPeriods)) {
-                    // 動的条件を生成
-                    $conditions = $messageService->buildBlockConditions($blockPeriods, 'created_at');
-                } else {
-                    $conditions = null; // 条件がない場合
-                }
-
-                // 最新メッセージ日時を動的に取得
-                $latestMessageDate = DB::table('user_messages')
-                    ->select('created_at')
-                    ->where('user_id', $user->id)
-                    ->when($conditions, function ($query, $conditions) {
-                        // ブロック期間があれば条件を追加
-                        return $query->whereRaw("NOT ($conditions)");
-                    })
-                    ->unionAll(
-                        DB::table('user_message_images')
-                            ->select('created_at')
-                            ->where('user_id', $user->id)
-                            ->when($conditions, function ($query, $conditions) {
-                                return $query->whereRaw("NOT ($conditions)");
-                            })
-                    )
-                    ->max('created_at');
-
-                // 結果をフォーマット
-                $user->latest_message_date = $latestMessageDate
-                    ? Carbon::parse($latestMessageDate)->format('Y-m-d H:i')
-                    : null;
-
-                return $user;
-            });
+            ->get();
         return view("admin.account_show", ["user_uuid" => $user_uuid, "account_data" => $account_data, "chat_users" => $users, "id" => $id]);
     }
 
@@ -268,7 +201,6 @@ class LineAccountController extends Controller
         $validated = $request->validated();
 
         $line_account = LineAccount::findOrFail($id);
-        Log::debug($line_account->toArray());
         $line_account->update(["account_name" => $validated["account_name"], "account_url" => $validated["account_url"]]);
 
         if($request->input("second_account_id")){
@@ -336,14 +268,6 @@ class LineAccountController extends Controller
 
 
     public function fetchScrollData(string $admin_id, Request $request){
-        $messageService = new MessageService();
-        $block_users_ids = BlockChatUser::pluck("chat_user_id");
-        $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
-            return [$userId => $messageService->hasUserBlockHistroy($userId)];
-        });
-
-        Log::debug($request->input("accountList"));
-
         $users = ChatUser::whereNotIn('id', function($query) {
             // サブクエリ
             $query->select('chat_user_id')
@@ -355,83 +279,50 @@ class LineAccountController extends Controller
                         ->latest()
                         ->groupBy('chat_user_id');
                 });
-        })
-        ->whereNotIn('chat_users.id', $request->input("accountList"))
-        ->where('account_id', $admin_id)
-        ->select([
-            'chat_users.account_id',
-            'chat_users.created_at', 
-            'chat_users.line_name',
-            'chat_users.id',
-        ])
-        ->selectSub(
-            DB::table('user_entities')
-                ->select('entity_uuid')
-                ->whereColumn('related_id', 'chat_users.id')
-                ->where('entity_type', 'user')
-                ->limit(1),
-            'entity_uuid'
-        )
-        ->selectSub(
-            DB::table('user_message_reads')
-                ->select(DB::raw('COALESCE(unread_count, 0)'))
-                ->whereColumn('chat_user_id', 'chat_users.id')
-                ->limit(1),
-            'unread_count'
-        )
-        ->orderBy('unread_count', 'desc')
-        ->orderBy('created_at', 'desc')
-        ->skip($request->input("dataCount"))
-        ->take(self::MESSAGES_PER_PAGE)
-        ->get()
-        ->map(function ($user) use ($blockPeriodsList, $messageService) {
-            // ユーザーのブロック期間を取得
-            $blockPeriods = $blockPeriodsList->get($user->id, []);
+            })
+            ->whereNotIn('chat_users.id', $request->input("accountList"))
+            ->where('account_id', $admin_id)
+            ->select([
+                'chat_users.account_id',
+                'chat_users.created_at', 
+                'chat_users.line_name',
+                'chat_users.id',
+            ])
+            ->selectSub(
+                DB::table('user_entities')
+                    ->select('entity_uuid')
+                    ->whereColumn('related_id', 'chat_users.id')
+                    ->where('entity_type', 'user')
+                    ->limit(1),
+                'entity_uuid'
+            )
+            ->selectSub(
+                DB::table('user_message_reads')
+                    ->select(DB::raw('COALESCE(unread_count, 0)'))
+                    ->whereColumn('chat_user_id', 'chat_users.id')
+                    ->limit(1),
+                'unread_count'
+            )
+            ->selectSub(
+                DB::table('message_summaries')
+                    ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
+                    ->whereRaw('admin_id = ?', [$admin_id])
+                    ->whereColumn('user_id', 'chat_users.id')
+                    ->limit(1),  // 最新の1件のみ取得
+                'latest_message_date'
+            )
+            ->orderBy('unread_count', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->skip($request->input("dataCount"))
+            ->take(self::MESSAGES_PER_PAGE)
+            ->get();
 
-            if (!empty($blockPeriods)) {
-                // 動的条件を生成
-                $conditions = $messageService->buildBlockConditions($blockPeriods, 'created_at');
-            } else {
-                $conditions = null; // 条件がない場合
-            }
-
-            // 最新メッセージ日時を動的に取得
-            $latestMessageDate = DB::table('user_messages')
-                ->select('created_at')
-                ->where('user_id', $user->id)
-                ->when($conditions, function ($query, $conditions) {
-                    // ブロック期間があれば条件を追加
-                    return $query->whereRaw("NOT ($conditions)");
-                })
-                ->unionAll(
-                    DB::table('user_message_images')
-                        ->select('created_at')
-                        ->where('user_id', $user->id)
-                        ->when($conditions, function ($query, $conditions) {
-                            return $query->whereRaw("NOT ($conditions)");
-                        })
-                )
-                ->max('created_at');
-
-            // 結果をフォーマット
-            $user->latest_message_date = $latestMessageDate
-                ? Carbon::parse($latestMessageDate)->format('Y-m-d H:i')
-                : null;
-
-            return $user;
-        });
         return response()->json($users);
     }
 
 
     public function fetchScrollAcocuntData(string $admin_id, string $status_id, Request $request){
         try{
-            $messageService = new MessageService();
-            // まず全てのブロック情報を取得
-            $block_users_ids = BlockChatUser::pluck("chat_user_id");
-            $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
-                return [$userId => $messageService->hasUserBlockHistroy($userId)];
-            });
 
             $accountData = LineAccount::query()
                 ->where('user_id', $admin_id)
@@ -442,48 +333,21 @@ class LineAccountController extends Controller
                     "line_accounts.created_at",
                     "line_accounts.account_status",
                 ])
-                ->selectSub(function ($query) use ($blockPeriodsList, $messageService) {
-                    $query->selectRaw('DATE_FORMAT(
-                        (SELECT MAX(latest_date) 
-                        FROM (
-                            SELECT m.created_at as latest_date
-                            FROM user_messages m
-                            INNER JOIN chat_users cu ON m.user_id = cu.id
-                            WHERE m.admin_id = line_accounts.id
-                            AND NOT EXISTS (
-                                SELECT 1 FROM chat_users cu2 
-                                WHERE cu2.id = m.user_id 
-                                AND EXISTS (
-                                    SELECT 1 FROM block_chat_users b 
-                                    WHERE b.chat_user_id = cu2.id 
-                                    AND b.is_blocked = 1 
-                                    AND (' . $messageService->buildBlockConditionsForAccount($blockPeriodsList->toArray(), 'm.created_at') . ')
-                                )
-                            )
-                            UNION ALL
-                            SELECT mi.created_at as latest_date
-                            FROM user_message_images mi
-                            INNER JOIN chat_users cu ON mi.user_id = cu.id
-                            WHERE mi.admin_id = line_accounts.id
-                            AND NOT EXISTS (
-                                SELECT 1 FROM chat_users cu2 
-                                WHERE cu2.id = mi.user_id 
-                                AND EXISTS (
-                                    SELECT 1 FROM block_chat_users b 
-                                    WHERE b.chat_user_id = cu2.id 
-                                    AND b.is_blocked = 1 
-                                    AND (' . $messageService->buildBlockConditionsForAccount($blockPeriodsList->toArray(), 'mi.created_at') . ')
-                                )
-                            )
-                        ) as combined_dates), "%Y-%m-%d %H:%i"
-                    )');
-                }, 'latest_message_date')
                 // 既存のselectSub部分は変更なし
                 ->selectSub(
                     DB::table('user_message_reads')
                         ->select(DB::raw('COALESCE(SUM(unread_count), 0)'))
                         ->whereColumn('admin_account_id', 'line_accounts.id'),
                     'unread_count'
+                )
+                ->selectSub(
+                    DB::table('message_summaries')
+                        ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
+                        ->whereColumn('admin_id', 'line_accounts.id')
+                        ->whereNotNull('latest_user_message_date')  // nullを除外
+                        ->orderBy('latest_user_message_date', 'desc')  // 日付で降順ソート
+                        ->limit(1),  // 最新の1件のみ取得
+                    'latest_message_date'
                 )
                 ->addSelect([
                     'entity_uuid' => DB::table('user_entities')
@@ -515,14 +379,7 @@ class LineAccountController extends Controller
 
     public function fetchSpecificAccount(Request $request){
         try{
-            $messageService = new MessageService();
-            // まず全てのブロック情報を取得
-            $block_users_ids = BlockChatUser::pluck("chat_user_id");
-            $blockPeriodsList = $block_users_ids->mapWithKeys(function ($userId) use($messageService){
-                return [$userId => $messageService->hasUserBlockHistroy($userId)];
-            });
             $data = $request->input('account_uuid', 'default-value');
-
             $accountData = LineAccount::query()
                 ->where('id', function($query) use($data){
                     $query->select("related_id")
@@ -546,42 +403,15 @@ class LineAccountController extends Controller
                         AND entity_type = "admin"
                     ) as entity_uuid')
                 ])
-                ->selectSub(function ($query) use ($blockPeriodsList, $messageService) {
-                    $query->selectRaw('DATE_FORMAT(
-                        (SELECT MAX(latest_date) 
-                        FROM (
-                            SELECT m.created_at as latest_date
-                            FROM user_messages m
-                            INNER JOIN chat_users cu ON m.user_id = cu.id
-                            WHERE m.admin_id = line_accounts.id
-                            AND NOT EXISTS (
-                                SELECT 1 FROM chat_users cu2 
-                                WHERE cu2.id = m.user_id 
-                                AND EXISTS (
-                                    SELECT 1 FROM block_chat_users b 
-                                    WHERE b.chat_user_id = cu2.id 
-                                    AND b.is_blocked = 1 
-                                    AND (' . $messageService->buildBlockConditionsForAccount($blockPeriodsList->toArray(), 'm.created_at') . ')
-                                )
-                            )
-                            UNION ALL
-                            SELECT mi.created_at as latest_date
-                            FROM user_message_images mi
-                            INNER JOIN chat_users cu ON mi.user_id = cu.id
-                            WHERE mi.admin_id = line_accounts.id
-                            AND NOT EXISTS (
-                                SELECT 1 FROM chat_users cu2 
-                                WHERE cu2.id = mi.user_id 
-                                AND EXISTS (
-                                    SELECT 1 FROM block_chat_users b 
-                                    WHERE b.chat_user_id = cu2.id 
-                                    AND b.is_blocked = 1 
-                                    AND (' . $messageService->buildBlockConditionsForAccount($blockPeriodsList->toArray(), 'mi.created_at') . ')
-                                )
-                            )
-                        ) as combined_dates), "%Y-%m-%d %H:%i"
-                    )');
-                }, 'latest_message_date')
+                ->selectSub(
+                    DB::table('message_summaries')
+                        ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
+                        ->whereColumn('admin_id', 'line_accounts.id')
+                        ->whereNotNull('latest_user_message_date')  // nullを除外
+                        ->orderBy('latest_user_message_date', 'desc')  // 日付で降順ソート
+                        ->limit(1),  // 最新の1件のみ取得
+                    'latest_message_date'
+                )
                 ->get();
 
                 $categories = Cache::remember('account_status', 60*24, function() {
