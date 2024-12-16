@@ -17,7 +17,7 @@ Route::get("/account/{account_id}", [LineAccountController::class, "hasSecondAcc
 Route::get("/account/{account_id}/status/{status_id}/current_stautus/{current_status_name}/update", [LineAccountController::class, "updateStatus"]);
 Route::get("/line/message/{admin_id}", [LineMessageController::class, "getMessage"]);
 
-Route::post("/broadcast_message/store", [BroadcastMessageController::class, "store"]);
+Route::post("/broadcast_message/store/{admin_id}", [BroadcastMessageController::class, "store"])->name("broadcast.store");
 Route::post("/greeting_message/store", [GreetingMessageController::class, "store"]);
 Route::post("/decrypt", [DecryptDataController::class, "decryptData"]);
 

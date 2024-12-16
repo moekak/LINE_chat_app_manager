@@ -11,16 +11,18 @@
 </head>
 <body>
       <section class="signup__wrapper">
-            
             @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                  <p>{{$error}}</p>  
-            @endforeach
-                
+            <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+                  <ul style="margin: 0;">
+                        @foreach ($errors->all() as $error)
+                        <li class="alert_danger">{{$error}}</li>
+                        @endforeach  
+                  </ul>   
+            </div> 
             @endif
             <div class="signup__wrapper-top">
-                 <img src="{{asset("img/icons8-user-48.png")}}" alt="">
-                 @yield('title')
+                  <img src="{{asset("img/icons8-user-48.png")}}" alt="">
+                  @yield('title')
             </div>
             
             <div class="signup__wrapper-input">
@@ -29,6 +31,13 @@
             </div>
             
       </section>
+      <script>
+            const btn = document.querySelector(".signup__wrapper-btn");
+            btn.addEventListener("click", function() {  // アロー関数ではなく通常の関数を使用
+                  btn.style.pointerEvents = "none";       // this の代わりに btn を使用
+                  btn.style.opacity = "50%";       // this の代わりに btn を使用
+            });
+      </script>
       <script src="{{mix("js/app.js")}}"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>

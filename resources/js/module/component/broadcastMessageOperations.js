@@ -17,7 +17,7 @@ export const displayMessageToList = (message, src, index, className, id) =>{
         heading = message.length > MAX_LENGTH ? message.substr(0, MAX_LENGTH) + "..." : message
         display = message
         type = "text"
-        index = null
+        index = index
     }
 
     if(src){
@@ -33,16 +33,34 @@ export const displayMessageToList = (message, src, index, className, id) =>{
     parentElement.insertAdjacentHTML('beforeend', template);
 }
 
-export const dragAndDrop = (id) =>{
+export const dragAndDrop = (id, changeOrder = false) =>{
 	const elem = document.getElementById(id);
-	Sortable.create(elem, {
-		animation: 150,
+    console.log("changeOrder value:", changeOrder); // changeOrderの値を確認
+    const options = {
+        animation: 150,
         handle: '.drag-handle',
-	});
+        onEnd(evt) {  // onEndを直接ここに定義
+            if (changeOrder) {  // 条件チェックをonEnd内部で行う
+                const items = document.querySelectorAll(".js_data");
+                const headings = document.querySelectorAll(".js_headings")
+                console.log("Items found:", items.length);
+                
+                Array.from(items).forEach((item, index) => {
+                    item.setAttribute('data-id', index);
+                });
+                Array.from(headings).forEach((heading, index) => {
+                    heading.setAttribute('data-id', index);
+                });
+            }
+        }
+    };
+
+
+    Sortable.create(elem, options);
 }
 
 // メッセージ表示リストから削除する処理
-export const deleteList = (id, upload = null, ) =>{
+export const deleteList = (id, formData) =>{
     let delete_btns = document.querySelectorAll(".js_deleteList")
     const accordion = document.getElementById(id)
 
@@ -50,15 +68,32 @@ export const deleteList = (id, upload = null, ) =>{
     delete_btns.forEach((btn)=>{
         btn.addEventListener("click", (e)=>{
 
-            if(upload){
-                upload.value = ""
-            }
+            console.log(e.currentTarget);
+            console.log(e.currentTarget.parentElement);
+            
+            let target_id = e.currentTarget.parentElement.getAttribute("data-id")
+            console.log(target_id);
+            
+
+            formData = formData.filter((data, index) =>index != target_id);
+            console.log(formData);
+            
 
             let list_el = e.currentTarget.parentElement.parentElement
 
             if(accordion.contains(list_el)){
                 accordion.removeChild(list_el) 
             }
+
+            const elements = document.querySelectorAll(".js_data")
+            elements.forEach((el, index)=>{
+                el.setAttribute("data-id", index)
+            })
+
+            const headings = document.querySelectorAll(".js_headings")
+            headings.forEach((el, index)=>{
+                el.setAttribute("data-id", index)
+            })
             
         })
     })

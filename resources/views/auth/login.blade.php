@@ -1,6 +1,6 @@
 @extends('auth.layout')
 @section('title')
-    <h1 class="signup__wrapper-ttl">Welcome!</h1>
+      <h1 class="signup__wrapper-ttl">Welcome!</h1>
 @endsection
 
 

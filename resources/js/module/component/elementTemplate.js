@@ -65,11 +65,11 @@ export const createMessageRow = (res, admin_account_id) =>{
 
 export const createBroadcastMessageRow = (data, id) =>{
       // 改行を<br>タグに変換
-      const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img data-file-index='${data.index}' src='${data.display}' class="displayImg js_img">`
+      const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img  src='${data.display}' class="displayImg js_img">`
 
       return `
             <div class="card js_card mb-2">
-                  <div class="card-header" id="heading${data.elementLength}">
+                  <div class="card-header js_headings" id="heading${data.elementLength}" data-id=${data.index}>
                         <div class="card-header-left">
                               <img src="/img/icons8-drag-25.png" class="drag-handle" style ="width: 20px;"/>
                               <h5 class="mb-0">
@@ -82,7 +82,7 @@ export const createBroadcastMessageRow = (data, id) =>{
                   </div>
             
                   <div id="collapse${data.elementLength}" class="collapse" aria-labelledby="heading${data.elementLength}" data-parent="#${id}">
-                        <div class="card-body js_data"data-id="${data.elementLength + 1}">${displayedData}</div>
+                        <div class="card-body js_data" data-id="${data.elementLength}" data-file-index='${data.index}'>${displayedData}</div>
                   </div>
             </div>
       `

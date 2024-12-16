@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MyEvent;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -13,15 +14,11 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         // バリデーション(フォームリクエストに書き換え可)
-        $credentials = $request->validate([
-            'name' => ['required'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validated();
 
-    
         // ログイン情報が正しいか
         // Auth::attemptメソッドでログイン情報が正しいか検証
         if (Auth::attempt($credentials)) {

@@ -33,7 +33,7 @@ var displayMessageToList = function displayMessageToList(message, src, index, cl
     heading = message.length > MAX_LENGTH ? message.substr(0, MAX_LENGTH) + "..." : message;
     display = message;
     type = "text";
-    index = null;
+    index = index;
   }
   if (src) {
     heading = "画像";
@@ -54,27 +54,57 @@ var displayMessageToList = function displayMessageToList(message, src, index, cl
   parentElement.insertAdjacentHTML('beforeend', template);
 };
 var dragAndDrop = function dragAndDrop(id) {
+  var changeOrder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var elem = document.getElementById(id);
-  Sortable.create(elem, {
+  console.log("changeOrder value:", changeOrder); // changeOrderの値を確認
+  var options = {
     animation: 150,
-    handle: '.drag-handle'
-  });
+    handle: '.drag-handle',
+    onEnd: function onEnd(evt) {
+      // onEndを直接ここに定義
+      if (changeOrder) {
+        // 条件チェックをonEnd内部で行う
+        var items = document.querySelectorAll(".js_data");
+        var headings = document.querySelectorAll(".js_headings");
+        console.log("Items found:", items.length);
+        Array.from(items).forEach(function (item, index) {
+          item.setAttribute('data-id', index);
+        });
+        Array.from(headings).forEach(function (heading, index) {
+          heading.setAttribute('data-id', index);
+        });
+      }
+    }
+  };
+  Sortable.create(elem, options);
 };
 
 // メッセージ表示リストから削除する処理
-var deleteList = function deleteList(id) {
-  var upload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+var deleteList = function deleteList(id, formData) {
   var delete_btns = document.querySelectorAll(".js_deleteList");
   var accordion = document.getElementById(id);
   delete_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
-      if (upload) {
-        upload.value = "";
-      }
+      console.log(e.currentTarget);
+      console.log(e.currentTarget.parentElement);
+      var target_id = e.currentTarget.parentElement.getAttribute("data-id");
+      console.log(target_id);
+      formData = formData.filter(function (data, index) {
+        return index != target_id;
+      });
+      console.log(formData);
       var list_el = e.currentTarget.parentElement.parentElement;
       if (accordion.contains(list_el)) {
         accordion.removeChild(list_el);
       }
+      var elements = document.querySelectorAll(".js_data");
+      elements.forEach(function (el, index) {
+        el.setAttribute("data-id", index);
+      });
+      var headings = document.querySelectorAll(".js_headings");
+      headings.forEach(function (el, index) {
+        el.setAttribute("data-id", index);
+      });
     });
   });
 };
@@ -124,8 +154,8 @@ var createMessageRow = function createMessageRow(res, admin_account_id) {
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
-  var displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : "<img data-file-index='".concat(data.index, "' src='").concat(data.display, "' class=\"displayImg js_img\">");
-  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header\" id=\"heading".concat(data.elementLength, "\">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\"data-id=\"").concat(data.elementLength + 1, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
+  var displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : "<img  src='".concat(data.display, "' class=\"displayImg js_img\">");
+  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header js_headings\" id=\"heading".concat(data.elementLength, "\" data-id=").concat(data.index, ">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\" data-id=\"").concat(data.elementLength, "\" data-file-index='").concat(data.index, "'>").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
 };
 var createAccountDataRow = function createAccountDataRow(res, categories) {
   var _res$latest_message_d;

@@ -263,7 +263,8 @@ export const handleChatRedirect = async () => {
             });
       });
 };
-      
+
+
 const submitRedirectForm = async (adminId, userId) => {
       const token = await fetchGetOperation("/api/token/generate");
       const tokenElement = document.querySelector(".js_token");
