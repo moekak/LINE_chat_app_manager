@@ -26,7 +26,7 @@ class UpdateLineAccountRequest extends FormRequest
         return [
             "account_id" => ["required", "integer"],
             "account_name" => ["required", "string", "max:50"],
-            "account_url" => ["required", "string", "url"],
+            "account_url" => ["required", "string", "url", "max:255"],
             "second_account_id" =>  ['nullable', 'integer', 'exists:line_accounts,id']
         ];
     }
@@ -38,6 +38,7 @@ class UpdateLineAccountRequest extends FormRequest
             "account_name.max" => "アカウント名は50文字以内で入力してください。",
             "account_url.url" => "URLの形式にしてください。" ,
             "account_url.required" => "友達追加用URLは必須項目です。" ,
+            "account_url.max" => "友達追加用URLは255文字以内で入力してください。" ,
             "second_account_id.exists" => "無効なアカウントです。"
         ];
     }

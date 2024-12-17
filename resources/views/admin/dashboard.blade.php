@@ -5,7 +5,6 @@
 @endsection
 @section('main')
 <input type="hidden" value="{{$user->id}}" id="js_admin_account_id">
-<input type="hidden" value={{Route::current()->parameter('id');}} id="js_line_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
       @php
             // セッションに 'success' キーが存在するかチェック
@@ -51,7 +50,7 @@
                               @foreach ($active_accounts as $account)
                                     <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
                                           <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-                                          <td w20><?= $account["account_name"]?></td>
+                                          <td w20 class="account_name" data-simplebar><?= $account["account_name"]?></td>
 
                                           <td class=" text-center total_message-count">
                                                 <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
@@ -383,7 +382,7 @@
 
       <div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
             <ul>
-                  <li class="alert_danger">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
+                  <li class="alert_danger js_error_txt">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
             </ul>   
       </div>  
 
@@ -496,9 +495,19 @@
                   document.getElementById("js_edit_account_modal").classList.remove("hidden")
                   document.querySelector(".bg").classList.remove("hidden")
 
-                  let form = document.getElementById('js_edit_account_form');
+                  let form = document.querySelector('.js_edit_account_form');
                   let action = form.getAttribute('action');
-                  action = action.replace(':id', document.querySelector(".js_account_id_input").value);
+                  action = action.replace('ID_PLACEHOLDER', document.querySelector(".js_account_id_input").value);
+                  form.setAttribute('action', action)
+            </script>  
+      @elseif ($currentRoute === 'lineMessage.create')
+            <script>
+                  document.getElementById("js_update_message_modal").classList.remove("hidden")
+                  document.querySelector(".bg").classList.remove("hidden")
+
+                  let form = document.querySelector('.js_update_sendingMsg');
+                  let action = form.getAttribute('action');
+                  action = action.replace('ID_PLACEHOLDER', document.getElementById("js_admin_account_id").value);
                   form.setAttribute('action', action)
             </script>  
       @endif

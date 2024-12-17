@@ -1,5 +1,5 @@
 
-import { close_modal, close_modal_by_click } from "./module/component/modalOperation.js";
+import { close_modal, close_modal_by_click, open_modal } from "./module/component/modalOperation.js";
 import { changeDisplayOrder, handleChatRedirect} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import { initializeUserModals } from "./module/component/accountModalInitializers.js";
@@ -62,3 +62,14 @@ close_modal_by_click(modal, btn)
 }
 
 
+// ローダーを表示する
+{
+      const submit_btn = document.querySelector(".modal__container-btn")
+      const modal = document.getElementById("js_edit_account_modal")
+      const loader = document.querySelector(".loader")
+      submit_btn.addEventListener("click", ()=>{
+            modal.classList.add("hidden")
+            document.querySelector(".bg").classList.add("hidden")
+            open_modal(loader)
+      })
+}

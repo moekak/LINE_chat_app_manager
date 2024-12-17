@@ -30,8 +30,8 @@ class UpdateUserDataRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "account_name.required" => "アカウント名は必須です。",
-            "account_name.max" => "アカウント名は50文字以内で入力してください。"
+            "account_name.required" => "ユーザー名は必須です。",
+            "account_name.max" => "ユーザー名は50文字以内で入力してください。"
         ];
     }
 }

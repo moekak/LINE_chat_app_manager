@@ -16,6 +16,7 @@ class LineMessageCreateRequest extends FormRequest
 
     public function rules(): array
     {
+        session()->flash("route_name", "lineMessage.create");
         return [
             "message" => ["required", "string", "max:50"],
         ];

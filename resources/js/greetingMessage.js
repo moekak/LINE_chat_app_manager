@@ -1,8 +1,8 @@
 import { deleteList, displayMessageToList, dragAndDrop, hasValue, hideErrorMsg } from "./module/component/broadcastMessageOperations.js"
+import { isAllowedType, isCorrectSize } from "./module/component/imageFileOperator.js"
 import { open_modal } from "./module/component/modalOperation.js"
-import { fetchPostOperation } from "./module/util/fetch.js"
 import { cleanHtmlContent } from "./module/util/messageService.js"
-import { resizeImage } from "./module/util/processAndResizeImage.js"
+import imageCompression from 'browser-image-compression';
 
 // グローバル変数
 const greeting_btn          = document.getElementById("js_create_message_btn")
@@ -11,6 +11,8 @@ const greetingMessageInput  = document.querySelector(".js_greeting_input")
 const display_btn           = document.querySelector(".js_greeting_display_btn")
 
 let greetingMessage = ""
+const formDataArray = []; // FormDataを保持する配列を作成
+let index = 0
 
 greeting_btn.addEventListener("click", ()=>{
     open_modal(modal)
@@ -30,45 +32,76 @@ greetingMessageInput.addEventListener("input", (e)=>{
 // 追加ボタンを押したらメッセージまたは画像をプレビューできるように表示させる
 display_btn.addEventListener("click", ()=>{
     if(greetingMessage.length > 0){
-        displayMessageToList(greetingMessage, null, null, "js_accordion_wrapper_greeting", "accordion_greeting")
-        deleteList("accordion_greeting")
-        dragAndDrop("accordion_greeting")
+        formDataArray[index] = {"type" : "text", "data" : greetingMessage}
+        displayMessageToList(greetingMessage, null, index, "js_accordion_wrapper_greeting", "accordion_greeting")
+        deleteList("accordion_greeting", formDataArray)
+        dragAndDrop("accordion_greeting", true)
         greetingMessage = ""
         greetingMessageInput.value = ""
+        index++
     }
 })
 
 // ドラッグドロップ機能
 window.onload = (e)=>{
-	dragAndDrop("accordion_greeting")
+	dragAndDrop("accordion_greeting", true)
 }
 
 
-let fileStorage = {};  // Fileオブジェクトを保存するためのオブジェクト
+const greetingText = document.querySelector(".js_broadcast_error")
+const errorTxt = document.querySelector(".js_error_txt")
+
 const uploads = document.querySelectorAll(".js_upload");
-uploads.forEach((upload, index) => {
+uploads.forEach((upload) => {
     upload.addEventListener("change", async (e) => {
 
-        hideErrorMsg()
-        // 選択されたファイルにアクセス
         const file = e.target.files[0];
+        if (!file) return;
 
-        // FileオブジェクトのままURLを作成
-        const objectURL = URL.createObjectURL(file);
+        if(!isAllowedType(file.type)){
+            greetingText.classList.remove("hidden")
+            errorTxt.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。"
+            return
+        }
 
-        // `displayMessageToList` にファイルのURLを渡して表示する
-        displayMessageToList(null, objectURL, index, "js_accordion_wrapper_greeting", "accordion_greeting");
-        deleteList("accordion_greeting",upload)
-        // ファイルをリサイズし、Blobオブジェクトを取得
-        const resizedBlob = await resizeImage(file);
-        // リサイズされたBlobオブジェクトを保存
-        fileStorage[index] = resizedBlob;
-        // 使用後にメモリ解放
-        // URL.revokeObjectURL(objectURL);
-                
+        if(!isCorrectSize(file.size)){
+            greetingText.classList.remove("hidden")
+            errorTxt.innerHTML = "画像サイズが大きすぎます。5MG以内で指定してください。"
+            return
+        }
+
+        // 1. 圧縮
+        const compressedFile = await imageCompression(file, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1024,
+            useWebWorker: true
+        });
+
+        const reader = new FileReader();
+        reader.onload = e =>{
+            displayMessageToList(null,  e.target.result, index, "js_accordion_wrapper_greeting", "accordion_greeting");
+            deleteList("accordion_greeting", formDataArray)
+            index++
+        }
+
+        reader.readAsDataURL(compressedFile);
+
+        // オリジナルのファイル名を加工
+        const originalName = file.name;
+        const extension = originalName.split('.').pop();  // 拡張子を取得
+        const newFileName = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${extension}`;
+
+        // 3. FormDataを配列に保存
+        const formData = new FormData();
+        formData.append('image', compressedFile); // ファイル名も保持
+        formDataArray[index] = {
+            formData: formData,
+            fileName: newFileName,  // ファイル名を保存
+            type: 'image'        // タイプも保存しておくと便利
+        };
 
         // ドラッグ＆ドロップの初期化
-        dragAndDrop("accordion_greeting");
+        dragAndDrop("accordion_greeting", true);
     });
 });
 
@@ -76,35 +109,62 @@ uploads.forEach((upload, index) => {
 // 一斉送信の送信ボタンクリック処理
 
 const submit_btn = document.querySelector(".js_greeting_submit_btn")
+let sendMessage = []
 submit_btn.addEventListener("click", ()=>{
     if(hasValue("accordion_greeting")){
+        sendMessage = []
         const data = document.querySelectorAll(".js_data")
-        const sendingData = {
-            content: [],
-            admin_id: document.getElementById("js_greeting_account_id").value,
-        };
-    
-        data.forEach((data)=>{
-            if(data.querySelector(".js_img")){
-                let fileIndex =data.querySelector(".js_img").getAttribute("data-file-index")
-                sendingData.content.push({ data: fileStorage[fileIndex], type: "greeting_img" });
-            }else{
-                sendingData.content.push({ data: cleanHtmlContent(data.innerHTML), type: "greeting_text" });
+
+        console.log(formDataArray);
+        console.log("formData");
+        console.log(data.length);
+        
+        
+        
+
+        // 順番通りに並べ替え
+        for(let i = 0; i < data.length; i ++){
+            console.log(Array.from(data)[i].getAttribute("data-file-index"));
+            sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")]
+        }
+
+        const formData = new FormData();
+
+        console.log(sendMessage);
+        
+        // sendMessage のデータを FormData に追加
+        sendMessage.forEach((item, index) => {
+            if (item.type === 'image') {
+                // FormDataから画像を取得
+                const imageFile = item.formData.get('image');
+                if (imageFile) {
+                    formData.append(`images[${index}]`, imageFile, item.fileName);
+                }
+            } else if (item.type === 'text') {
+                // テキストデータを追加
+                formData.append(`messages[${index}]`, item.data);
             }
-        })
-    
-    
-        // バックエンドに送信するデータ
-    
+        });
+
+
+        const admin_id = document.getElementById("js_greeting_account_id").value
         const loader = document.querySelector(".loader")
+        const modal = document.querySelector(".broadcasting_message_modal")
         modal.classList.add("hidden")
         open_modal(loader)
 
-        console.log(sendingData);
-        
-
-        fetchPostOperation(sendingData, "/api/greeting_message/store")
-        .then((res)=>{
+        // fetch でデータを送信
+        fetch(`/api/greeting_message/store/${admin_id}`, {
+            method: 'POST',
+            body: formData,
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((res) => {
             if(res["status"] = "success"){
                 document.getElementById("js_greeting_modal").classList.add("hidden")
                 document.querySelector(".bg").classList.add("hidden")

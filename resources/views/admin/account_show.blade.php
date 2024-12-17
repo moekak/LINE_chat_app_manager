@@ -58,7 +58,7 @@
 				@foreach ($chat_users as $chat_user)
 					<tr data-id={{$chat_user["entity_uuid"]}} class="js_chatUser_id">
 					<th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-					<td w20><?= $chat_user["line_name"]?></td>
+					<td w20 class="chat_user_name" data-simplebar><?= $chat_user["line_name"]?></td>
 					
 					<td  data-id={{$chat_user->id}}>
 						<div class="message_count js_message_count" style="display: {{ $chat_user['unread_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
@@ -146,7 +146,7 @@
 
 	<div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
 		<ul>
-			<li class="alert_danger">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
+			<li class="alert_danger js_error_txt">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
 		</ul>   
 	</div>  
 
@@ -163,7 +163,7 @@
 		<input type="hidden" name="admin_account_id" value={{Route::current()->parameter('id');}} id="js_greeting_account_id">
 		<div class="broadcast_message_submit_btn-box">
 			<button type="submit" class="modal__container-btn js_greeting_display_btn disabled_btn">追加</button>  
-			<button type="submit" class="modal__container-btn js_greeting_submit_btn">送信</button>  
+			<button type="submit" class="modal__container-btn js_greeting_submit_btn">登録</button>  
 		</div>
 	</div>      
 </section>
@@ -188,7 +188,7 @@
 				let id = document.querySelector(".js_account_id_input").value;
 				console.log(id);
 				
-				action = action.replace(':id', id);
+				action = action.replace('ID_PLACEHOLDER', id);
 				form.setAttribute('action', action)
 		</script>
 	@endif

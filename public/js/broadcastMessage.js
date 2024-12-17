@@ -2291,6 +2291,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
 
 var displayMessageToList = function displayMessageToList(message, src, index, className, id) {
+  console.log(index);
+
   // メッセージ表示リストの親要素を取得
   var parentElement = document.querySelector(".".concat(className));
   // 親要素の子要素をすべて取得し、その数を取得する
@@ -2416,14 +2418,14 @@ var createMessageRowForFetch = function createMessageRowForFetch(res, admin_acco
   var latestMessageDate = res["latest_message_date"] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["latest_message_date"]) : "";
   var display = res["unread_count"] > 0 ? "flex" : "none";
   console.log(res);
-  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res["id"], "></th>\n                  <td w20>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res["id"], "></th>\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["unread_count"] > 0 ? "flex" : "none";
   console.log(res);
-  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n                  <td w20>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=").concat(res[0]["id"], "></th>\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
@@ -2441,11 +2443,34 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
   };
   var status = statusMap[res["account_status"]];
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
-  return "\n            <tr class=\"js_account_id\" data-id=\"".concat(res["entity_uuid"], "\">\n                  <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=\"3\"></th>\n                  <td w20>").concat(res["account_name"], "</td>\n\n                  <td class=\" text-center total_message-count\">\n                        <div class=\"message_count js_mesage_count js_total_count\" style=\"display: ").concat(style, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td data-id=").concat(res["id"], " class=\"js_status\" style=\"color: #008000; cursor: pointer;\">\n                        <div class=\"btn-group\">\n                              <button class=\"btn btn-secondary btn-sm dropdown-toggle js_status_btn\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">\n                                    ").concat(status, "\n                              </button>\n                              <ul class=\"dropdown-menu\">\n                                    ").concat(categories.filter(function (category) {
+  return "\n            <tr class=\"js_account_id\" data-id=\"".concat(res["entity_uuid"], "\">\n                  <th scope=\"row\"><input type=\"checkbox\" id=\"checkbox3\" name=\"option3\" value=\"3\"></th>\n                  <td w20 class=\"account_name\" data-simplebar>").concat(res["account_name"], "</td>\n\n                  <td class=\" text-center total_message-count\">\n                        <div class=\"message_count js_mesage_count js_total_count\" style=\"display: ").concat(style, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td data-id=").concat(res["id"], " class=\"js_status\" style=\"color: #008000; cursor: pointer;\">\n                        <div class=\"btn-group\">\n                              <button class=\"btn btn-secondary btn-sm dropdown-toggle js_status_btn\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">\n                                    ").concat(status, "\n                              </button>\n                              <ul class=\"dropdown-menu\">\n                                    ").concat(categories.filter(function (category) {
     return category.status !== status;
   }).map(function (category) {
     return "\n                                                <li class=\"dropdown-item js_status_choices\" \n                                                      data-current-status=\"".concat(status, "\"\n                                                      data-status-name=\"").concat(category.status, "\"\n                                                      data-status-id=\"").concat(category.id, "\"\n                                                      data-account-id=\"").concat(res["id"], "\">\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
   }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"https://chat-manager.info/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+};
+
+/***/ }),
+
+/***/ "./resources/js/module/component/imageFileOperator.js":
+/*!************************************************************!*\
+  !*** ./resources/js/module/component/imageFileOperator.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isAllowedType: () => (/* binding */ isAllowedType),
+/* harmony export */   isCorrectSize: () => (/* binding */ isCorrectSize)
+/* harmony export */ });
+var isAllowedType = function isAllowedType(fileType) {
+  var allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+  return allowedTypes.includes(fileType);
+};
+var isCorrectSize = function isCorrectSize(fileSize) {
+  var MAX_SIZE = 5 * 1024 * 1024;
+  return fileSize < MAX_SIZE;
 };
 
 /***/ }),
@@ -2495,110 +2520,6 @@ var close_modal_by_click = function close_modal_by_click(modal, btn) {
 
 /***/ }),
 
-/***/ "./resources/js/module/util/fetch.js":
-/*!*******************************************!*\
-  !*** ./resources/js/module/util/fetch.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fetchGetOperation: () => (/* binding */ fetchGetOperation),
-/* harmony export */   fetchPostOperation: () => (/* binding */ fetchPostOperation)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-var fetchPostOperation = function fetchPostOperation(data, url) {
-  return fetch("".concat(url), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  }).then(/*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
-      var errorMessage;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            if (!(response.status === 204)) {
-              _context.next = 2;
-              break;
-            }
-            return _context.abrupt("return");
-          case 2:
-            if (response.ok) {
-              _context.next = 6;
-              break;
-            }
-            _context.next = 5;
-            return response.text();
-          case 5:
-            errorMessage = _context.sent;
-          case 6:
-            return _context.abrupt("return", response.json());
-          case 7:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }));
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }())["catch"](function (error) {
-    console.log(error);
-  });
-};
-var fetchGetOperation = function fetchGetOperation(url) {
-  return fetch("".concat(url), {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(/*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(response) {
-      var errorMessage;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            if (!(response.status === 204)) {
-              _context2.next = 2;
-              break;
-            }
-            return _context2.abrupt("return");
-          case 2:
-            if (response.ok) {
-              _context2.next = 6;
-              break;
-            }
-            _context2.next = 5;
-            return response.text();
-          case 5:
-            errorMessage = _context2.sent;
-          case 6:
-            return _context2.abrupt("return", response.json());
-          case 7:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2);
-    }));
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }()).then(function (data) {
-    return data;
-  })["catch"](function (error) {
-    console.error("エラーが発生しました:", error.message);
-  });
-};
-
-/***/ }),
-
 /***/ "./resources/js/module/util/formatDate.js":
 /*!************************************************!*\
   !*** ./resources/js/module/util/formatDate.js ***!
@@ -2631,122 +2552,6 @@ var formateDateToAsia = function formateDateToAsia() {
   var dateTokyo = date.toLocaleString('ja-JP', options).replace(/\//g, '-').replace(',', '');
   return dateTokyo;
 };
-
-/***/ }),
-
-/***/ "./resources/js/module/util/messageService.js":
-/*!****************************************************!*\
-  !*** ./resources/js/module/util/messageService.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   cleanHtmlContent: () => (/* binding */ cleanHtmlContent),
-/* harmony export */   prepareMessageData: () => (/* binding */ prepareMessageData)
-/* harmony export */ });
-var prepareMessageData = function prepareMessageData() {
-  // サーバーに送信するデータをすべて取得する
-  var body = document.querySelector(".js_message_input").value;
-  var formatted_body = body.replace(/\n/g, '<br>'); // 改行文字を <br> タグに置き換える
-  var admin_account_id = document.getElementById("js_account_id").value;
-  return {
-    body: body,
-    formatted_body: formatted_body,
-    admin_account_id: admin_account_id
-  };
-};
-
-//<br> タグを含むすべての HTML タグを除去し、適切な改行を維持する
-var cleanHtmlContent = function cleanHtmlContent(html) {
-  // 1. <br>タグを改行文字に置換
-  var text = html.replace(/<br\s*\/?>/gi, '\n');
-
-  // 2. その他のHTMLタグを除去
-  text = text.replace(/<[^>]+>/g, '');
-
-  // 3. HTMLエンティティをデコード
-  var textarea = document.createElement('textarea');
-  textarea.innerHTML = text;
-  text = textarea.value;
-
-  // 4. 連続する改行を1つの改行に置換
-  text = text.replace(/\n{3,}/g, '\n\n');
-
-  // 5. 前後の空白を除去
-  return text.trim();
-};
-
-/***/ }),
-
-/***/ "./resources/js/module/util/processAndResizeImage.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/module/util/processAndResizeImage.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fileOperation: () => (/* binding */ fileOperation),
-/* harmony export */   resizeImage: () => (/* binding */ resizeImage)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-var resizeImage = function resizeImage(file) {
-  var maxWidth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 160;
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var img = new Image();
-      img.src = e.target.result;
-      img.onload = function () {
-        // 圧縮を省略し、元の形式とクオリティを維持
-        var resizedImage = e.target.result;
-        resolve(resizedImage);
-      };
-      img.onerror = function () {
-        return reject(new Error('画像の読み込みに失敗しました。'));
-      };
-    };
-    reader.onerror = function () {
-      return reject(new Error('ファイルの読み込みに失敗しました。'));
-    };
-    reader.readAsDataURL(file);
-  });
-};
-var fileOperation = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var fileInput, file, resizedImage;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          fileInput = document.getElementById('fileInput'); // 適切なIDを使用してください
-          file = fileInput.files[0];
-          _context.prev = 2;
-          _context.next = 5;
-          return resizeImage(file);
-        case 5:
-          resizedImage = _context.sent;
-          _context.next = 11;
-          break;
-        case 8:
-          _context.prev = 8;
-          _context.t0 = _context["catch"](2);
-          alert(_context.t0.message);
-        case 11:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee, null, [[2, 8]]);
-  }));
-  return function fileOperation() {
-    return _ref.apply(this, arguments);
-  };
-}();
 
 /***/ }),
 
@@ -7259,12 +7064,10 @@ var __webpack_exports__ = {};
   \******************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/component/broadcastMessageOperations.js */ "./resources/js/module/component/broadcastMessageOperations.js");
-/* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
-/* harmony import */ var _module_util_messageService_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/messageService.js */ "./resources/js/module/util/messageService.js");
-/* harmony import */ var _module_util_processAndResizeImage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/util/processAndResizeImage.js */ "./resources/js/module/util/processAndResizeImage.js");
-/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
-/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
+/* harmony import */ var _module_component_imageFileOperator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/imageFileOperator.js */ "./resources/js/module/component/imageFileOperator.js");
+/* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -7275,13 +7078,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
-
-
 // 一斉配信のテキスト箇所
 var broadcastMessageInput = document.querySelector(".js_message_input");
 var display_btn = document.querySelector(".js_message_display_btn");
 var formDataArray = []; // FormDataを保持する配列を作成
-var textArray = [];
 var index = 0;
 var broadcastMessage = "";
 broadcastMessageInput.addEventListener("input", function (e) {
@@ -7310,6 +7110,8 @@ display_btn.addEventListener("click", function () {
 window.onload = function (e) {
   (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)("accordion", true);
 };
+var broadcastText = document.querySelector(".js_broadcast_error");
+var errorTxt = document.querySelector(".js_error_txt");
 var uploads = document.querySelectorAll(".js_upload");
 uploads.forEach(function (upload) {
   upload.addEventListener("change", /*#__PURE__*/function () {
@@ -7318,24 +7120,40 @@ uploads.forEach(function (upload) {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
+            broadcastText.classList.add("hidden");
             file = e.target.files[0];
             if (file) {
-              _context.next = 3;
+              _context.next = 4;
               break;
             }
             return _context.abrupt("return");
-          case 3:
-            _context.next = 5;
-            return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_6__["default"])(file, {
+          case 4:
+            if ((0,_module_component_imageFileOperator_js__WEBPACK_IMPORTED_MODULE_1__.isAllowedType)(file.type)) {
+              _context.next = 8;
+              break;
+            }
+            broadcastText.classList.remove("hidden");
+            errorTxt.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。";
+            return _context.abrupt("return");
+          case 8:
+            if ((0,_module_component_imageFileOperator_js__WEBPACK_IMPORTED_MODULE_1__.isCorrectSize)(file.size)) {
+              _context.next = 12;
+              break;
+            }
+            broadcastText.classList.remove("hidden");
+            errorTxt.innerHTML = "画像サイズが大きすぎます。5MG以内で指定してください。";
+            return _context.abrupt("return");
+          case 12:
+            _context.next = 14;
+            return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_4__["default"])(file, {
               maxSizeMB: 1,
               maxWidthOrHeight: 1024,
               useWebWorker: true
             });
-          case 5:
+          case 14:
             compressedFile = _context.sent;
             reader = new FileReader();
             reader.onload = function (e) {
-              console.log("index" + index);
               (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.displayMessageToList)(null, e.target.result, index, "js_accordion_wrapper", "accordion");
               (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.deleteList)("accordion", formDataArray);
               index++;
@@ -7357,7 +7175,7 @@ uploads.forEach(function (upload) {
 
             // // ドラッグ＆ドロップの初期化
             (0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.dragAndDrop)("accordion", true);
-          case 16:
+          case 25:
           case "end":
             return _context.stop();
         }
@@ -7370,13 +7188,14 @@ uploads.forEach(function (upload) {
 });
 
 // 一斉送信の送信ボタンクリック処理
-
 var submit_btn = document.querySelector(".js_message_submit_btn");
 var sendMessage = [];
 submit_btn.addEventListener("click", function () {
   if ((0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_0__.hasValue)("accordion")) {
     sendMessage = [];
     var data = document.querySelectorAll(".js_data");
+
+    // 順番通りに並べ替え
     for (var i = 0; i < data.length; i++) {
       console.log(Array.from(data)[i].getAttribute("data-file-index"));
       sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")];
@@ -7396,12 +7215,11 @@ submit_btn.addEventListener("click", function () {
         formData.append("messages[".concat(index, "]"), item.data);
       }
     });
-    console.log(sendMessage);
     var admin_id = document.getElementById("js_account_id").value;
     var loader = document.querySelector(".loader");
     var modal = document.querySelector(".broadcasting_message_modal");
     modal.classList.add("hidden");
-    (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__.open_modal)(loader);
+    (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(loader);
 
     // fetch でデータを送信
     fetch("/api/broadcast_message/store/".concat(admin_id), {
@@ -7432,43 +7250,20 @@ submit_btn.addEventListener("click", function () {
           success_el.style.display = "none";
         }, 2000);
         var created_at = res["created_at"];
-        _module_util_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"].emit("broadcast message", res["data"], admin_account_id, created_at);
+        var sendingDatatoBackEnd = res["data"];
+        _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].emit("broadcast message", {
+          sendingDatatoBackEnd: sendingDatatoBackEnd,
+          admin_id: admin_id,
+          created_at: created_at
+        });
       }
     })["catch"](function (error) {
       console.error('Upload error:', error);
     });
-
-    // fetchPostOperation(formData, `/api/broadcast_message/store/${admin_id}`)
-    // .then((res)=>{
-
-    //     console.log(res);
-
-    // if(res["created_at"]){
-
-    //     // モーダルをloaderを閉じる処理
-    //     document.getElementById("js_boradcasting_modal").classList.add("hidden")
-    //     document.querySelector(".bg").classList.add("hidden")
-    //     loader.classList.add("hidden")
-
-    //     // 成功メッセージを出す処理
-    //     const success_el = document.getElementById("js_alert_success")
-    //     success_el.style.display = "block";
-    //     success_el.innerHTML = "一斉送信に成功しました"
-    //     document.querySelector(".js_message_input").value = ""
-    //     document.querySelector(".js_upload").value = ""
-    //     document.querySelector(".js_accordion_wrapper").innerHTML = ""
-
-    //     // 成功メッセージを出して2秒後に批評にする
-    //     setTimeout(() => {
-    //         success_el.style.display = "none"
-    //     }, 2000);
-
-    //     const created_at = res["created_at"]
-    //     socket.emit("broadcast message", {sendingDatatoBackEnd, admin_account_id, created_at})
-    // }
-    // })
   } else {
     var error_el = document.querySelector(".js_broadcast_error");
+    var _errorTxt = document.querySelector(".js_error_txt");
+    _errorTxt.innerHTML = "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u304F\u3060\u3055\u3044\u3002<br> \u307E\u305F\u306F\u753B\u50CF\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044\u3002";
     error_el.classList.remove("hidden");
   }
 });

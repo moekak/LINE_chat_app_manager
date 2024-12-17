@@ -1,6 +1,9 @@
 import { createBroadcastMessageRow } from "./elementTemplate.js";
 
 export const displayMessageToList = (message, src, index, className, id) =>{
+
+    console.log(index);
+    
     
     // メッセージ表示リストの親要素を取得
     const parentElement = document.querySelector(`.${className}`);

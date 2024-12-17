@@ -17,14 +17,11 @@ class ImageService
                   // S3に画像を保存
                   Storage::disk('s3')->put($path, file_get_contents($imageData->getRealPath()));
                   
-                  // 手動でURLを構築
-                  $imageUrl = env('AWS_URL') . '/' . $path;
-                  
-                  return ["fileName" => $fileName, "imageUrl" => $imageUrl];
+                  return $fileName;
       
             } catch (\Exception $e) {
                   Log::error('Image save error: ' . $e->getMessage());
                   return ['error' => 'Failed to save image'];
             }
-}
+      }
 }

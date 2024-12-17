@@ -28,36 +28,69 @@ class BroadcastMessageController extends Controller
             $broadcastMessageGroup = BroadcastMessagesGroup::create();
             $broadcastMessage = "";
 
+            $allContent = [];
+
+            // 画像とメッセージを1つの配列にまとめる
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $key => $image) {
-                    $imageService = new ImageService();
-            
-
-
-                    $savingData = [
-                        "admin_id" => $admin_id,
-                        "broadcast_message_group_id" => $broadcastMessageGroup->id,
-                        "resource" => $imageService->saveImage($image)["fileName"], // 画像を保存
-                        "resource_type" => "broadcast_img",          // リソースタイプを指定
-                        "message_order" => $key,                       // 順序を設定
+                    $allContent[] = [
+                        'type' => 'image',
+                        'content' => $image,
+                        'order' => $key
                     ];
-                    $broadcastMessage = BroadcastMessage::create($savingData);
-                    $responseData[] = ["resource" => $imageService->saveImage($image)["imageUrl"], "type" => "broadcast_img", "order" => $broadcastMessage->message_order];
                 }
             }
-            
+
             if (isset($validated['messages'])) {
                 foreach ($validated['messages'] as $order => $contentItem) {
+                    $allContent[] = [
+                        'type' => 'text',
+                        'content' => $contentItem,
+                        'order' => $order
+                    ];
+                }
+            }
+
+            // orderで並び替え
+            usort($allContent, function($a, $b) {
+                return $a['order'] - $b['order'];
+            });
+
+            $responseData = [];
+
+            // 順番に処理
+            foreach ($allContent as $item) {
+                if ($item['type'] === 'image') {
+                    $imageService = new ImageService();
+                    $fileName = $imageService->saveImage($item['content']);
+                    
                     $savingData = [
                         "admin_id" => $admin_id,
                         "broadcast_message_group_id" => $broadcastMessageGroup->id,
-                        "resource" => $contentItem,            // メッセージ内容
-                        "resource_type" => "broadcast_text",   // メッセージタイプ
-                        "message_order" => $order             // 順序を設定
+                        "resource" => $fileName,
+                        "resource_type" => "broadcast_img",
+                        "message_order" => $item['order'],
                     ];
                     $broadcastMessage = BroadcastMessage::create($savingData);
-                    $responseData[] = ["resource" => $contentItem, "type" => "broadcast_text", "order" => $broadcastMessage->message_order];
-
+                    $responseData[] = [
+                        "resource" => $fileName, 
+                        "type" => "broadcast_img", 
+                        "order" => $broadcastMessage->message_order
+                    ];
+                } else {
+                    $savingData = [
+                        "admin_id" => $admin_id,
+                        "broadcast_message_group_id" => $broadcastMessageGroup->id,
+                        "resource" => $item['content'],
+                        "resource_type" => "broadcast_text",
+                        "message_order" => $item['order']
+                    ];
+                    $broadcastMessage = BroadcastMessage::create($savingData);
+                    $responseData[] = [
+                        "resource" => $item['content'], 
+                        "type" => "broadcast_text", 
+                        "order" => $broadcastMessage->message_order
+                    ];
                 }
             }
 

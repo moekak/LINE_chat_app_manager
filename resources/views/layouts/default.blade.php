@@ -8,6 +8,26 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
       <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+      <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+      <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+      <noscript>
+            <style>
+            /**
+            * Reinstate scrolling for non-JS clients
+            */
+            .simplebar-content-wrapper {
+                  scrollbar-width: auto;
+                  -ms-overflow-style: auto;
+            }
+      
+            .simplebar-content-wrapper::-webkit-scrollbar,
+            .simplebar-hide-scrollbar::-webkit-scrollbar {
+                  display: initial;
+                  width: initial;
+                  height: initial;
+            }
+            </style>
+      </noscript>
       @yield('style')
 
 </head>

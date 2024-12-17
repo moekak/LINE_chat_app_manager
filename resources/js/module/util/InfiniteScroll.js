@@ -1,5 +1,5 @@
 
-import {initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeUserModals } from "../component/accountModalInitializers.js";
+import {initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeSimpleBar, initializeUserModals } from "../component/accountModalInitializers.js";
 import { handleChatRedirect, initializeAccountStatusManager } from "../component/accountUIOperations.js";
 import {createAccountDataRow, createMessageRowForFetch} from "../component/elementTemplate.js";
 import { fetchPostOperation } from "./fetch.js";
@@ -55,6 +55,7 @@ class InfiniteScroll{
                                           });
                                            //ユーザー管理に関連するモーダルの初期化
                                           initializeUserModals(socket)
+                                          initializeSimpleBar()
                                           await handleChatRedirect()
                                     }else{
                                           response["accountData"].forEach((res)=>{
@@ -68,7 +69,12 @@ class InfiniteScroll{
                                           initializeAccountDeletionModal()
                                           // ステータス変更
                                           initializeAccountStatusManager()
+
+                                          initializeSimpleBar()
+
+                                          initializeSimpleBar()
                                           await handleChatRedirect()
+
                                     }
                               }
                         } catch (error) {

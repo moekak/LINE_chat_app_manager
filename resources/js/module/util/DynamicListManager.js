@@ -1,4 +1,4 @@
-import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal } from "../component/accountModalInitializers.js";
+import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeSimpleBar } from "../component/accountModalInitializers.js";
 import { initializeAccountStatusManager } from "../component/accountUIOperations.js";
 import { createAccountDataRow } from "../component/elementTemplate.js";
 import {fetchPostOperation } from "./fetch.js";
@@ -25,6 +25,9 @@ class DynamicListManager{
             initializeAccountDeletionModal()
             // ステータス変更
             initializeAccountStatusManager()
+
+            initializeSimpleBar()
+            initializeSimpleBar()
       }
 }
 

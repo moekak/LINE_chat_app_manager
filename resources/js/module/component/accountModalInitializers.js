@@ -1,6 +1,6 @@
 import { fetchGetOperation } from "../util/fetch.js"
 import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accountUIOperations.js"
-import { open_modal } from "./modalOperation.js"
+import { close_modal, close_modal_by_click, open_modal } from "./modalOperation.js"
 import { setLineMessageForUpdating } from "./accountUIOperations.js"
 import { fetchSpecificUserInfo } from "./fetchUserData.js"
 
@@ -72,6 +72,9 @@ export const initializeAccountDeletionModal= () =>{
                   open_modal(delete_account_modal)
             }) 
       })
+
+      const cancel_btn = document.querySelector(".delete_account-btn")
+      close_modal_by_click(delete_account_modal, cancel_btn)
 }
 
 // ユーザーブロックモーダルの初期化
@@ -135,4 +138,12 @@ export const initializeUserModals = (socket)=> {
       
       // ブロックモーダル初期化
       initializeAccountBlockModal(socket)
+}
+
+export const initializeSimpleBar = ()=>{
+      // SimpleBarを再初期化
+      SimpleBar.instances = new WeakMap(); // 既存インスタンスをリセット (必要に応じて)
+      document.querySelectorAll("[data-simplebar]").forEach((el) => {
+            new SimpleBar(el);
+      });
 }

@@ -1,11 +1,8 @@
 import { deleteList, displayMessageToList, dragAndDrop, hasValue, hideErrorMsg } from "./module/component/broadcastMessageOperations.js"
-import { close_modal, open_modal } from "./module/component/modalOperation.js"
-import { fetchPostOperation } from "./module/util/fetch.js"
-import { cleanHtmlContent } from "./module/util/messageService.js"
-import { resizeImage } from "./module/util/processAndResizeImage.js"
+import { isAllowedType, isCorrectSize } from "./module/component/imageFileOperator.js";
+import { open_modal } from "./module/component/modalOperation.js"
 import socket from "./module/util/socket.js"
 import imageCompression from 'browser-image-compression';
-
 
 
 // 一斉配信のテキスト箇所
@@ -13,7 +10,6 @@ const broadcastMessageInput = document.querySelector(".js_message_input")
 const display_btn = document.querySelector(".js_message_display_btn")
 
 const formDataArray = []; // FormDataを保持する配列を作成
-const textArray = []
 let index = 0
 
 let broadcastMessage = ""
@@ -44,12 +40,29 @@ window.onload = (e)=>{
 	dragAndDrop("accordion", true)
 }
 
+const broadcastText = document.querySelector(".js_broadcast_error")
+const errorTxt = document.querySelector(".js_error_txt")
+
 const uploads = document.querySelectorAll(".js_upload");
 uploads.forEach((upload) => {
     upload.addEventListener("change", async (e) => {
+        broadcastText.classList.add("hidden")
 
         const file = e.target.files[0];
         if (!file) return;
+
+        if(!isAllowedType(file.type)){
+            broadcastText.classList.remove("hidden")
+            errorTxt.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。"
+            return
+        }
+
+        if(!isCorrectSize(file.size)){
+            broadcastText.classList.remove("hidden")
+            errorTxt.innerHTML = "画像サイズが大きすぎます。5MG以内で指定してください。"
+            return
+        }
+
 
          // 1. 圧縮
         const compressedFile = await imageCompression(file, {
@@ -60,8 +73,6 @@ uploads.forEach((upload) => {
 
         const reader = new FileReader();
         reader.onload = e =>{
-            console.log("index" + index);
-            
             displayMessageToList(null, e.target.result, index, "js_accordion_wrapper", "accordion");
             deleteList("accordion", formDataArray)
             index++
@@ -86,14 +97,11 @@ uploads.forEach((upload) => {
 
         // // ドラッグ＆ドロップの初期化
         dragAndDrop("accordion", true);
-
-        
     });
 });
 
 
 // 一斉送信の送信ボタンクリック処理
-
 const submit_btn = document.querySelector(".js_message_submit_btn")
 let sendMessage = []
 submit_btn.addEventListener("click", ()=>{
@@ -101,7 +109,7 @@ submit_btn.addEventListener("click", ()=>{
         sendMessage = []
         const data = document.querySelectorAll(".js_data")
 
-
+        // 順番通りに並べ替え
         for(let i = 0; i < data.length; i ++){
             console.log(Array.from(data)[i].getAttribute("data-file-index"));
             sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")]
@@ -124,9 +132,6 @@ submit_btn.addEventListener("click", ()=>{
             }
         });
 
-        console.log(sendMessage);
-
-        
 
         const admin_id = document.getElementById("js_account_id").value
         const loader = document.querySelector(".loader")
@@ -169,10 +174,6 @@ submit_btn.addEventListener("click", ()=>{
                         }, 2000);
             
                         const created_at = res["created_at"]
-
-                        console.log("socketサーバーに送信！");
-                        console.log(res["data"]);
-
                         const sendingDatatoBackEnd = res["data"];
                         
                         socket.emit("broadcast message", {
@@ -186,41 +187,11 @@ submit_btn.addEventListener("click", ()=>{
                 console.error('Upload error:', error);
             });
 
-    
-
-
-    
-        // fetchPostOperation(formData, `/api/broadcast_message/store/${admin_id}`)
-        // .then((res)=>{
-
-        //     console.log(res);
-            
-            // if(res["created_at"]){
-    
-            //     // モーダルをloaderを閉じる処理
-            //     document.getElementById("js_boradcasting_modal").classList.add("hidden")
-            //     document.querySelector(".bg").classList.add("hidden")
-            //     loader.classList.add("hidden")
-    
-            //     // 成功メッセージを出す処理
-            //     const success_el = document.getElementById("js_alert_success")
-            //     success_el.style.display = "block";
-            //     success_el.innerHTML = "一斉送信に成功しました"
-            //     document.querySelector(".js_message_input").value = ""
-            //     document.querySelector(".js_upload").value = ""
-            //     document.querySelector(".js_accordion_wrapper").innerHTML = ""
-    
-            //     // 成功メッセージを出して2秒後に批評にする
-            //     setTimeout(() => {
-            //         success_el.style.display = "none"
-            //     }, 2000);
-    
-            //     const created_at = res["created_at"]
-            //     socket.emit("broadcast message", {sendingDatatoBackEnd, admin_account_id, created_at})
-            // }
-        // })
     }else{
         const error_el = document.querySelector(".js_broadcast_error")
+        const errorTxt = document.querySelector(".js_error_txt")
+
+        errorTxt.innerHTML = `メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。`
         error_el.classList.remove("hidden")
     }
     

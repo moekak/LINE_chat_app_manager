@@ -130,6 +130,10 @@ export const setActionUrl = (id, className) =>{
 
       let form = document.querySelector(`.${className}`)
       let action  = form.getAttribute("action");
+
+
+      console.log(form);
+      
       
       // URLに既存のIDが含まれているかを正規表現で探す
       // パターン: 数字がID部分に相当する (例: /update/26 のようなURL)
