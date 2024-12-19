@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="{{ asset('css/auth/signup.css') }}">
+      <link rel="stylesheet" href="{{ secure_asset('css/auth/signup.css') }}">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
       
       <title>Document</title>
@@ -33,9 +33,9 @@
       </section>
       <script>
             const btn = document.querySelector(".signup__wrapper-btn");
-            btn.addEventListener("click", function() {  // アロー関数ではなく通常の関数を使用
-                  btn.style.pointerEvents = "none";       // this の代わりに btn を使用
-                  btn.style.opacity = "50%";       // this の代わりに btn を使用
+            btn.addEventListener("click", function() {  
+                  btn.style.pointerEvents = "none";     
+                  btn.style.opacity = "50%";       
             });
       </script>
       <script src="{{mix("js/app.js")}}"></script>

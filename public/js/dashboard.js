@@ -2407,10 +2407,15 @@ var initializeLineMessageUpdationModal = function initializeLineMessageUpdationM
 };
 var initializeUserModals = function initializeUserModals(socket) {
   // ユーザー編集処理
+
+  console.log("oooo");
   var edit_btns = document.querySelectorAll(".js_edit_user_btn");
   var editModal = document.getElementById("js_edit_account_modal");
   edit_btns.forEach(function (edit_btn) {
-    (0,_fetchUserData_js__WEBPACK_IMPORTED_MODULE_3__.fetchSpecificUserInfo)(edit_btn, editModal);
+    edit_btn.addEventListener("click", function (e) {
+      console.log("hahah");
+      (0,_fetchUserData_js__WEBPACK_IMPORTED_MODULE_3__.fetchSpecificUserInfo)(e, editModal);
+    });
   });
 
   // ブロックモーダル初期化
@@ -2495,24 +2500,23 @@ var changeDisplayOrder = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           if (!(sender_type == "user")) {
-            _context.next = 38;
+            _context.next = 40;
             break;
           }
           elements = document.querySelectorAll(".js_chatUser_id");
           parentElement = document.querySelector(".js_table");
-          console.log(sender_id + " sender id");
           _iterator = _createForOfIteratorHelper(elements);
-          _context.prev = 5;
+          _context.prev = 4;
           _iterator.s();
-        case 7:
+        case 6:
           if ((_step = _iterator.n()).done) {
-            _context.next = 22;
+            _context.next = 24;
             break;
           }
           element = _step.value;
           id = element.getAttribute("data-id");
           if (!(id == sender_id)) {
-            _context.next = 20;
+            _context.next = 22;
             break;
           }
           newCloneDiv = element.cloneNode(true);
@@ -2523,44 +2527,50 @@ var changeDisplayOrder = /*#__PURE__*/function () {
           latest_message_element.innerHTML = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_2__.formateDateToAsia)();
           parentElement.insertBefore(newCloneDiv, parentElement.firstChild);
           parentElement.removeChild(element);
+
+          //ユーザー管理に関連するモーダルの初期化
+          (0,_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeUserModals)(_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
+          _context.next = 21;
+          return handleChatRedirect();
+        case 21:
           return _context.abrupt("return");
-        case 20:
-          _context.next = 7;
-          break;
         case 22:
-          _context.next = 27;
+          _context.next = 6;
           break;
         case 24:
-          _context.prev = 24;
-          _context.t0 = _context["catch"](5);
+          _context.next = 29;
+          break;
+        case 26:
+          _context.prev = 26;
+          _context.t0 = _context["catch"](4);
           _iterator.e(_context.t0);
-        case 27:
-          _context.prev = 27;
+        case 29:
+          _context.prev = 29;
           _iterator.f();
-          return _context.finish(27);
-        case 30:
-          _context.next = 32;
-          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/api/user/".concat(sender_id, "/account/").concat(receiver_id));
+          return _context.finish(29);
         case 32:
+          _context.next = 34;
+          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/api/user/".concat(sender_id, "/account/").concat(receiver_id));
+        case 34:
           response = _context.sent;
-          parentElement.insertAdjacentHTML('afterbegin', (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__.createMessageRow)(response, response["admin_account_id"]));
+          parentElement.insertAdjacentHTML('afterbegin', (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__.createMessageRow)(response[0], response["admin_account_id"]));
           _util_UserStateManager_js__WEBPACK_IMPORTED_MODULE_4__["default"].setState(response[0]["id"]);
 
           //ユーザー管理に関連するモーダルの初期化
           (0,_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeUserModals)(_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
-          _context.next = 38;
+          _context.next = 40;
           return handleChatRedirect();
-        case 38:
+        case 40:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[5, 24, 27, 30]]);
+    }, _callee, null, [[4, 26, 29, 32]]);
   }));
   return function changeDisplayOrder(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }();
-var changeAccountDisplayOrder = function changeAccountDisplayOrder(sender_id, receiver_id, sender_type, admin_login_id) {
+var changeAccountDisplayOrder = function changeAccountDisplayOrder(receiver_id, sender_type, admin_login_id) {
   var hasAccount = false;
   if (sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id) {
     var elemets = document.querySelectorAll(".js_account_id");
@@ -2904,17 +2914,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var fetchSpecificUserInfo = function fetchSpecificUserInfo(btn, modal) {
-  btn.addEventListener("click", function (e) {
-    var loader = document.querySelector(".loader");
-    (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(loader);
-    // 編集するユーザーidを取得する
-    var user_id = e.currentTarget.getAttribute("data-id");
-    (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.setActionUrl)(user_id, "js_edit_account_form");
-    (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_0__.fetchGetOperation)("/api/user/".concat(user_id)).then(function (res) {
-      // ユーザーの情報をAPIを使用して取得
-      (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleEditUserName)(res, modal);
-    });
+var fetchSpecificUserInfo = function fetchSpecificUserInfo(e, modal) {
+  var loader = document.querySelector(".loader");
+  (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(loader);
+  // 編集するユーザーidを取得する
+  var user_id = e.currentTarget.getAttribute("data-id");
+  (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.setActionUrl)(user_id, "js_edit_account_form");
+  (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_0__.fetchGetOperation)("/api/user/".concat(user_id)).then(function (res) {
+    // ユーザーの情報をAPIを使用して取得
+    (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleEditUserName)(res, modal);
   });
 };
 
@@ -7974,11 +7982,11 @@ var admin_id = document.getElementById("js_admin_account_id").value;
 
 // チャットメッセージを受信した際
 _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("chat message", function (actual_sender_id, actual_receiver_id, sender_type, admin_login_id) {
-  (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(actual_sender_id, actual_receiver_id, sender_type, admin_login_id);
+  (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(actual_receiver_id, sender_type, admin_login_id);
 });
 // チャット画像を受信した際
 _module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("send_image", function (sender_id, receiver_id, sender_type, admin_login_id) {
-  (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(sender_id, receiver_id, sender_type, admin_login_id);
+  (0,_module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_2__.changeAccountDisplayOrder)(receiver_id, sender_type, admin_login_id);
 });
 
 // アカウント削除キャンセル処理

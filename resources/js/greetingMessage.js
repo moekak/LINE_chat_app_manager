@@ -66,7 +66,7 @@ uploads.forEach((upload) => {
 
         if(!isCorrectSize(file.size)){
             greetingText.classList.remove("hidden")
-            errorTxt.innerHTML = "画像サイズが大きすぎます。5MG以内で指定してください。"
+            errorTxt.innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください。"
             return
         }
 

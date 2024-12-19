@@ -4,7 +4,7 @@ import { formateDateToAsia } from "../util/formatDate.js";
 import socket from "../util/socket.js";
 import userStateManager from "../util/UserStateManager.js";
 import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeUserModals } from "./accountModalInitializers.js";
-import { createMessageRow } from "./elementTemplate.js";
+import { createMessageRow, createMessageRowForFetch } from "./elementTemplate.js";
 import { open_modal } from "./modalOperation.js";
 
 
@@ -29,8 +29,6 @@ export const changeDisplayOrder = async (sender_id, receiver_id, sender_type) =>
       if(sender_type == "user"){
             const elements          = document.querySelectorAll(".js_chatUser_id")
             const parentElement     = document.querySelector(".js_table")
-            console.log(sender_id + " sender id");
-            
 
             for (let element of elements) {
                   let id = element.getAttribute("data-id");
@@ -45,12 +43,16 @@ export const changeDisplayOrder = async (sender_id, receiver_id, sender_type) =>
 
                         parentElement.insertBefore(newCloneDiv, parentElement.firstChild)   
                         parentElement.removeChild(element)
+
+                        //ユーザー管理に関連するモーダルの初期化
+                        initializeUserModals(socket)
+                        await handleChatRedirect()
                         return 
                   }
             }
 
             const response = await fetchGetOperation(`/api/user/${sender_id}/account/${receiver_id}`)
-            parentElement.insertAdjacentHTML('afterbegin', createMessageRow(response, response["admin_account_id"]));
+            parentElement.insertAdjacentHTML('afterbegin', createMessageRow(response[0], response["admin_account_id"]));
             userStateManager.setState(response[0]["id"])
 
             //ユーザー管理に関連するモーダルの初期化
@@ -61,7 +63,7 @@ export const changeDisplayOrder = async (sender_id, receiver_id, sender_type) =>
 }
 
 
-export const changeAccountDisplayOrder = (sender_id, receiver_id, sender_type, admin_login_id) =>{
+export const changeAccountDisplayOrder = (receiver_id, sender_type, admin_login_id) =>{
       let hasAccount = false;
       if(sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id){
             const elemets = document.querySelectorAll(".js_account_id")

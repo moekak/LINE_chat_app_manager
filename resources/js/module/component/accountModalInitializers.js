@@ -129,11 +129,19 @@ export const initializeLineMessageUpdationModal= () =>{
 }
 export const initializeUserModals = (socket)=> {
       // ユーザー編集処理
+
+      console.log("oooo");
+      
       const edit_btns = document.querySelectorAll(".js_edit_user_btn")
       const editModal = document.getElementById("js_edit_account_modal")
 
       edit_btns.forEach((edit_btn)=>{
-            fetchSpecificUserInfo(edit_btn, editModal)
+            edit_btn.addEventListener("click", (e)=>{
+
+                  console.log("hahah");
+                  
+                  fetchSpecificUserInfo(e, editModal)
+            })  
       })
       
       // ブロックモーダル初期化

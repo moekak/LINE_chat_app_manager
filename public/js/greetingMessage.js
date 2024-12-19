@@ -498,7 +498,7 @@ uploads.forEach(function (upload) {
               break;
             }
             greetingText.classList.remove("hidden");
-            errorTxt.innerHTML = "画像サイズが大きすぎます。5MG以内で指定してください。";
+            errorTxt.innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください。";
             return _context.abrupt("return");
           case 11:
             _context.next = 13;

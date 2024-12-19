@@ -7,21 +7,51 @@ use App\Models\BlockChatUser;
 use App\Models\ChatUser;
 use App\Models\UserEntity;
 use App\Services\MessageCountService;
+use Illuminate\Support\Facades\DB;
 
 class ChatUserController extends Controller
 {
     public function getUserData($sender_id, $receiver_id){
 
-        $sender_uuid = UserEntity::where("entity_uuid", $sender_id)->value("related_id");
         $receiver_uuid = UserEntity::where("entity_uuid", $receiver_id)->value("related_id");
-        $messageCountService = new MessageCountService();
-        $message_count = $messageCountService->selectTotalMessageCount($receiver_uuid, $sender_uuid);
 
-        $chatUser = ChatUser::find($sender_uuid);
-        // created_atをAsia/Tokyoに変換し、フォーマット
-        $chatUser->created_at = $chatUser->created_at->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+        $chatUser = ChatUser::where("id", function($query) use($sender_id){
+            $query->select("related_id")
+                ->from("user_entities")
+                ->where("entity_uuid", $sender_id)
+                ->where("entity_type", "user");
+            })
+            ->select([
+                "chat_users.id",
+                "chat_users.line_name",
+                DB::raw('DATE_FORMAT(chat_users.created_at, "%Y-%m-%d %H:%i")')
+            ])
+            ->selectSub(
+                DB::table('user_entities')
+                    ->select('entity_uuid')
+                    ->whereColumn('related_id', 'chat_users.id')
+                    ->where('entity_type', 'user')
+                    ->limit(1),
+                'entity_uuid'
+            )
+            ->selectSub(
+                DB::table('user_message_reads')
+                    ->select(DB::raw('COALESCE(unread_count, 0)'))
+                    ->whereColumn('chat_user_id', 'chat_users.id')
+                    ->limit(1),
+                'unread_count'
+            )
+            ->selectSub(
+                DB::table('message_summaries')
+                    ->select(DB::raw('DATE_FORMAT(latest_all_message_date, "%Y-%m-%d %H:%i")'))
+                    ->whereColumn('user_id', 'chat_users.id')
+                    ->whereNotNull('latest_all_message_date'),
+                'latest_message_date'
+            )
+            ->get();
 
-        $chatUser["unread_count"] = $message_count;
+        // // created_atをAsia/Tokyoに変換し、フォーマット
+        // $chatUser->created_at = $chatUser->created_at->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
         return response()->json([$chatUser, "admin_account_id" => $receiver_uuid], 200);
     }
 

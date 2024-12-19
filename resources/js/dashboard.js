@@ -3,7 +3,6 @@ import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
-import DynamicListManager from "./module/util/DynamicListManager.js";
 
 // モーダル初期設定
 // アカウント編集モーダル処理
@@ -54,11 +53,11 @@ registerUser(admin_id, "user")
 
 // チャットメッセージを受信した際
 socket.on("chat message", (actual_sender_id, actual_receiver_id, sender_type, admin_login_id)=>{
-    changeAccountDisplayOrder(actual_sender_id, actual_receiver_id, sender_type, admin_login_id)
+    changeAccountDisplayOrder(actual_receiver_id, sender_type, admin_login_id)
 })
 // チャット画像を受信した際
 socket.on("send_image", (sender_id, receiver_id, sender_type, admin_login_id)=>{
-    changeAccountDisplayOrder(sender_id, receiver_id, sender_type, admin_login_id)
+    changeAccountDisplayOrder(receiver_id, sender_type, admin_login_id)
 })
 
 
