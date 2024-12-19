@@ -11,7 +11,6 @@ export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
       
       return `
             <tr data-id=${res["entity_uuid"]} class="js_chatUser_id">
-                  <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value=${res["id"]}></th>
                   <td w20 class="chat_user_name" data-simplebar>${res["line_name"]}</td>
                   <td data-id=${res["id"]}>
                         <div class="message_count js_message_count" style="display:${display}; font-weight: bold;">${res["unread_count"]}</div>
@@ -42,7 +41,6 @@ export const createMessageRow = (res, admin_account_id) =>{
       
       return `
             <tr data-id=${res[0]["entity_uuid"]} class="js_chatUser_id">
-                  <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value=${res[0]["id"]}></th>
                   <td w20 class="chat_user_name" data-simplebar>${res[0]["line_name"]}</td>
                   <td data-id=${res[0]["id"]}>
                         <div class="message_count js_message_count" style="display:${display}; font-weight: bold;">${res[0]["unread_count"]}</div>
@@ -100,9 +98,7 @@ export const createAccountDataRow = (res, categories) =>{
       const createdAtTokyo = formateDateToAsia(res["created_at"])
       return `
             <tr class="js_account_id" data-id="${res["entity_uuid"]}">
-                  <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
                   <td w20 class="account_name" data-simplebar>${res["account_name"]}</td>
-
                   <td class=" text-center total_message-count">
                         <div class="message_count js_mesage_count js_total_count" style="display: ${style}; font-weight: bold;">${res["unread_count"]}</div>
                   </td>

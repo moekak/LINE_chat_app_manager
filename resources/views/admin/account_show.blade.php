@@ -1,8 +1,4 @@
 @extends('layouts.default')
-
-@section('title')
-	Dashboard
-@endsection
 @section('style')
 	<style>
 		body{
@@ -45,40 +41,38 @@
 		<div class="dashboard__wrapper-table">
 			<table class="table table-striped">
 				<thead>
-				<tr>
-					<th scope="col"></th>
-					<th scope="col">ユーザー名</th>
-					<th scope="col">未読数</th>
-					<th scope="col">最新受信日</th>
-					<th scope="col">作成日時</th>
-					<th scope="col">管理</th>
-				</tr>
+					<tr>
+						<th scope="col">ユーザー名</th>
+						<th scope="col">未読数</th>
+						<th scope="col">最新受信日</th>
+						<th scope="col">作成日時</th>
+						<th scope="col">管理</th>
+					</tr>
 				</thead>
 				<tbody class="js_table">
-				@foreach ($chat_users as $chat_user)
-					<tr data-id={{$chat_user["entity_uuid"]}} class="js_chatUser_id">
-					<th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-					<td w20 class="chat_user_name" data-simplebar><?= $chat_user["line_name"]?></td>
-					
-					<td  data-id={{$chat_user->id}}>
-						<div class="message_count js_message_count" style="display: {{ $chat_user['unread_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
-							{{ $chat_user["unread_count"]}}
-						</div>
-					</td>
-					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
-					<td><?= $chat_user["created_at"] ?></td>
-					<td class="operation">
-						<form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
-							<input type="hidden" name="admin_id" class="js_admin_el">
-							<input type="hidden" name="user_id" class="js_user_el">
-							<input type="hidden" name="token" class="js_token">
-							<button type="submit" class="operation_icon js_redirect_btn" data-user-id={{$chat_user['id']}} data-admin-id={{$id}}><img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ"></button>
-						</form>
-						<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
-						<button class="operation_icon js_block_btn" data-uuid="{{$chat_user["entity_uuid"]}}" data-name="{{$chat_user["line_name"]}}" data-id="{{$chat_user["id"]}}"><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
-					</td>
-					</tr>
-				@endforeach
+					@foreach ($chat_users as $chat_user)
+						<tr data-id={{$chat_user["entity_uuid"]}} class="js_chatUser_id">
+							<td w20 class="chat_user_name" data-simplebar><?= $chat_user["line_name"]?></td>
+							
+							<td  data-id={{$chat_user->id}}>
+								<div class="message_count js_message_count" style="display: {{ $chat_user['unread_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
+									{{ $chat_user["unread_count"]}}
+								</div>
+							</td>
+							<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
+							<td><?= $chat_user["created_at"] ?></td>
+							<td class="operation">
+								<form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
+									<input type="hidden" name="admin_id" class="js_admin_el">
+									<input type="hidden" name="user_id" class="js_user_el">
+									<input type="hidden" name="token" class="js_token">
+									<button type="submit" class="operation_icon js_redirect_btn" data-user-id={{$chat_user['id']}} data-admin-id={{$id}}><img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ"></button>
+								</form>
+								<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
+								<button class="operation_icon js_block_btn" data-uuid="{{$chat_user["entity_uuid"]}}" data-name="{{$chat_user["line_name"]}}" data-id="{{$chat_user["id"]}}"><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
+							</td>
+						</tr>
+					@endforeach
 				</tbody>
 				
 			</table>

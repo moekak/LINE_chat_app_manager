@@ -125,9 +125,8 @@ class LineAccountController extends Controller
 
     public function show(string $id)
     {
-        $user = Auth::user();
         $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
-        $account_data = LineAccount::where("user_id", $user->id)->get();
+        $account_name = LineAccount::where("id", $id)->value("account_name");
 
         $users = ChatUser::whereNotIn('id', function($query) {
                 // サブクエリ
@@ -175,7 +174,7 @@ class LineAccountController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(self::MESSAGES_PER_PAGE)
             ->get();
-        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_data" => $account_data, "chat_users" => $users, "id" => $id]);
+        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id]);
     }
 
     /**

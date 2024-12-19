@@ -1,8 +1,4 @@
 @extends('layouts.default')
-
-@section('title')
-	<h2>Dashboard</h2><p></p>
-@endsection
 @section('main')
 <input type="hidden" value="{{$user_uuid}}" id="js_admin_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
@@ -22,7 +18,6 @@
 			<table class="table table-striped">
 				<thead>
 				<tr>
-					<th scope="col"></th>
 					<th scope="col">ユーザー名</th>
 					<th scope="col">最新受信日</th>
 					<th scope="col">作成日時</th>
@@ -32,13 +27,12 @@
 				<tbody class="js_table">
 				@foreach ($block_lists as $chat_user)
 					<tr data-id={{$chat_user["entity_uuid"]}} class="js_chatUser_id">
-					<th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-					<td w20><?= $chat_user["line_name"]?></td>
-					<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
-					<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
-					<td class="operation">
-						<button class="operation_icon js_block_btn" data-uuid='{{$chat_user["uuid"]}}' data-name='{{$chat_user["line_name"]}}' data-id='{{$chat_user["id"]}}'><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
-					</td>
+						<td w20><?= $chat_user["line_name"]?></td>
+						<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
+						<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
+						<td class="operation">
+							<button class="operation_icon js_block_btn" data-uuid='{{$chat_user["uuid"]}}' data-name='{{$chat_user["line_name"]}}' data-id='{{$chat_user["id"]}}'><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
+						</td>
 					</tr>
 				@endforeach
 				</tbody>

@@ -24,6 +24,7 @@ class UserBlockController extends Controller
 
         // ブロックユーザー一覧を取得
         $block_users_ids = BlockChatUser::where("is_blocked", "1")->pluck("chat_user_id");
+        $account_name = LineAccount::where("id", $id)->value("account_name");
         
         $block_users = ChatUser::whereIn("id", $block_users_ids)
             ->where('account_id', $id)
@@ -50,7 +51,7 @@ class UserBlockController extends Controller
         $account_data = LineAccount::where("user_id", $user->id)->get();
 
 
-        return view("admin.block_account", ["block_lists" => $block_users, "user_uuid"=> $user_uuid, "account_data" => $account_data]);
+        return view("admin.block_account", ["block_lists" => $block_users, "user_uuid"=> $user_uuid, "account_data" => $account_data, "account_name" => $account_name]);
     }
 
 

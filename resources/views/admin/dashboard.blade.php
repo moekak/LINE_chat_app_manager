@@ -1,8 +1,6 @@
 @extends('layouts.default')
 
-@section('title2')
-      <h2>Dashboard</h2><p></p>
-@endsection
+
 @section('main')
 <input type="hidden" value="{{$user->id}}" id="js_admin_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
@@ -36,22 +34,19 @@
                   <table class="table table-striped">
                         <thead>
                               <tr>
-                                    <th scope="col"></th>
                                     <th scope="col">アカウント名</th>
                                     <th scope="col">未読数</th>
                                     <th scope="col">ステータス</th>
                                     <th scope="col">最新受信日</th>
                                     <th scope="col">作成日時</th>
-                                    <th scope="col">管理</th>
+                                    <th scope="col" style="width: 20px;">管理</th>
                               </tr>
                         </thead>
                         <tbody class="js_table js_parentEl1">
                               
                               @foreach ($active_accounts as $account)
                                     <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
-                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
                                           <td w20 class="account_name" data-simplebar><?= $account["account_name"]?></td>
-
                                           <td class=" text-center total_message-count">
                                                 <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
                                                       {{ $account["unread_count"] }}
@@ -101,7 +96,6 @@
                   <table class="table table-striped">
                         <thead>
                               <tr>
-                                    <th scope="col"></th>
                                     <th scope="col">アカウント名</th>
                                     <th scope="col">未読数</th>
                                     <th scope="col">ステータス</th>
@@ -114,8 +108,7 @@
                               
                               @foreach ($inactive_accounts as $account)
                                     <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
-                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-                                          <td w20><?= $account["account_name"]?></td>
+                                          <td w20 class="account_name" data-simplebar><?= $account["account_name"]?></td>
 
                                           <td class=" text-center total_message-count">
                                                 <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
@@ -166,7 +159,6 @@
                   <table class="table table-striped">
                         <thead>
                               <tr>
-                                    <th scope="col"></th>
                                     <th scope="col">アカウント名</th>
                                     <th scope="col">未読数</th>
                                     <th scope="col">ステータス</th>
@@ -179,8 +171,7 @@
                               
                               @foreach ($suspended_accounts as $account)
                                     <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
-                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-                                          <td w20><?= $account["account_name"]?></td>
+                                          <td w20 class="account_name" data-simplebar><?= $account["account_name"]?></td>
 
                                           <td class=" text-center total_message-count">
                                                 <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">
@@ -231,7 +222,6 @@
                   <table class="table table-striped">
                         <thead>
                               <tr>
-                                    <th scope="col"></th>
                                     <th scope="col">アカウント名</th>
                                     <th scope="col">未読数</th>
                                     <th scope="col">ステータス</th>
@@ -244,8 +234,7 @@
                               
                               @foreach ($banned_accounts as $account)
                                     <tr class="js_account_id" data-id={{$account["entity_uuid"]}}>
-                                          <th scope="row"><input type="checkbox" id="checkbox3" name="option3" value="3"></th>
-                                          <td w20><?= $account["account_name"]?></td>
+                                          <td w20 class="account_name" data-simplebar><?= $account["account_name"]?></td>
 
                                           <td class=" text-center total_message-count">
                                                 <div class="message_count js_mesage_count js_total_count" style="display: {{ $account["unread_count"] > 0 ? 'flex' : 'none' }}; font-weight: bold;">

@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-      <title>@yield('title', '管理システム')</title>
+      <title>@yield('title', 'チャット管理システム')</title>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-      <link rel="stylesheet" href="{{ secure_asset('css/common.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+      <link rel="shortcut icon" href="{{asset("img/icons8-chat-32.png")}}">
       <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
       <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
       <noscript>
@@ -39,56 +40,56 @@
             <nav class="nav__area">
                   <div class="nav__item-ttl bg-blue txt-white font-25 txt-center p-20">管理システム</div>
                   <div class="nav__item-container">
-                        <div class="nav__item-option ptb-20 prl-20">
-                              <p class="nav__item-option__txt txt-gray"><a href="{{route("dashboard")}}">アカウント一覧</a></p>
+                        <div class="nav__item-option">
+                              <a href="{{route("dashboard")}}" class="nav__item-option__txt txt-gray">アカウント一覧</a>
                         </div>
                         @if (Route::currentRouteName() == "account.show")
-                              <div class="nav__item-option ptb-20 prl-20">
-                                    <p class="nav__item-option__txt txt-gray"><a href="{{route("account.block.user", ["id" => Route::current()->parameter('id')])}}">ブロックアカウント一覧</a></p>
+                              <div class="nav__item-option">
+                                    <a href="{{route("account.block.user", ["id" => Route::current()->parameter('id')])}}" class="nav__item-option__txt txt-gray">ブロックアカウント一覧</a>
                               </div>
-                              <div class="nav__item-option ptb-20 prl-20">
+                              <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_create_message_btn">初回メッセージ設定</p>
                               </div>
                         @endif
                         @if (Route::currentRouteName() == "dashboard")
-                              <div class="nav__item-option ptb-20 prl-20">
+                              <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_create_account_btn">アカウント追加</p>
                               </div>
-                              <div class="nav__item-option ptb-20 prl-20">
+                              <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_update_line_btn" data-id="{{$user->id}}">LINE送信文言変更</p>
                               </div>
                         @endif
-                        <div class="nav__item-option ptb-20 prl-20">
-                              <form action="{{route("logout")}}" method="post">
-                                    @csrf
-                                    <button class="logout_btn" type="submit">
-                                          <p class="nav__item-option__txt txt-gray">ログアウト</p> 
-                                    </button>
-                              </form>
-                              
-                        </div>
+                        @if (Route::currentRouteName() == "account.block.user")
+                              <div class="nav__item-option">
+                                    <a href="{{route("account.show", ["id" => Route::current()->parameter('id')])}}"  class="nav__item-option__txt txt-gray">ユーザー一覧</a>
+                              </div>
+                        @endif
+                        <form action="{{route("logout")}}" method="post">
+                              @csrf
+                              <button class="logout_btn" type="submit">
+                                    <p class="nav__item-option__txt txt-gray">ログアウト</p> 
+                              </button>
+                        </form>
+
                   </div>
             </nav>
             <section class="dashboard__wrapper">
-                  @if (Route::currentRouteName() !== "dashboard")
-                  <nav class="nav__area-second js_slide_nav">
-                        {{-- <div class="nav__item-ttl bg-blue txt-white font-25 txt-center p-20">管理システム</div> --}}
-                        <div class="nav__item-container">
-                        @foreach ($account_data as $account)
-                              <div class="nav__item-option ptb-20 prl-20 nav__item-option-border">
-                                    <a href="{{route("account.show", ["id" => $account["id"]])}}"><p class="nav__item-option__txt txt-gray"><?= $account["account_name"]?></p></a>
-                                    <img src="{{asset("img/icons8-mail-32.png")}}" alt="" class="nav__item-option__message-icon">
+                  @if (Route::currentRouteName() == "account.show" || Route::currentRouteName() == "account.block.user")
+                        <div class="dashboard__wrapper-top_show p-20 shadow-bottom ">
+                              <h4 style="font-weight: 700;">{{$account_name}}</h4>
+                              <div class="dashboard__wrapper-top--box">
+                                    <img src="{{asset("img/icons8-user-icon-48.png")}}" alt="" class="dashboard__wrapper-top--box-img">  
+                                    <p class="dashboard__wrapper-top-txt">{{$user->name}}</p>
                               </div>
-                        @endforeach
                         </div>
-                  </nav>
+                  @else
+                        <div class="dashboard__wrapper-top p-20 shadow-bottom ">
+                              <div class="dashboard__wrapper-top--box">
+                                    <img src="{{asset("img/icons8-user-icon-48.png")}}" alt="" class="dashboard__wrapper-top--box-img">  
+                                    <p class="dashboard__wrapper-top-txt">{{$user->name}}</p>
+                              </div>
+                        </div>
                   @endif
-                  <div class="dashboard__wrapper-top p-20 shadow-bottom ">
-                        <div class="dashboard__wrapper-top--box">
-                              <img src="{{asset("img/icons8-user-icon-48.png")}}" alt="" class="dashboard__wrapper-top--box-img">  
-                              <p class="dashboard__wrapper-top-txt">{{$user->name}}</p>
-                        </div>
-                  </div>
                   @yield('main')
             </section>
       </main>

@@ -117,14 +117,15 @@ p, ul {
     font-size: 14px !important;
 }
 .success_alert {
-    position: absolute;
+    position: fixed;
     width: 42%;
     top: 10%;
-    left: 50%;
+    left: 58%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     font-size: 15px;
+    z-index: 999;
 }
 
 /* nav セクション */
@@ -140,6 +141,15 @@ p, ul {
 .nav__item-option {
     transition: 0.5s ease;
     cursor: pointer;
+    position: relative;
+
+}
+.nav__item-option__txt{
+    width: 100%;
+    display: inline-block;
+    padding: 20px;
+    text-align: left;
+
 }
 .nav__item-option-border{
     border-bottom: 1px solid rgba(255, 255, 255, 0.507);
@@ -184,6 +194,17 @@ p, ul {
     justify-content: end;
     position: sticky;
     top: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 994;
+}
+.dashboard__wrapper-top_show {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    padding-left: 100px;
     width: 100%;
     background-color: #fff;
     z-index: 994;
@@ -256,6 +277,7 @@ p, ul {
 }
 .operation{
     display: flex;
+    padding-right: 23px !important;
 }
 
 /* ログアウト */
@@ -263,6 +285,7 @@ p, ul {
     background-color: transparent;
     border: none;
     padding: 0;
+    width: 100%;
 }
 
 
@@ -368,6 +391,7 @@ p, ul {
     overflow: auto;
     max-width: 200px;
     white-space: nowrap;
+    padding-left: 21px !important;
 }
 
 
@@ -474,7 +498,7 @@ p, ul {
     height: 3px;
     right: 0;
     bottom: 5px;
-    left: auto;  /* leftの値をリセット */
+    left: 20px;  /* leftの値をリセット */
     border-radius: 8px;
 }
 
@@ -498,4 +522,8 @@ p, ul {
 /* ホバー時のスクロールバーの表示 */
 .simplebar-scrollbar.simplebar-visible:before {
     opacity: 0.5;
+}
+
+.simplebar-scrollbar{
+    margin-left: 11px;
 }
