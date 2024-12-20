@@ -312,8 +312,9 @@
                   <select class="form-select mb-3 js_status_select" name="account_status">
                         <option disabled {{ old('account_status') ? '' : 'selected' }}>ステータスを選択してください</option>
                         @foreach ($account_status as $status)
-
-                              <option value="{{ $status->id }}" {{ old('account_status') == $status->id ? 'selected' : '' }}>{{$status->status}}</option> 
+                              @if ($status->id !== 4)
+                                    <option value="{{ $status->id }}" {{ old('account_status') == $status->id ? 'selected' : '' }}>{{$status->status}}</option> 
+                              @endif
                         @endforeach
                   </select>
             </div>
@@ -388,7 +389,7 @@
             <input type="hidden" name="admin_account_id" id="js_account_id">
             <div class="broadcast_message_submit_btn-box">
                   <button type="submit" class="modal__container-btn js_message_display_btn disabled_btn">追加</button>  
-                  <button type="submit" class="modal__container-btn js_message_submit_btn">送信</button>  
+                  <button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">送信</button>  
             </div>
       </div>      
 </section>
@@ -435,7 +436,7 @@
                               </select>
                         </div>
                         <input type="hidden" name="current_account_id" value="{{old("current_account_id")}}" id="js_edit_second_account_id">
-                        <button type="submit" class="btn" style="background-color: #20a8d7; border: none; color: white;">追加</button>
+                        <button type="submit" class="btn" style="background-color: #2088d7; border: none; color: white;">追加</button>
                   </form>
             </div>
       </div>

@@ -1,10 +1,7 @@
+import { toggleDisplayButtonState } from "./accountUIOperations.js";
 import { createBroadcastMessageRow } from "./elementTemplate.js";
 
 export const displayMessageToList = (message, src, index, className, id) =>{
-
-    console.log(index);
-    
-    
     // メッセージ表示リストの親要素を取得
     const parentElement = document.querySelector(`.${className}`);
     // 親要素の子要素をすべて取得し、その数を取得する
@@ -70,17 +67,8 @@ export const deleteList = (id, formData) =>{
     
     delete_btns.forEach((btn)=>{
         btn.addEventListener("click", (e)=>{
-
-            console.log(e.currentTarget);
-            console.log(e.currentTarget.parentElement);
-            
             let target_id = e.currentTarget.parentElement.getAttribute("data-id")
-            console.log(target_id);
-            
-
             formData = formData.filter((data, index) =>index != target_id);
-            console.log(formData);
-            
 
             let list_el = e.currentTarget.parentElement.parentElement
 
@@ -97,6 +85,8 @@ export const deleteList = (id, formData) =>{
             headings.forEach((el, index)=>{
                 el.setAttribute("data-id", index)
             })
+
+            toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
             
         })
     })

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Zen+Kaku+Gothic+New&display=swap");
 
 :root {
-    ---bg-blue: #20a8d7;
+    ---bg-blue: #2088d7;
     --bg-dark-blue: #384042;
     --bg-dark-blue2: #5d696c;
     --bg-dark-blue-hover: #202526;
@@ -17,7 +17,7 @@ body {
     font-weight: 400;
     font-style: normal;
     position: relative;
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
 }
 a{
     color: inherit;
@@ -261,19 +261,19 @@ p, ul {
     width: 20px;
 }
 .operation_icon:nth-child(1){
-    background-color: #20a8d7;
+    background-color: #2088d7;
 }
 .js_redirect_btn{
-    background-color: #20a8d7;
+    background-color: #2088d7;
 }
 .operation_icon:nth-child(2){
-    background-color: #f9bb3b;
+    background-color: #e5a72b;
 }
 .operation_icon:nth-child(3), .js_delete_account_btn{
-    background-color: #ff5555;
+    background-color: #d74141;
 }
 .js_send_message_btn{
-    background-color: #2ecc71 !important;
+    background-color: #26a35c !important;
 }
 .operation{
     display: flex;
@@ -322,7 +322,7 @@ p, ul {
 
 .modal__container-btn {
     border: none;
-    background-color: #20a8d7;
+    background-color: #2088d7;
     color: #fff;
     border-radius: 5px;
     padding: 7px 25px;

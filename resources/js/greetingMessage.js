@@ -1,3 +1,4 @@
+import { toggleDisplayButtonState } from "./module/component/accountUIOperations.js";
 import { deleteList, displayMessageToList, dragAndDrop, hasValue, hideErrorMsg } from "./module/component/broadcastMessageOperations.js"
 import { isAllowedType, isCorrectSize } from "./module/component/imageFileOperator.js"
 import { open_modal } from "./module/component/modalOperation.js"
@@ -22,11 +23,7 @@ greeting_btn.addEventListener("click", ()=>{
 greetingMessageInput.addEventListener("input", (e)=>{
     hideErrorMsg()
     greetingMessage = e.currentTarget.value
-    if(greetingMessage.length > 0){
-        display_btn.classList.remove("disabled_btn")
-    }else{
-        display_btn.classList.add("disabled_btn")
-    }
+    toggleDisplayButtonState(display_btn, greetingMessage)
 })
 
 // 追加ボタンを押したらメッセージまたは画像をプレビューできるように表示させる

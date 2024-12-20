@@ -133,10 +133,6 @@ export const setActionUrl = (id, className) =>{
       let form = document.querySelector(`.${className}`)
       let action  = form.getAttribute("action");
 
-
-      console.log(form);
-      
-      
       // URLに既存のIDが含まれているかを正規表現で探す
       // パターン: 数字がID部分に相当する (例: /update/26 のようなURL)
       const idPatternUpdate = /\/update\/\d+/;
@@ -245,14 +241,13 @@ export const initializeAccountStatusManager =()=>{
                   // ステータス変更に成功した場合
                   if(res){
                         window.scrollTo({
-                        top: 0,
-                        left: 0,
-                        behavior: 'auto'  // 'auto' ensures instant scrolling
+                              top: 0,
+                              left: 0,
+                              behavior: 'auto'  // 'auto' ensures instant scrolling
                         });
                         localStorage.setItem("status_update", "success")
                         window.location.reload()
                   }
-                  
             })
       }
 }
@@ -284,3 +279,8 @@ const submitRedirectForm = async (adminId, userId) => {
       const form = document.querySelector(".js_redirect_form");
       form.submit();
 };
+
+
+export const toggleDisplayButtonState = (btn, message) =>{
+      btn.classList.toggle("disabled_btn", message.length === 0);
+}

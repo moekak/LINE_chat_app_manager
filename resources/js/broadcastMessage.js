@@ -1,3 +1,4 @@
+import { toggleDisplayButtonState } from "./module/component/accountUIOperations.js";
 import { deleteList, displayMessageToList, dragAndDrop, hasValue, hideErrorMsg } from "./module/component/broadcastMessageOperations.js"
 import { isAllowedType, isCorrectSize } from "./module/component/imageFileOperator.js";
 import { open_modal } from "./module/component/modalOperation.js"
@@ -16,11 +17,7 @@ let broadcastMessage = ""
 broadcastMessageInput.addEventListener("input", (e)=>{
     hideErrorMsg()
     broadcastMessage = e.currentTarget.value
-    if(broadcastMessage.length > 0){
-        display_btn.classList.remove("disabled_btn")
-    }else{
-        display_btn.classList.add("disabled_btn")
-    }
+    toggleDisplayButtonState(display_btn, broadcastMessage)
 })
 
 
@@ -32,6 +29,8 @@ display_btn.addEventListener("click", ()=>{
         dragAndDrop("accordion", true)
         broadcastMessage = ""
         broadcastMessageInput.value = ""
+        toggleDisplayButtonState(document.querySelector(".js_message_submit_btn"), document.querySelectorAll(".js_headings"))
+        toggleDisplayButtonState(document.querySelector(".js_message_display_btn"), broadcastMessage)
         index++
     }
 })
@@ -76,6 +75,7 @@ uploads.forEach((upload) => {
             displayMessageToList(null, e.target.result, index, "js_accordion_wrapper", "accordion");
             deleteList("accordion", formDataArray)
             index++
+            toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
         }
 
         reader.readAsDataURL(compressedFile);

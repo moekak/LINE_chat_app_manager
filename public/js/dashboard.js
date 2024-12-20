@@ -2451,7 +2451,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setActionFullUrl: () => (/* binding */ setActionFullUrl),
 /* harmony export */   setActionUrl: () => (/* binding */ setActionUrl),
 /* harmony export */   setDataForEditUserName: () => (/* binding */ setDataForEditUserName),
-/* harmony export */   setLineMessageForUpdating: () => (/* binding */ setLineMessageForUpdating)
+/* harmony export */   setLineMessageForUpdating: () => (/* binding */ setLineMessageForUpdating),
+/* harmony export */   toggleDisplayButtonState: () => (/* binding */ toggleDisplayButtonState)
 /* harmony export */ });
 /* harmony import */ var _util_DynamicListManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/DynamicListManager.js */ "./resources/js/module/util/DynamicListManager.js");
 /* harmony import */ var _util_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/fetch.js */ "./resources/js/module/util/fetch.js");
@@ -2666,7 +2667,6 @@ var handleEditUserName = /*#__PURE__*/function () {
 var setActionUrl = function setActionUrl(id, className) {
   var form = document.querySelector(".".concat(className));
   var action = form.getAttribute("action");
-  console.log(form);
 
   // URLに既存のIDが含まれているかを正規表現で探す
   // パターン: 数字がID部分に相当する (例: /update/26 のようなURL)
@@ -2839,6 +2839,9 @@ var submitRedirectForm = /*#__PURE__*/function () {
     return _ref6.apply(this, arguments);
   };
 }();
+var toggleDisplayButtonState = function toggleDisplayButtonState(btn, message) {
+  btn.classList.toggle("disabled_btn", message.length === 0);
+};
 
 /***/ }),
 
