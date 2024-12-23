@@ -26,7 +26,7 @@ class LineMessageCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'message.required' => '文言はは必須項目です。',
+            'message.required' => '文言は必須項目です。',
             'message.max' => '文言は50文字以内で入力してください。',
         ];
     }

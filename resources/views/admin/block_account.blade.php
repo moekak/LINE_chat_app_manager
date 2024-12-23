@@ -107,9 +107,6 @@
 
 				let form = document.querySelector('.js_edit_account_form');
 				let action = form.getAttribute('action');
-				let id = document.querySelector(".js_account_id_input").value;
-				console.log(id);
-				
 				action = action.replace(':id', id);
 				form.setAttribute('action', action)
 

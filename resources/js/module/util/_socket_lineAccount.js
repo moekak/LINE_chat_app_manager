@@ -12,7 +12,6 @@ let socket2 = io(config.socketUrl, {  // ベースURLのみ指定
 
 // 接続が確立されたときに実行される
 socket2.on('connect', () => {
-      console.log('サーバーに接続されましたyoooooo');
 });
 
 

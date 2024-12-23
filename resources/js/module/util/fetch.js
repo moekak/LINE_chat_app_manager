@@ -22,8 +22,6 @@ export const fetchPostOperation = (data, url) => {
   })
 };
 export const fetchGetOperation = (url) => {
-
-
   return fetch(`${url}`, {
     method: "GET",
     headers: {

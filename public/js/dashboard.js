@@ -8016,36 +8016,6 @@ if (status_update) {
     new _module_util_InfiniteScroll_js__WEBPACK_IMPORTED_MODULE_4__["default"](element, base_url, parentElement, fileType);
   });
 }
-
-// // アカウント追加処理
-// const submit_form =document.getElementById("js_add_account_form")
-
-// submit_form.addEventListener("submit", (e)=>{
-//     e.preventDefault()
-
-//     let account_name = document.querySelector(".js_account_name_input").value 
-//     let channel_access_token = document.querySelector(".js_channel_access_token_input").value
-//     let channel_secret = document.querySelector(".js_channel_secret_input").value
-//     let url = document.querySelector(".js_url_input").value
-//     let status = document.querySelector(".js_status_select").value
-//     let second_account_id = document.querySelector(".js_second_account_id")
-
-//     const data = {
-//         "account_name" : account_name,
-//         "account_url": url,
-//         "channelsecret" : channel_secret,
-//         "channelaccesstoken" : channel_access_token,
-//         "account_status" : status,
-//         "second_account_id" : second_account_id
-//     }
-
-//     console.log(data);
-
-//     setInterval(()=>{
-//         submit_form.submit() 
-//     }, 3000)
-
-// })
 })();
 
 /******/ })()

@@ -68,14 +68,10 @@ export const changeAccountDisplayOrder = (receiver_id, sender_type, admin_login_
       if(sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id){
             const elemets = document.querySelectorAll(".js_account_id")
 
-            console.log(receiver_id);
-            
             for (let element of elemets){
                   let account_id = element.getAttribute("data-id");
-                  console.log(account_id);
-                  
+
                   if(account_id == receiver_id){
-                        console.log("same");
                         
                         hasAccount == true
                         const parentElement = element.parentElement

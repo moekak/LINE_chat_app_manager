@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BroadcastMessageController;
 use App\Http\Controllers\ChatUserController;
+use App\Http\Controllers\CreateTitleController;
 use App\Http\Controllers\LineMessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SecondAccountController;
@@ -43,4 +44,5 @@ Route::post("/user/update/{id}", [ChatUserController::class, "update"])->name("u
 
 Route::get("/account/block/{id}", [ChatUserController::class, "block"])->name("account.block")->middleware("auth");
 Route::post("/line/message/update/{id}", [LineMessageController::class, "update"])->name("message.update")->middleware("auth");
+Route::post("/title/update", [CreateTitleController::class, "store"])->name("title.update")->middleware("auth");
 

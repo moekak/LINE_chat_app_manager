@@ -4,7 +4,6 @@ import { changeDisplayOrder, handleChatRedirect} from "./module/component/accoun
 import socket, { registerUser } from "./module/util/socket.js";
 import { initializeUserModals } from "./module/component/accountModalInitializers.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
-import { fetchGetOperation } from "./module/util/fetch.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -73,3 +72,26 @@ close_modal_by_click(modal, btn)
             open_modal(loader)
       })
 }
+
+// タイトル表示変更モーダル
+{
+      const title_btn = document.getElementById("js_create_title_btn")
+      const modal = document.getElementById("js_create_title_modal")
+
+      title_btn.addEventListener("click", ()=>{
+            open_modal(modal)
+      })
+}
+
+
+// アカウント編集のloader表示
+const submitForms = document.querySelectorAll(".js_loader")
+const loader = document.querySelector(".loader")
+
+submitForms.forEach((submitForm)=>{
+      submitForm.addEventListener("submit", ()=>{
+            submitForm.classList.add("hidden")
+            open_modal(loader)
+            
+      })
+})

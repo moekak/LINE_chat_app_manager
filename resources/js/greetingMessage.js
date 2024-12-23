@@ -111,24 +111,13 @@ submit_btn.addEventListener("click", ()=>{
     if(hasValue("accordion_greeting")){
         sendMessage = []
         const data = document.querySelectorAll(".js_data")
-
-        console.log(formDataArray);
-        console.log("formData");
-        console.log(data.length);
-        
-        
-        
-
         // 順番通りに並べ替え
         for(let i = 0; i < data.length; i ++){
-            console.log(Array.from(data)[i].getAttribute("data-file-index"));
             sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")]
         }
 
         const formData = new FormData();
 
-        console.log(sendMessage);
-        
         // sendMessage のデータを FormData に追加
         sendMessage.forEach((item, index) => {
             if (item.type === 'image') {

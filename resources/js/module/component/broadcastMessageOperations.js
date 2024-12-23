@@ -35,7 +35,6 @@ export const displayMessageToList = (message, src, index, className, id) =>{
 
 export const dragAndDrop = (id, changeOrder = false) =>{
 	const elem = document.getElementById(id);
-    console.log("changeOrder value:", changeOrder); // changeOrderの値を確認
     const options = {
         animation: 150,
         handle: '.drag-handle',
@@ -43,8 +42,7 @@ export const dragAndDrop = (id, changeOrder = false) =>{
             if (changeOrder) {  // 条件チェックをonEnd内部で行う
                 const items = document.querySelectorAll(".js_data");
                 const headings = document.querySelectorAll(".js_headings")
-                console.log("Items found:", items.length);
-                
+
                 Array.from(items).forEach((item, index) => {
                     item.setAttribute('data-id', index);
                 });
@@ -97,9 +95,6 @@ export const deleteList = (id, formData) =>{
 export const hasValue = (id)=>{
     const accordion = document.getElementById(id)
     const lists = accordion.querySelectorAll(".js_card")
-
-    console.log(lists);
-    
     return lists.length > 0
 }
 

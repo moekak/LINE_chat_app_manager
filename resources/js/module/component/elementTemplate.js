@@ -3,12 +3,8 @@ import { formateDateToAsia } from "../util/formatDate.js"
 export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
       const createdAtTokyo = formateDateToAsia(res["created_at"])
       const latestMessageDate = res["latest_message_date"] ? formateDateToAsia(res["latest_message_date"]) : ""
-
       const display = res["unread_count"] > 0 ? "flex" : "none"
 
-      console.log(res);
-      
-      
       return `
             <tr data-id=${res["entity_uuid"]} class="js_chatUser_id">
                   <td w20 class="chat_user_name" data-simplebar>${res["line_name"]}</td>
@@ -33,12 +29,8 @@ export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
 export const createMessageRow = (res, admin_account_id) =>{
       const createdAtTokyo = formateDateToAsia(res[0]["created_at"])
       const latestMessageDate = formateDateToAsia()
-
       const display = res[0]["unread_count"] > 0 ? "flex" : "none"
 
-      console.log(res);
-      
-      
       return `
             <tr data-id=${res[0]["entity_uuid"]} class="js_chatUser_id">
                   <td w20 class="chat_user_name" data-simplebar>${res[0]["line_name"]}</td>

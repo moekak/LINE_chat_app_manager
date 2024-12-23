@@ -47,8 +47,6 @@ class InfiniteScroll{
                                     this.hasNoValue = true; // もうデータがない場合は停止
                                     this.loader.classList.add("hidden")  
                               } else {
-                                    console.log(response);
-                                    
                                     if(this.fileType === "accountShow"){
                                           response.forEach((res) => {
                                                 this.parentElement.insertAdjacentHTML("beforeend",createMessageRowForFetch(res, res["account_id"]));

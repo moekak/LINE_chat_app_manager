@@ -33,6 +33,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name.required' => 'ユーザーネームは必須項目です。',
             'name.unique' => 'このユーザーネームは既に使用されています。',
+            'name.max' => 'ユーザーネームは50文字以内で設定してください。',
             'password.required' => 'パスワードは必須項目です。',
             'password.min' => 'パスワードは6文字以上で設定してください。',
         ];

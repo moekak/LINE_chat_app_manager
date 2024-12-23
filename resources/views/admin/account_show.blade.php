@@ -161,7 +161,31 @@
 		</div>
 	</div>      
 </section>
+{{-- タイトル更新 --}}
+<section class="modal__container js_modal hidden js_loader" id="js_create_title_modal">
+      <h3 class="modal__container-ttl">タイトル表示作成</h3>
+      @if ($errors->any())
+      <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+            <ul>
+                  @foreach ($errors->all() as $error)
+                  <li class="alert_danger">{{$error}}</li>
+                  @endforeach  
+            </ul>   
+      </div>  
+      @endif
+      <form action="{{ route('title.update')}}" method="post">
+            @csrf
+            <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label">タイトル <span style="color: red; font-size: 13px;">※</span></label>
+                  <input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="title" value="{{ isset($title) && isset($title['title']) ? $title['title'] : old('title') }}">
+                  <input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
+            </div>
+            <button type="submit" class="modal__container-btn">作成</button>
+      </form>
+</section>
+
 @endsection
+
 
 @section('content')
 @endsection
@@ -185,11 +209,15 @@
 				action = action.replace('ID_PLACEHOLDER', id);
 				form.setAttribute('action', action)
 		</script>
+	@elseif($currentRoute === 'title.create')
+		<script>
+			document.getElementById("js_create_title_modal").classList.remove("hidden")
+			document.querySelector(".bg").classList.remove("hidden")
+		</script>
 	@endif
 @endif
 
 <script src="{{ mix("js/account_show.js")}}"></script>
 <script src="{{ mix("js/greetingMessage.js")}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
-    
 @endsection

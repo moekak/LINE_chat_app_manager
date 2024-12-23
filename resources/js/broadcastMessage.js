@@ -111,7 +111,6 @@ submit_btn.addEventListener("click", ()=>{
 
         // 順番通りに並べ替え
         for(let i = 0; i < data.length; i ++){
-            console.log(Array.from(data)[i].getAttribute("data-file-index"));
             sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")]
         }
 
