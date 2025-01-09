@@ -2,7 +2,7 @@ import DynamicListManager from "../util/DynamicListManager.js";
 import { fetchGetOperation } from "../util/fetch.js";
 import { formateDateToAsia } from "../util/formatDate.js";
 import socket from "../util/socket.js";
-import userStateManager from "../util/UserStateManager.js";
+import userStateManager from "../util/state/UserStateManager.js";
 import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeUserModals } from "./accountModalInitializers.js";
 import { createMessageRow, createMessageRowForFetch } from "./elementTemplate.js";
 import { open_modal } from "./modalOperation.js";

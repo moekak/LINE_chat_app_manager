@@ -1,0 +1,52 @@
+class FormDataStateManager{
+    constructor(){
+        if (!FormDataStateManager.instance) {
+              this.formDataArray = []; // 初期状態
+              FormDataStateManager.instance = this; // インスタンスを保存
+        }
+        return FormDataStateManager.instance; // 常に同じインスタンスを返す
+    }
+
+    /**
+     * 全体の状態を取得
+     * @returns {Array} - formDataArray の現在の状態
+     */
+    getState(){
+        console.log("Getting state: ", this.formDataArray);
+            return this.formDataArray;
+    }
+
+    /**
+     * 指定したインデックスのデータを取得
+     * @param {number} index - データのインデックス
+     * @returns {Object|null} - 指定したインデックスのデータ
+     */
+    getItem(index) {
+        return this.formDataArray[index] || null;
+    }
+
+
+    /**
+     * 指定されたindexのデータを削除
+     * @param {number} index - データのインデックス
+     */
+    removeItem(index) {
+        this.formDataArray.splice(index, 1); // 配列からindex番目を削除
+    }
+
+    /**
+     * データを追加または更新
+     * @param {number} index - 保存したいインデックス
+     * @param {Object} data - 保存するデータ (formData, fileName, type)
+     */
+    setItem(index, data) {
+        this.formDataArray[index] = data;
+        console.log(`Setting item at index ${index}: `, data);
+        console.log("State after setItem: ", this.formDataArray);
+    }
+}
+
+const formDataStateManager = new FormDataStateManager();
+Object.freeze(formDataStateManager); // インスタンスを凍結して変更不可に
+
+export default formDataStateManager;

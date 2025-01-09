@@ -3,6 +3,5 @@
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/broadcastMessage.js": "/js/broadcastMessage.js",
     "/js/account_show.js": "/js/account_show.js",
-    "/js/account_block.js": "/js/account_block.js",
-    "/js/greetingMessage.js": "/js/greetingMessage.js"
+    "/js/account_block.js": "/js/account_block.js"
 }

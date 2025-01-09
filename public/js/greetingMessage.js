@@ -2273,6 +2273,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/module/component/BroadcastMessageOperator.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/module/component/BroadcastMessageOperator.js ***!
+  \*******************************************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\resources\\js\\module\\component\\BroadcastMessageOperator.js: Duplicate private name #truncateText. (136:4)\n\n\u001b[0m \u001b[90m 134 |\u001b[39m \u001b[90m     *  テキストを最大長で切り詰める\u001b[39m\n \u001b[90m 135 |\u001b[39m \u001b[90m    */\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 136 |\u001b[39m     \u001b[33m#\u001b[39mtruncateText(text) {\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 137 |\u001b[39m         \u001b[36mreturn\u001b[39m text\u001b[33m.\u001b[39mlength \u001b[33m>\u001b[39m \u001b[33mMAX_LENGTH\u001b[39m \u001b[33m?\u001b[39m \u001b[32m`${text.substr(0, MAX_LENGTH)}...`\u001b[39m \u001b[33m:\u001b[39m text\u001b[33m;\u001b[39m\n \u001b[90m 138 |\u001b[39m     }\n \u001b[90m 139 |\u001b[39m\u001b[0m\n    at constructor (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:362:19)\n    at Parser.raise (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:3259:19)\n    at ClassScopeHandler.declarePrivateName (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:3360:19)\n    at Parser.declareClassPrivateMethodInScope (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:13211:21)\n    at Parser.pushClassPrivateMethod (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:13208:10)\n    at Parser.parseClassMemberWithIsStatic (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:13074:14)\n    at Parser.parseClassMember (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:13039:10)\n    at C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12993:14\n    at Parser.withSmartMixTopicForbiddingContext (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:11914:14)\n    at Parser.parseClassBody (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12975:10)\n    at Parser.parseClass (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12950:22)\n    at Parser.parseStatementContent (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12270:21)\n    at Parser.parseStatementLike (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12243:17)\n    at Parser.parseModuleItem (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12220:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12796:36)\n    at Parser.parseBlockBody (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12789:10)\n    at Parser.parseProgram (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12117:10)\n    at Parser.parseTopLevel (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:12107:25)\n    at Parser.parse (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:13923:10)\n    at parse (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\parser\\lib\\index.js:13957:38)\n    at parser (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\core\\lib\\parser\\index.js:41:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:64:37)\n    at normalizeFile.next (<anonymous>)\n    at run (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\core\\lib\\transformation\\index.js:21:50)\n    at run.next (<anonymous>)\n    at transform (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\@babel\\core\\lib\\transform.js:22:33)\n    at transform.next (<anonymous>)\n    at step (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\gensync\\index.js:261:32)\n    at C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\gensync\\index.js:273:13\n    at async.call.result.err.err (C:\\Users\\Gamer\\programming\\LINE-chat-app-manager\\node_modules\\gensync\\index.js:223:11)");
+
+/***/ }),
+
 /***/ "./resources/js/module/component/accountModalInitializers.js":
 /*!*******************************************************************!*\
   !*** ./resources/js/module/component/accountModalInitializers.js ***!
@@ -2407,13 +2417,10 @@ var initializeLineMessageUpdationModal = function initializeLineMessageUpdationM
 };
 var initializeUserModals = function initializeUserModals(socket) {
   // ユーザー編集処理
-
-  console.log("oooo");
   var edit_btns = document.querySelectorAll(".js_edit_user_btn");
   var editModal = document.getElementById("js_edit_account_modal");
   edit_btns.forEach(function (edit_btn) {
     edit_btn.addEventListener("click", function (e) {
-      console.log("hahah");
       (0,_fetchUserData_js__WEBPACK_IMPORTED_MODULE_3__.fetchSpecificUserInfo)(e, editModal);
     });
   });
@@ -2458,7 +2465,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/fetch.js */ "./resources/js/module/util/fetch.js");
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
 /* harmony import */ var _util_socket_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/socket.js */ "./resources/js/module/util/socket.js");
-/* harmony import */ var _util_UserStateManager_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/UserStateManager.js */ "./resources/js/module/util/UserStateManager.js");
+/* harmony import */ var _util_state_UserStateManager_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/state/UserStateManager.js */ "./resources/js/module/util/state/UserStateManager.js");
 /* harmony import */ var _accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./accountModalInitializers.js */ "./resources/js/module/component/accountModalInitializers.js");
 /* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
 /* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modalOperation.js */ "./resources/js/module/component/modalOperation.js");
@@ -2555,7 +2562,7 @@ var changeDisplayOrder = /*#__PURE__*/function () {
         case 34:
           response = _context.sent;
           parentElement.insertAdjacentHTML('afterbegin', (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__.createMessageRow)(response[0], response["admin_account_id"]));
-          _util_UserStateManager_js__WEBPACK_IMPORTED_MODULE_4__["default"].setState(response[0]["id"]);
+          _util_state_UserStateManager_js__WEBPACK_IMPORTED_MODULE_4__["default"].setState(response[0]["id"]);
 
           //ユーザー管理に関連するモーダルの初期化
           (0,_accountModalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeUserModals)(_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
@@ -2575,16 +2582,13 @@ var changeAccountDisplayOrder = function changeAccountDisplayOrder(receiver_id, 
   var hasAccount = false;
   if (sender_type == "user" && document.getElementById("js_admin_account_id").value == admin_login_id) {
     var elemets = document.querySelectorAll(".js_account_id");
-    console.log(receiver_id);
     var _iterator2 = _createForOfIteratorHelper(elemets),
       _step2;
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var element = _step2.value;
         var account_id = element.getAttribute("data-id");
-        console.log(account_id);
         if (account_id == receiver_id) {
-          console.log("same");
           hasAccount == true;
           var parentElement = element.parentElement;
           var newClonedDiv = element.cloneNode(true);
@@ -2855,8 +2859,6 @@ var toggleDisplayButtonState = function toggleDisplayButtonState(btn, message) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   deleteList: () => (/* binding */ deleteList),
-/* harmony export */   displayMessageToList: () => (/* binding */ displayMessageToList),
-/* harmony export */   dragAndDrop: () => (/* binding */ dragAndDrop),
 /* harmony export */   hasValue: () => (/* binding */ hasValue),
 /* harmony export */   hideErrorMsg: () => (/* binding */ hideErrorMsg)
 /* harmony export */ });
@@ -2864,66 +2866,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
 
 
-var displayMessageToList = function displayMessageToList(message, src, index, className, id) {
-  // メッセージ表示リストの親要素を取得
-  var parentElement = document.querySelector(".".concat(className));
-  // 親要素の子要素をすべて取得し、その数を取得する
-  var elementLength = parentElement.querySelectorAll(".js_card").length;
-  // テキストが最大文字超えていたら...にする
 
-  var heading;
-  var display;
-  var type;
-  if (message) {
-    var MAX_LENGTH = 20;
-    heading = message.length > MAX_LENGTH ? message.substr(0, MAX_LENGTH) + "..." : message;
-    display = message;
-    type = "text";
-    index = index;
-  }
-  if (src) {
-    heading = "画像";
-    display = src;
-    type = "img";
-    index = index;
-  }
+// export const displayMessageToList = (message, src, index, className, id) =>{
+//     // メッセージ表示リストの親要素を取得
+//     const parentElement = document.querySelector(`.${className}`);
+//     // 親要素の子要素をすべて取得し、その数を取得する
+//     let elementLength = parentElement.querySelectorAll(".js_card").length
+//     // テキストが最大文字超えていたら...にする
 
-  // HTML作成し、親要素に挿入する
-  var data = {
-    heading: heading,
-    display: display,
-    elementLength: elementLength,
-    type: type,
-    index: index
-  };
-  var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_1__.createBroadcastMessageRow)(data, id);
-  parentElement.insertAdjacentHTML('beforeend', template);
-};
-var dragAndDrop = function dragAndDrop(id) {
-  var changeOrder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var elem = document.getElementById(id);
-  console.log("changeOrder value:", changeOrder); // changeOrderの値を確認
-  var options = {
-    animation: 150,
-    handle: '.drag-handle',
-    onEnd: function onEnd(evt) {
-      // onEndを直接ここに定義
-      if (changeOrder) {
-        // 条件チェックをonEnd内部で行う
-        var items = document.querySelectorAll(".js_data");
-        var headings = document.querySelectorAll(".js_headings");
-        console.log("Items found:", items.length);
-        Array.from(items).forEach(function (item, index) {
-          item.setAttribute('data-id', index);
-        });
-        Array.from(headings).forEach(function (heading, index) {
-          heading.setAttribute('data-id', index);
-        });
-      }
-    }
-  };
-  Sortable.create(elem, options);
-};
+//     let heading;
+//     let display;
+//     let type;
+
+//     if(message){
+//         const MAX_LENGTH = 20
+//         heading = message.length > MAX_LENGTH ? message.substr(0, MAX_LENGTH) + "..." : message
+//         display = message
+//         type = "text"
+//         index = index
+//     }
+
+//     if(src){
+//         heading = "画像"
+//         display = src
+//         type = "img"
+//         index = index
+//     }
+
+//     // HTML作成し、親要素に挿入する
+//     const data = {heading, display, elementLength, type, index}
+//     const template = createBroadcastMessageRow(data, id);
+//     parentElement.insertAdjacentHTML('beforeend', template);
+// }
+
+// export const dragAndDrop = (id, changeOrder = false) =>{
+// 	const elem = document.getElementById(id);
+//     const options = {
+//         animation: 150,
+//         handle: '.drag-handle',
+//         onEnd(evt) {  // onEndを直接ここに定義
+//             if (changeOrder) {  // 条件チェックをonEnd内部で行う
+//                 const items = document.querySelectorAll(".js_data");
+//                 const headings = document.querySelectorAll(".js_headings")
+
+//                 Array.from(items).forEach((item, index) => {
+//                     item.setAttribute('data-id', index);
+//                 });
+//                 Array.from(headings).forEach((heading, index) => {
+//                     heading.setAttribute('data-id', index);
+//                 });
+//             }
+//         }
+//     };
+
+//     Sortable.create(elem, options);
+// }
 
 // メッセージ表示リストから削除する処理
 var deleteList = function deleteList(id, formData) {
@@ -2956,7 +2953,6 @@ var deleteList = function deleteList(id, formData) {
 var hasValue = function hasValue(id) {
   var accordion = document.getElementById(id);
   var lists = accordion.querySelectorAll(".js_card");
-  console.log(lists);
   return lists.length > 0;
 };
 var hideErrorMsg = function hideErrorMsg() {
@@ -2986,14 +2982,12 @@ var createMessageRowForFetch = function createMessageRowForFetch(res, admin_acco
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
   var latestMessageDate = res["latest_message_date"] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["latest_message_date"]) : "";
   var display = res["unread_count"] > 0 ? "flex" : "none";
-  console.log(res);
   return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["unread_count"] > 0 ? "flex" : "none";
-  console.log(res);
   return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
@@ -3048,29 +3042,6 @@ var fetchSpecificUserInfo = function fetchSpecificUserInfo(e, modal) {
     // ユーザーの情報をAPIを使用して取得
     (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleEditUserName)(res, modal);
   });
-};
-
-/***/ }),
-
-/***/ "./resources/js/module/component/imageFileOperator.js":
-/*!************************************************************!*\
-  !*** ./resources/js/module/component/imageFileOperator.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   isAllowedType: () => (/* binding */ isAllowedType),
-/* harmony export */   isCorrectSize: () => (/* binding */ isCorrectSize)
-/* harmony export */ });
-var isAllowedType = function isAllowedType(fileType) {
-  var allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-  return allowedTypes.includes(fileType);
-};
-var isCorrectSize = function isCorrectSize(fileSize) {
-  var MAX_SIZE = 5 * 1024 * 1024;
-  return fileSize < MAX_SIZE;
 };
 
 /***/ }),
@@ -3246,52 +3217,6 @@ var DynamicListManager = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/module/util/UserStateManager.js":
-/*!******************************************************!*\
-  !*** ./resources/js/module/util/UserStateManager.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-// シングルトンパターン
-var UserStateManager = /*#__PURE__*/function () {
-  function UserStateManager() {
-    _classCallCheck(this, UserStateManager);
-    if (!UserStateManager.instance) {
-      this.list = []; // 初期状態
-      UserStateManager.instance = this; // インスタンスを保存
-    }
-    return UserStateManager.instance; // 常に同じインスタンスを返す
-  }
-  return _createClass(UserStateManager, [{
-    key: "getState",
-    value: function getState() {
-      return this.list;
-    }
-  }, {
-    key: "setState",
-    value: function setState(value) {
-      this.list.push(value);
-    }
-  }]);
-}();
-var userStateManager = new UserStateManager();
-Object.freeze(userStateManager); // インスタンスを凍結して変更不可に
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userStateManager);
-
-/***/ }),
-
 /***/ "./resources/js/module/util/fetch.js":
 /*!*******************************************!*\
   !*** ./resources/js/module/util/fetch.js ***!
@@ -3393,6 +3318,251 @@ var fetchGetOperation = function fetchGetOperation(url) {
     console.error("エラーが発生しました:", error.message);
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/module/util/fileOperation/FileUploader.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/module/util/fileOperation/FileUploader.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
+/* harmony import */ var _component_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../component/BroadcastMessageOperator.js */ "./resources/js/module/component/BroadcastMessageOperator.js");
+/* harmony import */ var _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
+/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+
+
+
+
+var MAX_SIZE = 5 * 1024 * 1024;
+
+/**
+ * FileUploader
+ * ファイルアップロードとその操作を管理するクラス
+ * 
+ * @param {File} file - 選択された画像ファイル
+ * @param {HTMLElement} errorTxtElement - エラー文を表示するための要素
+ */
+var _FileUploader_brand = /*#__PURE__*/new WeakSet();
+var FileUploader = /*#__PURE__*/function () {
+  function FileUploader(file, errorTxtElement) {
+    _classCallCheck(this, FileUploader);
+    /**
+     * ファイルを圧縮
+     * @returns {Promise<File>} - 圧縮済みのファイル
+     */
+    _classPrivateMethodInitSpec(this, _FileUploader_brand);
+    this.file = file;
+    this.errorTxtElement = errorTxtElement;
+  }
+
+  /**
+   * ファイル操作のメイン処理
+   * - ファイルの検証
+   * - 圧縮処理
+   * - ファイルの表示および保存
+   */
+  return _createClass(FileUploader, [{
+    key: "fileOperation",
+    value: (function () {
+      var _fileOperation = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var compressedFile;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              this.validateFile();
+              _context.next = 4;
+              return _assertClassBrand(_FileUploader_brand, this, _compressedFile).call(this);
+            case 4:
+              compressedFile = _context.sent;
+              _context.next = 7;
+              return this.handleFileUpload(compressedFile);
+            case 7:
+              _context.next = 13;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+              alert('ファイル操作中にエラーが発生しました。再度実行してください');
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this, [[0, 9]]);
+      }));
+      function fileOperation() {
+        return _fileOperation.apply(this, arguments);
+      }
+      return fileOperation;
+    }()
+    /**
+     * 圧縮されたファイルを処理
+     * - ファイルをリストに表示
+     * - FormDataArrayに保存
+     * 
+     * @param {File} compressedFile - 圧縮済みのファイル
+     */
+    )
+  }, {
+    key: "handleFileUpload",
+    value: (function () {
+      var _handleFileUpload = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(compressedFile) {
+        var reader, index, newFileName;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              reader = new FileReader();
+              index = _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_3__["default"].getState();
+              reader.onload = function (e) {
+                _component_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__.displayImageMessageToList(e.target.result, "js_accordion_wrapper", "accordion", index);
+                // 不要なリストを削除
+                _component_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__.deleteList("accordion");
+
+                // インデックスをインクリメント
+                _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_3__["default"].setState();
+
+                // ボタン状態を更新
+                (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_0__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"));
+              };
+              reader.readAsDataURL(compressedFile);
+
+              // 新しいファイル名を生成し、FormDataArrayに保存
+              newFileName = this.generateOriginalFileName();
+              this.setImageDataToFormDataArray(compressedFile, newFileName, index);
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, this);
+      }));
+      function handleFileUpload(_x) {
+        return _handleFileUpload.apply(this, arguments);
+      }
+      return handleFileUpload;
+    }())
+  }, {
+    key: "generateOriginalFileName",
+    value:
+    /**
+     * オリジナルのファイル名を生成
+     * @returns {string} - 新しいファイル名
+     */
+
+    function generateOriginalFileName() {
+      var originalName = this.file.name;
+      var extension = originalName.split('.').pop(); // 拡張子を取得
+      return "".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9), ".").concat(extension);
+    }
+
+    /**
+     * 圧縮ファイルをFormDataArrayに保存
+     * @param {File} compressedFile - 圧縮済みのファイル
+     * @param {string} newFileName - 新しいファイル名
+     * @param {number} index - 保存先のインデックス
+     */
+  }, {
+    key: "setImageDataToFormDataArray",
+    value: function setImageDataToFormDataArray(compressedFile, newFileName, index) {
+      var formData = new FormData();
+      formData.append('image', compressedFile); // ファイル名も保持
+
+      var data = {
+        formData: formData,
+        fileName: newFileName,
+        // ファイル名を保存
+        type: 'image' // タイプも保存しておくと便利
+      };
+      _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setItem(index, data);
+    }
+
+    /**
+     * ファイルの形式とサイズを検証
+     * - 許可されていない形式やサイズの場合にエラー文言を表示させる
+     */
+  }, {
+    key: "validateFile",
+    value: function validateFile() {
+      if (!FileUploader.isAllowedType(this.file.type)) {
+        this.errorTxtElement.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。";
+        return;
+      }
+      if (!FileUploader.isCorrectSize(this.file.size)) {
+        this.errorTxtElement.innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください。";
+        return;
+      }
+    }
+
+    /**
+     * 許可されているファイル形式かを判定
+     * @param {string} fileType - ファイルのMIMEタイプ
+     * @returns {boolean} - 許可されている形式ならtrue
+     */
+  }], [{
+    key: "isAllowedType",
+    value: function isAllowedType(fileType) {
+      var allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      return allowedTypes.includes(fileType);
+    }
+
+    /**
+     * ファイルサイズが許可範囲内かを判定
+     * @param {number} fileSize - ファイルサイズ (バイト単位)
+     * @returns {boolean} - 許可されているサイズならtrue
+     */
+  }, {
+    key: "isCorrectSize",
+    value: function isCorrectSize(fileSize) {
+      return fileSize < MAX_SIZE;
+    }
+  }]);
+}();
+function _compressedFile() {
+  return _compressedFile2.apply(this, arguments);
+}
+function _compressedFile2() {
+  _compressedFile2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_4__["default"])(this.file, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1024,
+            useWebWorker: true
+          });
+        case 2:
+          return _context3.abrupt("return", _context3.sent);
+        case 3:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, this);
+  }));
+  return _compressedFile2.apply(this, arguments);
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FileUploader);
 
 /***/ }),
 
@@ -3511,6 +3681,176 @@ var registerUser = function registerUser(admin_id, type) {
   socket.emit("register", "".concat(type).concat(admin_id));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (socket);
+
+/***/ }),
+
+/***/ "./resources/js/module/util/state/FormDataStateManager.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/module/util/state/FormDataStateManager.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var FormDataStateManager = /*#__PURE__*/function () {
+  function FormDataStateManager() {
+    _classCallCheck(this, FormDataStateManager);
+    if (!FormDataStateManager.instance) {
+      this.formDataArray = []; // 初期状態
+      FormDataStateManager.instance = this; // インスタンスを保存
+    }
+    return FormDataStateManager.instance; // 常に同じインスタンスを返す
+  }
+
+  /**
+   * 全体の状態を取得
+   * @returns {Array} - formDataArray の現在の状態
+   */
+  return _createClass(FormDataStateManager, [{
+    key: "getState",
+    value: function getState() {
+      return this.formDataArray;
+    }
+
+    /**
+     * 指定したインデックスのデータを取得
+     * @param {number} index - データのインデックス
+     * @returns {Object|null} - 指定したインデックスのデータ
+     */
+  }, {
+    key: "getItem",
+    value: function getItem(index) {
+      return this.formDataArray[index] || null;
+    }
+
+    /**
+     * 指定されたindexのデータを削除
+     * @param {number} index - データのインデックス
+     */
+  }, {
+    key: "removeItem",
+    value: function removeItem(index) {
+      this.formDataArray.splice(index, 1); // 配列からindex番目を削除
+    }
+
+    /**
+     * データを追加または更新
+     * @param {number} index - 保存したいインデックス
+     * @param {Object} data - 保存するデータ (formData, fileName, type)
+     */
+  }, {
+    key: "setItem",
+    value: function setItem(index, data) {
+      this.formDataArray[index] = data;
+    }
+  }]);
+}();
+var formDataStateManager = new FormDataStateManager();
+Object.freeze(formDataStateManager); // インスタンスを凍結して変更不可に
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formDataStateManager);
+
+/***/ }),
+
+/***/ "./resources/js/module/util/state/IndexStateManager.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/module/util/state/IndexStateManager.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var IndexStateManager = /*#__PURE__*/function () {
+  function IndexStateManager() {
+    _classCallCheck(this, IndexStateManager);
+    if (!IndexStateManager.instance) {
+      this.index = {
+        count: 0
+      }; // 初期状態
+      IndexStateManager.instance = this; // インスタンスを保存
+    }
+    return IndexStateManager.instance; // 常に同じインスタンスを返す
+  }
+  return _createClass(IndexStateManager, [{
+    key: "getState",
+    value: function getState() {
+      return this.index["count"];
+    }
+  }, {
+    key: "setState",
+    value: function setState() {
+      this.index["count"]++;
+    }
+  }]);
+}();
+var indexStateManager = new IndexStateManager();
+Object.freeze(indexStateManager); // インスタンスを凍結して変更不可に
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (indexStateManager);
+
+/***/ }),
+
+/***/ "./resources/js/module/util/state/UserStateManager.js":
+/*!************************************************************!*\
+  !*** ./resources/js/module/util/state/UserStateManager.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+// シングルトンパターン
+var UserStateManager = /*#__PURE__*/function () {
+  function UserStateManager() {
+    _classCallCheck(this, UserStateManager);
+    if (!UserStateManager.instance) {
+      this.list = []; // 初期状態
+      UserStateManager.instance = this; // インスタンスを保存
+    }
+    return UserStateManager.instance; // 常に同じインスタンスを返す
+  }
+  return _createClass(UserStateManager, [{
+    key: "getState",
+    value: function getState() {
+      return this.list;
+    }
+  }, {
+    key: "setState",
+    value: function setState(value) {
+      this.list.push(value);
+    }
+  }]);
+}();
+var userStateManager = new UserStateManager();
+Object.freeze(userStateManager); // インスタンスを凍結して変更不可に
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userStateManager);
 
 /***/ }),
 
@@ -7987,8 +8327,8 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
 /* harmony import */ var _module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/component/broadcastMessageOperations.js */ "./resources/js/module/component/broadcastMessageOperations.js");
-/* harmony import */ var _module_component_imageFileOperator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/component/imageFileOperator.js */ "./resources/js/module/component/imageFileOperator.js");
-/* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _module_util_fileOperation_FileUploader_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/util/fileOperation/FileUploader.js */ "./resources/js/module/util/fileOperation/FileUploader.js");
 /* harmony import */ var _module_util_messageService_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/util/messageService.js */ "./resources/js/module/util/messageService.js");
 /* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -8011,7 +8351,7 @@ var greetingMessage = "";
 var formDataArray = []; // FormDataを保持する配列を作成
 var index = 0;
 greeting_btn.addEventListener("click", function () {
-  (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_modal)(modal);
+  (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(modal);
 });
 
 // メッセージの入力ありなしで追加ボタンのスタイルを変更する
@@ -8058,7 +8398,7 @@ uploads.forEach(function (upload) {
             }
             return _context.abrupt("return");
           case 3:
-            if ((0,_module_component_imageFileOperator_js__WEBPACK_IMPORTED_MODULE_2__.isAllowedType)(file.type)) {
+            if (_module_util_fileOperation_FileUploader_js__WEBPACK_IMPORTED_MODULE_3__["default"].isAllowedType(file.type)) {
               _context.next = 7;
               break;
             }
@@ -8066,7 +8406,7 @@ uploads.forEach(function (upload) {
             errorTxt.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。";
             return _context.abrupt("return");
           case 7:
-            if ((0,_module_component_imageFileOperator_js__WEBPACK_IMPORTED_MODULE_2__.isCorrectSize)(file.size)) {
+            if (_module_util_fileOperation_FileUploader_js__WEBPACK_IMPORTED_MODULE_3__["default"].isCorrectSize(file.size)) {
               _context.next = 11;
               break;
             }
@@ -8125,17 +8465,11 @@ submit_btn.addEventListener("click", function () {
   if ((0,_module_component_broadcastMessageOperations_js__WEBPACK_IMPORTED_MODULE_1__.hasValue)("accordion_greeting")) {
     sendMessage = [];
     var data = document.querySelectorAll(".js_data");
-    console.log(formDataArray);
-    console.log("formData");
-    console.log(data.length);
-
     // 順番通りに並べ替え
     for (var i = 0; i < data.length; i++) {
-      console.log(Array.from(data)[i].getAttribute("data-file-index"));
       sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")];
     }
     var formData = new FormData();
-    console.log(sendMessage);
 
     // sendMessage のデータを FormData に追加
     sendMessage.forEach(function (item, index) {
@@ -8154,7 +8488,7 @@ submit_btn.addEventListener("click", function () {
     var loader = document.querySelector(".loader");
     var _modal = document.querySelector(".broadcasting_message_modal");
     _modal.classList.add("hidden");
-    (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_modal)(loader);
+    (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(loader);
 
     // fetch でデータを送信
     fetch("/api/greeting_message/store/".concat(admin_id), {

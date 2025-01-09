@@ -1,7 +1,7 @@
 import { toggleDisplayButtonState } from "./module/component/accountUIOperations.js";
 import { deleteList, displayMessageToList, dragAndDrop, hasValue, hideErrorMsg } from "./module/component/broadcastMessageOperations.js"
-import { isAllowedType, isCorrectSize } from "./module/component/imageFileOperator.js"
 import { open_modal } from "./module/component/modalOperation.js"
+import FileUploader from "./module/util/fileOperation/FileUploader.js";
 import { cleanHtmlContent } from "./module/util/messageService.js"
 import imageCompression from 'browser-image-compression';
 
@@ -55,13 +55,13 @@ uploads.forEach((upload) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        if(!isAllowedType(file.type)){
+        if(!FileUploader.isAllowedType(file.type)){
             greetingText.classList.remove("hidden")
             errorTxt.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。"
             return
         }
 
-        if(!isCorrectSize(file.size)){
+        if(!FileUploader.isCorrectSize(file.size)){
             greetingText.classList.remove("hidden")
             errorTxt.innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください。"
             return

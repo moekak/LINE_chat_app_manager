@@ -464,6 +464,54 @@
       </form>
 </section>
 
+{{-- 画像のURL編集モーダル --}}
+<section class="image_edit_modal hidden" id="js_image_edit_modal">
+      <div class="preview_box">
+            <div class="preview_box-top">
+                  <p>プレビュー</p>
+                  <small>※送信時に画像が劣化する場合があります。</small>
+            </div>
+            <div class="preview_box-img" id="image-container">
+                  <img src="" alt="" id="image">
+            </div>
+            <div class="preview_box-desc">
+                  <div>対応形式: .png/.jpg</div>
+                  <div>最大データ容量: 5MBまで</div>
+            </div>
+      </div>
+      <div class="url_setting_area">
+            <p class="url_setting_txt">タップ時アクションの利用</p>
+            <div class="radio_btn">
+                  <div class="form-check">
+                        <input class="form-check-input" value="off" type="radio" name="choice" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">利用しない</label>
+                  </div>
+                  <div class="form-check">
+                        <input class="form-check-input" value="on" type="radio" name="choice" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">利用する</label>
+                  </div> 
+            </div>
+            <div class="url_setting_wrapper" id="js_url_setting">
+                  <div style="margin-top: 20px;"></div>
+                  <p class="url_setting_txt">URL設定</p>
+                  <input type="url" name="url" id="js_url_input" class="url_input" placeholder="https://example.com">
+                  <div class="btn_area">
+                        <button><label for="fileInput">画像変更</label></button>
+                        <button id="js_change_area" class="disable_btn">選択範囲確定</button>
+                  </div>
+                  <small style="color: gray;font-size: 12px;">※画像を変更する際は、タップ時アクションが設定されている場合設定が解除されます。</small><br>
+                  <div style="margin-top: 10px;"></div>
+                  <small style="color: gray; font-size: 12px; margin-top: 3px;">※範囲を選択してから「選択範囲確定」ボタンを押してください。</small><br>
+                  <div style="margin-top: 10px;"></div>
+                  <small style="color: gray;  font-size: 12px; margin-top: 3px;">※再度範囲を選択したい場合は、「選択範囲変更」ボタンを押してください。</small>  
+            </div>
+            
+            <div style="margin-top: 40px;">
+                  <button class="preview_submit_btn disable_btn" id="js_preview_submit_btn">送信</button>
+            </div>
+            
+      </div>
+</section>
 
 @endsection
 @section('script')

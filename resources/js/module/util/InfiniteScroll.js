@@ -5,7 +5,7 @@ import {createAccountDataRow, createMessageRowForFetch} from "../component/eleme
 import { fetchPostOperation } from "./fetch.js";
 import socket from "./socket.js";
 import accountStateManager from "./AccountStateManager.js";
-import userStateManager from "./UserStateManager.js";
+import userStateManager from "./state/UserStateManager.js";
 const MESSAGES_PER_PAGE = 20
 
 class InfiniteScroll{

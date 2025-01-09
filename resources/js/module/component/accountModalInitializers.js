@@ -3,6 +3,9 @@ import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accoun
 import { close_modal, close_modal_by_click, open_modal } from "./modalOperation.js"
 import { setLineMessageForUpdating } from "./accountUIOperations.js"
 import { fetchSpecificUserInfo } from "./fetchUserData.js"
+import BroadcastMessageOperator from "./broadcast/BroadcastMessageOperator.js"
+import formDataStateManager from "../util/state/FormDataStateManager.js"
+import indexStateManager from "../util/state/IndexStateManager.js"
 
 // アカウント編集モーダルの初期化
 export const initializeAccountEditModal =() =>{
@@ -48,9 +51,15 @@ export const initializeBroadcastMessageModal = () =>{
                   e.preventDefault()
                   // 一斉送信メッセージモーダルを表示する
                   open_modal(broadcasting_modal);
+
                   // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
                   let account_id = e.currentTarget.getAttribute("data-id")
                   document.getElementById("js_account_id").value = account_id
+
+                  const data2 = {"type" : "text", "data" : "22222"}
+
+                  formDataStateManager.setItem(indexStateManager.getState(), data2)
+                  new BroadcastMessageOperator("js_accordion_wrapper", "accordion")
             })
       })
 }
