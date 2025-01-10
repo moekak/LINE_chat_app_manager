@@ -11,6 +11,8 @@
       <link rel="shortcut icon" href="{{asset("img/icons8-chat-32.png")}}">
       <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
       <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+      <link  href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+      <script src="https://unpkg.com/cropperjs"></script>
       <noscript>
             <style>
             /**

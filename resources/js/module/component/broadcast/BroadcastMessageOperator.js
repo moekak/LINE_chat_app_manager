@@ -83,6 +83,11 @@ class BroadcastMessageOperator{
             return;
         }
 
+        if(!src){
+            alert("一斉配信画像設定でエラーが発生しました。再度お試しください。--")
+        }
+
+
         const elementLength = parentElement.querySelectorAll(".js_card").length;
         const data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength, index);
 

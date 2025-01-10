@@ -1,5 +1,6 @@
 import BroadcastMessageOperator from "./module/component/broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "./module/component/DragAndDrop.js";
+import { open_modal } from "./module/component/modalOperation.js";
 import FileUploader from "./module/util/file/FileUploader.js";
 
 
@@ -8,7 +9,7 @@ import FileUploader from "./module/util/file/FileUploader.js";
 window.onload = (e)=>{
     DragAndDrop.dragAndDrop("accordion", true)
 }
-
+let broadcastMessageOperatorInstance = null
 const broadcastText = document.querySelector(".js_broadcast_error")
 const errorTxt = document.querySelector(".js_error_txt")
 
@@ -16,7 +17,7 @@ const uploads = document.querySelectorAll(".js_upload");
 const imageEditModal = document.getElementById("js_image_edit_modal")
 uploads.forEach((upload) => {
     upload.addEventListener("change", async (e) => {
-        // open_modal(imageEditModal)
+        open_modal(imageEditModal)
         broadcastText.classList.add("hidden")
         const file = e.target.files[0];
 
@@ -29,11 +30,17 @@ uploads.forEach((upload) => {
         DragAndDrop.dragAndDrop("accordion", true);
 
         // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // formDataStateManager.getState()で画像だと、非同期の処理になるから値が取得できない問題
+         // BroadcastMessageOperator のインスタンスを作成
+        if (!broadcastMessageOperatorInstance) {
+            broadcastMessageOperatorInstance = new BroadcastMessageOperator("js_accordion_wrapper", "accordion");
+        }
+        
         new BroadcastMessageOperator("js_accordion_wrapper", "accordion")
     });
 });
 
+
+new BroadcastMessageOperator("js_accordion_wrapper", "accordion")
 
 // // 一斉送信の送信ボタンクリック処理
 // const submit_btn = document.querySelector(".js_message_submit_btn")

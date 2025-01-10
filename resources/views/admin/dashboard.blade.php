@@ -505,11 +505,9 @@
                   <div style="margin-top: 10px;"></div>
                   <small style="color: gray;  font-size: 12px; margin-top: 3px;">※再度範囲を選択したい場合は、「選択範囲変更」ボタンを押してください。</small>  
             </div>
-            
             <div style="margin-top: 40px;">
                   <button class="preview_submit_btn disable_btn" id="js_preview_submit_btn">送信</button>
             </div>
-            
       </div>
 </section>
 

@@ -55,11 +55,6 @@ export const initializeBroadcastMessageModal = () =>{
                   // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
                   let account_id = e.currentTarget.getAttribute("data-id")
                   document.getElementById("js_account_id").value = account_id
-
-                  const data2 = {"type" : "text", "data" : "22222"}
-
-                  formDataStateManager.setItem(indexStateManager.getState(), data2)
-                  new BroadcastMessageOperator("js_accordion_wrapper", "accordion")
             })
       })
 }

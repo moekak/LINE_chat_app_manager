@@ -1,5 +1,9 @@
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
+import { close_modal } from "../../component/modalOperation.js";
+import ButtonController from "../../component/ui/ButttonController.js";
+import Cropper from "../cropper/Cropper.js";
+import CropperEventHandler from "../cropper/CropperEventHandler.js";
 import formDataStateManager from "../state/FormDataStateManager.js"
 import indexStateManager from "../state/IndexStateManager.js"
 import imageCompression from 'browser-image-compression';
@@ -48,24 +52,82 @@ class FileUploader{
     async handleFileUpload(compressedFile){
         const reader = new FileReader();
         const index = indexStateManager.getState()
-        reader.onload = e =>{
-            BroadcastMessageOperator.displayImageMessageToList(e.target.result,"js_accordion_wrapper", "accordion", index);
-            // 不要なリストを削除
-            BroadcastMessageOperator.deleteList("accordion")
+        const newImage = this.#createImageElement(this.file);
 
-            // インデックスをインクリメント
-            indexStateManager.setState()
+        newImage.onload = e =>{
+            const newImageButton = ButtonController.replaceButton("js_change_area")
+            this.cropper = new Cropper(this.imageElement, newImageButton)
 
-            // ボタン状態を更新
-            toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
+
+            const cropperHandler = new CropperEventHandler(newImageButton,this.cropper)
+            cropperHandler.changeBtnEvent()
+            // 新しい画像要素を Cropper に更新
+            this.cropper.updateImage(newImage);
+
+            // 古い画像を置き換え
+            const container = document.getElementById("image-container");
+            container.innerHTML = ""; // 古い画像を削除
+            container.appendChild(newImage); // 新しい画像を追加
+
+            // URLの設定
+            const urlInput = document.getElementById("js_url_input")
+            let url = ""
+            urlInput.addEventListener("input", (e)=>{
+                url = e.target.value
+            })
+
+
+            // 画像切り取りが完了して送信ボタンを押した後の処理
+            const confirmBtn = document.getElementById("js_preview_submit_btn")
+            const newconfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newconfirmBtn, confirmBtn);
+
+
+            const modal = document.getElementById("js_image_edit_modal")
+
+            newconfirmBtn.addEventListener("click", ()=>{
+                modal.classList.add("hidden")
+
+                let cropArea = this.cropper.getCropperArea()
+
+
+                // ラジオボタンの切り替え
+                const choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
+                const selectedChoices = Array.from(choices).find(choice => choice.checked);
+                if(selectedChoices.value === "off"){
+                    cropArea = []
+                    url = ""
+                }
+    
+                
+                BroadcastMessageOperator.displayImageMessageToList(newImage.src,"js_accordion_wrapper", "accordion", index);
+                // 不要なリストを削除
+                BroadcastMessageOperator.deleteList("accordion")
+
+                // インデックスをインクリメント
+                indexStateManager.setState()
+
+                // // ボタン状態を更新
+                toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
+
+                reader.readAsDataURL(compressedFile);
+
+                // 新しいファイル名を生成し、FormDataArrayに保存
+                const newFileName = this.generateOriginalFileName()
+                this.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea)
+            })
         }
 
-        reader.readAsDataURL(compressedFile);
 
-        // 新しいファイル名を生成し、FormDataArrayに保存
-        const newFileName = this.generateOriginalFileName()
-        this.setImageDataToFormDataArray(compressedFile, newFileName, index)
     }
+
+     // 新しい画像要素を作成
+    #createImageElement(){
+        const newImage = document.createElement("img");
+        newImage.src = URL.createObjectURL(this.file);
+        newImage.id = "image"; // IDを付加
+        return newImage;
+    };
 
     /**
      * ファイルを圧縮
@@ -97,15 +159,21 @@ class FileUploader{
      * @param {number} index - 保存先のインデックス
      */
 
-    setImageDataToFormDataArray(compressedFile, newFileName, index){
+    setImageDataToFormDataArray(compressedFile, newFileName, index,url, cropArea){
         const formData = new FormData();
         formData.append('image', compressedFile); // ファイル名も保持
 
         const data = {
             formData: formData,
             fileName: newFileName,  // ファイル名を保存
-            type: 'image'        // タイプも保存しておくと便利
+            type: 'image',        // タイプも保存しておくと便利
+            cropArea: JSON.stringify(cropArea),
+            url: url
+
         }
+
+        console.log(data);
+        
 
         formDataStateManager.setItem(index, data)
     }

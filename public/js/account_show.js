@@ -2348,11 +2348,6 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
       // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
       var account_id = e.currentTarget.getAttribute("data-id");
       document.getElementById("js_account_id").value = account_id;
-      var data2 = {
-        "type": "text",
-        "data": "22222"
-      };
-      _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].setItem(_util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].getState(), data2);
       new _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_4__["default"]("js_accordion_wrapper", "accordion");
     });
   });
@@ -3063,22 +3058,20 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
     key: "emitBroadcastMessageToSocket",
     value: function () {
       var _emitBroadcastMessageToSocket = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var formDataArray, response, admin_id, loader, success_el, created_at, sendingDatatoBackEnd;
+        var response, admin_id, loader, success_el, created_at, sendingDatatoBackEnd;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              formDataArray = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState();
-              console.log(formDataArray);
-              _context2.next = 4;
+              _context2.next = 2;
               return this.submitBroadcastMessageToServer();
-            case 4:
+            case 2:
               response = _context2.sent;
               if (response["created_at"]) {
-                _context2.next = 7;
+                _context2.next = 5;
                 break;
               }
               return _context2.abrupt("return");
-            case 7:
+            case 5:
               // モーダルをloaderを閉じる処理
               document.getElementById("js_boradcasting_modal").classList.add("hidden");
               document.querySelector(".bg").classList.add("hidden");
@@ -3105,7 +3098,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
                 admin_id: admin_id,
                 created_at: created_at
               });
-            case 22:
+            case 20:
             case "end":
               return _context2.stop();
           }
@@ -3124,6 +3117,9 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       if (!parentElement) {
         console.error("\u89AA\u8981\u7D20\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093: ".concat(className));
         return;
+      }
+      if (!src) {
+        alert("一斉配信画像設定でエラーが発生しました。再度お試しください。--");
       }
       var elementLength = parentElement.querySelectorAll(".js_card").length;
       var data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength, index);
