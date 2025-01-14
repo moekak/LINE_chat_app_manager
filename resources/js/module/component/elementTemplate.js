@@ -72,7 +72,7 @@ export const createBroadcastMessageRow = (data, id) =>{
                   </div>
             
                   <div id="collapse${data.elementLength}" class="collapse" aria-labelledby="heading${data.elementLength}" data-parent="#${id}">
-                        <div class="card-body js_data" data-id="${data.elementLength}" data-file-index='${data.index}'>${displayedData}</div>
+                        <div class="card-body js_data" data-id="${data.elementLength}">${displayedData}</div>
                   </div>
             </div>
       `

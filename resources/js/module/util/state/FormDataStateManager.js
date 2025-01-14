@@ -12,8 +12,7 @@ class FormDataStateManager{
      * @returns {Array} - formDataArray の現在の状態
      */
     getState(){
-        console.log("Getting state: ", this.formDataArray);
-            return this.formDataArray;
+        return this.formDataArray;
     }
 
     /**
@@ -25,13 +24,27 @@ class FormDataStateManager{
         return this.formDataArray[index] || null;
     }
 
+    reOrderItem(index, value){
+        this.formDataArray[index] = value
+    }
+
+    addData(data){
+        this.formDataArray.push(...data)
+    }
+
 
     /**
      * 指定されたindexのデータを削除
      * @param {number} index - データのインデックス
      */
     removeItem(index) {
-        this.formDataArray.splice(index, 1); // 配列からindex番目を削除
+        this.formDataArray.splice(index, 1); // 配列からindex番目を削除  
+
+        console.log(this.formDataArray.length + "length");
+        
+    }
+    resetItem() {
+        this.formDataArray.length = 0; // 配列を空にする
     }
 
     /**
@@ -41,7 +54,6 @@ class FormDataStateManager{
      */
     setItem(index, data) {
         this.formDataArray[index] = data;
-        console.log(`Setting item at index ${index}: `, data);
         console.log("State after setItem: ", this.formDataArray);
     }
 }

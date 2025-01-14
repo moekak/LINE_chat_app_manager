@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BroadcastMessageRequest;
+use App\Models\BroadcastImagesCropArea;
 use App\Models\BroadcastMessage;
 use App\Models\BroadcastMessagesGroup;
-use App\Models\MessageSummary;
 use App\Services\ImageService;
-use App\Services\MessageCountService;
 use App\Services\MessageSummaryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+
 
 class BroadcastMessageController extends Controller
 {
@@ -19,26 +18,34 @@ class BroadcastMessageController extends Controller
         try{
 
             DB::beginTransaction();
-            $validated = $request->input();
+            $validated = $request->all();
             $savingData = [];
             $responseData = [];
-
 
             // 一斉送信グループに保存
             $broadcastMessageGroup = BroadcastMessagesGroup::create();
             $broadcastMessage = "";
 
             $allContent = [];
+            $cropData = [];
 
             // 画像とメッセージを1つの配列にまとめる
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $key => $image) {
+
+                    $meta = $request->input("images.{$key}.meta");
+                    $metaDecoded = $meta ? json_decode($meta, true) : null;
+
                     $allContent[] = [
                         'type' => 'image',
                         'content' => $image,
-                        'order' => $key
+                        'order' => $key,
+                        "cropArea" => $metaDecoded["cropArea"] ?? [],
+                        "url" => $metaDecoded["url"] ?? ""
                     ];
                 }
+
+
             }
 
             if (isset($validated['messages'])) {
@@ -56,14 +63,15 @@ class BroadcastMessageController extends Controller
                 return $a['order'] - $b['order'];
             });
 
-            $responseData = [];
 
             // 順番に処理
-            foreach ($allContent as $item) {
+            foreach ($allContent as $index =>$item) {
+
                 if ($item['type'] === 'image') {
                     $imageService = new ImageService();
                     $fileName = $imageService->saveImage($item['content']);
-                    
+
+
                     $savingData = [
                         "admin_id" => $admin_id,
                         "broadcast_message_group_id" => $broadcastMessageGroup->id,
@@ -71,12 +79,40 @@ class BroadcastMessageController extends Controller
                         "resource_type" => "broadcast_img",
                         "message_order" => $item['order'],
                     ];
+
                     $broadcastMessage = BroadcastMessage::create($savingData);
-                    $responseData[] = [
-                        "resource" => $fileName, 
-                        "type" => "broadcast_img", 
-                        "order" => $broadcastMessage->message_order
-                    ];
+
+                    if($item["cropArea"]){
+                        $cropArea = json_decode($item["cropArea"]);
+
+                        $cropData = [
+                            "broadcast_message_id" => $broadcastMessage->id,
+                            "url" => $item["url"],
+                            "x_percent" => $cropArea->xPercent,
+                            "y_percent" => $cropArea->yPercent,
+                            "width_percent" => $cropArea->widthPercent,
+                            "height_percent" => $cropArea->heightPercent,
+                        ];
+    
+                        BroadcastImagesCropArea::create($cropData);
+
+                        $responseData[$index] = [
+                            "resource" => $fileName, 
+                            "type" => "broadcast_img", 
+                            "order" => $broadcastMessage->message_order,
+                            "cropArea" => ["x_percent" => $cropArea->xPercent, "y_percent" => $cropArea->yPercent, "width_percent" => $cropArea->widthPercent, "height_percent" => $cropArea->heightPercent, "url" => $item["url"]],
+                        ];
+
+                    }else{
+                        $responseData[$index] = [
+                            "resource" => $fileName, 
+                            "type" => "broadcast_img", 
+                            "order" => $broadcastMessage->message_order,
+                            "cropArea" => [],
+                        ];
+                    }
+
+                
                 } else {
                     $savingData = [
                         "admin_id" => $admin_id,
@@ -86,10 +122,11 @@ class BroadcastMessageController extends Controller
                         "message_order" => $item['order']
                     ];
                     $broadcastMessage = BroadcastMessage::create($savingData);
-                    $responseData[] = [
+                    $responseData[$index] = [
                         "resource" => $item['content'], 
                         "type" => "broadcast_text", 
-                        "order" => $broadcastMessage->message_order
+                        "order" => $broadcastMessage->message_order,
+                        "cropArea" => [],
                     ];
                 }
             }
@@ -97,7 +134,7 @@ class BroadcastMessageController extends Controller
             // 最新メッセージ管理テーブルの更新
             MessageSummaryService::updateLatestMessage($admin_id, $broadcastMessage->created_at, $broadcastMessage->resource_type);
             DB::commit();
-            Log::debug($responseData);
+            
             $created_at = $broadcastMessage->created_at->format('H:i');
             return response()->json(["created_at"=> $created_at, "data" => $responseData]);
 

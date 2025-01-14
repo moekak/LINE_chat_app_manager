@@ -35,12 +35,12 @@ class CropperState{
       // 保存された選択範囲の位置とサイズの割合（%）を返す
       getState(){
 
-            console.log({
-                  xPercent: this.xPercent,
-                  yPercent :this.yPercent,
-                  widthPercent : this.widthPercent ,
-                  heightPercent :this.heightPercent 
-            });
+            // console.log({
+            //       xPercent: this.xPercent,
+            //       yPercent :this.yPercent,
+            //       widthPercent : this.widthPercent ,
+            //       heightPercent :this.heightPercent 
+            // });
             
             return{
                   xPercent: this.xPercent,

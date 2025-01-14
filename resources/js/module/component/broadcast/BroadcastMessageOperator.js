@@ -19,12 +19,30 @@ const MAX_LENGTH = 20
 
 */
 class BroadcastMessageOperator{
-    constructor(className, accordionId) {
+
+    // 静的プロパティでインスタンスを保持
+    static #instance = null;
+    /**
+     * シングルトンパターンのためのインスタンス取得メソッド
+     * @param {string} className - メッセージ表示リストの親要素のクラス名
+     * @param {HTMLElement} accordionId - 一斉メッセージまたは画像を挿入する要素
+     * @returns {BroadcastMessageOperator} インスタンス
+     */
+    static getInstance(className, accordionId, baseUrl, isGreeting = false) {
+        if (!BroadcastMessageOperator.#instance) {
+            BroadcastMessageOperator.#instance = new BroadcastMessageOperator(className, accordionId, baseUrl, isGreeting);
+        }
+        return BroadcastMessageOperator.#instance;
+    }
+
+    constructor(className, accordionId, baseUrl, isGreeting = false) {
         
         this.message = "";
         this.className = className;
         this.accordionId = accordionId;
-        this.sendMessage = []
+        this.newBtn = null
+        this.baseUrl = baseUrl
+        this.isGreeting = isGreeting
 
         
         // 必要な要素を取得
@@ -38,14 +56,13 @@ class BroadcastMessageOperator{
 
     initializeEvents() {
         // メソッドをバインドしてイベントを登録
-        this.handleMessageInput = this.handleMessageInput.bind(this);
-        this.broadcastMessageInput.addEventListener("input", this.handleMessageInput);
+        this.broadcastMessageInput.addEventListener("input", this.handleMessageInput.bind(this));
 
-        this.handleDisplayClick = this.handleDisplayClick.bind(this);
-        this.displayBtn.addEventListener("click", this.handleDisplayClick);
+        this.newBtn = this.displayBtn.cloneNode(true)
+        this.displayBtn.parentNode.replaceChild(this.newBtn, this.displayBtn)
+        this.newBtn.addEventListener("click", this.handleDisplayClick.bind(this));
 
-        this.emitBroadcastMessageToSocket = this.emitBroadcastMessageToSocket.bind(this)
-        this.submitBtn.addEventListener("click", this.emitBroadcastMessageToSocket)
+        this.submitBtn.addEventListener("click",this.emitBroadcastMessageToSocket.bind(this))
     }
     
     /**
@@ -145,14 +162,21 @@ class BroadcastMessageOperator{
         const accordion = document.getElementById(id)
     
         delete_btns.forEach((btn)=>{
-            btn.addEventListener("click", (e)=>{
+            const newBtn = btn.cloneNode(true)
+            btn.parentNode.replaceChild(newBtn, btn)
+
+            newBtn.addEventListener("click", (e)=>{
+
                 const target_id = e.currentTarget.parentElement.getAttribute("data-id")
+
                 formDataStateManager.removeItem(target_id); // データを削除
-    
+                indexStateManager.setMinusState()
                 const list_el = e.currentTarget.parentElement.parentElement
                 if(accordion.contains(list_el)){
                     accordion.removeChild(list_el) 
                 }
+
+
     
                 this.#updateElementIndexes()
                 this.#toggleSubmitButtonState()
@@ -205,11 +229,12 @@ class BroadcastMessageOperator{
         const index = indexStateManager.getState()
         const data = {"type" : "text", "data" : this.message}
 
+        this.newBtn.classList.add("disabled_btn")
         formDataStateManager.setItem(index, data)
 
         this.displayMessageToList()
         BroadcastMessageOperator.deleteList("accordion")
-        BroadcastMessageOperator.#toggleSubmitButtonState()
+        toggleDisplayButtonState(document.querySelector(".js_message_submit_btn"),document.querySelectorAll(".js_headings"));
 
         this.message = ""
         FormController.initializeInput()
@@ -221,7 +246,10 @@ class BroadcastMessageOperator{
 
         BroadcastMessageOperator.hideErrorMsg()
         this.message = e.currentTarget.value
-        toggleDisplayButtonState(this.displayBtn, this.message)
+
+        console.log(this.newBtn)
+        console.log("new button")
+        toggleDisplayButtonState(this.newBtn, this.message)
     }
 
 
@@ -238,25 +266,28 @@ class BroadcastMessageOperator{
         const data = document.querySelectorAll(".js_data")
         // 順番通りに並べ替え
         const formDataArray = formDataStateManager.getState()
-        
-        for(let i = 0; i < data.length; i ++){
-            this.sendMessage[i] = formDataArray[Array.from(data)[i].getAttribute("data-file-index")]
-        }
-
         const formData = new FormData();
 
+
         // sendMessage のデータを FormData に追加
-        this.sendMessage.forEach((item, index) => {
-            if (item.type === 'image') {
-                // FormDataから画像を取得
-                const imageFile = item.formData.get('image');
-                if (imageFile) {
-                    formData.append(`images[${index}]`, imageFile, item.fileName);
+        formDataArray.forEach((item, index) => {
+
+            if(item !== undefined && item.type !== undefined){
+                if (item.type === 'image') {
+                    // FormDataから画像を取得
+                    const imageFile = item.formData.get('image');
+                    if (imageFile) {
+                        formData.append(`images[${index}]`, imageFile, item.fileName);
+                    }
+                    if(item.url && item.cropArea){
+                        formData.append(`images[${index}][meta]`, JSON.stringify({ url: item.url, cropArea: item.cropArea }));
+                    }
+                } else if (item.type === 'text') {
+                    // テキストデータを追加
+                    formData.append(`messages[${index}]`, item.data);
                 }
-            } else if (item.type === 'text') {
-                // テキストデータを追加
-                formData.append(`messages[${index}]`, item.data);
             }
+            
         });
 
         return formData
@@ -271,13 +302,13 @@ class BroadcastMessageOperator{
 
         const formData = this.prepareBroadcastFormData()
 
-        const response = await fetch(`/api/broadcast_message/store/${admin_id}`, {
+        const response = await fetch(`${this.baseUrl}/${admin_id}`, {
             method: 'POST',
             body: formData,
         })
 
         if (!response.ok) {
-            throw new Error("一斉送信の作成でエラーが発生しました。もう一度お試しください");
+            alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
         }
 
         const data = await response.json(); // レスポンスをJSONに変換
@@ -287,17 +318,13 @@ class BroadcastMessageOperator{
     async emitBroadcastMessageToSocket(){
         const response = await this.submitBroadcastMessageToServer()
 
-        if(!response["created_at"]){
-            return
-        }
-
-
         // モーダルをloaderを閉じる処理
-        document.getElementById("js_boradcasting_modal").classList.add("hidden")
+        document.getElementById("js_messageSetting_modal").classList.add("hidden")
         document.querySelector(".bg").classList.add("hidden")
         const admin_id = document.getElementById("js_account_id").value
         const loader = document.querySelector(".loader")
         loader.classList.add("hidden")
+        
 
         // 成功メッセージを出す処理
         const success_el = document.getElementById("js_alert_success")
@@ -312,12 +339,28 @@ class BroadcastMessageOperator{
             success_el.style.display = "none"
         }, 2000);
 
-        const created_at = response["created_at"]
-        const sendingDatatoBackEnd = response["data"];
-        socket.emit("broadcast message", {
-            sendingDatatoBackEnd: sendingDatatoBackEnd,
+
+        
+        if(this.isGreeting){
+            return
+        }
+        const {created_at, data} = response
+
+
+        // formDataをリセットする
+        formDataStateManager.resetItem()
+
+        console.log({
+            sendingDatatoBackEnd: data,
             admin_id: admin_id,
-            created_at: created_at
+            created_at: created_at,
+        });
+        
+        indexStateManager.resetState()
+        socket.emit("broadcast message", {
+            sendingDatatoBackEnd: data,
+            admin_id: admin_id,
+            created_at: created_at,
         });
     }
 }

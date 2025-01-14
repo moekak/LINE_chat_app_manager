@@ -367,7 +367,7 @@
 </section>
 
 {{-- 一斉配信モーダル --}}
-<section class="modal__container js_modal hidden broadcasting_message_modal" id="js_boradcasting_modal" style="width: 530px;">
+<section class="modal__container js_modal hidden broadcasting_message_modal" id="js_messageSetting_modal" style="width: 530px;">
       <h3 class="modal__container-ttl">一斉送信メッセージ</h3>
 
       <div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
@@ -384,7 +384,7 @@
                   <label for="formGroupExampleInput" class="form-label">本文 <span style="color: red; font-size: 13px;">※</span></label>
                   <textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="6" name="body">{{ old('body') }}</textarea>
                   <div class="mt-3"></div>
-                  <input type="file" class="js_upload">
+                  <input type="file" class="js_upload" id="fileInput">
             </div>
             <input type="hidden" name="admin_account_id" id="js_account_id">
             <div class="broadcast_message_submit_btn-box">
@@ -497,7 +497,7 @@
                   <input type="url" name="url" id="js_url_input" class="url_input" placeholder="https://example.com">
                   <div class="btn_area">
                         <button><label for="fileInput">画像変更</label></button>
-                        <button id="js_change_area" class="disable_btn">選択範囲確定</button>
+                        <button id="js_change_area" class="disabled_btn">選択範囲確定</button>
                   </div>
                   <small style="color: gray;font-size: 12px;">※画像を変更する際は、タップ時アクションが設定されている場合設定が解除されます。</small><br>
                   <div style="margin-top: 10px;"></div>
@@ -505,8 +505,8 @@
                   <div style="margin-top: 10px;"></div>
                   <small style="color: gray;  font-size: 12px; margin-top: 3px;">※再度範囲を選択したい場合は、「選択範囲変更」ボタンを押してください。</small>  
             </div>
-            <div style="margin-top: 40px;">
-                  <button class="preview_submit_btn disable_btn" id="js_preview_submit_btn">送信</button>
+            <div style="margin-top: 14px;">
+                  <button class="preview_submit_btn disabled_btn" id="js_preview_submit_btn">送信</button>
             </div>
       </div>
 </section>

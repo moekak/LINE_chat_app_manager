@@ -3,9 +3,7 @@ import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accoun
 import { close_modal, close_modal_by_click, open_modal } from "./modalOperation.js"
 import { setLineMessageForUpdating } from "./accountUIOperations.js"
 import { fetchSpecificUserInfo } from "./fetchUserData.js"
-import BroadcastMessageOperator from "./broadcast/BroadcastMessageOperator.js"
-import formDataStateManager from "../util/state/FormDataStateManager.js"
-import indexStateManager from "../util/state/IndexStateManager.js"
+
 
 // アカウント編集モーダルの初期化
 export const initializeAccountEditModal =() =>{
@@ -44,7 +42,7 @@ export const initializeAccountEditModal =() =>{
 // 一斉送信モーダルの初期化
 export const initializeBroadcastMessageModal = () =>{
       const sending_btns            = document.querySelectorAll(".js_send_message_btn")
-      const broadcasting_modal      = document.getElementById("js_boradcasting_modal")
+      const broadcasting_modal      = document.getElementById("js_messageSetting_modal")
 
       sending_btns.forEach((btn)=>{
             btn.addEventListener("click", (e)=>{

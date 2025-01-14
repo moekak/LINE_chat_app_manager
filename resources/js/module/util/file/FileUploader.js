@@ -22,6 +22,7 @@ class FileUploader{
     constructor(file, errorTxtElement){
         this.file = file
         this.errorTxtElement = errorTxtElement   
+        this.newconfirmBtn = null
     }
 
     /**
@@ -61,6 +62,7 @@ class FileUploader{
 
             const cropperHandler = new CropperEventHandler(newImageButton,this.cropper)
             cropperHandler.changeBtnEvent()
+            this.#changeSubmitBtn()
             // 新しい画像要素を Cropper に更新
             this.cropper.updateImage(newImage);
 
@@ -79,13 +81,11 @@ class FileUploader{
 
             // 画像切り取りが完了して送信ボタンを押した後の処理
             const confirmBtn = document.getElementById("js_preview_submit_btn")
-            const newconfirmBtn = confirmBtn.cloneNode(true);
-            confirmBtn.parentNode.replaceChild(newconfirmBtn, confirmBtn);
-
-
+            this.newconfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(this.newconfirmBtn, confirmBtn);
             const modal = document.getElementById("js_image_edit_modal")
 
-            newconfirmBtn.addEventListener("click", ()=>{
+            this.newconfirmBtn.addEventListener("click", ()=>{
                 modal.classList.add("hidden")
 
                 let cropArea = this.cropper.getCropperArea()
@@ -169,11 +169,8 @@ class FileUploader{
             type: 'image',        // タイプも保存しておくと便利
             cropArea: JSON.stringify(cropArea),
             url: url
-
         }
 
-        console.log(data);
-        
 
         formDataStateManager.setItem(index, data)
     }
@@ -219,6 +216,62 @@ class FileUploader{
     static isCorrectSize(fileSize){
         return fileSize < MAX_SIZE
     }
+
+
+        // 送信ボタンの色を変更する
+    // 送信ボタンの色を変更する
+    #changeSubmitBtn() {
+        console.log("eee");
+        
+        const choices = document.querySelectorAll('input[name="choice"]');
+        const urlInput = document.getElementById("js_url_input");
+        const confirmBtn = document.getElementById("js_change_area");
+
+        // ボタンの状態を更新する関数
+        const updateButtonState = () => {
+                const isChoiceOn = [...choices].some(choice => choice.checked && choice.value === "on");
+                const hasUrl = urlInput.value.length > 0;
+                const isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
+
+                if(isChoiceOn){
+                    if (hasUrl && isConfirmed) {
+                        console.log("remove");
+                        console.log(this.newconfirmBtn);
+                        
+                        
+                        this.newconfirmBtn.classList.remove("disabled_btn");
+                    } else {
+                        this.newconfirmBtn.classList.add("disabled_btn");
+                    }
+                }else{
+
+                    this.newconfirmBtn.classList.remove("disabled_btn");
+                }
+        };
+    
+        // 各イベントリスナーでボタン状態を更新
+        choices.forEach(choice => {
+                choice.addEventListener("change", updateButtonState);
+        });
+    
+        urlInput.addEventListener("input", () => {
+                this.actionUrl = urlInput.value; // 必要なら保持
+                updateButtonState();
+        });
+    
+        console.log(confirmBtn);
+        
+        confirmBtn.addEventListener("click", () => {
+
+            // console.log("click");
+            
+            //     // 確定状態をトグル
+            //     this.isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
+                updateButtonState();
+        });
+    }
+
+    
 }
 
 export default FileUploader;

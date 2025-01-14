@@ -14,6 +14,12 @@ class IndexStateManager{
     setState(){
             this.index["count"]++
     }
+    setMinusState(){
+            this.index["count"]--
+    }
+    resetState(){
+        this.index["count"] = 0
+    }
 }
 
 const indexStateManager = new IndexStateManager();

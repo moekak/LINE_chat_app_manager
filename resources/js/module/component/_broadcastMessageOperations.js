@@ -84,7 +84,7 @@ export const deleteList = (id, formData) =>{
                 el.setAttribute("data-id", index)
             })
 
-            toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
+            toggleDisplayButtonState(document.querySelector(".js_message_submit_btn"), document.querySelectorAll(".js_headings"))
             
         })
     })

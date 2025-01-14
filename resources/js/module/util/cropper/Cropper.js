@@ -53,7 +53,7 @@ class Cropper {
                   highlight: true, // クロップボックスのハイライトを有効
                   cropBoxResizable: true, // クロップボックスのリサイズを許可
                   cropend: () => {
-                        this.changeBtn.classList.remove("disable_btn")
+                        this.changeBtn.classList.remove("disabled_btn")
                   },
             });
       }

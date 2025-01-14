@@ -14,7 +14,7 @@
 @endsection
 @section('main')
 <input type="hidden" value="{{$user_uuid}}" id="js_admin_account_id">
-<input type="hidden" value={{Route::current()->parameter('id');}} id="js_line_account_id">
+<input type="hidden" value={{Route::current()->parameter('id');}} id="js_account_id">
 <div class="dashboard__wrapper-main bg-lightgray">
 	@php
 		// セッションに 'success' キーが存在するかチェック
@@ -131,7 +131,7 @@
 
 
 {{-- 初回あいさつモーダル --}}
-<section class="modal__container js_modal broadcasting_message_modal hidden" id="js_greeting_modal" style="width: 530px;">
+<section class="modal__container js_modal broadcasting_message_modal hidden" id="js_messageSetting_modal" style="width: 530px;">
 	<h3 class="modal__container-ttl">初回メッセージ登録</h3>
 	<div class="alert alert-secondary" style="font-size: 14px;" role="alert">
 		ユーザー名を挿入する際は、{名前}としてください。<br>
@@ -146,42 +146,90 @@
 
 	<div class="broadcast_message_area">
 		<div class="broascast_message-list">
-			<div id="accordion_greeting" class="js_accordion_wrapper_greeting">
+			<div id="accordion" class="js_accordion_wrapper">
 		</div>
 		<div class="mb-3 mt-3">
 			<label for="formGroupExampleInput" class="form-label">本文 <span style="color: red; font-size: 13px;">※</span></label>
-			<textarea class="form-control js_greeting_input" id="exampleFormControlTextarea1" rows="6" name="body">{{ old('body') }}</textarea>
+			<textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="6" name="body">{{ old('body') }}</textarea>
 			<div class="mt-3"></div>
 			<input type="file" class="js_upload">
 		</div>
 		<input type="hidden" name="admin_account_id" value={{Route::current()->parameter('id');}} id="js_greeting_account_id">
 		<div class="broadcast_message_submit_btn-box">
-			<button type="submit" class="modal__container-btn js_greeting_display_btn disabled_btn">追加</button>  
-			<button type="submit" class="modal__container-btn js_greeting_submit_btn">登録</button>  
+			<button type="submit" class="modal__container-btn js_message_display_btn disabled_btn">追加</button>  
+			<button type="submit" class="modal__container-btn js_message_submit_btn">登録</button>  
 		</div>
 	</div>      
 </section>
 {{-- タイトル更新 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_title_modal">
-      <h3 class="modal__container-ttl">タイトル表示作成</h3>
-      @if ($errors->any())
-      <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+	<h3 class="modal__container-ttl">タイトル表示作成</h3>
+	@if ($errors->any())
+	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>
-                  @foreach ($errors->all() as $error)
-                  <li class="alert_danger">{{$error}}</li>
-                  @endforeach  
-            </ul>   
-      </div>  
-      @endif
-      <form action="{{ route('title.update')}}" method="post">
-            @csrf
-            <div class="mb-3">
-                  <label for="formGroupExampleInput" class="form-label">タイトル <span style="color: red; font-size: 13px;">※</span></label>
-                  <input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="title" value="{{ isset($title) && isset($title['title']) ? $title['title'] : old('title') }}">
-                  <input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
-            </div>
-            <button type="submit" class="modal__container-btn">作成</button>
-      </form>
+				@foreach ($errors->all() as $error)
+				<li class="alert_danger">{{$error}}</li>
+				@endforeach  
+			</ul>   
+	</div>  
+	@endif
+	<form action="{{ route('title.update')}}" method="post">
+		@csrf
+		<div class="mb-3">
+			<label for="formGroupExampleInput" class="form-label">タイトル <span style="color: red; font-size: 13px;">※</span></label>
+			<input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="title" value="{{ isset($title) && isset($title['title']) ? $title['title'] : old('title') }}">
+			<input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
+		</div>
+		<button type="submit" class="modal__container-btn">作成</button>
+    </form>
+</section>
+
+
+{{-- 画像のURL編集モーダル --}}
+<section class="image_edit_modal hidden" id="js_image_edit_modal">
+	<div class="preview_box">
+		<div class="preview_box-top">
+			<p>プレビュー</p>
+			<small>※送信時に画像が劣化する場合があります。</small>
+		</div>
+		<div class="preview_box-img" id="image-container">
+			<img src="" alt="" id="image">
+		</div>
+		<div class="preview_box-desc">
+			<div>対応形式: .png/.jpg</div>
+			<div>最大データ容量: 5MBまで</div>
+		</div>
+	</div>
+	<div class="url_setting_area">
+		<p class="url_setting_txt">タップ時アクションの利用</p>
+		<div class="radio_btn">
+			<div class="form-check">
+				<input class="form-check-input" value="off" type="radio" name="choice" id="flexRadioDefault1">
+				<label class="form-check-label" for="flexRadioDefault1">利用しない</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" value="on" type="radio" name="choice" id="flexRadioDefault2" checked>
+				<label class="form-check-label" for="flexRadioDefault2">利用する</label>
+			</div> 
+		</div>
+		<div class="url_setting_wrapper" id="js_url_setting">
+			<div style="margin-top: 20px;"></div>
+			<p class="url_setting_txt">URL設定</p>
+			<input type="url" name="url" id="js_url_input" class="url_input" placeholder="https://example.com">
+			<div class="btn_area">
+				<button><label for="fileInput">画像変更</label></button>
+				<button id="js_change_area" class="disabled_btn">選択範囲確定</button>
+			</div>
+			<small style="color: gray;font-size: 12px;">※画像を変更する際は、タップ時アクションが設定されている場合設定が解除されます。</small><br>
+			<div style="margin-top: 10px;"></div>
+			<small style="color: gray; font-size: 12px; margin-top: 3px;">※範囲を選択してから「選択範囲確定」ボタンを押してください。</small><br>
+			<div style="margin-top: 10px;"></div>
+			<small style="color: gray;  font-size: 12px; margin-top: 3px;">※再度範囲を選択したい場合は、「選択範囲変更」ボタンを押してください。</small>  
+		</div>
+		<div style="margin-top: 14px;">
+			<button class="preview_submit_btn disabled_btn" id="js_preview_submit_btn">送信</button>
+		</div>
+	</div>
 </section>
 
 @endsection
@@ -204,8 +252,7 @@
 				let form = document.querySelector('.js_edit_account_form');
 				let action = form.getAttribute('action');
 				let id = document.querySelector(".js_account_id_input").value;
-				console.log(id);
-				
+
 				action = action.replace('ID_PLACEHOLDER', id);
 				form.setAttribute('action', action)
 		</script>

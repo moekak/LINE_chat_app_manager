@@ -45,7 +45,7 @@ close_modal_by_click(modal, btn)
 // 無限スクロール処理
 {
       const element = document.querySelector(".dashboard__wrapper-table");
-      const admin_id = document.getElementById("js_line_account_id").value 
+      const admin_id = document.getElementById("js_account_id").value 
       const base_url = `/api/user/lists/${admin_id}`
       const parentElement = document.querySelector(".js_table")
       const fileType = "accountShow"

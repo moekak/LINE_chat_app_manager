@@ -480,9 +480,9 @@ p, ul {
     cursor: pointer;
 }
 
-.disabled_btn {
-    opacity: 50%;
-    pointer-events: none;
+.disabled_btn{
+    opacity: 50% !important;
+    pointer-events: none !important;
 }
 
 
@@ -614,7 +614,7 @@ p, ul {
     font-weight: bold;
 }
 .url_setting_area{
-    width: 50%;
+    width: 53%;
 }
 
 .url_input{
@@ -627,7 +627,7 @@ p, ul {
 }
 .btn_area{
     display: flex;
-    margin-top: 40px;
+    margin-top: 26px;
     margin-bottom: 20px;
     justify-content: space-between;
     gap: 10px;
