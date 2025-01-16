@@ -321,7 +321,7 @@
             <div class="col-12">
                   <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち追加URLを入力）</label>
                   <select class="form-select mb-3 js_second_account_id" name="second_account_id">
-                        <option disabled {{ old('second_account_id') ? '' : 'selected' }}>予備アカウントを選択してください</option>
+                        <option value="" disabled {{ old('second_account_id') ? '' : 'selected' }}>予備アカウントを選択してください</option>
                         @foreach ($second_accounts as $account)
                               <option value="{{ $account->id }}" {{ old('second_account_id') == $account->id ? 'selected' : '' }}>{{$account->account_name}}</option> 
                         @endforeach
@@ -356,7 +356,7 @@
             </div>
             <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち追加URLを入力）</label>
             <select class="form-select js_select_element mb-3" aria-label="Default select example" name="second_account_id">
-                  <option disabled {{ old('second_account_id') ? '' : 'selected' }} class="js_edit_secondAccount_input"></option>
+                  <option disabled {{ old('second_account_id') ? 'selected' : '' }} class="js_edit_secondAccount_input"></option>
                   @foreach ($second_accounts as $account)
                         <option value="{{ $account->id }}" {{ old('second_account_id') == $account->id ? 'selected' : '' }} class="js_second_account">{{$account->account_name}}</option> 
                   @endforeach

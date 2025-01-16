@@ -35,6 +35,7 @@ class CreateLineAccountRequest extends FormRequest
         return [
             "account_name" => ["required", "string", "max:50"],
             "account_url" => ["required", "url", "max:2048"],
+            "second_account_id" => ['exists:line_accounts,id'],
             'channelsecret' => [
                 'required',
                 'string',
@@ -52,8 +53,10 @@ class CreateLineAccountRequest extends FormRequest
                         if ($exists) {
                             $fail('既にこのチャネルシークレットは使用されています。');
                         }
+
+
                     } catch (\Exception $e) {
-                        $fail('Could not verify the channel access tokenmnnnn.');
+                        $fail('チャネルシークレットの署名検証に失敗しました。再度お試しください。');
                     }
                 }
             ],
@@ -66,6 +69,7 @@ class CreateLineAccountRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     // LINEのAPIを呼び出してトークンの有効性を確認
                     try {
+                        Log::debug($value);
                         $response = Http::withHeaders([
                             'Authorization' => 'Bearer ' . $value
                         ])->get('https://api.line.me/v2/bot/info');
@@ -116,8 +120,11 @@ class CreateLineAccountRequest extends FormRequest
             'channelaccesstoken.required' => 'チャネルアクセストークンは必須です。',
             'channelaccesstoken.min' => 'チャネルアクセストークンが短すぎます。',
             'channelaccesstoken.max' => 'チャネルアクセストークンが長すぎます。',
+            'channelaccesstoken.regex' => 'チャネルアクセストークンが無効です。',
             'channelsecret.required' => 'チャネルシークレットは必須です。',
-            'channelsecret.size' => 'チャネルシークレットは32文字で入力してください。'
+            'channelsecret.size' => 'チャネルシークレットは32文字で入力してください。',
+            'channelsecret.regex' => 'チャネルシークレットが無効です。',
+            'second_account_id' => "予備アカウントが無効です。"
         ];
 
         return $messages;
