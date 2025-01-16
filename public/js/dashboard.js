@@ -2294,6 +2294,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
 /* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modalOperation.js */ "./resources/js/module/component/modalOperation.js");
 /* harmony import */ var _fetchUserData_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fetchUserData.js */ "./resources/js/module/component/fetchUserData.js");
+/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
+/* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+
+
+
 
 
 
@@ -2335,6 +2341,8 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
   var broadcasting_modal = document.getElementById("js_messageSetting_modal");
   sending_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
+      _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].resetState();
+      _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].resetItem();
       e.preventDefault();
       // 一斉送信メッセージモーダルを表示する
       (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(broadcasting_modal);
@@ -2342,6 +2350,12 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
       // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
       var account_id = e.currentTarget.getAttribute("data-id");
       document.getElementById("js_account_id").value = account_id;
+
+      // 画像ファイル選択を空にする
+      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeFileUpload();
+
+      // document.querySelector(".js_accordion_wrapper").innerHTML = ""
+      // document.querySelector(".js_message_submit_btn").classList.add("disabled_btn")
     });
   });
 };
@@ -2937,6 +2951,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
 /* harmony export */ });
+/* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
+/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+
+
+
 var open_modal = function open_modal(modal) {
   document.querySelector(".bg").classList.remove("hidden");
   modal.classList.remove("hidden");
@@ -2946,16 +2966,22 @@ var close_modal = function close_modal() {
   var modals = document.querySelectorAll(".js_modal");
   var alerts = document.querySelectorAll(".js_alert_danger");
   var loader = document.querySelector(".loader");
+  var imageEditModal = document.getElementById("js_image_edit_modal");
   bg.addEventListener("click", function () {
-    bg.classList.add("hidden");
-    loader.classList.add("hidden");
-    modals.forEach(function (modal) {
-      modal.classList.add("hidden");
-    });
-    if (alerts) {
-      alerts.forEach(function (alert) {
-        alert.style.display = "none";
+    if (imageEditModal.classList.contains("hidden")) {
+      bg.classList.add("hidden");
+      loader.classList.add("hidden");
+      modals.forEach(function (modal) {
+        modal.classList.add("hidden");
       });
+      if (alerts) {
+        alerts.forEach(function (alert) {
+          alert.classList.add("hidden");
+        });
+      }
+    } else {
+      imageEditModal.classList.add("hidden");
+      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_2__["default"].initializeFileUpload();
     }
   });
 };
@@ -2966,6 +2992,70 @@ var close_modal_by_click = function close_modal_by_click(modal, btn) {
     modal.classList.add("hidden");
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/module/component/ui/FormController.js":
+/*!************************************************************!*\
+  !*** ./resources/js/module/component/ui/FormController.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _util_cropper_CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/cropper/CropperOverlay.js */ "./resources/js/module/util/cropper/CropperOverlay.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var FormController = /*#__PURE__*/function () {
+  function FormController() {
+    _classCallCheck(this, FormController);
+  }
+  return _createClass(FormController, null, [{
+    key: "initializeInput",
+    value: function initializeInput() {
+      var inputField = document.querySelector(".js_message_input");
+      inputField.value = "";
+    }
+  }, {
+    key: "initializeImageCropInput",
+    value: function initializeImageCropInput() {
+      var inputFiled = document.getElementById("js_url_input");
+      var buttton = document.getElementById("js_change_area");
+      var submitButton = document.querySelector(".preview_submit_btn ");
+      var choices = document.getElementsByName('choice');
+      choices.forEach(function (choice) {
+        if (choice.value === "off") {
+          choice.checked = false;
+        } else {
+          choice.checked = true;
+        }
+      });
+      var url_wrapper = document.getElementById("js_url_setting");
+      url_wrapper.classList.remove("hidden");
+      buttton.classList.add("disabled_btn");
+      if (buttton.innerHTML === "選択範囲変更") {
+        buttton.style.backgroundColor = "#fff";
+        buttton.innerHTML = "選択範囲確定";
+      }
+      submitButton.classList.add("disabled_btn");
+      inputFiled.value = "";
+    }
+  }, {
+    key: "initializeFileUpload",
+    value: function initializeFileUpload() {
+      document.querySelector(".js_upload").value = "";
+    }
+  }]);
+}();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormController);
 
 /***/ }),
 
@@ -3251,6 +3341,118 @@ var InfiniteScroll = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/module/util/cropper/CropperOverlay.js":
+/*!************************************************************!*\
+  !*** ./resources/js/module/util/cropper/CropperOverlay.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var _CropperOverlay;
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _classPrivateFieldInitSpec(e, t, a) { _checkPrivateRedeclaration(e, t), t.set(e, a); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateFieldGet(s, a) { return s.get(_assertClassBrand(s, a)); }
+function _classPrivateFieldSet(s, a, r) { return s.set(_assertClassBrand(s, a), r), r; }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+var _overlayElements = /*#__PURE__*/new WeakMap();
+var _CropperOverlay_brand = /*#__PURE__*/new WeakSet();
+var CropperOverlay = /*#__PURE__*/function () {
+  function CropperOverlay() {
+    _classCallCheck(this, CropperOverlay);
+    // スタイル変更対象のDOM要素をオブジェクトとして格納
+    _classPrivateMethodInitSpec(this, _CropperOverlay_brand);
+    _classPrivateFieldInitSpec(this, _overlayElements, null);
+    _assertClassBrand(_CropperOverlay_brand, this, _initializeElements).call(this);
+  }
+  return _createClass(CropperOverlay, [{
+    key: "setVisibility",
+    value:
+    // オーバーレイ要素の表示状態を制御するメソッド
+    function setVisibility(isVisible) {
+      try {
+        // 表示状態に応じたスタイル値を設定
+        var displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE : CropperOverlay.STYLES.HIDDEN;
+        var backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR;
+
+        // 複数要素（lines, points, dots）を一括で処理するための配列
+        var targetElements = [_classPrivateFieldGet(_overlayElements, this).lines, _classPrivateFieldGet(_overlayElements, this).points, _classPrivateFieldGet(_overlayElements, this).dots];
+
+        // 各要素グループの表示/非表示を切り替え
+        targetElements.forEach(function (elements) {
+          elements.forEach(function (element) {
+            element.style.display = displayStyle;
+          });
+        });
+
+        // 背景の切り替え
+        _classPrivateFieldGet(_overlayElements, this).selectedArea.style.backgroundColor = backgroundColor;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }], [{
+    key: "updateCropperState",
+    value: function updateCropperState(isEnabled) {
+      var cropper = document.querySelector(".cropper-drag-box");
+      var cropperContainer = document.querySelector(".cropper-container");
+      var cropperBox = document.querySelector(".cropper-crop-box");
+      if (!cropper || !cropperContainer || !cropperBox) {
+        console.error("Cropper elements not found in the DOM");
+        return;
+      }
+      if (isEnabled) {
+        cropper.classList.add("cropper-crop", "cropper-modal");
+        cropperContainer.classList.add("cropper-bg");
+        cropperBox.style.display = "block";
+      } else {
+        cropper.classList.remove("cropper-crop", "cropper-modal");
+        cropperContainer.classList.remove("cropper-bg");
+        cropperBox.style.display = "none";
+      }
+    }
+  }]);
+}();
+_CropperOverlay = CropperOverlay;
+function _initializeElements() {
+  _classPrivateFieldSet(_overlayElements, this, {
+    selectedArea: document.querySelector(_CropperOverlay.SELECTORS.SELECTED_AREA),
+    lines: document.querySelectorAll(_CropperOverlay.SELECTORS.LINES),
+    points: document.querySelectorAll(_CropperOverlay.SELECTORS.POINTS),
+    dots: document.querySelectorAll(_CropperOverlay.SELECTORS.DOTS)
+  });
+}
+// スタイル変更したい要素のクラス名の定義
+_defineProperty(CropperOverlay, "SELECTORS", {
+  SELECTED_AREA: '.cropper-face',
+  LINES: '.cropper-line',
+  POINTS: '.cropper-point',
+  DOTS: '.cropper-dashed'
+});
+// toggleで変更するときのスタイル
+// (例)visible = true →　display: block, backgroundColor: #fff
+// (例)visible = false →　display: none, backgroundColor: red
+_defineProperty(CropperOverlay, "STYLES", {
+  HIDDEN: 'none',
+  VISIBLE: 'block',
+  SELECTED_COLOR: 'red',
+  DEFAULT_COLOR: '#fff'
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CropperOverlay);
+
+/***/ }),
+
 /***/ "./resources/js/module/util/fetch.js":
 /*!*******************************************!*\
   !*** ./resources/js/module/util/fetch.js ***!
@@ -3424,6 +3626,166 @@ var registerUser = function registerUser(admin_id, type) {
   socket.emit("register", "".concat(type).concat(admin_id));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (socket);
+
+/***/ }),
+
+/***/ "./resources/js/module/util/state/FormDataStateManager.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/module/util/state/FormDataStateManager.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var FormDataStateManager = /*#__PURE__*/function () {
+  function FormDataStateManager() {
+    _classCallCheck(this, FormDataStateManager);
+    if (!FormDataStateManager.instance) {
+      this.formDataArray = []; // 初期状態
+      FormDataStateManager.instance = this; // インスタンスを保存
+    }
+    return FormDataStateManager.instance; // 常に同じインスタンスを返す
+  }
+
+  /**
+   * 全体の状態を取得
+   * @returns {Array} - formDataArray の現在の状態
+   */
+  return _createClass(FormDataStateManager, [{
+    key: "getState",
+    value: function getState() {
+      return this.formDataArray;
+    }
+
+    /**
+     * 指定したインデックスのデータを取得
+     * @param {number} index - データのインデックス
+     * @returns {Object|null} - 指定したインデックスのデータ
+     */
+  }, {
+    key: "getItem",
+    value: function getItem(index) {
+      return this.formDataArray[index] || null;
+    }
+  }, {
+    key: "reOrderItem",
+    value: function reOrderItem(index, value) {
+      this.formDataArray[index] = value;
+    }
+  }, {
+    key: "addData",
+    value: function addData(data) {
+      var _this$formDataArray;
+      (_this$formDataArray = this.formDataArray).push.apply(_this$formDataArray, _toConsumableArray(data));
+    }
+
+    /**
+     * 指定されたindexのデータを削除
+     * @param {number} index - データのインデックス
+     */
+  }, {
+    key: "removeItem",
+    value: function removeItem(index) {
+      this.formDataArray.splice(index, 1); // 配列からindex番目を削除  
+
+      console.log(this.formDataArray.length + "length");
+    }
+  }, {
+    key: "resetItem",
+    value: function resetItem() {
+      this.formDataArray.length = 0; // 配列を空にする
+      console.log(this.formDataArray);
+    }
+
+    /**
+     * データを追加または更新
+     * @param {number} index - 保存したいインデックス
+     * @param {Object} data - 保存するデータ (formData, fileName, type)
+     */
+  }, {
+    key: "setItem",
+    value: function setItem(index, data) {
+      this.formDataArray[index] = data;
+      console.log("State after setItem: ", this.formDataArray);
+    }
+  }]);
+}();
+var formDataStateManager = new FormDataStateManager();
+Object.freeze(formDataStateManager); // インスタンスを凍結して変更不可に
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formDataStateManager);
+
+/***/ }),
+
+/***/ "./resources/js/module/util/state/IndexStateManager.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/module/util/state/IndexStateManager.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var IndexStateManager = /*#__PURE__*/function () {
+  function IndexStateManager() {
+    _classCallCheck(this, IndexStateManager);
+    if (!IndexStateManager.instance) {
+      this.index = {
+        count: 0
+      }; // 初期状態
+      IndexStateManager.instance = this; // インスタンスを保存
+    }
+    return IndexStateManager.instance; // 常に同じインスタンスを返す
+  }
+  return _createClass(IndexStateManager, [{
+    key: "getState",
+    value: function getState() {
+      return this.index["count"];
+    }
+  }, {
+    key: "setState",
+    value: function setState() {
+      this.index["count"]++;
+    }
+  }, {
+    key: "setMinusState",
+    value: function setMinusState() {
+      this.index["count"]--;
+    }
+  }, {
+    key: "resetState",
+    value: function resetState() {
+      this.index["count"] = 0;
+    }
+  }]);
+}();
+var indexStateManager = new IndexStateManager();
+Object.freeze(indexStateManager); // インスタンスを凍結して変更不可に
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (indexStateManager);
 
 /***/ }),
 

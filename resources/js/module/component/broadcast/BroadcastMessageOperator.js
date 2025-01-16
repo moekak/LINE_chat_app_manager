@@ -316,6 +316,7 @@ class BroadcastMessageOperator{
     }
 
     async emitBroadcastMessageToSocket(){
+
         const response = await this.submitBroadcastMessageToServer()
 
         // モーダルをloaderを閉じる処理
@@ -329,9 +330,9 @@ class BroadcastMessageOperator{
         // 成功メッセージを出す処理
         const success_el = document.getElementById("js_alert_success")
         success_el.style.display = "block";
-        success_el.innerHTML = "一斉送信に成功しました"
+        success_el.innerHTML = this.isGreeting ? "初回挨拶メッセージの設定に成功しました。" : "一斉送信に成功しました"
         document.querySelector(".js_message_input").value = ""
-        document.querySelector(".js_upload").value = ""
+        FormController.initializeFileUpload()
         document.querySelector(".js_accordion_wrapper").innerHTML = ""
 
         // 成功メッセージを出して2秒後に批評にする
@@ -350,12 +351,6 @@ class BroadcastMessageOperator{
         // formDataをリセットする
         formDataStateManager.resetItem()
 
-        console.log({
-            sendingDatatoBackEnd: data,
-            admin_id: admin_id,
-            created_at: created_at,
-        });
-        
         indexStateManager.resetState()
         socket.emit("broadcast message", {
             sendingDatatoBackEnd: data,

@@ -20,14 +20,11 @@ greeting_btn.addEventListener("click", ()=>{
 BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
 const greetingText = document.querySelector(".js_broadcast_error")
 const errorTxt = document.querySelector(".js_error_txt")
-const imageEditModal = document.getElementById("js_image_edit_modal")
 const uploads = document.querySelectorAll(".js_upload");
 
 uploads.forEach((upload) => {
     upload.addEventListener("change", async (e) => {
-
         FormController.initializeImageCropInput()
-        open_modal(imageEditModal)
 
         greetingText.classList.add("hidden")
 

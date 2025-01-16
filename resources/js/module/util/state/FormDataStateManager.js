@@ -45,6 +45,7 @@ class FormDataStateManager{
     }
     resetItem() {
         this.formDataArray.length = 0; // 配列を空にする
+        console.log(this.formDataArray)
     }
 
     /**

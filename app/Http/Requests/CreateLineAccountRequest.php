@@ -34,7 +34,7 @@ class CreateLineAccountRequest extends FormRequest
 
         return [
             "account_name" => ["required", "string", "max:50"],
-            "account_url" => ["required", "url", "max:255"],
+            "account_url" => ["required", "url", "max:2048"],
             'channelsecret' => [
                 'required',
                 'string',

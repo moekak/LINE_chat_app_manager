@@ -1,7 +1,8 @@
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
-import { close_modal } from "../../component/modalOperation.js";
+import { close_modal, open_modal } from "../../component/modalOperation.js";
 import ButtonController from "../../component/ui/ButttonController.js";
+import FormController from "../../component/ui/FormController.js";
 import Cropper from "../cropper/Cropper.js";
 import CropperEventHandler from "../cropper/CropperEventHandler.js";
 import formDataStateManager from "../state/FormDataStateManager.js"
@@ -23,6 +24,7 @@ class FileUploader{
         this.file = file
         this.errorTxtElement = errorTxtElement   
         this.newconfirmBtn = null
+        this.errorElment = document.querySelector(".js_broadcast_error")
     }
 
     /**
@@ -34,7 +36,14 @@ class FileUploader{
     async fileOperation(){
 
         try{
-            this.validateFile()
+            if(!this.validateFile()) return
+
+            // 画像リンクモーダル表示
+            document.querySelector(".js_url_error").classList.add("hidden")
+            const imageEditModal = document.getElementById("js_image_edit_modal")
+
+            open_modal(imageEditModal)
+
             const compressedFile = await this.#compressedFile()
             await this.handleFileUpload(compressedFile)
         }catch(error){
@@ -86,14 +95,28 @@ class FileUploader{
             const modal = document.getElementById("js_image_edit_modal")
 
             this.newconfirmBtn.addEventListener("click", ()=>{
+                // URL形式チェック
+                const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
+                const urlInput= document.getElementById("js_url_input")
+
+                const choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
+                const selectedChoices = Array.from(choices).find(choice => choice.checked);
+
+
+                if(selectedChoices.value === "on" && !regex.test(urlInput.value)){
+                        const urlError = document.querySelector(".js_url_error")
+                        urlError.classList.remove("hidden")
+                        return 
+                }
+
+
                 modal.classList.add("hidden")
 
                 let cropArea = this.cropper.getCropperArea()
 
 
                 // ラジオボタンの切り替え
-                const choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
-                const selectedChoices = Array.from(choices).find(choice => choice.checked);
+            
                 if(selectedChoices.value === "off"){
                     cropArea = []
                     url = ""
@@ -182,13 +205,12 @@ class FileUploader{
      */
     validateFile(){
         if(!FileUploader.isAllowedType(this.file.type)){
-            this.errorTxtElement.innerHTML = "許可されているファイル形式は JPG, PNG, GIF, WEBP のみです。"
-            return;
+            return this.#validationError("許可されているファイル形式は JPG, PNGのみです。")
         }
         if(!FileUploader.isCorrectSize(this.file.size)){
-            this.errorTxtElement.innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください。"
-            return
+            return this.#validationError("画像サイズが大きすぎます。5MB以内で指定してください。")
         }
+        return true
     }
 
     /**
@@ -217,15 +239,22 @@ class FileUploader{
         return fileSize < MAX_SIZE
     }
 
+    #validationError(txt){
+        this.errorTxtElement.innerHTML = txt
+        FormController.initializeFileUpload()
+        this.errorElment.classList.remove("hidden")
+        return false
+    }
+
 
         // 送信ボタンの色を変更する
     // 送信ボタンの色を変更する
     #changeSubmitBtn() {
-        console.log("eee");
-        
+
         const choices = document.querySelectorAll('input[name="choice"]');
         const urlInput = document.getElementById("js_url_input");
         const confirmBtn = document.getElementById("js_change_area");
+        const urlError = document.querySelector(".js_url_error")
 
         // ボタンの状態を更新する関数
         const updateButtonState = () => {
@@ -235,10 +264,6 @@ class FileUploader{
 
                 if(isChoiceOn){
                     if (hasUrl && isConfirmed) {
-                        console.log("remove");
-                        console.log(this.newconfirmBtn);
-                        
-                        
                         this.newconfirmBtn.classList.remove("disabled_btn");
                     } else {
                         this.newconfirmBtn.classList.add("disabled_btn");
@@ -256,17 +281,12 @@ class FileUploader{
     
         urlInput.addEventListener("input", () => {
                 this.actionUrl = urlInput.value; // 必要なら保持
+                urlError.classList.add("hidden")
                 updateButtonState();
         });
     
-        console.log(confirmBtn);
-        
-        confirmBtn.addEventListener("click", () => {
 
-            // console.log("click");
-            
-            //     // 確定状態をトグル
-            //     this.isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
+        confirmBtn.addEventListener("click", () => {
                 updateButtonState();
         });
     }

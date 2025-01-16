@@ -34,6 +34,10 @@ class FormController{
         inputFiled.value = ""
 
     }
+
+    static initializeFileUpload(){
+        document.querySelector(".js_upload").value = ""
+    }
 }
 
 export default FormController;

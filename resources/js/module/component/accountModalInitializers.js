@@ -3,6 +3,9 @@ import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accoun
 import { close_modal, close_modal_by_click, open_modal } from "./modalOperation.js"
 import { setLineMessageForUpdating } from "./accountUIOperations.js"
 import { fetchSpecificUserInfo } from "./fetchUserData.js"
+import FormController from "./ui/FormController.js"
+import indexStateManager from "../util/state/IndexStateManager.js"
+import formDataStateManager from "../util/state/FormDataStateManager.js"
 
 
 // アカウント編集モーダルの初期化
@@ -46,6 +49,8 @@ export const initializeBroadcastMessageModal = () =>{
 
       sending_btns.forEach((btn)=>{
             btn.addEventListener("click", (e)=>{
+                  indexStateManager.resetState()
+                  formDataStateManager.resetItem()
                   e.preventDefault()
                   // 一斉送信メッセージモーダルを表示する
                   open_modal(broadcasting_modal);
@@ -53,6 +58,12 @@ export const initializeBroadcastMessageModal = () =>{
                   // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
                   let account_id = e.currentTarget.getAttribute("data-id")
                   document.getElementById("js_account_id").value = account_id
+
+                  // 画像ファイル選択を空にする
+                  FormController.initializeFileUpload()
+
+                  // document.querySelector(".js_accordion_wrapper").innerHTML = ""
+                  // document.querySelector(".js_message_submit_btn").classList.add("disabled_btn")
             })
       })
 }

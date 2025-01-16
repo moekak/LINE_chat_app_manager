@@ -494,7 +494,8 @@
             <div class="url_setting_wrapper" id="js_url_setting">
                   <div style="margin-top: 20px;"></div>
                   <p class="url_setting_txt">URL設定</p>
-                  <input type="url" name="url" id="js_url_input" class="url_input" placeholder="https://example.com">
+                  <input type="url" name="url" id="js_url_input" class="url_input" placeholder="https://example.com" maxlength="2048">
+                  <small class="hidden js_url_error" style="color: red; font-size: 12px; padding-top: 14px;">URLの形式にしてください</small>
                   <div class="btn_area">
                         <button><label for="fileInput">画像変更</label></button>
                         <button id="js_change_area" class="disabled_btn">選択範囲確定</button>

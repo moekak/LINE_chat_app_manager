@@ -26,7 +26,7 @@ class UpdateLineAccountRequest extends FormRequest
         return [
             "account_id" => ["required", "integer"],
             "account_name" => ["required", "string", "max:50"],
-            "account_url" => ["required", "string", "url", "max:255"],
+            "account_url" => ["required", "string", "url", "max:2048"],
             "second_account_id" =>  ['nullable', 'integer', 'exists:line_accounts,id']
         ];
     }

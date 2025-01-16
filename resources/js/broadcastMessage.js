@@ -17,13 +17,16 @@ const broadcastText = document.querySelector(".js_broadcast_error")
 const errorTxt = document.querySelector(".js_error_txt")
 
 const uploads = document.querySelectorAll(".js_upload");
-const imageEditModal = document.getElementById("js_image_edit_modal")
 uploads.forEach((upload) => {
     upload.addEventListener("change", async (e) => {
+        console.log("22");
+        
         FormController.initializeImageCropInput()
-        open_modal(imageEditModal)
         broadcastText.classList.add("hidden")
         const file = e.target.files[0];
+
+        console.log(file);
+        
 
         if (!file) return;
 
