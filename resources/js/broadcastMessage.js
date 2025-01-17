@@ -14,19 +14,17 @@ window.onload = (e)=>{
 
 BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_BROADCASTMESSAGE);
 const broadcastText = document.querySelector(".js_broadcast_error")
+const imageError = document.querySelector(".js_image_error")
 const errorTxt = document.querySelector(".js_error_txt")
 
 const uploads = document.querySelectorAll(".js_upload");
 uploads.forEach((upload) => {
     upload.addEventListener("change", async (e) => {
-        console.log("22");
         
         FormController.initializeImageCropInput()
         broadcastText.classList.add("hidden")
+        imageError.classList.add("hidden")
         const file = e.target.files[0];
-
-        console.log(file);
-        
 
         if (!file) return;
 

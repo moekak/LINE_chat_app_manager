@@ -12,6 +12,8 @@ class FormController{
         const submitButton = document.querySelector(".preview_submit_btn ")
         const choices = document.getElementsByName('choice')
 
+        document.querySelector(".js_image_error").classList.add("hidden")
+
         choices.forEach((choice)=>{
             if(choice.value === "off"){
                 choice.checked = false

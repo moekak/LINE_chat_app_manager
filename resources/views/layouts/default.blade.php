@@ -38,6 +38,7 @@
 <body>
       <div class="bg hidden"></div>
       <div class="loader hidden"></div>
+      <div class="crop_bg hidden"></div>
       <main class="dashboard">
             <nav class="nav__area">
                   <div class="nav__item-ttl bg-blue txt-white font-25 txt-center p-20">管理システム</div>

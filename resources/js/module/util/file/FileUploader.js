@@ -1,3 +1,4 @@
+import { error } from "laravel-mix/src/Log.js";
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
 import { close_modal, open_modal } from "../../component/modalOperation.js";
@@ -24,7 +25,23 @@ class FileUploader{
         this.file = file
         this.errorTxtElement = errorTxtElement   
         this.newconfirmBtn = null
-        this.errorElment = document.querySelector(".js_broadcast_error")
+        this.errorElement = document.querySelector(".js_broadcast_error")
+        this.imageErrorElement = document.querySelector(".js_image_error")
+
+        // イベントを初期化
+        this.initializeEvents();
+    }
+
+    initializeEvents() {
+        this.changeImageBtn = document.getElementById("js_changeImg_btn")
+        this.newChangeImageBtn = this.changeImageBtn.cloneNode(true)
+        this.changeImageBtn.parentNode.replaceChild(this.newChangeImageBtn, this.changeImageBtn)
+
+        this.newChangeImageBtn.addEventListener("click", this.handleDisplayClick.bind(this));
+    }
+
+    handleDisplayClick(){
+        FormController.initializeFileUpload()
     }
 
     /**
@@ -38,11 +55,18 @@ class FileUploader{
         try{
             if(!this.validateFile()) return
 
+            if(document.querySelector(".image_edit_modal").classList.contains("hidden")){
+                console.log("contain");
+                
+                this.#toggleLoader(true)
+            }else{
+                console.log("not contain");
+                
+                this.#toggleLoaderforChangeImg(true)
+            }
+            
             // 画像リンクモーダル表示
             document.querySelector(".js_url_error").classList.add("hidden")
-            const imageEditModal = document.getElementById("js_image_edit_modal")
-
-            open_modal(imageEditModal)
 
             const compressedFile = await this.#compressedFile()
             await this.handleFileUpload(compressedFile)
@@ -80,6 +104,17 @@ class FileUploader{
             container.innerHTML = ""; // 古い画像を削除
             container.appendChild(newImage); // 新しい画像を追加
 
+            // TODODODO
+
+            if(document.querySelector(".image_edit_modal").classList.contains("hidden")){
+                this.#toggleLoader(false)
+            }else{
+                this.#toggleLoaderforChangeImg(false)
+            }
+    
+            const imageEditModal = document.getElementById("js_image_edit_modal")
+            open_modal(imageEditModal)
+
             // URLの設定
             const urlInput = document.getElementById("js_url_input")
             let url = ""
@@ -96,6 +131,8 @@ class FileUploader{
 
             this.newconfirmBtn.addEventListener("click", ()=>{
                 // URL形式チェック
+
+                FormController.initializeFileUpload()
                 const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
                 const urlInput= document.getElementById("js_url_input")
 
@@ -198,20 +235,24 @@ class FileUploader{
         formDataStateManager.setItem(index, data)
     }
 
-
     /**
      * ファイルの形式とサイズを検証
      * - 許可されていない形式やサイズの場合にエラー文言を表示させる
      */
     validateFile(){
+        let hasModal = true
+        if(document.getElementById("js_image_edit_modal").classList.contains("hidden")) hasModal = false
+
         if(!FileUploader.isAllowedType(this.file.type)){
-            return this.#validationError("許可されているファイル形式は JPG, PNGのみです。")
+
+            return this.#validationError("許可されているファイル形式は JPG, PNGのみです。", hasModal)
         }
         if(!FileUploader.isCorrectSize(this.file.size)){
-            return this.#validationError("画像サイズが大きすぎます。5MB以内で指定してください。")
+            return this.#validationError("画像サイズが大きすぎます。5MB以内で指定してください。", hasModal)
         }
         return true
     }
+
 
     /**
      * 許可されているファイル形式かを判定
@@ -222,10 +263,7 @@ class FileUploader{
         const allowedTypes = [
             'image/jpeg',
             'image/png',
-            'image/gif',
-            'image/webp'
         ];
-    
         return allowedTypes.includes(fileType)
     }
     
@@ -239,15 +277,58 @@ class FileUploader{
         return fileSize < MAX_SIZE
     }
 
-    #validationError(txt){
-        this.errorTxtElement.innerHTML = txt
+    #validationError(txt, hasModal){
         FormController.initializeFileUpload()
-        this.errorElment.classList.remove("hidden")
+
+        if(hasModal){
+            document.querySelector(".js_image_error").classList.remove("hidden")
+            document.querySelector(".js_image_error").innerHTML = txt
+        }else{
+            document.querySelector(".js_broadcast_error").classList.remove("hidden")
+            document.querySelector(".js_error_txt").innerHTML = txt
+        }
+        
         return false
     }
 
+    #toggleLoader(isLoading){
 
-        // 送信ボタンの色を変更する
+        const messageModal = document.getElementById("js_messageSetting_modal")
+        const loader = document.querySelector(".loader")
+        const crop_bg = document.querySelector(".crop_bg")
+
+        if(isLoading){
+            messageModal.style.zIndex = 0
+            loader.classList.remove("hidden")
+            crop_bg.classList.remove("hidden")
+        }else{
+            messageModal.style.zIndex = 999
+            loader.classList.remove("add")
+            crop_bg.classList.add("hidden")
+        }
+    }
+
+    #toggleLoaderforChangeImg(isLoading){
+        const modal = document.querySelector(".image_edit_modal")
+        const settingModal = document.getElementById("js_messageSetting_modal")
+        const loader = document.querySelector(".loader")
+        const bg = document.querySelector(".crop_bg")
+
+        if(isLoading){
+            modal.style.zIndex = "997"
+            settingModal.style.zIndex="997"
+            loader.classList.remove("hidden")
+            bg.classList.remove("hidden")
+        }else{
+            modal.style.zIndex = "999"
+            settingModal.style.zIndex="999"
+            loader.classList.add("hidden")
+            bg.classList.add("hidden")
+        }
+    }
+
+
+    // 送信ボタンの色を変更する
     // 送信ボタンの色を変更する
     #changeSubmitBtn() {
 

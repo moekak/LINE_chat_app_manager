@@ -3031,6 +3031,7 @@ var FormController = /*#__PURE__*/function () {
       var buttton = document.getElementById("js_change_area");
       var submitButton = document.querySelector(".preview_submit_btn ");
       var choices = document.getElementsByName('choice');
+      document.querySelector(".js_image_error").classList.add("hidden");
       choices.forEach(function (choice) {
         if (choice.value === "off") {
           choice.checked = false;

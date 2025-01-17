@@ -246,9 +246,6 @@ class BroadcastMessageOperator{
 
         BroadcastMessageOperator.hideErrorMsg()
         this.message = e.currentTarget.value
-
-        console.log(this.newBtn)
-        console.log("new button")
         toggleDisplayButtonState(this.newBtn, this.message)
     }
 
@@ -326,7 +323,6 @@ class BroadcastMessageOperator{
         const loader = document.querySelector(".loader")
         loader.classList.add("hidden")
         
-
         // 成功メッセージを出す処理
         const success_el = document.getElementById("js_alert_success")
         success_el.style.display = "block";
@@ -341,12 +337,10 @@ class BroadcastMessageOperator{
         }, 2000);
 
 
-        
         if(this.isGreeting){
             return
         }
         const {created_at, data} = response
-
 
         // formDataをリセットする
         formDataStateManager.resetItem()
