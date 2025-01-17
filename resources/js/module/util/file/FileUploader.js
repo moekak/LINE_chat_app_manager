@@ -1,7 +1,7 @@
-import { error } from "laravel-mix/src/Log.js";
+
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
-import { close_modal, open_modal } from "../../component/modalOperation.js";
+import { open_modal } from "../../component/modalOperation.js";
 import ButtonController from "../../component/ui/ButttonController.js";
 import FormController from "../../component/ui/FormController.js";
 import Cropper from "../cropper/Cropper.js";
