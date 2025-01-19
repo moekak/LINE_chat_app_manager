@@ -6,12 +6,11 @@ import ButtonController from "../../component/ui/ButttonController.js";
 import FormController from "../../component/ui/FormController.js";
 import Cropper from "../cropper/Cropper.js";
 import CropperEventHandler from "../cropper/CropperEventHandler.js";
-import { formDataStateManager } from "../state/FormDataStateManager.js";
-import { indexStateManager } from "../state/IndexStateManager.js"
+import formDataStateManager from "../state/FormDataStateManager.js"
+import indexStateManager from "../state/IndexStateManager.js"
 import imageCompression from 'browser-image-compression';
 
 const MAX_SIZE = 5 * 1024 * 1024
-
 
 /**
  * FileUploader
@@ -22,14 +21,12 @@ const MAX_SIZE = 5 * 1024 * 1024
  */
 class FileUploader{
 
-    constructor(file, errorTxtElement, formDataStateManager = formDataStateManager, indexStateManager = indexStateManager){
+    constructor(file, errorTxtElement){
         this.file = file
         this.errorTxtElement = errorTxtElement   
         this.newconfirmBtn = null
         this.errorElement = document.querySelector(".js_broadcast_error")
         this.imageErrorElement = document.querySelector(".js_image_error")
-        this.formDataStateManager = formDataStateManager
-        this.indexStateManager = indexStateManager
 
         // イベントを初期化
         this.initializeEvents();
@@ -88,7 +85,7 @@ class FileUploader{
      */
     async handleFileUpload(compressedFile){
         const reader = new FileReader();
-        const index = this.indexStateManager.getState()
+        const index = indexStateManager.getState()
         const newImage = this.#createImageElement(this.file);
 
         newImage.onload = e =>{
@@ -168,7 +165,7 @@ class FileUploader{
                 BroadcastMessageOperator.deleteList("accordion")
 
                 // インデックスをインクリメント
-                this.indexStateManager.setState()
+                indexStateManager.setState()
 
                 // // ボタン状態を更新
                 toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
@@ -235,7 +232,7 @@ class FileUploader{
         }
 
 
-        this.formDataStateManager.setItem(index, data)
+        formDataStateManager.setItem(index, data)
     }
 
     /**
@@ -298,16 +295,16 @@ class FileUploader{
 
         const messageModal = document.getElementById("js_messageSetting_modal")
         const loader = document.querySelector(".loader")
-        const crop_bg = document.querySelector(".crop_bg")
+        const fixed_bg = document.querySelector(".fixed_bg")
 
         if(isLoading){
             messageModal.style.zIndex = 0
             loader.classList.remove("hidden")
-            crop_bg.classList.remove("hidden")
+            fixed_bg.classList.remove("hidden")
         }else{
             messageModal.style.zIndex = 999
             loader.classList.remove("add")
-            crop_bg.classList.add("hidden")
+            fixed_bg.classList.add("hidden")
         }
     }
 
@@ -315,7 +312,7 @@ class FileUploader{
         const modal = document.querySelector(".image_edit_modal")
         const settingModal = document.getElementById("js_messageSetting_modal")
         const loader = document.querySelector(".loader")
-        const bg = document.querySelector(".crop_bg")
+        const bg = document.querySelector(".fixed_bg")
 
         if(isLoading){
             modal.style.zIndex = "997"

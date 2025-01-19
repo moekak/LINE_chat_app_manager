@@ -593,7 +593,7 @@ p, ul {
 .prview_box-area{
     position: relative;
 }
-.crop_bg{
+.fixed_bg{
     background-color: rgba(0, 0, 0, 0);
     position: absolute;
     top: 0;

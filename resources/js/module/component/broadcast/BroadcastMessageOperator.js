@@ -1,14 +1,13 @@
 import socket from "../../util/socket.js";
-import { formDataStateManager } from "../../util/state/FormDataStateManager.js";
-
-import {indexStateManager} from "../../util/state/IndexStateManager.js"
+import formDataStateManager from "../../util/state/FormDataStateManager.js"
+import indexStateManager from "../../util/state/IndexStateManager.js"
 import { toggleDisplayButtonState } from "../accountUIOperations.js";
-import DragAndDrop from "../DragAndDrop.js";
 import { createBroadcastMessageRow } from "../elementTemplate.js";
 import { open_modal } from "../modalOperation.js";
 import FormController from "../ui/FormController.js";
 
 const MAX_LENGTH = 20
+
 
 /**
  * @param {string} message - 一斉送信メッセージ
@@ -29,18 +28,14 @@ class BroadcastMessageOperator{
      * @param {HTMLElement} accordionId - 一斉メッセージまたは画像を挿入する要素
      * @returns {BroadcastMessageOperator} インスタンス
      */
-    static getInstance(className, accordionId, baseUrl, formDataStateManagerInstance = formDataStateManager, indexDataStateManagerInstance = indexStateManager, isGreeting = false) {
+    static getInstance(className, accordionId, baseUrl, isGreeting = false) {
         if (!BroadcastMessageOperator.#instance) {
-            BroadcastMessageOperator.#instance = new BroadcastMessageOperator(className, accordionId, baseUrl, formDataStateManagerInstance,indexDataStateManagerInstance, isGreeting);
+            BroadcastMessageOperator.#instance = new BroadcastMessageOperator(className, accordionId, baseUrl, isGreeting);
         }
         return BroadcastMessageOperator.#instance;
     }
 
-    static resetInstance() {
-        BroadcastMessageOperator.#instance = null;
-    }
-
-    constructor(className, accordionId, baseUrl, formDataStateManagerInstance,indexDataStateManagerInstance, isGreeting) {
+    constructor(className, accordionId, baseUrl, isGreeting = false) {
         
         this.message = "";
         this.className = className;
@@ -48,8 +43,6 @@ class BroadcastMessageOperator{
         this.newBtn = null
         this.baseUrl = baseUrl
         this.isGreeting = isGreeting
-        this.formDataStateManagerInstance = formDataStateManagerInstance
-        this.indexDataStateManagerInstance = indexDataStateManagerInstance
 
         
         // 必要な要素を取得
@@ -59,7 +52,6 @@ class BroadcastMessageOperator{
 
         // イベントを初期化
         this.initializeEvents();
-
     }
 
     initializeEvents() {
@@ -131,7 +123,7 @@ class BroadcastMessageOperator{
             display: this.message,
             type: "text",
             elementLength,
-            index: this.indexDataStateManagerInstance .getState(),
+            index: indexStateManager.getState(),
         };
     }
 
@@ -177,8 +169,8 @@ class BroadcastMessageOperator{
 
                 const target_id = e.currentTarget.parentElement.getAttribute("data-id")
 
-                this.formDataStateManagerInstance.removeItem(target_id); // データを削除
-                this.indexDataStateManagerInstance.setMinusState()
+                formDataStateManager.removeItem(target_id); // データを削除
+                indexStateManager.setMinusState()
                 const list_el = e.currentTarget.parentElement.parentElement
                 if(accordion.contains(list_el)){
                     accordion.removeChild(list_el) 
@@ -234,13 +226,11 @@ class BroadcastMessageOperator{
 
     handleDisplayClick(){
 
-        const index = this.indexDataStateManagerInstance .getState()
-
-
+        const index = indexStateManager.getState()
         const data = {"type" : "text", "data" : this.message}
 
         this.newBtn.classList.add("disabled_btn")
-        this.formDataStateManagerInstance.setItem(index, data)
+        formDataStateManager.setItem(index, data)
 
         this.displayMessageToList()
         BroadcastMessageOperator.deleteList("accordion")
@@ -249,12 +239,7 @@ class BroadcastMessageOperator{
         this.message = ""
         FormController.initializeInput()
 
-        this.indexDataStateManagerInstance.setState()
-
-        console.log("mdjfcmo@ws");
-        
-        console.log(this.formDataStateManagerInstance.getState());
-    
+        indexStateManager.setState()
     }
 
     handleMessageInput(e){
@@ -277,7 +262,7 @@ class BroadcastMessageOperator{
 
         const data = document.querySelectorAll(".js_data")
         // 順番通りに並べ替え
-        const formDataArray = this.formDataStateManagerInstance.getState()
+        const formDataArray = formDataStateManager.getState()
         const formData = new FormData();
 
 
@@ -358,15 +343,16 @@ class BroadcastMessageOperator{
         const {created_at, data} = response
 
         // formDataをリセットする
-        this.formDataStateManagerInstance.resetItem()
+        formDataStateManager.resetItem()
 
-        this.indexDataStateManagerInstance .resetState()
+        indexStateManager.resetState()
         socket.emit("broadcast message", {
             sendingDatatoBackEnd: data,
             admin_id: admin_id,
             created_at: created_at,
         });
     }
+
 }
 
 export default BroadcastMessageOperator;

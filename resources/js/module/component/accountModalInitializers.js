@@ -1,11 +1,11 @@
 import { fetchGetOperation } from "../util/fetch.js"
 import { setAccountDataForEditing, setAccountName, setActionUrl } from "./accountUIOperations.js"
-import { close_modal, close_modal_by_click, open_modal } from "./modalOperation.js"
+import { close_modal, close_modal_by_click, open_modal, open_modal_no_click } from "./modalOperation.js"
 import { setLineMessageForUpdating } from "./accountUIOperations.js"
 import { fetchSpecificUserInfo } from "./fetchUserData.js"
 import FormController from "./ui/FormController.js"
-import  { IndexStateManager } from "../util/state/IndexStateManager.js"
-import { FormDataStateManager } from "../util/state/FormDataStateManager.js"
+import  indexStateManager, { IndexStateManager } from "../util/state/IndexStateManager.js"
+import formDataStateManager, { FormDataStateManager } from "../util/state/FormDataStateManager.js"
 import BroadcastMessageOperator from "./broadcast/BroadcastMessageOperator.js"
 import { API_ENDPOINTS } from "../../config/apiEndPoint.js"
 import FileUploader from "../util/file/FileUploader.js"
@@ -53,45 +53,11 @@ export const initializeBroadcastMessageModal = () =>{
 
       sending_btns.forEach((btn)=>{
             btn.addEventListener("click", (e)=>{
-
-                  FormController.initializePreviewList()
+                  indexStateManager.resetState()
+                  formDataStateManager.resetItem()
+                  e.preventDefault()
                   // 一斉送信メッセージモーダルを表示する
                   open_modal(broadcasting_modal);
-
-                  BroadcastMessageOperator.resetInstance()
-                  // 現在のインスタンスをリセット
-                  FormDataStateManager.resetInstance();
-                  // 新しいインスタンスを作成
-                  const newFormInstance = FormDataStateManager.createNewInstance();
-
-                  IndexStateManager.resetInstance()
-                  const newIndexInstance = IndexStateManager.createNewInstance()
-                  DragAndDrop.dragAndDrop("accordion",newFormInstance, true)
-                  BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_BROADCASTMESSAGE, newFormInstance, newIndexInstance);
-
-                  const broadcastText = document.querySelector(".js_broadcast_error")
-                  const imageError = document.querySelector(".js_image_error")
-                  const errorTxt = document.querySelector(".js_error_txt")
-
-                  const uploads = document.querySelectorAll(".js_upload");
-                  uploads.forEach((upload) => {
-                        upload.addEventListener("change", async (e) => {
-                              
-                              FormController.initializeImageCropInput()
-                              broadcastText.classList.add("hidden")
-                              imageError.classList.add("hidden")
-                              const file = e.target.files[0];
-
-                              if (!file) return;
-
-                              const fileUploader = new FileUploader(file, errorTxt, newInstance)
-                              await fileUploader.fileOperation()
-
-                              // // ドラッグ＆ドロップの初期化
-                              DragAndDrop.dragAndDrop("accordion", true);
-                              BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_BROADCASTMESSAGE);
-                        });
-                  });
 
                   // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
                   let account_id = e.currentTarget.getAttribute("data-id")
@@ -99,11 +65,9 @@ export const initializeBroadcastMessageModal = () =>{
 
                   // 画像ファイル選択を空にする
                   FormController.initializeFileUpload()
-
             })
       })
 }
-
 
 
 // アカウント削除モーダルの初期化

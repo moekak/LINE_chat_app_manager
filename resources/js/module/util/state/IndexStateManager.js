@@ -20,21 +20,9 @@ class IndexStateManager{
     resetState(){
         this.index["count"] = 0
     }
-    static resetInstance() {
-        IndexStateManager.instance = null; // インスタンスをリセット
-    }
-
-    /**
-     * 新しいインスタンスを作成
-     */
-    static createNewInstance() {
-        const newInstance = new IndexStateManager();
-        Object.freeze(newInstance); // 新しいインスタンスを凍結
-        return newInstance;
-    }
 }
 
 const indexStateManager = new IndexStateManager();
 Object.freeze(indexStateManager); // インスタンスを凍結して変更不可に
-export { indexStateManager, IndexStateManager };
+
 export default indexStateManager;

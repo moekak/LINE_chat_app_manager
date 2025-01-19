@@ -161,6 +161,21 @@
 		</div>
 	</div>      
 </section>
+
+{{-- 一斉配信モーダル閉じる前の確認 --}}
+<section class="modal__container js_modal hidden" id="js_broadcast_confirm_modal" style="width: 500px;">
+	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">設定画面を閉じてよろしいですか？</h2>
+	<p>一斉配信設定画面を閉じてよろしいですか？閉じると、設定した全てのデータが完全に消去され、元に戻すことはできません。</p>
+	<div style="margin-top: 15px"></div>
+	<div class="delete_account-btn-container">
+		<div class="btn-box">
+				<button id="js_cancel_btn" readonly style="width: 100%;">キャンセル</button>
+		</div>
+		<div class="cancel-btn btn-box js_delete_account_from delete-btn ">
+				<button style="color: #fff;width: 100%;" readonly ><a href="">閉じる</a></button>
+		</div>
+	</div>
+</section>
 {{-- タイトル更新 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_title_modal">
 	<h3 class="modal__container-ttl">タイトル表示変更</h3>

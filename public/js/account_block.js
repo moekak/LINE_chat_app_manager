@@ -5584,51 +5584,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 var DragAndDrop = /*#__PURE__*/function () {
   function DragAndDrop() {
     _classCallCheck(this, DragAndDrop);
   }
   return _createClass(DragAndDrop, null, [{
     key: "dragAndDrop",
-    value: function dragAndDrop(id, formDataStateManager) {
-      var changeOrder = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    value: function dragAndDrop(id) {
+      var changeOrder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var elem = document.getElementById(id);
-
-      // 深いコピーで初期状態を保存
-      var initialState = JSON.parse(JSON.stringify(formDataStateManager.getState()));
-      console.log("Initial state at start of dragAndDrop:", initialState);
       var options = {
         animation: 150,
         handle: '.drag-handle',
         onEnd: function onEnd(evt) {
+          // onEndを直接ここに定義
           if (changeOrder) {
-            console.log("Initial state at onEnd:", initialState);
-            console.log("Current state in formDataStateManager:", formDataStateManager.getState());
+            // 条件チェックをonEnd内部で行う
+
             var items = document.querySelectorAll(".js_data");
             var headings = document.querySelectorAll(".js_headings");
+            var formDataArray = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getState();
             var newDataArray = [];
             Array.from(items).forEach(function (item, index) {
-              var dataId = item.getAttribute("data-id");
-              console.log("Item: ".concat(item, ", Data ID: ").concat(dataId));
-              newDataArray[index] = initialState[dataId];
+              newDataArray[index] = formDataArray[item.getAttribute("data-id")];
               item.setAttribute("data-id", index);
             });
             Array.from(headings).forEach(function (heading, index) {
               heading.setAttribute('data-id', index);
             });
-            console.log("New Data Array:", newDataArray);
+            console.log(newDataArray);
 
-            // 一旦formDataをリセットして並び替え後のデータを追加
-            formDataStateManager.resetItem();
-            console.log("After reset:", formDataStateManager.getState());
-            formDataStateManager.addData(newDataArray);
-            console.log("After addData:", formDataStateManager.getState());
+            // 一旦formDataをリセットして並び順をかえたものをセットする
+            _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].resetItem();
+            _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addData(newDataArray);
           }
         }
       };
@@ -5668,10 +5664,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
 /* harmony import */ var _util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/file/FileUploader.js */ "./resources/js/module/util/file/FileUploader.js");
 /* harmony import */ var _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./DragAndDrop.js */ "./resources/js/module/component/DragAndDrop.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
 
 
@@ -5720,57 +5712,11 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
   var broadcasting_modal = document.getElementById("js_messageSetting_modal");
   sending_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
-      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializePreviewList();
+      _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].resetState();
+      _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].resetItem();
+      e.preventDefault();
       // 一斉送信メッセージモーダルを表示する
       (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(broadcasting_modal);
-      _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_7__["default"].resetInstance();
-      // 現在のインスタンスをリセット
-      _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__.FormDataStateManager.resetInstance();
-      // 新しいインスタンスを作成
-      var newFormInstance = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__.FormDataStateManager.createNewInstance();
-      _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__.IndexStateManager.resetInstance();
-      var newIndexInstance = _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__.IndexStateManager.createNewInstance();
-      _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_10__["default"].dragAndDrop("accordion", newFormInstance, true);
-      _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_7__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_8__.API_ENDPOINTS.FETCH_BROADCASTMESSAGE, newFormInstance, newIndexInstance);
-      var broadcastText = document.querySelector(".js_broadcast_error");
-      var imageError = document.querySelector(".js_image_error");
-      var errorTxt = document.querySelector(".js_error_txt");
-      var uploads = document.querySelectorAll(".js_upload");
-      uploads.forEach(function (upload) {
-        upload.addEventListener("change", /*#__PURE__*/function () {
-          var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-            var file, fileUploader;
-            return _regeneratorRuntime().wrap(function _callee$(_context) {
-              while (1) switch (_context.prev = _context.next) {
-                case 0:
-                  _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeImageCropInput();
-                  broadcastText.classList.add("hidden");
-                  imageError.classList.add("hidden");
-                  file = e.target.files[0];
-                  if (file) {
-                    _context.next = 6;
-                    break;
-                  }
-                  return _context.abrupt("return");
-                case 6:
-                  fileUploader = new _util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_9__["default"](file, errorTxt, newInstance);
-                  _context.next = 9;
-                  return fileUploader.fileOperation();
-                case 9:
-                  // // ドラッグ＆ドロップの初期化
-                  _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_10__["default"].dragAndDrop("accordion", true);
-                  _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_7__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_8__.API_ENDPOINTS.FETCH_BROADCASTMESSAGE);
-                case 11:
-                case "end":
-                  return _context.stop();
-              }
-            }, _callee);
-          }));
-          return function (_x) {
-            return _ref.apply(this, arguments);
-          };
-        }());
-      });
 
       // 一斉メッセージ行いたいアカウントのIDを取得し、inputに格納
       var account_id = e.currentTarget.getAttribute("data-id");
@@ -6291,10 +6237,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
 /* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
 /* harmony import */ var _accountUIOperations_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
-/* harmony import */ var _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../DragAndDrop.js */ "./resources/js/module/component/DragAndDrop.js");
-/* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
-/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -6315,7 +6260,6 @@ function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.h
 
 
 
-
 var MAX_LENGTH = 20;
 
 /**
@@ -6329,7 +6273,8 @@ var MAX_LENGTH = 20;
 */
 var _BroadcastMessageOperator_brand = /*#__PURE__*/new WeakSet();
 var BroadcastMessageOperator = /*#__PURE__*/function () {
-  function BroadcastMessageOperator(className, accordionId, baseUrl, formDataStateManagerInstance, indexDataStateManagerInstance, isGreeting) {
+  function BroadcastMessageOperator(className, accordionId, baseUrl) {
+    var isGreeting = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     _classCallCheck(this, BroadcastMessageOperator);
     /**
      * テキストメッセージデータを準備
@@ -6342,8 +6287,6 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
     this.newBtn = null;
     this.baseUrl = baseUrl;
     this.isGreeting = isGreeting;
-    this.formDataStateManagerInstance = formDataStateManagerInstance;
-    this.indexDataStateManagerInstance = indexDataStateManagerInstance;
 
     // 必要な要素を取得
     this.broadcastMessageInput = document.querySelector(".js_message_input");
@@ -6378,7 +6321,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       }
       var elementLength = parentElement.querySelectorAll(".js_card").length;
       var data = _assertClassBrand(_BroadcastMessageOperator_brand, this, _prepareTextMessageData).call(this, elementLength);
-      var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_5__.createBroadcastMessageRow)(data, this.accordionId);
+      var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_4__.createBroadcastMessageRow)(data, this.accordionId);
       parentElement.insertAdjacentHTML("beforeend", template);
     }
 
@@ -6392,21 +6335,19 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
   }, {
     key: "handleDisplayClick",
     value: function handleDisplayClick() {
-      var index = this.indexDataStateManagerInstance.getState();
+      var index = _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState();
       var data = {
         "type": "text",
         "data": this.message
       };
       this.newBtn.classList.add("disabled_btn");
-      this.formDataStateManagerInstance.setItem(index, data);
+      _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setItem(index, data);
       this.displayMessageToList();
       BroadcastMessageOperator.deleteList("accordion");
       (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_3__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn"), document.querySelectorAll(".js_headings"));
       this.message = "";
-      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeInput();
-      this.indexDataStateManagerInstance.setState();
-      console.log("mdjfcmo@ws");
-      console.log(this.formDataStateManagerInstance.getState());
+      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeInput();
+      _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setState();
     }
   }, {
     key: "handleMessageInput",
@@ -6427,7 +6368,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       }
       var data = document.querySelectorAll(".js_data");
       // 順番通りに並べ替え
-      var formDataArray = this.formDataStateManagerInstance.getState();
+      var formDataArray = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState();
       var formData = new FormData();
 
       // sendMessage のデータを FormData に追加
@@ -6465,7 +6406,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
               loader = document.querySelector(".loader");
               modal = document.querySelector(".broadcasting_message_modal");
               modal.classList.add("hidden");
-              (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.open_modal)(loader);
+              (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_5__.open_modal)(loader);
               formData = this.prepareBroadcastFormData();
               _context.next = 8;
               return fetch("".concat(this.baseUrl, "/").concat(admin_id), {
@@ -6517,7 +6458,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
               success_el.style.display = "block";
               success_el.innerHTML = this.isGreeting ? "初回挨拶メッセージの設定に成功しました。" : "一斉送信に成功しました";
               document.querySelector(".js_message_input").value = "";
-              _ui_FormController_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeFileUpload();
+              _ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeFileUpload();
               document.querySelector(".js_accordion_wrapper").innerHTML = "";
 
               // 成功メッセージを出して2秒後に批評にする
@@ -6531,8 +6472,8 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
               return _context2.abrupt("return");
             case 17:
               created_at = response.created_at, data = response.data; // formDataをリセットする
-              this.formDataStateManagerInstance.resetItem();
-              this.indexDataStateManagerInstance.resetState();
+              _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].resetItem();
+              _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].resetState();
               _util_socket_js__WEBPACK_IMPORTED_MODULE_0__["default"].emit("broadcast message", {
                 sendingDatatoBackEnd: data,
                 admin_id: admin_id,
@@ -6559,18 +6500,11 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
      * @returns {BroadcastMessageOperator} インスタンス
      */
     function getInstance(className, accordionId, baseUrl) {
-      var formDataStateManagerInstance = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__.formDataStateManager;
-      var indexDataStateManagerInstance = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__.indexStateManager;
-      var isGreeting = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+      var isGreeting = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
       if (!_instance._) {
-        _instance._ = new BroadcastMessageOperator(className, accordionId, baseUrl, formDataStateManagerInstance, indexDataStateManagerInstance, isGreeting);
+        _instance._ = new BroadcastMessageOperator(className, accordionId, baseUrl, isGreeting);
       }
       return _instance._;
-    }
-  }, {
-    key: "resetInstance",
-    value: function resetInstance() {
-      _instance._ = null;
     }
   }, {
     key: "displayImageMessageToList",
@@ -6586,7 +6520,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       }
       var elementLength = parentElement.querySelectorAll(".js_card").length;
       var data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength, index);
-      var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_5__.createBroadcastMessageRow)(data, accordionId);
+      var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_4__.createBroadcastMessageRow)(data, accordionId);
       parentElement.insertAdjacentHTML("beforeend", template);
     }
   }, {
@@ -6629,8 +6563,8 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
         btn.parentNode.replaceChild(newBtn, btn);
         newBtn.addEventListener("click", function (e) {
           var target_id = e.currentTarget.parentElement.getAttribute("data-id");
-          _this.formDataStateManagerInstance.removeItem(target_id); // データを削除
-          _this.indexDataStateManagerInstance.setMinusState();
+          _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].removeItem(target_id); // データを削除
+          _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setMinusState();
           var list_el = e.currentTarget.parentElement.parentElement;
           if (accordion.contains(list_el)) {
             accordion.removeChild(list_el);
@@ -6666,7 +6600,7 @@ function _prepareTextMessageData(elementLength) {
     display: this.message,
     type: "text",
     elementLength: elementLength,
-    index: this.indexDataStateManagerInstance.getState()
+    index: _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState()
   };
 }
 function _truncateText(text) {
@@ -6808,21 +6742,34 @@ var close_modal = function close_modal() {
   var alerts = document.querySelectorAll(".js_alert_danger");
   var loader = document.querySelector(".loader");
   var imageEditModal = document.getElementById("js_image_edit_modal");
+  if (document.getElementById("js_cancel_btn")) {
+    document.getElementById("js_cancel_btn").addEventListener("click", function () {
+      document.getElementById("js_broadcast_confirm_modal").classList.add("hidden");
+      document.querySelector(".broadcasting_message_modal").style.zIndex = "999";
+    });
+  }
   bg.addEventListener("click", function () {
-    if (imageEditModal.classList.contains("hidden")) {
-      bg.classList.add("hidden");
-      loader.classList.add("hidden");
-      modals.forEach(function (modal) {
-        modal.classList.add("hidden");
-      });
-      if (alerts) {
-        alerts.forEach(function (alert) {
-          alert.classList.add("hidden");
-        });
-      }
-    } else {
+    if (imageEditModal.classList.contains("hidden") == false) {
       imageEditModal.classList.add("hidden");
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__["default"].initializeFileUpload();
+      return;
+    }
+    if (document.querySelector(".broadcasting_message_modal").classList.contains("hidden") == false) {
+      document.getElementById("js_broadcast_confirm_modal").classList.remove("hidden");
+      document.querySelector(".broadcasting_message_modal").style.zIndex = "997";
+      return;
+    }
+
+    // 通常処理
+    bg.classList.add("hidden");
+    loader.classList.add("hidden");
+    modals.forEach(function (modal) {
+      modal.classList.add("hidden");
+    });
+    if (alerts) {
+      alerts.forEach(function (alert) {
+        alert.classList.add("hidden");
+      });
     }
   });
 };
@@ -7670,8 +7617,6 @@ var MAX_SIZE = 5 * 1024 * 1024;
 var _FileUploader_brand = /*#__PURE__*/new WeakSet();
 var FileUploader = /*#__PURE__*/function () {
   function FileUploader(file, errorTxtElement) {
-    var formDataStateManager = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : formDataStateManager;
-    var indexStateManager = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : indexStateManager;
     _classCallCheck(this, FileUploader);
     // 新しい画像要素を作成
     _classPrivateMethodInitSpec(this, _FileUploader_brand);
@@ -7680,8 +7625,6 @@ var FileUploader = /*#__PURE__*/function () {
     this.newconfirmBtn = null;
     this.errorElement = document.querySelector(".js_broadcast_error");
     this.imageErrorElement = document.querySelector(".js_image_error");
-    this.formDataStateManager = formDataStateManager;
-    this.indexStateManager = indexStateManager;
 
     // イベントを初期化
     this.initializeEvents();
@@ -7774,7 +7717,7 @@ var FileUploader = /*#__PURE__*/function () {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               reader = new FileReader();
-              index = this.indexStateManager.getState();
+              index = _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].getState();
               newImage = _assertClassBrand(_FileUploader_brand, this, _createImageElement).call(this, this.file);
               newImage.onload = function (e) {
                 var newImageButton = _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_3__["default"].replaceButton("js_change_area");
@@ -7841,7 +7784,7 @@ var FileUploader = /*#__PURE__*/function () {
                   _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__["default"].deleteList("accordion");
 
                   // インデックスをインクリメント
-                  _this.indexStateManager.setState();
+                  _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].setState();
 
                   // // ボタン状態を更新
                   (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_0__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"));
@@ -7898,7 +7841,7 @@ var FileUploader = /*#__PURE__*/function () {
         cropArea: JSON.stringify(cropArea),
         url: url
       };
-      this.formDataStateManager.setItem(index, data);
+      _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_7__["default"].setItem(index, data);
     }
 
     /**
@@ -7991,22 +7934,22 @@ function _validationError(txt, hasModal) {
 function _toggleLoader(isLoading) {
   var messageModal = document.getElementById("js_messageSetting_modal");
   var loader = document.querySelector(".loader");
-  var crop_bg = document.querySelector(".crop_bg");
+  var fixed_bg = document.querySelector(".fixed_bg");
   if (isLoading) {
     messageModal.style.zIndex = 0;
     loader.classList.remove("hidden");
-    crop_bg.classList.remove("hidden");
+    fixed_bg.classList.remove("hidden");
   } else {
     messageModal.style.zIndex = 999;
     loader.classList.remove("add");
-    crop_bg.classList.add("hidden");
+    fixed_bg.classList.add("hidden");
   }
 }
 function _toggleLoaderforChangeImg(isLoading) {
   var modal = document.querySelector(".image_edit_modal");
   var settingModal = document.getElementById("js_messageSetting_modal");
   var loader = document.querySelector(".loader");
-  var bg = document.querySelector(".crop_bg");
+  var bg = document.querySelector(".fixed_bg");
   if (isLoading) {
     modal.style.zIndex = "997";
     settingModal.style.zIndex = "997";
@@ -8144,8 +8087,7 @@ var registerUser = function registerUser(admin_id, type) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   FormDataStateManager: () => (/* binding */ FormDataStateManager),
-/* harmony export */   formDataStateManager: () => (/* binding */ formDataStateManager)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -8230,27 +8172,12 @@ var FormDataStateManager = /*#__PURE__*/function () {
       this.formDataArray[index] = data;
       console.log("State after setItem: ", this.formDataArray);
     }
-  }], [{
-    key: "resetInstance",
-    value: function resetInstance() {
-      FormDataStateManager.instance = null; // インスタンスをリセット
-    }
-
-    /**
-     * 新しいインスタンスを作成
-     */
-  }, {
-    key: "createNewInstance",
-    value: function createNewInstance() {
-      var newInstance = new FormDataStateManager();
-      Object.freeze(newInstance); // 新しいインスタンスを凍結
-      return newInstance;
-    }
   }]);
 }();
 var formDataStateManager = new FormDataStateManager();
 Object.freeze(formDataStateManager); // インスタンスを凍結して変更不可に
 
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formDataStateManager);
 
 /***/ }),
 
@@ -8263,9 +8190,7 @@ Object.freeze(formDataStateManager); // インスタンスを凍結して変更�
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   IndexStateManager: () => (/* binding */ IndexStateManager),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   indexStateManager: () => (/* binding */ indexStateManager)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -8303,22 +8228,6 @@ var IndexStateManager = /*#__PURE__*/function () {
     key: "resetState",
     value: function resetState() {
       this.index["count"] = 0;
-    }
-  }], [{
-    key: "resetInstance",
-    value: function resetInstance() {
-      IndexStateManager.instance = null; // インスタンスをリセット
-    }
-
-    /**
-     * 新しいインスタンスを作成
-     */
-  }, {
-    key: "createNewInstance",
-    value: function createNewInstance() {
-      var newInstance = new IndexStateManager();
-      Object.freeze(newInstance); // 新しいインスタンスを凍結
-      return newInstance;
     }
   }]);
 }();
