@@ -21,13 +21,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>     
 
-
-      {{-- @foreach ($line_accounts as $status => $accounts) --}}
       <div class="dashboard__wrapper-table-area">
             <div class="dashboard__wrapper-table-box p-20">
                   <div class="dashboard__wrapper-table-ttl">
                         <p>使用中アカウント一覧</p>
-                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
             <div class="dashboard__wrapper-table" data-status-id="1">
@@ -89,7 +86,6 @@
             <div class="dashboard__wrapper-table-box p-20">
                   <div class="dashboard__wrapper-table-ttl">
                         <p>未使用アカウント一覧</p>
-                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
             <div class="dashboard__wrapper-table" data-status-id="2">
@@ -215,7 +211,6 @@
             <div class="dashboard__wrapper-table-box p-20">
                   <div class="dashboard__wrapper-table-ttl">
                         <p>バンアカウント一覧</p>
-                        {{-- <img src="{{asset("img/icons8-create-50.png")}}" alt="" class="dashboard__wrapper-table-icon"> --}}
                   </div>  
             </div>
             <div class="dashboard__wrapper-table" data-status-id="4">

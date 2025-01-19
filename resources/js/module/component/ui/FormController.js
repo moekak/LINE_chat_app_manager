@@ -40,6 +40,11 @@ class FormController{
     static initializeFileUpload(){
         document.querySelector(".js_upload").value = ""
     }
+
+    static initializePreviewList(){
+        document.querySelector(".js_accordion_wrapper").innerHTML = ""
+    }
+
 }
 
 export default FormController;

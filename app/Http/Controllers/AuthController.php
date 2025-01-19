@@ -16,6 +16,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
+
         // バリデーション(フォームリクエストに書き換え可)
         $credentials = $request->validated();
 
@@ -48,7 +49,7 @@ class AuthController extends Controller
         // セッションを無効化を再生成(セキュリティ対策のため)
         $request->session()->regenerateToken();
 
-        return view("auth.login");
+        return redirect()->route("admin.login");
 
     }
 }

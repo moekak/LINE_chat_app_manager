@@ -57,9 +57,22 @@ class FormDataStateManager{
         this.formDataArray[index] = data;
         console.log("State after setItem: ", this.formDataArray);
     }
+
+    static resetInstance() {
+        FormDataStateManager.instance = null; // インスタンスをリセット
+    }
+
+
+    /**
+     * 新しいインスタンスを作成
+     */
+    static createNewInstance() {
+        const newInstance = new FormDataStateManager();
+        Object.freeze(newInstance); // 新しいインスタンスを凍結
+        return newInstance;
+    }
 }
 
 const formDataStateManager = new FormDataStateManager();
 Object.freeze(formDataStateManager); // インスタンスを凍結して変更不可に
-
-export default formDataStateManager;
+export { formDataStateManager, FormDataStateManager };

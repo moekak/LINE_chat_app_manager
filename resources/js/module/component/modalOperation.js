@@ -1,5 +1,4 @@
-import formDataStateManager from "../util/state/FormDataStateManager.js"
-import indexStateManager from "../util/state/IndexStateManager.js"
+
 import FormController from "./ui/FormController.js"
 
 export const open_modal = (modal)=>{

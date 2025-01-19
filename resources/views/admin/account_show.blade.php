@@ -60,7 +60,7 @@
 								</div>
 							</td>
 							<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
-							<td><?= $chat_user["created_at"] ?></td>
+							<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 							<td class="operation">
 								<form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
 									<input type="hidden" name="admin_id" class="js_admin_el">
@@ -132,7 +132,7 @@
 
 {{-- 初回あいさつモーダル --}}
 <section class="modal__container js_modal broadcasting_message_modal hidden" id="js_messageSetting_modal" style="width: 530px;">
-	<h3 class="modal__container-ttl">初回メッセージ登録</h3>
+	<h3 class="modal__container-ttl">初回メッセージ設定</h3>
 	<div class="alert alert-secondary" style="font-size: 14px;" role="alert">
 		ユーザー名を挿入する際は、{名前}としてください。<br>
 		例). {名前}さん、初めまして！
@@ -163,7 +163,7 @@
 </section>
 {{-- タイトル更新 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_title_modal">
-	<h3 class="modal__container-ttl">タイトル表示作成</h3>
+	<h3 class="modal__container-ttl">タイトル表示変更</h3>
 	@if ($errors->any())
 	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>

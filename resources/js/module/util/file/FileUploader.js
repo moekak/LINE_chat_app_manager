@@ -6,11 +6,12 @@ import ButtonController from "../../component/ui/ButttonController.js";
 import FormController from "../../component/ui/FormController.js";
 import Cropper from "../cropper/Cropper.js";
 import CropperEventHandler from "../cropper/CropperEventHandler.js";
-import formDataStateManager from "../state/FormDataStateManager.js"
-import indexStateManager from "../state/IndexStateManager.js"
+import { formDataStateManager } from "../state/FormDataStateManager.js";
+import { indexStateManager } from "../state/IndexStateManager.js"
 import imageCompression from 'browser-image-compression';
 
 const MAX_SIZE = 5 * 1024 * 1024
+
 
 /**
  * FileUploader
@@ -21,12 +22,14 @@ const MAX_SIZE = 5 * 1024 * 1024
  */
 class FileUploader{
 
-    constructor(file, errorTxtElement){
+    constructor(file, errorTxtElement, formDataStateManager = formDataStateManager, indexStateManager = indexStateManager){
         this.file = file
         this.errorTxtElement = errorTxtElement   
         this.newconfirmBtn = null
         this.errorElement = document.querySelector(".js_broadcast_error")
         this.imageErrorElement = document.querySelector(".js_image_error")
+        this.formDataStateManager = formDataStateManager
+        this.indexStateManager = indexStateManager
 
         // イベントを初期化
         this.initializeEvents();
@@ -85,7 +88,7 @@ class FileUploader{
      */
     async handleFileUpload(compressedFile){
         const reader = new FileReader();
-        const index = indexStateManager.getState()
+        const index = this.indexStateManager.getState()
         const newImage = this.#createImageElement(this.file);
 
         newImage.onload = e =>{
@@ -165,7 +168,7 @@ class FileUploader{
                 BroadcastMessageOperator.deleteList("accordion")
 
                 // インデックスをインクリメント
-                indexStateManager.setState()
+                this.indexStateManager.setState()
 
                 // // ボタン状態を更新
                 toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
@@ -232,7 +235,7 @@ class FileUploader{
         }
 
 
-        formDataStateManager.setItem(index, data)
+        this.formDataStateManager.setItem(index, data)
     }
 
     /**
