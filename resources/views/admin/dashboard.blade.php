@@ -397,7 +397,7 @@
             <div class="btn-box">
                   <button id="js_cancel_btn" readonly style="width: 100%;">キャンセル</button>
             </div>
-            <div class="cancel-btn btn-box js_delete_account_from delete-btn ">
+            <div class="cancel-btn btn-box  delete-btn ">
                   <button style="color: #fff;width: 100%;" readonly ><a href="{{route("dashboard")}}">閉じる</a></button>
             </div>
       </div>
