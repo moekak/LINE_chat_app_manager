@@ -1,4 +1,5 @@
 
+import { SYSTEM_URL } from "../../../config/config.js";
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
 import { open_modal } from "../../component/modalOperation.js";
@@ -85,7 +86,6 @@ class FileUploader{
      */
     async handleFileUpload(compressedFile){
         const reader = new FileReader();
-        const index = indexStateManager.getState()
         const newImage = this.#createImageElement(this.file);
 
         newImage.onload = e =>{
@@ -159,13 +159,10 @@ class FileUploader{
                     url = ""
                 }
     
-                
+                const index = document.querySelectorAll(".js_headings").length
                 BroadcastMessageOperator.displayImageMessageToList(newImage.src,"js_accordion_wrapper", "accordion", index);
                 // 不要なリストを削除
                 BroadcastMessageOperator.deleteList("accordion")
-
-                // インデックスをインクリメント
-                indexStateManager.setState()
 
                 // // ボタン状態を更新
                 toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
@@ -174,7 +171,7 @@ class FileUploader{
 
                 // 新しいファイル名を生成し、FormDataArrayに保存
                 const newFileName = this.generateOriginalFileName()
-                this.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea)
+                FileUploader.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea)
             })
         }
 
@@ -219,7 +216,7 @@ class FileUploader{
      * @param {number} index - 保存先のインデックス
      */
 
-    setImageDataToFormDataArray(compressedFile, newFileName, index,url, cropArea){
+    static setImageDataToFormDataArray(compressedFile, newFileName, index,url, cropArea){
         const formData = new FormData();
         formData.append('image', compressedFile); // ファイル名も保持
 
@@ -231,8 +228,8 @@ class FileUploader{
             url: url
         }
 
-
         formDataStateManager.setItem(index, data)
+        indexStateManager.setState()  
     }
 
     /**
@@ -372,6 +369,16 @@ class FileUploader{
         });
     }
 
+
+    static convertFileNameToFile = async (fileName) =>{
+        const baseUrl = SYSTEM_URL.IMAGE_URL
+        const url = `${baseUrl}/${fileName}`; // フルURLを生成
+        const response = await fetch(url); // 画像を取得
+        const blob = await response.blob(); // Blobに変換
+    
+        // BlobからFileオブジェクトを作成して返す
+        return new File([blob], fileName, { type: blob.type });
+    }
     
 }
 

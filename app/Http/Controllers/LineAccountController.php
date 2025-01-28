@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
 use App\Models\BlockChatUser;
 use App\Models\ChatUser;
+use App\Models\GreetingMessage;
 use App\Models\LineAccount;
 use App\Models\PageTitle;
 use App\Models\SecondAccount;

@@ -16,6 +16,7 @@ Route::get("/user/{user_id}", [ChatUserController::class, "getUserName"]);
 Route::get("/account/{account_id}", [LineAccountController::class, "hasSecondAccount"]);
 Route::get("/account/{account_id}/status/{status_id}/current_stautus/{current_status_name}/update", [LineAccountController::class, "updateStatus"]);
 Route::get("/line/message/{admin_id}", [LineMessageController::class, "getMessage"]);
+Route::get("/greetingMessage/adminId/{admin_id}", [GreetingMessageController::class, "getGreetingMessages"]);
 
 Route::post("/broadcast_message/store/{admin_id}", [BroadcastMessageController::class, "store"])->name("broadcast.store");
 Route::post("/greeting_message/store/{admin_id}", [GreetingMessageController::class, "store"]);

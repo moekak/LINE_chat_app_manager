@@ -5551,7 +5551,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var API_ENDPOINTS = {
   FETCH_BROADCASTMESSAGE: "/api/broadcast_message/store",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store"
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId"
 };
 
 /***/ }),
@@ -5565,11 +5566,17 @@ var API_ENDPOINTS = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   socketUrl: 'https://chat-socket.info:3000'
 });
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId"
+};
 
 /***/ }),
 
@@ -6299,6 +6306,8 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
   return _createClass(BroadcastMessageOperator, [{
     key: "initializeEvents",
     value: function initializeEvents() {
+      BroadcastMessageOperator.deleteList("accordion");
+
       // メソッドをバインドしてイベントを登録
       this.broadcastMessageInput.addEventListener("input", this.handleMessageInput.bind(this));
       this.newBtn = this.displayBtn.cloneNode(true);
@@ -6313,16 +6322,29 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
   }, {
     key: "displayMessageToList",
     value: function displayMessageToList() {
+      var messageObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      console.log(_util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+
       // 親要素を取得
       var parentElement = document.querySelector(".".concat(this.className));
       if (!parentElement) {
         console.error("\u89AA\u8981\u7D20\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093: ".concat(this.className));
         return;
       }
+      if (messageObj.hasOwnProperty("message")) {
+        var _data = {
+          "type": "text",
+          "data": messageObj["message"]
+        };
+        _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setItem(messageObj["message_order"], _data);
+      }
       var elementLength = parentElement.querySelectorAll(".js_card").length;
-      var data = _assertClassBrand(_BroadcastMessageOperator_brand, this, _prepareTextMessageData).call(this, elementLength);
+      var data = _assertClassBrand(_BroadcastMessageOperator_brand, this, _prepareTextMessageData).call(this, elementLength, messageObj);
       var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_4__.createBroadcastMessageRow)(data, this.accordionId);
       parentElement.insertAdjacentHTML("beforeend", template);
+      if (messageObj.hasOwnProperty("message")) {
+        _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setState();
+      }
     }
 
     /**
@@ -6335,6 +6357,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
   }, {
     key: "handleDisplayClick",
     value: function handleDisplayClick() {
+      _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setSpecificNumber(document.querySelectorAll(".js_headings").length);
       var index = _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState();
       var data = {
         "type": "text",
@@ -6347,6 +6370,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_3__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn"), document.querySelectorAll(".js_headings"));
       this.message = "";
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeInput();
+      console.log(_util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
       _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setState();
     }
   }, {
@@ -6519,7 +6543,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
         alert("一斉配信画像設定でエラーが発生しました。再度お試しください。--");
       }
       var elementLength = parentElement.querySelectorAll(".js_card").length;
-      var data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength, index);
+      var data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength);
       var template = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_4__.createBroadcastMessageRow)(data, accordionId);
       parentElement.insertAdjacentHTML("beforeend", template);
     }
@@ -6532,13 +6556,13 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
      * @param {number} elementLength - 親要素の子要素数
      * @param {number} index - 表示順のインデックス
      */
-    function prepareImageMessageData(src, elementLength, index) {
+    function prepareImageMessageData(src, elementLength) {
       return {
         heading: "画像",
         display: src,
         type: "img",
         elementLength: elementLength,
-        index: index
+        index: elementLength
       };
     }
 
@@ -6558,10 +6582,13 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       var _this = this;
       var delete_btns = document.querySelectorAll(".js_deleteList");
       var accordion = document.getElementById(id);
+      _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setSpecificNumber(delete_btns.length);
       delete_btns.forEach(function (btn) {
         var newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
         newBtn.addEventListener("click", function (e) {
+          _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setSpecificNumber(document.querySelectorAll(".js_deleteList").length);
+          console.log("deleteだよ");
           var target_id = e.currentTarget.parentElement.getAttribute("data-id");
           _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].removeItem(target_id); // データを削除
           _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setMinusState();
@@ -6569,6 +6596,8 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
           if (accordion.contains(list_el)) {
             accordion.removeChild(list_el);
           }
+          console.log(_util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState());
+          console.log("indexの数");
           _assertClassBrand(BroadcastMessageOperator, _this, _updateElementIndexes).call(_this);
           _assertClassBrand(BroadcastMessageOperator, _this, _toggleSubmitButtonState).call(_this);
         });
@@ -6593,15 +6622,26 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
     }
   }]);
 }();
-function _prepareTextMessageData(elementLength) {
-  var heading = _assertClassBrand(_BroadcastMessageOperator_brand, this, _truncateText).call(this, this.message);
-  return {
-    heading: heading,
-    display: this.message,
-    type: "text",
-    elementLength: elementLength,
-    index: _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState()
-  };
+function _prepareTextMessageData(elementLength, messageObj) {
+  if (messageObj.hasOwnProperty("message")) {
+    var heading = _assertClassBrand(_BroadcastMessageOperator_brand, this, _truncateText).call(this, messageObj["message"]);
+    return {
+      heading: heading,
+      display: messageObj["message"],
+      type: "text",
+      elementLength: messageObj["message_order"],
+      index: _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState()
+    };
+  } else {
+    var _heading = _assertClassBrand(_BroadcastMessageOperator_brand, this, _truncateText).call(this, this.message);
+    return {
+      heading: _heading,
+      display: this.message,
+      type: "text",
+      elementLength: elementLength,
+      index: _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState()
+    };
+  }
 }
 function _truncateText(text) {
   return text.length > MAX_LENGTH ? "".concat(text.substr(0, MAX_LENGTH), "...") : text;
@@ -7567,16 +7607,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
-/* harmony import */ var _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../component/broadcast/BroadcastMessageOperator.js */ "./resources/js/module/component/broadcast/BroadcastMessageOperator.js");
-/* harmony import */ var _component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/ui/ButttonController.js */ "./resources/js/module/component/ui/ButttonController.js");
-/* harmony import */ var _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
-/* harmony import */ var _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../cropper/Cropper.js */ "./resources/js/module/util/cropper/Cropper.js");
-/* harmony import */ var _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../cropper/CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
-/* harmony import */ var _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
-/* harmony import */ var _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
-/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
+/* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../config/config.js */ "./resources/js/config/config.js");
+/* harmony import */ var _component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
+/* harmony import */ var _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../component/broadcast/BroadcastMessageOperator.js */ "./resources/js/module/component/broadcast/BroadcastMessageOperator.js");
+/* harmony import */ var _component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/ButttonController.js */ "./resources/js/module/component/ui/ButttonController.js");
+/* harmony import */ var _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../cropper/Cropper.js */ "./resources/js/module/util/cropper/Cropper.js");
+/* harmony import */ var _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cropper/CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
+/* harmony import */ var _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
+/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7590,11 +7631,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
 function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
 function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
 
 
 
@@ -7640,7 +7683,7 @@ var FileUploader = /*#__PURE__*/function () {
   }, {
     key: "handleDisplayClick",
     value: function handleDisplayClick() {
-      _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeFileUpload();
+      _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
     }
 
     /**
@@ -7712,17 +7755,16 @@ var FileUploader = /*#__PURE__*/function () {
     value: (function () {
       var _handleFileUpload = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(compressedFile) {
         var _this = this;
-        var reader, index, newImage;
+        var reader, newImage;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               reader = new FileReader();
-              index = _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].getState();
               newImage = _assertClassBrand(_FileUploader_brand, this, _createImageElement).call(this, this.file);
               newImage.onload = function (e) {
-                var newImageButton = _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_3__["default"].replaceButton("js_change_area");
-                _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_5__["default"](_this.imageElement, newImageButton);
-                var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_6__["default"](newImageButton, _this.cropper);
+                var newImageButton = _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_change_area");
+                _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__["default"](_this.imageElement, newImageButton);
+                var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__["default"](newImageButton, _this.cropper);
                 cropperHandler.changeBtnEvent();
                 _assertClassBrand(_FileUploader_brand, _this, _changeSubmitBtn).call(_this);
                 // 新しい画像要素を Cropper に更新
@@ -7741,7 +7783,7 @@ var FileUploader = /*#__PURE__*/function () {
                   _assertClassBrand(_FileUploader_brand, _this, _toggleLoaderforChangeImg).call(_this, false);
                 }
                 var imageEditModal = document.getElementById("js_image_edit_modal");
-                (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(imageEditModal);
+                (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_modal)(imageEditModal);
 
                 // URLの設定
                 var urlInput = document.getElementById("js_url_input");
@@ -7758,7 +7800,7 @@ var FileUploader = /*#__PURE__*/function () {
                 _this.newconfirmBtn.addEventListener("click", function () {
                   // URL形式チェック
 
-                  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeFileUpload();
+                  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
                   var regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
                   var urlInput = document.getElementById("js_url_input");
                   var choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
@@ -7779,23 +7821,21 @@ var FileUploader = /*#__PURE__*/function () {
                     cropArea = [];
                     url = "";
                   }
-                  _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__["default"].displayImageMessageToList(newImage.src, "js_accordion_wrapper", "accordion", index);
+                  var index = document.querySelectorAll(".js_headings").length;
+                  _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].displayImageMessageToList(newImage.src, "js_accordion_wrapper", "accordion", index);
                   // 不要なリストを削除
-                  _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__["default"].deleteList("accordion");
-
-                  // インデックスをインクリメント
-                  _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].setState();
+                  _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].deleteList("accordion");
 
                   // // ボタン状態を更新
-                  (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_0__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"));
+                  (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"));
                   reader.readAsDataURL(compressedFile);
 
                   // 新しいファイル名を生成し、FormDataArrayに保存
                   var newFileName = _this.generateOriginalFileName();
-                  _this.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea);
+                  FileUploader.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea);
                 });
               };
-            case 4:
+            case 3:
             case "end":
               return _context2.stop();
           }
@@ -7827,30 +7867,13 @@ var FileUploader = /*#__PURE__*/function () {
      * @param {number} index - 保存先のインデックス
      */
   }, {
-    key: "setImageDataToFormDataArray",
-    value: function setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea) {
-      var formData = new FormData();
-      formData.append('image', compressedFile); // ファイル名も保持
-
-      var data = {
-        formData: formData,
-        fileName: newFileName,
-        // ファイル名を保存
-        type: 'image',
-        // タイプも保存しておくと便利
-        cropArea: JSON.stringify(cropArea),
-        url: url
-      };
-      _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_7__["default"].setItem(index, data);
-    }
-
+    key: "validateFile",
+    value:
     /**
      * ファイルの形式とサイズを検証
      * - 許可されていない形式やサイズの場合にエラー文言を表示させる
      */
-  }, {
-    key: "validateFile",
-    value: function validateFile() {
+    function validateFile() {
       var hasModal = true;
       if (document.getElementById("js_image_edit_modal").classList.contains("hidden")) hasModal = false;
       if (!FileUploader.isAllowedType(this.file.type)) {
@@ -7868,6 +7891,24 @@ var FileUploader = /*#__PURE__*/function () {
      * @returns {boolean} - 許可されている形式ならtrue
      */
   }], [{
+    key: "setImageDataToFormDataArray",
+    value: function setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea) {
+      var formData = new FormData();
+      formData.append('image', compressedFile); // ファイル名も保持
+
+      var data = {
+        formData: formData,
+        fileName: newFileName,
+        // ファイル名を保存
+        type: 'image',
+        // タイプも保存しておくと便利
+        cropArea: JSON.stringify(cropArea),
+        url: url
+      };
+      _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].setItem(index, data);
+      _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_9__["default"].setState();
+    }
+  }, {
     key: "isAllowedType",
     value: function isAllowedType(fileType) {
       var allowedTypes = ['image/jpeg', 'image/png'];
@@ -7900,28 +7941,28 @@ function _compressedFile() {
   return _compressedFile2.apply(this, arguments);
 }
 function _compressedFile2() {
-  _compressedFile2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+  _compressedFile2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
-          _context3.next = 2;
-          return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_9__["default"])(this.file, {
+          _context4.next = 2;
+          return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_10__["default"])(this.file, {
             maxSizeMB: 1,
             maxWidthOrHeight: 1024,
             useWebWorker: true
           });
         case 2:
-          return _context3.abrupt("return", _context3.sent);
+          return _context4.abrupt("return", _context4.sent);
         case 3:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
-    }, _callee3, this);
+    }, _callee4, this);
   }));
   return _compressedFile2.apply(this, arguments);
 }
 function _validationError(txt, hasModal) {
-  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeFileUpload();
+  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
   if (hasModal) {
     document.querySelector(".js_image_error").classList.remove("hidden");
     document.querySelector(".js_image_error").innerHTML = txt;
@@ -8002,6 +8043,35 @@ function _changeSubmitBtn() {
     updateButtonState();
   });
 }
+_defineProperty(FileUploader, "convertFileNameToFile", /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(fileName) {
+    var baseUrl, url, response, blob;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          baseUrl = _config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL;
+          url = "".concat(baseUrl, "/").concat(fileName); // フルURLを生成
+          _context3.next = 4;
+          return fetch(url);
+        case 4:
+          response = _context3.sent;
+          _context3.next = 7;
+          return response.blob();
+        case 7:
+          blob = _context3.sent;
+          return _context3.abrupt("return", new File([blob], fileName, {
+            type: blob.type
+          }));
+        case 9:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return function (_x2) {
+    return _ref.apply(this, arguments);
+  };
+}());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FileUploader);
 
 /***/ }),
@@ -8213,6 +8283,11 @@ var IndexStateManager = /*#__PURE__*/function () {
     key: "getState",
     value: function getState() {
       return this.index["count"];
+    }
+  }, {
+    key: "setSpecificNumber",
+    value: function setSpecificNumber(num) {
+      this.index["count"] = num;
     }
   }, {
     key: "setState",

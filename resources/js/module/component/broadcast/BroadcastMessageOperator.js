@@ -30,12 +30,12 @@ class BroadcastMessageOperator{
      */
     static getInstance(className, accordionId, baseUrl, isGreeting = false) {
         if (!BroadcastMessageOperator.#instance) {
-            BroadcastMessageOperator.#instance = new BroadcastMessageOperator(className, accordionId, baseUrl, isGreeting);
+            BroadcastMessageOperator.#instance = new BroadcastMessageOperator(className, accordionId, baseUrl,isGreeting);
         }
         return BroadcastMessageOperator.#instance;
     }
 
-    constructor(className, accordionId, baseUrl, isGreeting = false) {
+    constructor(className, accordionId, baseUrl,  isGreeting = false) {
         
         this.message = "";
         this.className = className;
@@ -55,20 +55,22 @@ class BroadcastMessageOperator{
     }
 
     initializeEvents() {
+        BroadcastMessageOperator.deleteList("accordion")
+
         // メソッドをバインドしてイベントを登録
         this.broadcastMessageInput.addEventListener("input", this.handleMessageInput.bind(this));
-
         this.newBtn = this.displayBtn.cloneNode(true)
         this.displayBtn.parentNode.replaceChild(this.newBtn, this.displayBtn)
         this.newBtn.addEventListener("click", this.handleDisplayClick.bind(this));
-
         this.submitBtn.addEventListener("click",this.emitBroadcastMessageToSocket.bind(this))
     }
     
     /**
      * テキストメッセージをリストに表示 (インスタンスメソッド)
      */
-    displayMessageToList() {
+    displayMessageToList(messageObj = []) {
+
+        console.log(formDataStateManager.getState());
 
         // 親要素を取得
         const parentElement = document.querySelector(`.${this.className}`);
@@ -77,11 +79,21 @@ class BroadcastMessageOperator{
             return;
         }
 
+        if(messageObj.hasOwnProperty("message")){
+            const data = {"type" : "text", "data" : messageObj["message"]}
+            formDataStateManager.setItem(messageObj["message_order"], data)
+        }
+
         const elementLength = parentElement.querySelectorAll(".js_card").length;
-        const data = this.#prepareTextMessageData(elementLength);
+        const data = this.#prepareTextMessageData(elementLength, messageObj);
 
         const template = createBroadcastMessageRow(data, this.accordionId);
         parentElement.insertAdjacentHTML("beforeend", template);
+
+        if(messageObj.hasOwnProperty("message")){
+            indexStateManager.setState()  
+        }
+        
     }
 
     /**
@@ -106,7 +118,7 @@ class BroadcastMessageOperator{
 
 
         const elementLength = parentElement.querySelectorAll(".js_card").length;
-        const data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength, index);
+        const data = BroadcastMessageOperator.prepareImageMessageData(src, elementLength);
 
         const template = createBroadcastMessageRow(data, accordionId);
         parentElement.insertAdjacentHTML("beforeend", template);
@@ -116,15 +128,28 @@ class BroadcastMessageOperator{
      * テキストメッセージデータを準備
      * @param {number} elementLength - 親要素の子要素数
      */
-    #prepareTextMessageData(elementLength) {
-        const heading = this.#truncateText(this.message);
-        return {
-            heading,
-            display: this.message,
-            type: "text",
-            elementLength,
-            index: indexStateManager.getState(),
-        };
+    #prepareTextMessageData(elementLength, messageObj) {
+
+        if(messageObj.hasOwnProperty("message")){
+            const heading = this.#truncateText(messageObj["message"]);
+            return {
+                heading,
+                display: messageObj["message"],
+                type: "text",
+                elementLength: messageObj["message_order"],
+                index: indexStateManager.getState(),
+            };
+        }else{
+            const heading = this.#truncateText(this.message);
+            return {
+                heading,
+                display: this.message,
+                type: "text",
+                elementLength,
+                index: indexStateManager.getState(),
+            };
+        }
+        
     }
 
     /**
@@ -133,13 +158,13 @@ class BroadcastMessageOperator{
      * @param {number} elementLength - 親要素の子要素数
      * @param {number} index - 表示順のインデックス
      */
-    static prepareImageMessageData(src, elementLength, index) {
+    static prepareImageMessageData(src, elementLength) {
         return {
             heading: "画像",
             display: src,
             type: "img",
             elementLength,
-            index,
+            index: elementLength,
         };
     }
 
@@ -160,12 +185,17 @@ class BroadcastMessageOperator{
     static deleteList(id){
         let delete_btns = document.querySelectorAll(".js_deleteList")
         const accordion = document.getElementById(id)
-    
+
+        indexStateManager.setSpecificNumber(delete_btns.length)
+
         delete_btns.forEach((btn)=>{
             const newBtn = btn.cloneNode(true)
             btn.parentNode.replaceChild(newBtn, btn)
 
             newBtn.addEventListener("click", (e)=>{
+
+                indexStateManager.setSpecificNumber(document.querySelectorAll(".js_deleteList").length)
+                console.log("deleteだよ");
 
                 const target_id = e.currentTarget.parentElement.getAttribute("data-id")
 
@@ -177,7 +207,10 @@ class BroadcastMessageOperator{
                 }
 
 
-    
+                console.log(indexStateManager.getState());
+                console.log("indexの数");
+                
+
                 this.#updateElementIndexes()
                 this.#toggleSubmitButtonState()
             })
@@ -226,6 +259,7 @@ class BroadcastMessageOperator{
 
     handleDisplayClick(){
 
+        indexStateManager.setSpecificNumber(document.querySelectorAll(".js_headings").length)
         const index = indexStateManager.getState()
         const data = {"type" : "text", "data" : this.message}
 
@@ -239,6 +273,8 @@ class BroadcastMessageOperator{
         this.message = ""
         FormController.initializeInput()
 
+        console.log(formDataStateManager.getState());
+        
         indexStateManager.setState()
     }
 

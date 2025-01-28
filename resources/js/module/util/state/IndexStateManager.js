@@ -10,6 +10,9 @@ class IndexStateManager{
     getState(){
             return this.index["count"]
     }
+    setSpecificNumber(num){
+        this.index["count"] = num
+    }
 
     setState(){
             this.index["count"]++
