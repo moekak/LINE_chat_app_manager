@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BroadcastMessageController;
 use App\Http\Controllers\ChatUserController;
 use App\Http\Controllers\CreateTitleController;
+use App\Http\Controllers\LineDisplayTextController;
 use App\Http\Controllers\LineMessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SecondAccountController;
@@ -27,6 +28,7 @@ Route::post('/admin/login', [AuthController::class, 'login'])->name("login")->mi
 Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 
+Route::post("/lineDisplayText/store", [LineDisplayTextController::class, "store"])->name("lineDisplayText.store")->middleware("auth");
 
 Route::post("/account/create", [LineAccountController::class, "create"])->name("account.create")->middleware("auth");
 Route::delete("/account/destroy/{id}", [LineAccountController::class, "destroy"])->name("account.destroy")->middleware("auth");

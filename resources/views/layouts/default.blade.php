@@ -56,6 +56,9 @@
                               <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_create_title_btn">タイトル表示変更</p>
                               </div>
+                              <div class="nav__item-option">
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_text_btn">追加時テキスト変更</p>
+                              </div>
                         @endif
                         @if (Route::currentRouteName() == "dashboard")
                               <div class="nav__item-option">

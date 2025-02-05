@@ -172,7 +172,7 @@
 				<button id="js_cancel_btn" readonly style="width: 100%;">キャンセル</button>
 		</div>
 		<div class="cancel-btn btn-box js_delete_account_from delete-btn ">
-				<button style="color: #fff;width: 100%;" readonly ><a href="">閉じる</a></button>
+				<button style="color: #fff;width: 100%;" readonly ><a href="" style="width: 100%; display: block;">閉じる</a></button>
 		</div>
 	</div>
 </section>
@@ -196,7 +196,7 @@
 			<input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
 		</div>
 		<button type="submit" class="modal__container-btn">作成</button>
-    	</form>
+	</form>
 </section>
 
 
@@ -252,6 +252,42 @@
 	</div>
 </section>
 
+
+{{-- 追加時テキスト追加 --}}
+<section class="modal__container js_modal hidden js_loader" id="js_create_text_modal">
+	<h3 class="modal__container-ttl">追加時テキスト表示変更</h3>
+	@if ($errors->any())
+	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+            <ul>
+				@foreach ($errors->all() as $error)
+				<li class="alert_danger">{{$error}}</li>
+				@endforeach  
+			</ul>   
+	</div>  
+	@endif
+	<form action="{{ route('lineDisplayText.store')}}" method="post">
+		@csrf
+		<div class="mb-3">
+			<div class="radio_btn">
+				<div class="form-check">
+					<input class="form-check-input js_display_radio radio_button-style" value="1" type="radio" name="is_show" id="flexRadioDefault3" {{ old('is_show', isset($line_display_text) ? $line_display_text["is_show"] : '') == '1' ? 'checked' : '' }}>
+					<label class="form-check-label radio_button-style" for="flexRadioDefault3">表示する</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input js_display_radio radio_button-style" value="0" type="radio" name="is_show" id="flexRadioDefault4" {{ old('is_show', isset($line_display_text) ? $line_display_text["is_show"] : '') == '0' ? 'checked' : '' }}>
+					<label class="form-check-label radio_button-style" for="flexRadioDefault4">表示しない</label>
+				</div> 
+			</div>
+			<div class="text_input-area js_create_text {{ old('is_show') == '1' || (isset($line_display_text) && $line_display_text["is_show"] == '1') || (!isset($line_display_text) && old('is_show') === null) ? '' : 'hidden' }}">
+				<label for="formGroupExampleInput" class="form-label mt-3">テキスト <span style="color: red; font-size: 13px;">※</span></label>
+				<input type="text" class="form-control js_line_text_input" id="formGroupExampleInput" name="text" value="{{ old('text') ? old("text") :  (isset($line_display_text["text"])? $line_display_text['text'] : "" )}}">
+				<input type="hidden" class="form-control " id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
+			</div>
+		</div>
+		<button type="submit" class="modal__container-btn">作成</button>
+	</form>
+</section>
+
 @endsection
 
 
@@ -281,6 +317,25 @@
 			document.getElementById("js_create_title_modal").classList.remove("hidden")
 			document.querySelector(".bg").classList.remove("hidden")
 		</script>
+	@elseif($currentRoute === 'lineDisplayText.store')
+	<script>
+		document.getElementById("js_create_text_modal").classList.remove("hidden")
+		document.querySelector(".bg").classList.remove("hidden")
+		const radioBtns = document.querySelectorAll(".js_display_radio")
+		const textInput = document.querySelector(".js_create_text")
+		const textElement = document.querySelector(".js_line_text_input")
+
+		radioBtns.forEach((radioBtn)=>{
+				radioBtn.addEventListener("change", (e)=>{
+				textInput.classList.toggle("hidden", e.target.value === "0")
+				if(e.target.value === "0"){
+					console.log("0ですよ");
+					textElement.value = ""
+				}
+			})
+			
+		})
+	</script>
 	@endif
 @endif
 

@@ -1,12 +1,14 @@
 
-import {initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeSimpleBar, initializeUserModals } from "../component/accountModalInitializers.js";
+import {initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeSimpleBar, initializeUserModals } from "../component/modalInitializers.js";;
 import { handleChatRedirect, initializeAccountStatusManager } from "../component/accountUIOperations.js";
 import {createAccountDataRow, createMessageRowForFetch} from "../component/elementTemplate.js";
 import { fetchPostOperation } from "./fetch.js";
 import socket from "./socket.js";
-import accountStateManager from "./AccountStateManager.js";
+import accountStateManager from "./state/AccountStateManager.js";
 import userStateManager from "./state/UserStateManager.js";
 const MESSAGES_PER_PAGE = 20
+
+
 
 class InfiniteScroll{
       constructor(element, url, parentElement, fileType){

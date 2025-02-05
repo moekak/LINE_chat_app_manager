@@ -1,4 +1,4 @@
-import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeLineMessageUpdationModal } from "./module/component/accountModalInitializers.js";
+import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeLineMessageUpdationModal } from "./module/component/modalInitializers.js";
 import { open_modal, close_modal } from "./module/component/modalOperation.js"
 import { changeAccountDisplayOrder, initializeAccountStatusManager} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";

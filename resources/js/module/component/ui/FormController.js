@@ -45,6 +45,25 @@ class FormController{
         document.querySelector(".js_accordion_wrapper").innerHTML = ""
     }
 
+    static setupTextToggle(){
+        const radioBtns = document.querySelectorAll(".js_display_radio")
+        const textInput = document.querySelector(".js_create_text")
+        const textElement = document.querySelector(".js_line_text_input")
+
+
+        radioBtns.forEach((radioBtn)=>{
+            radioBtn.addEventListener("change", (e)=>{
+                textInput.classList.toggle("hidden", e.target.value === "0")
+                if(e.target.value === "0"){
+                    textElement.value = ""
+                    console.log(textElement);
+                    
+                }
+            })
+            
+        })
+    }
+
 }
 
 export default FormController;

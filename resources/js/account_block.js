@@ -1,10 +1,12 @@
-import { initializeAccountBlockModal } from "./module/component/accountModalInitializers.js";
+
+import { initializeAccountBlockModal } from "./module/component/modalInitializers.js";
 import { close_modal, close_modal_by_click } from "./module/component/modalOperation.js";
 import socket from "./module/util/socket.js";
 
 initializeAccountBlockModal(socket)
 close_modal()
 
+initializeAccountBlockModal
 
 // ブロック解除キャンセル処理
 const btn = document.querySelector(".js_block_cancel")

@@ -703,6 +703,8 @@ p, ul {
 
 .overlay {
     position: absolute;
-    /* background-color: rgba(255, 0, 0, 0.3); 
-    border: 2px solid rgba(255, 0, 0, 0.7); */
+}
+
+.radio_button-style{
+    cursor: pointer;
 }

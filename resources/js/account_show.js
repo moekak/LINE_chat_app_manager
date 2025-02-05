@@ -2,8 +2,9 @@
 import { close_modal, close_modal_by_click, open_modal } from "./module/component/modalOperation.js";
 import { changeDisplayOrder, handleChatRedirect} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
-import { initializeUserModals } from "./module/component/accountModalInitializers.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
+import { initializeUserModals } from "./module/component/modalInitializers.js";
+import FormController from "./module/component/ui/FormController.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -80,6 +81,17 @@ close_modal_by_click(modal, btn)
 
       title_btn.addEventListener("click", ()=>{
             open_modal(modal)
+      })
+}
+
+// 追加時テキスト表示変更モーダル
+{
+      const text_btn = document.getElementById("js_create_text_btn")
+      const modal = document.getElementById("js_create_text_modal")
+
+      text_btn.addEventListener("click", ()=>{
+            open_modal(modal)
+            FormController.setupTextToggle()
       })
 }
 

@@ -9,6 +9,7 @@ use App\Models\BlockChatUser;
 use App\Models\ChatUser;
 use App\Models\GreetingMessage;
 use App\Models\LineAccount;
+use App\Models\LineDisplayText;
 use App\Models\PageTitle;
 use App\Models\SecondAccount;
 use App\Models\UserEntity;
@@ -130,6 +131,7 @@ class LineAccountController extends Controller
         $user_uuid = UserEntity::where("related_id", $id)->where("entity_type", "admin")->value("entity_uuid");
         $account_name = LineAccount::where("id", $id)->value("account_name");
         $title = PageTitle::where("admin_id", $id)->first();
+        $line_display_text = LineDisplayText::where("admin_id", $id)->select("id", "text", "is_show")->first();
 
         $users = ChatUser::whereNotIn('id', function($query) {
                 // サブクエリ
@@ -177,7 +179,7 @@ class LineAccountController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(self::MESSAGES_PER_PAGE)
             ->get();
-        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title]);
+        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text]);
     }
 
     /**

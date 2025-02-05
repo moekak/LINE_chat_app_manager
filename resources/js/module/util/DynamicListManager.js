@@ -1,14 +1,16 @@
-import { initializeAccountDeletionModal, initializeAccountEditModal, initializeBroadcastMessageModal, initializeSimpleBar } from "../component/accountModalInitializers.js";
+
 import { initializeAccountStatusManager } from "../component/accountUIOperations.js";
 import { createAccountDataRow } from "../component/elementTemplate.js";
 import {fetchPostOperation } from "./fetch.js";
-import accountStateManager from "./AccountStateManager.js";
+import accountStateManager from "./state/AccountStateManager.js";
+import { initializeAccountDeletionModal } from "../component/modalInitializers.js";
 
 class DynamicListManager{
       constructor(data, url){
             this.data = data
             this.url = url
       }
+
 
       async fetchData(){
             const response = await fetchPostOperation(this.data, this.url)
