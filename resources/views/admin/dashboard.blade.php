@@ -398,7 +398,7 @@
                   <button id="js_cancel_btn" readonly style="width: 100%;">キャンセル</button>
             </div>
             <div class="cancel-btn btn-box  delete-btn ">
-                  <button style="color: #fff;width: 100%;" readonly ><a href="{{route("dashboard")}}">閉じる</a></button>
+                  <button style="color: #fff;width: 100%;" readonly ><a href="{{route("dashboard")}}" style="width: 100%; display: block;">閉じる</a></button>
             </div>
       </div>
 </section>

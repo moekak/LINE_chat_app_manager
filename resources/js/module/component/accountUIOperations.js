@@ -177,7 +177,7 @@ export const setAccountDataForEditing = (res) => {
             second_account_input.selected       = true
 
             second_account_options.forEach((option)=>{
-                  if(option.textContent == res["second_account"]["account_name"]){
+                  if(option.textContent == res["second_account"]["account_name"] || option.value  == res["account_data"]["id"]){
                         option.style.display = "none"
                   }else{
                         option.style.display = "block"

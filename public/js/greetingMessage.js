@@ -5919,7 +5919,7 @@ var setAccountDataForEditing = function setAccountDataForEditing(res) {
     second_account_input.textContent = (_res$second_account$a = res["second_account"]["account_name"]) !== null && _res$second_account$a !== void 0 ? _res$second_account$a : "予備アカウントを選択してください";
     second_account_input.selected = true;
     second_account_options.forEach(function (option) {
-      if (option.textContent == res["second_account"]["account_name"]) {
+      if (option.textContent == res["second_account"]["account_name"] || option.value == res["account_data"]["id"]) {
         option.style.display = "none";
       } else {
         option.style.display = "block";
