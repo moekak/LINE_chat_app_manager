@@ -255,7 +255,7 @@
 
 {{-- 追加時テキスト追加 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_text_modal">
-	<h3 class="modal__container-ttl">追加時テキスト表示変更</h3>
+	<h3 class="modal__container-ttl">固定テキスト設定</h3>
 	@if ($errors->any())
 	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>
@@ -284,7 +284,7 @@
 				<input type="hidden" class="form-control " id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
 			</div>
 		</div>
-		<button type="submit" class="modal__container-btn">作成</button>
+		<button type="submit" class="modal__container-btn">保存</button>
 	</form>
 </section>
 

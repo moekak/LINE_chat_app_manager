@@ -29,6 +29,6 @@ class LineDisplayTextController extends Controller
         }
 
         
-        return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "追加時テキストの変更に成功しました。"); 
+        return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "固定テキストの変更に成功しました。"); 
     }
 }
