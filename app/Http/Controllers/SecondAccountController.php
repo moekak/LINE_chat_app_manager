@@ -13,6 +13,6 @@ class SecondAccountController extends Controller
         $validated = $request->validated();
         SecondAccount::create($validated);
 
-        return redirect()->route("dashboard")->with("success", "予備アカウントの追加に成功しました。ステータスが変更可能になりました。");
+        return redirect()->route("dashboard")->with("success", "予備アカウントの保存に成功しました。ステータスが変更可能になりました。");
     }
 }

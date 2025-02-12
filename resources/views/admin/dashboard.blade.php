@@ -271,9 +271,9 @@
       {{-- @endforeach --}}
 </div>
 
-{{-- 追加モーダル --}}
+{{-- 保存モーダル --}}
 <section class="modal__container js_modal js_loader hidden" id="js_create_account_modal" style="width: 640px;">
-      <h3 class="modal__container-ttl">追加</h3>
+      <h3 class="modal__container-ttl">保存</h3>
       @if ($errors->any())
       <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>
@@ -299,7 +299,7 @@
             </div>
 
             <div class="col-md-6">
-                  <label for="formGroupExampleInput" class="form-label js_url_input">友達追加用URL <span style="color: red; font-size: 13px;">※</span></label>
+                  <label for="formGroupExampleInput" class="form-label js_url_input">友達保存用URL <span style="color: red; font-size: 13px;">※</span></label>
                   <input type="text" class="form-control js_" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
             </div>
             <div class="col-md-6">
@@ -314,7 +314,7 @@
                   </select>
             </div>
             <div class="col-12">
-                  <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち追加URLを入力）</label>
+                  <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち保存URLを入力）</label>
                   <select class="form-select mb-3 js_second_account_id" name="second_account_id">
                         <option value="" disabled {{ old('second_account_id') ? '' : 'selected' }}>予備アカウントを選択してください</option>
                         @foreach ($second_accounts as $account)
@@ -323,7 +323,7 @@
                   </select>
             </div>
             <div class="col-12">
-                  <button type="submit" class="modal__container-btn">追加</button> 
+                  <button type="submit" class="modal__container-btn">保存</button> 
             </div>
       </form>
 </section>
@@ -346,10 +346,10 @@
                   <input type="text" class="form-control js_edit_account_input" id="formGroupExampleInput" name="account_name" value="{{old("account_name")}}">
             </div>
             <div class="mb-3">
-                  <label for="formGroupExampleInput" class="form-label">友達追加用URL　<span style="color: red; font-size: 13px;">※</span></label>
+                  <label for="formGroupExampleInput" class="form-label">友達保存用URL　<span style="color: red; font-size: 13px;">※</span></label>
                   <input type="text" class="form-control js_edit_url_input" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
             </div>
-            <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち追加URLを入力）</label>
+            <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち保存URLを入力）</label>
             <select class="form-select js_select_element mb-3" aria-label="Default select example" name="second_account_id">
                   <option disabled {{ old('second_account_id') ? 'selected' : '' }} class="js_edit_secondAccount_input"></option>
                   @foreach ($second_accounts as $account)
@@ -357,7 +357,7 @@
                   @endforeach
             </select>
             <input type="hidden" name="account_id" value="{{old("account_id")}}" class="js_account_id_input">
-            <button type="submit" class="modal__container-btn">更新</button>
+            <button type="submit" class="modal__container-btn">保存</button>
       </form>
 </section>
 
@@ -366,7 +366,7 @@
       <h3 class="modal__container-ttl">一斉送信メッセージ</h3>  
       <div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
             <ul>
-                  <li class="alert_danger js_error_txt">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
+                  <li class="alert_danger js_error_txt">メッセージを入力して保存ボタンを押してください。<br> または画像を選択してください。</li> 
             </ul>   
       </div>  
 
@@ -383,7 +383,7 @@
             <input type="hidden" name="admin_account_id" id="js_account_id">
             <div class="broadcast_message_submit_btn-box">
                   <button type="submit" class="modal__container-btn js_message_display_btn disabled_btn">追加</button>  
-                  <button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">送信</button>  
+                  <button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">保存</button>  
             </div>
       </div>      
 </section>
@@ -446,7 +446,7 @@
                               </select>
                         </div>
                         <input type="hidden" name="current_account_id" value="{{old("current_account_id")}}" id="js_edit_second_account_id">
-                        <button type="submit" class="btn" style="background-color: #2088d7; border: none; color: white;">追加</button>
+                        <button type="submit" class="btn" style="background-color: #2088d7; border: none; color: white;">保存</button>
                   </form>
             </div>
       </div>
@@ -470,7 +470,7 @@
                   <label for="formGroupExampleInput" class="form-label">文言 <span style="color: red; font-size: 13px;">※</span></label>
                   <input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="message" value="{{old("message")}}">
             </div>
-            <button type="submit" class="modal__container-btn">追加</button>
+            <button type="submit" class="modal__container-btn">保存</button>
       </form>
 </section>
 

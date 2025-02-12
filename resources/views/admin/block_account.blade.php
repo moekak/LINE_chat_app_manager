@@ -61,7 +61,7 @@
 		</div>
 
 		<input type="hidden" name="account_id" value="{{old("account_id")}}" class="js_account_id_input">
-		<button type="submit" class="modal__container-btn">更新</button>
+		<button type="submit" class="modal__container-btn">保存</button>
 	</form>
 </section>
 {{-- ユーザーブロック確認モーダル --}}

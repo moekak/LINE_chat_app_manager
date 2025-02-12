@@ -6220,7 +6220,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       var formDataArray = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState();
       var formData = new FormData();
 
-      // sendMessage のデータを FormData に追加
+      // sendMessage のデータを FormData に保存
       formDataArray.forEach(function (item, index) {
         if (item !== undefined && item.type !== undefined) {
           if (item.type === 'image') {
@@ -6236,7 +6236,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
               }));
             }
           } else if (item.type === 'text') {
-            // テキストデータを追加
+            // テキストデータを保存
             formData.append("messages[".concat(index, "]"), item.data);
           }
         }
@@ -7735,7 +7735,7 @@ var FileUploader = /*#__PURE__*/function () {
                 // 古い画像を置き換え
                 var container = document.getElementById("image-container");
                 container.innerHTML = ""; // 古い画像を削除
-                container.appendChild(newImage); // 新しい画像を追加
+                container.appendChild(newImage); // 新しい画像を保存
 
                 // TODODODO
 
@@ -8240,7 +8240,7 @@ var FormDataStateManager = /*#__PURE__*/function () {
     }
 
     /**
-     * データを追加または更新
+     * データを保存または更新
      * @param {number} index - 保存したいインデックス
      * @param {Object} data - 保存するデータ (formData, fileName, type)
      */

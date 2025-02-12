@@ -23,8 +23,6 @@ class DragAndDrop{
                         heading.setAttribute('data-id', index);
                     });
 
-
-                    console.log(newDataArray);
                     
                     // 一旦formDataをリセットして並び順をかえたものをセットする
                     formDataStateManager.resetItem()

@@ -123,7 +123,7 @@ class LineAccountController extends Controller
         }
 
         // // node.jsに通知を送信
-        return redirect()->route("dashboard")->with("success", "アカウントの追加に成功しました。");
+        return redirect()->route("dashboard")->with("success", "アカウントの保存に成功しました。");
     }
 
     public function show(string $id)

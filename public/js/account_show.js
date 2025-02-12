@@ -3748,7 +3748,7 @@ var FormDataStateManager = /*#__PURE__*/function () {
     }
 
     /**
-     * データを追加または更新
+     * データを保存または更新
      * @param {number} index - 保存したいインデックス
      * @param {Object} data - 保存するデータ (formData, fileName, type)
      */
@@ -8434,7 +8434,7 @@ var modal = document.getElementById("js_block_account_modal");
   });
 }
 
-// 追加時テキスト表示変更モーダル
+// 保存時テキスト表示変更モーダル
 {
   var text_btn = document.getElementById("js_create_text_btn");
   var _modal3 = document.getElementById("js_create_text_modal");

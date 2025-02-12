@@ -57,12 +57,8 @@ class FileUploader{
             if(!this.validateFile()) return
 
             if(document.querySelector(".image_edit_modal").classList.contains("hidden")){
-                console.log("contain");
-                
                 this.#toggleLoader(true)
             }else{
-                console.log("not contain");
-                
                 this.#toggleLoaderforChangeImg(true)
             }
             
@@ -102,7 +98,7 @@ class FileUploader{
             // 古い画像を置き換え
             const container = document.getElementById("image-container");
             container.innerHTML = ""; // 古い画像を削除
-            container.appendChild(newImage); // 新しい画像を追加
+            container.appendChild(newImage); // 新しい画像を保存
 
             // TODODODO
 

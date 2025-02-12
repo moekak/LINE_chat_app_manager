@@ -69,9 +69,6 @@ class BroadcastMessageOperator{
      * テキストメッセージをリストに表示 (インスタンスメソッド)
      */
     displayMessageToList(messageObj = []) {
-
-        console.log(formDataStateManager.getState());
-
         // 親要素を取得
         const parentElement = document.querySelector(`.${this.className}`);
         if (!parentElement) {
@@ -195,8 +192,6 @@ class BroadcastMessageOperator{
             newBtn.addEventListener("click", (e)=>{
 
                 indexStateManager.setSpecificNumber(document.querySelectorAll(".js_deleteList").length)
-                console.log("deleteだよ");
-
                 const target_id = e.currentTarget.parentElement.getAttribute("data-id")
 
                 formDataStateManager.removeItem(target_id); // データを削除
@@ -205,11 +200,6 @@ class BroadcastMessageOperator{
                 if(accordion.contains(list_el)){
                     accordion.removeChild(list_el) 
                 }
-
-
-                console.log(indexStateManager.getState());
-                console.log("indexの数");
-                
 
                 this.#updateElementIndexes()
                 this.#toggleSubmitButtonState()
@@ -273,8 +263,6 @@ class BroadcastMessageOperator{
         this.message = ""
         FormController.initializeInput()
 
-        console.log(formDataStateManager.getState());
-        
         indexStateManager.setState()
     }
 
@@ -291,7 +279,7 @@ class BroadcastMessageOperator{
             const error_el = document.querySelector(".js_broadcast_error")
             const errorTxt = document.querySelector(".js_error_txt")
 
-            errorTxt.innerHTML = `メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。`
+            errorTxt.innerHTML = `メッセージを入力して保存ボタンを押してください。<br> または画像を選択してください。`
             error_el.classList.remove("hidden")
             return
         }
@@ -302,7 +290,7 @@ class BroadcastMessageOperator{
         const formData = new FormData();
 
 
-        // sendMessage のデータを FormData に追加
+        // sendMessage のデータを FormData に保存
         formDataArray.forEach((item, index) => {
 
             if(item !== undefined && item.type !== undefined){
@@ -316,7 +304,7 @@ class BroadcastMessageOperator{
                         formData.append(`images[${index}][meta]`, JSON.stringify({ url: item.url, cropArea: item.cropArea }));
                     }
                 } else if (item.type === 'text') {
-                    // テキストデータを追加
+                    // テキストデータを保存
                     formData.append(`messages[${index}]`, item.data);
                 }
             }

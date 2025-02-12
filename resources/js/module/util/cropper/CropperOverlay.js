@@ -36,26 +36,22 @@ class CropperOverlay {
 
       // オーバーレイ要素の表示状態を制御するメソッド
       setVisibility(isVisible){
-            try{
-                  // 表示状態に応じたスタイル値を設定
-                  const displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE: CropperOverlay.STYLES.HIDDEN
-                  const backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR
+            // 表示状態に応じたスタイル値を設定
+            const displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE: CropperOverlay.STYLES.HIDDEN
+            const backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR
 
-                  // 複数要素（lines, points, dots）を一括で処理するための配列
-                  const targetElements = [this.#overlayElements.lines, this.#overlayElements.points, this.#overlayElements.dots]
+            // 複数要素（lines, points, dots）を一括で処理するための配列
+            const targetElements = [this.#overlayElements.lines, this.#overlayElements.points, this.#overlayElements.dots]
 
-                  // 各要素グループの表示/非表示を切り替え
-                  targetElements.forEach((elements)=>{
-                        elements.forEach((element)=>{
-                              element.style.display = displayStyle
-                        })
+            // 各要素グループの表示/非表示を切り替え
+            targetElements.forEach((elements)=>{
+                  elements.forEach((element)=>{
+                        element.style.display = displayStyle
                   })
+            })
 
-                  // 背景の切り替え
-                  this.#overlayElements.selectedArea.style.backgroundColor = backgroundColor
-            }catch(e){
-                  console.log(e);
-            }
+            // 背景の切り替え
+            this.#overlayElements.selectedArea.style.backgroundColor = backgroundColor
       }
 
       static updateCropperState(isEnabled) {

@@ -19,7 +19,7 @@ class LineMessageController extends Controller
         if ($user->id != $id) {
             return redirect()
                 ->back() // 前のページに戻る
-                ->withErrors(['id' => 'Invalid user ID']) //エラーメッセージをセッションに追加
+                ->withErrors(['id' => 'Invalid user ID']) //エラーメッセージをセッションに保存
                 ->withInput(); //入力値を保持したまま戻る
         }
 

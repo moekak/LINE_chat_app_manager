@@ -62,7 +62,7 @@
 							<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
 							<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 							<td class="operation">
-								<form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
+								<form action="{{config('services.chat_api')}}" method="POST" class="js_redirect_form">
 									<input type="hidden" name="admin_id" class="js_admin_el">
 									<input type="hidden" name="user_id" class="js_user_el">
 									<input type="hidden" name="token" class="js_token">
@@ -104,7 +104,7 @@
 		</div>
 
 		<input type="hidden" name="account_id" value="{{old("account_id")}}" class="js_account_id_input">
-		<button type="submit" class="modal__container-btn">更新</button>
+		<button type="submit" class="modal__container-btn">保存</button>
 	</form>
 </section>
 {{-- ユーザーブロック確認モーダル --}}
@@ -140,7 +140,7 @@
 
 	<div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
 		<ul>
-			<li class="alert_danger js_error_txt">メッセージを入力して追加ボタンを押してください。<br> または画像を選択してください。</li> 
+			<li class="alert_danger js_error_txt">メッセージを入力して保存ボタンを押してください。<br> または画像を選択してください。</li> 
 		</ul>   
 	</div>  
 
@@ -157,7 +157,7 @@
 		<input type="hidden" name="admin_account_id" value={{Route::current()->parameter('id');}} id="js_greeting_account_id">
 		<div class="broadcast_message_submit_btn-box">
 			<button type="submit" class="modal__container-btn js_message_display_btn disabled_btn">追加</button>  
-			<button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">登録</button>  
+			<button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">保存</button>  
 		</div>
 	</div>      
 </section>
@@ -195,7 +195,7 @@
 			<input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="title" value="{{ isset($title) && isset($title['title']) ? $title['title'] : old('title') }}">
 			<input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
 		</div>
-		<button type="submit" class="modal__container-btn">作成</button>
+		<button type="submit" class="modal__container-btn">保存</button>
 	</form>
 </section>
 
@@ -253,7 +253,7 @@
 </section>
 
 
-{{-- 追加時テキスト追加 --}}
+{{-- 保存時テキスト保存 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_text_modal">
 	<h3 class="modal__container-ttl">固定テキスト設定</h3>
 	@if ($errors->any())
@@ -329,7 +329,6 @@
 				radioBtn.addEventListener("change", (e)=>{
 				textInput.classList.toggle("hidden", e.target.value === "0")
 				if(e.target.value === "0"){
-					console.log("0ですよ");
 					textElement.value = ""
 				}
 			})

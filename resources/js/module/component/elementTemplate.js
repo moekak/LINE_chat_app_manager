@@ -1,4 +1,5 @@
 import { formateDateToAsia } from "../util/formatDate.js"
+import { SYSTEM_URL } from "../../config/config.js";
 
 export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
       const createdAtTokyo = formateDateToAsia(res["created_at"])
@@ -14,7 +15,7 @@ export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
                   <td class="js_latest_message_date">${latestMessageDate}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                        <form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
+                        <form action="${SYSTEM_URL.CHAT_URL}" method="POST" class="js_redirect_form">
                               <input type="hidden" name="admin_id" class="js_admin_el">
                               <input type="hidden" name="user_id" class="js_user_el">
                               <input type="hidden" name="token" class="js_token">
@@ -40,7 +41,7 @@ export const createMessageRow = (res, admin_account_id) =>{
                   <td class="js_latest_message_date">${latestMessageDate}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                        <form action="https://chat-system.info/api/chat" method="POST" class="js_redirect_form">
+                        <form action="${SYSTEM_URL.CHAT_URL}" method="POST" class="js_redirect_form">
                               <input type="hidden" name="admin_id" class="js_admin_el">
                               <input type="hidden" name="user_id" class="js_user_el">
                               <input type="hidden" name="token" class="js_token">
@@ -115,7 +116,7 @@ export const createAccountDataRow = (res, categories) =>{
                   <td class="js_latest_message_date">${res["latest_message_date"] ?? ""}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                        <a href="https://chat-manager.info/account/show/${res["id"]}"><button class="operation_icon"><img src="/img/icons8-user-24.png" alt=""></button></a>
+                        <a href="${CHAT_BASE_URL}/account/show/${res["id"]}"><button class="operation_icon"><img src="/img/icons8-user-24.png" alt=""></button></a>
                         <button class="operation_icon js_edit_account_btn" data-id=${res["id"]}><img src="/img/icons8-edit-24.png" alt=""></button>
                         <button class="operation_icon js_send_message_btn" data-id=${res["id"]}><img src="/img/icons8-send-24.png" alt=""></button>
                         <button class="operation_icon js_delete_account_btn" type="submit" data-id=${res["id"]} data-name=${res["account_name"]}><img src="/img/icons8-delete-24.png" alt=""></button>

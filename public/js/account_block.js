@@ -3591,7 +3591,7 @@ var FormDataStateManager = /*#__PURE__*/function () {
     }
 
     /**
-     * データを追加または更新
+     * データを保存または更新
      * @param {number} index - 保存したいインデックス
      * @param {Object} data - 保存するデータ (formData, fileName, type)
      */

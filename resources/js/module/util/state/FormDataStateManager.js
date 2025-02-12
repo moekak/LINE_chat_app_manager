@@ -39,23 +39,18 @@ class FormDataStateManager{
      */
     removeItem(index) {
         this.formDataArray.splice(index, 1); // 配列からindex番目を削除  
-
-        console.log(this.formDataArray.length + "length");
-        
     }
     resetItem() {
         this.formDataArray.length = 0; // 配列を空にする
-        console.log(this.formDataArray)
     }
 
     /**
-     * データを追加または更新
+     * データを保存または更新
      * @param {number} index - 保存したいインデックス
      * @param {Object} data - 保存するデータ (formData, fileName, type)
      */
     setItem(index, data) {
         this.formDataArray[index] = data;
-        console.log("State after setItem: ", this.formDataArray);
     }
 }
 

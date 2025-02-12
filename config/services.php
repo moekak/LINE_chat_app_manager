@@ -13,7 +13,9 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    // 開発用
+    // 'chat_api' => env('API_URL', 'https://chat.line-chat-system-dev.tokyo/api/chat'),
+    'chat_api' => env('API_URL', 'https://chat-system.info/api/chat'),
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

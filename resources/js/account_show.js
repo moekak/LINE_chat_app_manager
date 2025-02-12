@@ -84,7 +84,7 @@ close_modal_by_click(modal, btn)
       })
 }
 
-// 追加時テキスト表示変更モーダル
+// 保存時テキスト表示変更モーダル
 {
       const text_btn = document.getElementById("js_create_text_btn")
       const modal = document.getElementById("js_create_text_modal")
