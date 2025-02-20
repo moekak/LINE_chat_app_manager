@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminMessageRead;
 use App\Models\BroadcastImagesCropArea;
 use App\Models\BroadcastMessage;
 use App\Models\BroadcastMessagesGroup;
+use App\Models\ChatUser;
 use App\Services\ImageService;
 use App\Services\MessageSummaryService;
+use App\Services\UnreadMessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -64,6 +67,7 @@ class BroadcastMessageController extends Controller
             });
 
 
+            $lastMessageData = [];
             // 順番に処理
             foreach ($allContent as $index =>$item) {
 
@@ -97,6 +101,7 @@ class BroadcastMessageController extends Controller
                         BroadcastImagesCropArea::create($cropData);
 
                         $responseData[$index] = [
+                            "id" => $broadcastMessage->id,
                             "resource" => $fileName, 
                             "type" => "broadcast_img", 
                             "order" => $broadcastMessage->message_order,
@@ -105,6 +110,7 @@ class BroadcastMessageController extends Controller
 
                     }else{
                         $responseData[$index] = [
+                            "id" => $broadcastMessage->id,
                             "resource" => $fileName, 
                             "type" => "broadcast_img", 
                             "order" => $broadcastMessage->message_order,
@@ -123,13 +129,25 @@ class BroadcastMessageController extends Controller
                     ];
                     $broadcastMessage = BroadcastMessage::create($savingData);
                     $responseData[$index] = [
+                        "id" => $broadcastMessage->id,
                         "resource" => $item['content'], 
                         "type" => "broadcast_text", 
                         "order" => $broadcastMessage->message_order,
                         "cropArea" => [],
                     ];
                 }
+
+                // 一斉メッセージの一番最初のメッセージを取得する
+                if($index === 0){
+                    $lastMessageData["message_id"] = $broadcastMessage->id;
+                    $lastMessageData["message_type"] = $broadcastMessage->resource_type;
+                }
             }
+
+            // 既読未読管理テーブル(admin_message_reads)を更新する(既存の未読カウント＋1)
+            $unreadCount = count($allContent);
+            UnreadMessageService::unreadCountDBOperation($admin_id, $lastMessageData, $unreadCount);
+
 
             // 最新メッセージ管理テーブルの更新
             MessageSummaryService::updateLatestMessage($admin_id, $broadcastMessage->created_at, $broadcastMessage->resource_type);
