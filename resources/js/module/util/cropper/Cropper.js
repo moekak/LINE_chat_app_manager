@@ -3,6 +3,7 @@ import CropperOverlay from "./CropperOverlay.js";
 import CropperEventHandler from "./CropperEventHandler.js";
 import CropperState from "./CropperState.js";
 import CropperJS from "cropperjs";
+import 'cropperjs/dist/cropper.css';
 
 class Cropper {
       constructor(image, changeBtn) {
