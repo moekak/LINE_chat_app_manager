@@ -3059,7 +3059,7 @@ var FormController = /*#__PURE__*/function () {
     key: "initializeImageCropInput",
     value: function initializeImageCropInput() {
       var inputFiled = document.getElementById("js_url_input");
-      var buttton = document.getElementById("js_change_area");
+      var button = document.getElementById("js_change_area");
       var submitButton = document.querySelector(".preview_submit_btn ");
       var choices = document.getElementsByName('choice');
       document.querySelector(".js_image_error").classList.add("hidden");
@@ -3072,10 +3072,10 @@ var FormController = /*#__PURE__*/function () {
       });
       var url_wrapper = document.getElementById("js_url_setting");
       url_wrapper.classList.add("hidden");
-      buttton.classList.add("disabled_btn");
-      if (buttton.innerHTML === "選択範囲変更") {
-        buttton.style.backgroundColor = "#fff";
-        buttton.innerHTML = "選択範囲確定";
+      button.classList.add("disabled_btn");
+      if (button.innerHTML === "選択範囲変更") {
+        button.style.backgroundColor = "#fff";
+        button.innerHTML = "選択範囲確定";
       }
       submitButton.classList.remove("disabled_btn");
       inputFiled.value = "";

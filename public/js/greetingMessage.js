@@ -7236,9 +7236,9 @@ var close_modal_by_click = function close_modal_by_click(modal, btn) {
 
 /***/ }),
 
-/***/ "./resources/js/module/component/ui/ButttonController.js":
+/***/ "./resources/js/module/component/ui/buttonController.js":
 /*!***************************************************************!*\
-  !*** ./resources/js/module/component/ui/ButttonController.js ***!
+  !*** ./resources/js/module/component/ui/buttonController.js ***!
   \***************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -7316,7 +7316,7 @@ var FormController = /*#__PURE__*/function () {
     key: "initializeImageCropInput",
     value: function initializeImageCropInput() {
       var inputFiled = document.getElementById("js_url_input");
-      var buttton = document.getElementById("js_change_area");
+      var button = document.getElementById("js_change_area");
       var submitButton = document.querySelector(".preview_submit_btn ");
       var choices = document.getElementsByName('choice');
       document.querySelector(".js_image_error").classList.add("hidden");
@@ -7329,10 +7329,10 @@ var FormController = /*#__PURE__*/function () {
       });
       var url_wrapper = document.getElementById("js_url_setting");
       url_wrapper.classList.add("hidden");
-      buttton.classList.add("disabled_btn");
-      if (buttton.innerHTML === "選択範囲変更") {
-        buttton.style.backgroundColor = "#fff";
-        buttton.innerHTML = "選択範囲確定";
+      button.classList.add("disabled_btn");
+      if (button.innerHTML === "選択範囲変更") {
+        button.style.backgroundColor = "#fff";
+        button.innerHTML = "選択範囲確定";
       }
       submitButton.classList.remove("disabled_btn");
       inputFiled.value = "";
@@ -7991,7 +7991,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
 /* harmony import */ var _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../component/broadcast/BroadcastMessageOperator.js */ "./resources/js/module/component/broadcast/BroadcastMessageOperator.js");
 /* harmony import */ var _component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/ButttonController.js */ "./resources/js/module/component/ui/ButttonController.js");
+/* harmony import */ var _component_ui_buttonController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/buttonController.js */ "./resources/js/module/component/ui/buttonController.js");
 /* harmony import */ var _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../cropper/Cropper.js */ "./resources/js/module/util/cropper/Cropper.js");
 /* harmony import */ var _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cropper/CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
@@ -8140,7 +8140,7 @@ var FileUploader = /*#__PURE__*/function () {
               reader = new FileReader();
               newImage = _assertClassBrand(_FileUploader_brand, this, _createImageElement).call(this, this.file);
               newImage.onload = function (e) {
-                var newImageButton = _component_ui_ButttonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_change_area");
+                var newImageButton = _component_ui_buttonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_change_area");
                 _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__["default"](_this.imageElement, newImageButton);
                 var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__["default"](newImageButton, _this.cropper);
                 cropperHandler.changeBtnEvent();

@@ -8,7 +8,7 @@ class FormController{
 
     static initializeImageCropInput(){
         const inputFiled = document.getElementById("js_url_input")
-        const buttton = document.getElementById("js_change_area")
+        const button = document.getElementById("js_change_area")
         const submitButton = document.querySelector(".preview_submit_btn ")
         const choices = document.getElementsByName('choice')
 
@@ -25,11 +25,11 @@ class FormController{
         const url_wrapper = document.getElementById("js_url_setting");
         url_wrapper.classList.add("hidden")
 
-        buttton.classList.add("disabled_btn")
-        if(buttton.innerHTML === "選択範囲変更"){
+        button.classList.add("disabled_btn")
+        if(button.innerHTML === "選択範囲変更"){
 
-            buttton.style.backgroundColor = "#fff"
-            buttton.innerHTML = "選択範囲確定"
+            button.style.backgroundColor = "#fff"
+            button.innerHTML = "選択範囲確定"
         }
 
         submitButton.classList.remove("disabled_btn")
