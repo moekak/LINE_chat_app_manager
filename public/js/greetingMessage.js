@@ -5244,6 +5244,106 @@ function isnan (val) {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./node_modules/cropperjs/dist/cropper.css":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./node_modules/cropperjs/dist/cropper.css ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Cropper.js v1.6.2\n * https://fengyuanchen.github.io/cropperjs\n *\n * Copyright 2015-present Chen Fengyuan\n * Released under the MIT license\n *\n * Date: 2024-04-21T07:43:02.731Z\n */\n\n.cropper-container {\n  direction: ltr;\n  font-size: 0;\n  line-height: 0;\n  position: relative;\n  touch-action: none;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n.cropper-container img {\n    backface-visibility: hidden;\n    display: block;\n    height: 100%;\n    image-orientation: 0deg;\n    max-height: none !important;\n    max-width: none !important;\n    min-height: 0 !important;\n    min-width: 0 !important;\n    width: 100%;\n  }\n\n.cropper-wrap-box,\n.cropper-canvas,\n.cropper-drag-box,\n.cropper-crop-box,\n.cropper-modal {\n  bottom: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.cropper-wrap-box,\n.cropper-canvas {\n  overflow: hidden;\n}\n\n.cropper-drag-box {\n  background-color: #fff;\n  opacity: 0;\n}\n\n.cropper-modal {\n  background-color: #000;\n  opacity: 0.5;\n}\n\n.cropper-view-box {\n  display: block;\n  height: 100%;\n  outline: 1px solid #39f;\n  outline-color: rgba(51, 153, 255, 0.75);\n  overflow: hidden;\n  width: 100%;\n}\n\n.cropper-dashed {\n  border: 0 dashed #eee;\n  display: block;\n  opacity: 0.5;\n  position: absolute;\n}\n\n.cropper-dashed.dashed-h {\n    border-bottom-width: 1px;\n    border-top-width: 1px;\n    height: calc(100% / 3);\n    left: 0;\n    top: calc(100% / 3);\n    width: 100%;\n  }\n\n.cropper-dashed.dashed-v {\n    border-left-width: 1px;\n    border-right-width: 1px;\n    height: 100%;\n    left: calc(100% / 3);\n    top: 0;\n    width: calc(100% / 3);\n  }\n\n.cropper-center {\n  display: block;\n  height: 0;\n  left: 50%;\n  opacity: 0.75;\n  position: absolute;\n  top: 50%;\n  width: 0;\n}\n\n.cropper-center::before,\n  .cropper-center::after {\n    background-color: #eee;\n    content: ' ';\n    display: block;\n    position: absolute;\n  }\n\n.cropper-center::before {\n    height: 1px;\n    left: -3px;\n    top: 0;\n    width: 7px;\n  }\n\n.cropper-center::after {\n    height: 7px;\n    left: 0;\n    top: -3px;\n    width: 1px;\n  }\n\n.cropper-face,\n.cropper-line,\n.cropper-point {\n  display: block;\n  height: 100%;\n  opacity: 0.1;\n  position: absolute;\n  width: 100%;\n}\n\n.cropper-face {\n  background-color: #fff;\n  left: 0;\n  top: 0;\n}\n\n.cropper-line {\n  background-color: #39f;\n}\n\n.cropper-line.line-e {\n    cursor: ew-resize;\n    right: -3px;\n    top: 0;\n    width: 5px;\n  }\n\n.cropper-line.line-n {\n    cursor: ns-resize;\n    height: 5px;\n    left: 0;\n    top: -3px;\n  }\n\n.cropper-line.line-w {\n    cursor: ew-resize;\n    left: -3px;\n    top: 0;\n    width: 5px;\n  }\n\n.cropper-line.line-s {\n    bottom: -3px;\n    cursor: ns-resize;\n    height: 5px;\n    left: 0;\n  }\n\n.cropper-point {\n  background-color: #39f;\n  height: 5px;\n  opacity: 0.75;\n  width: 5px;\n}\n\n.cropper-point.point-e {\n    cursor: ew-resize;\n    margin-top: -3px;\n    right: -3px;\n    top: 50%;\n  }\n\n.cropper-point.point-n {\n    cursor: ns-resize;\n    left: 50%;\n    margin-left: -3px;\n    top: -3px;\n  }\n\n.cropper-point.point-w {\n    cursor: ew-resize;\n    left: -3px;\n    margin-top: -3px;\n    top: 50%;\n  }\n\n.cropper-point.point-s {\n    bottom: -3px;\n    cursor: s-resize;\n    left: 50%;\n    margin-left: -3px;\n  }\n\n.cropper-point.point-ne {\n    cursor: nesw-resize;\n    right: -3px;\n    top: -3px;\n  }\n\n.cropper-point.point-nw {\n    cursor: nwse-resize;\n    left: -3px;\n    top: -3px;\n  }\n\n.cropper-point.point-sw {\n    bottom: -3px;\n    cursor: nesw-resize;\n    left: -3px;\n  }\n\n.cropper-point.point-se {\n    bottom: -3px;\n    cursor: nwse-resize;\n    height: 20px;\n    opacity: 1;\n    right: -3px;\n    width: 20px;\n  }\n\n@media (min-width: 768px) {\n\n.cropper-point.point-se {\n      height: 15px;\n      width: 15px;\n  }\n    }\n\n@media (min-width: 992px) {\n\n.cropper-point.point-se {\n      height: 10px;\n      width: 10px;\n  }\n    }\n\n@media (min-width: 1200px) {\n\n.cropper-point.point-se {\n      height: 5px;\n      opacity: 0.75;\n      width: 5px;\n  }\n    }\n\n.cropper-point.point-se::before {\n    background-color: #39f;\n    bottom: -50%;\n    content: ' ';\n    display: block;\n    height: 200%;\n    opacity: 0;\n    position: absolute;\n    right: -50%;\n    width: 200%;\n  }\n\n.cropper-invisible {\n  opacity: 0;\n}\n\n.cropper-bg {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');\n}\n\n.cropper-hide {\n  display: block;\n  height: 0;\n  position: absolute;\n  width: 0;\n}\n\n.cropper-hidden {\n  display: none !important;\n}\n\n.cropper-move {\n  cursor: move;\n}\n\n.cropper-crop {\n  cursor: crosshair;\n}\n\n.cropper-disabled .cropper-drag-box,\n.cropper-disabled .cropper-face,\n.cropper-disabled .cropper-line,\n.cropper-disabled .cropper-point {\n  cursor: not-allowed;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (cssWithMappingToString) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join("");
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === "string") {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, ""]];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+/***/ }),
+
 /***/ "./node_modules/ieee754/index.js":
 /*!***************************************!*\
   !*** ./node_modules/ieee754/index.js ***!
@@ -5351,6 +5451,315 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ }),
+
+/***/ "./node_modules/cropperjs/dist/cropper.css":
+/*!*************************************************!*\
+  !*** ./node_modules/cropperjs/dist/cropper.css ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_cropper_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!../../postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./cropper.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./node_modules/cropperjs/dist/cropper.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_cropper_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_cropper_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : 0;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && typeof btoa !== 'undefined') {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
 
 /***/ }),
 
@@ -5575,8 +5984,25 @@ __webpack_require__.r(__webpack_exports__);
 var SYSTEM_URL = {
   IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
   FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId"
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat-system.info/api/chat",
+  CHAT_BASE_URL: "https://chat-system.info"
 };
+
+// // 開発用
+// export default {
+//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
+
+// };
+
+// // 開発用
+// export const SYSTEM_URL = {
+//     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/api/chat",
+//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+// };
 
 /***/ }),
 
@@ -5627,7 +6053,6 @@ var DragAndDrop = /*#__PURE__*/function () {
             Array.from(headings).forEach(function (heading, index) {
               heading.setAttribute('data-id', index);
             });
-            console.log(newDataArray);
 
             // 一旦formDataをリセットして並び順をかえたものをセットする
             _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].resetItem();
@@ -6148,8 +6573,6 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
     key: "displayMessageToList",
     value: function displayMessageToList() {
       var messageObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      console.log(_util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
-
       // 親要素を取得
       var parentElement = document.querySelector(".".concat(this.className));
       if (!parentElement) {
@@ -6195,7 +6618,6 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_3__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn"), document.querySelectorAll(".js_headings"));
       this.message = "";
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeInput();
-      console.log(_util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
       _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setState();
     }
   }, {
@@ -6211,7 +6633,7 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       if (!BroadcastMessageOperator.hasValue("accordion")) {
         var error_el = document.querySelector(".js_broadcast_error");
         var errorTxt = document.querySelector(".js_error_txt");
-        errorTxt.innerHTML = "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u304F\u3060\u3055\u3044\u3002<br> \u307E\u305F\u306F\u753B\u50CF\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044\u3002";
+        errorTxt.innerHTML = "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B\u3057\u3066\u4FDD\u5B58\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u304F\u3060\u3055\u3044\u3002<br> \u307E\u305F\u306F\u753B\u50CF\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044\u3002";
         error_el.classList.remove("hidden");
         return;
       }
@@ -6413,7 +6835,6 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
         btn.parentNode.replaceChild(newBtn, btn);
         newBtn.addEventListener("click", function (e) {
           _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setSpecificNumber(document.querySelectorAll(".js_deleteList").length);
-          console.log("deleteだよ");
           var target_id = e.currentTarget.parentElement.getAttribute("data-id");
           _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].removeItem(target_id); // データを削除
           _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setMinusState();
@@ -6421,8 +6842,6 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
           if (accordion.contains(list_el)) {
             accordion.removeChild(list_el);
           }
-          console.log(_util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].getState());
-          console.log("indexの数");
           _assertClassBrand(BroadcastMessageOperator, _this, _updateElementIndexes).call(_this);
           _assertClassBrand(BroadcastMessageOperator, _this, _toggleSubmitButtonState).call(_this);
         });
@@ -6513,18 +6932,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch)
 /* harmony export */ });
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
+/* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config/config.js */ "./resources/js/config/config.js");
+
 
 var createMessageRowForFetch = function createMessageRowForFetch(res, admin_account_id, sender_uuid) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
   var latestMessageDate = res["latest_message_date"] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["latest_message_date"]) : "";
   var display = res["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
@@ -6546,7 +6967,7 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
     return category.status !== status;
   }).map(function (category) {
     return "\n                                                <li class=\"dropdown-item js_status_choices\" \n                                                      data-current-status=\"".concat(status, "\"\n                                                      data-status-name=\"").concat(category.status, "\"\n                                                      data-status-id=\"").concat(category.id, "\"\n                                                      data-account-id=\"").concat(res["id"], "\">\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
-  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"https://chat-manager.info/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 
 /***/ }),
@@ -6901,19 +7322,19 @@ var FormController = /*#__PURE__*/function () {
       document.querySelector(".js_image_error").classList.add("hidden");
       choices.forEach(function (choice) {
         if (choice.value === "off") {
-          choice.checked = false;
-        } else {
           choice.checked = true;
+        } else {
+          choice.checked = false;
         }
       });
       var url_wrapper = document.getElementById("js_url_setting");
-      url_wrapper.classList.remove("hidden");
+      url_wrapper.classList.add("hidden");
       buttton.classList.add("disabled_btn");
       if (buttton.innerHTML === "選択範囲変更") {
         buttton.style.backgroundColor = "#fff";
         buttton.innerHTML = "選択範囲確定";
       }
-      submitButton.classList.add("disabled_btn");
+      submitButton.classList.remove("disabled_btn");
       inputFiled.value = "";
     }
   }, {
@@ -6937,7 +7358,6 @@ var FormController = /*#__PURE__*/function () {
           textInput.classList.toggle("hidden", e.target.value === "0");
           if (e.target.value === "0") {
             textElement.value = "";
-            console.log(textElement);
           }
         });
       });
@@ -7043,12 +7463,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
 /* harmony import */ var _CropperState_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CropperState.js */ "./resources/js/module/util/cropper/CropperState.js");
 /* harmony import */ var cropperjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! cropperjs */ "./node_modules/cropperjs/dist/cropper.js");
+/* harmony import */ var cropperjs_dist_cropper_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! cropperjs/dist/cropper.css */ "./node_modules/cropperjs/dist/cropper.css");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -7060,9 +7482,6 @@ var Cropper = /*#__PURE__*/function () {
     this.cropperInstance = null; // Cropper.js インスタンスを保持
     this.changeBtn = changeBtn;
     this.choices = document.getElementsByName('choice');
-    // Cropper内メソッド、プロパティすべてをthisで受け渡す
-    this.cropperHandler = new _CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_1__["default"](this.changeBtn, this);
-    this.cropperHandler.initializeEvents();
     this.cropperState = null;
   }
   return _createClass(Cropper, [{
@@ -7081,6 +7500,7 @@ var Cropper = /*#__PURE__*/function () {
   }, {
     key: "updateImage",
     value: function updateImage(newImage) {
+      var _this = this;
       // 既存のインスタンスを破棄
       if (this.cropperInstance) {
         this.cropperInstance.destroy();
@@ -7091,12 +7511,26 @@ var Cropper = /*#__PURE__*/function () {
       this.image = newImage;
 
       // 新しい Cropper インスタンスを作成
-      this.resizeImage();
+      this.choices.forEach(function (choice) {
+        var newChoice = choice.cloneNode(true); // 元の要素を複製
+        choice.replaceWith(newChoice); // 新しい要素と置き換え
+
+        newChoice.addEventListener("change", function (e) {
+          _CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_1__["default"].handleUrlInputToggle(e);
+          if (e.target.value === "on") {
+            _this.resizeImage();
+          } else {
+            if (_this.cropperInstance) {
+              _this.destroyCropper();
+            }
+          }
+        });
+      });
     }
   }, {
     key: "resizeImage",
     value: function resizeImage() {
-      var _this = this;
+      var _this2 = this;
       // Cropper.js インスタンスを作成
       this.cropperInstance = new cropperjs__WEBPACK_IMPORTED_MODULE_3__(this.image, {
         viewMode: 0.5,
@@ -7116,7 +7550,7 @@ var Cropper = /*#__PURE__*/function () {
         cropBoxResizable: true,
         // クロップボックスのリサイズを許可
         cropend: function cropend() {
-          _this.changeBtn.classList.remove("disabled_btn");
+          _this2.changeBtn.classList.remove("disabled_btn");
         }
       });
     }
@@ -7124,16 +7558,19 @@ var Cropper = /*#__PURE__*/function () {
     key: "getCropperArea",
     value: function getCropperArea() {
       try {
-        var cropBoxData = this.cropperInstance.getCropBoxData(); // 最終的な選択範囲
-        var containerData = this.cropperInstance.getContainerData(); // コンテナのデータ
-        var imageData = this.cropperInstance.getImageData(); // 画像全体の情報
+        if (this.cropperInstance) {
+          var cropBoxData = this.cropperInstance.getCropBoxData(); // 最終的な選択範囲
+          var containerData = this.cropperInstance.getContainerData(); // コンテナのデータ
+          var imageData = this.cropperInstance.getImageData(); // 画像全体の情報
 
-        // 選択範囲の位置とサイズを画像全体に対する割合（%）で計算し保存
-        this.cropperState = new _CropperState_js__WEBPACK_IMPORTED_MODULE_2__["default"](cropBoxData, imageData, containerData);
-        this.cropperState.updatePercentage();
-        return this.cropperState.getState();
+          // 選択範囲の位置とサイズを画像全体に対する割合（%）で計算し保存
+          this.cropperState = new _CropperState_js__WEBPACK_IMPORTED_MODULE_2__["default"](cropBoxData, imageData, containerData);
+          this.cropperState.updatePercentage();
+          return this.cropperState.getState();
+        }
       } catch (error) {
-        alert("画像リンク指定でエラーが発生しました。再度実行してくださう。");
+        console.log(error);
+        alert("画像リンク指定でエラーが発生しました。再度実行してください。");
       }
     }
   }, {
@@ -7202,34 +7639,33 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
-function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
-function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
 
-var _CropperEventHandler_brand = /*#__PURE__*/new WeakSet();
 var CropperEventHandler = /*#__PURE__*/function () {
   function CropperEventHandler(changeBtn, cropper) {
     _classCallCheck(this, CropperEventHandler);
-    // URLソース選択（ラジオボタン）の変更を監視
-    // 選択状態に応じてURL入力欄の表示/非表示を切り替える
-    _classPrivateMethodInitSpec(this, _CropperEventHandler_brand);
     this.choices = document.getElementsByName('choice');
     this.changeBtn = changeBtn;
     this.cropper = cropper;
   }
 
-  // 画像編集に関連する全てのイベントリスナーを初期化
+  // // 画像編集に関連する全てのイベントリスナーを初期化
+  // initializeEvents(){
+  //       this.#detectChoiceEvents()
+  // }
+
+  // // URLソース選択（ラジオボタン）の変更を監視
+  // // 選択状態に応じてURL入力欄の表示/非表示を切り替える
+  // #detectChoiceEvents(){
+  //       this.choices.forEach((choice)=>{
+  //             choice.addEventListener("change", (event) => this.#handleUrlInputToggle(event, this))
+  //       })
+  // }
+
+  // 画像変更ボタンのクリックイベントを監視
+  // クリック時にCropperの編集モードを開始
   return _createClass(CropperEventHandler, [{
-    key: "initializeEvents",
-    value: function initializeEvents() {
-      _assertClassBrand(_CropperEventHandler_brand, this, _detectChoiceEvents).call(this);
-    }
-  }, {
     key: "changeBtnEvent",
-    value:
-    // 画像変更ボタンのクリックイベントを監視
-    // クリック時にCropperの編集モードを開始
-    function changeBtnEvent() {
+    value: function changeBtnEvent() {
       var _this = this;
       this.changeBtn.addEventListener("click", function () {
         var txt = _this.changeBtn.innerHTML;
@@ -7246,25 +7682,19 @@ var CropperEventHandler = /*#__PURE__*/function () {
     }
 
     // URL変更要素の表示切替
+  }], [{
+    key: "handleUrlInputToggle",
+    value: function handleUrlInputToggle(event) {
+      var url_wrapper = document.getElementById("js_url_setting");
+      url_wrapper.classList.toggle("hidden", event.target.value === "off");
+      if (event.target.value === "off") {
+        _CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateCropperState(false);
+      } else {
+        _CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateCropperState(true);
+      }
+    }
   }]);
 }();
-function _detectChoiceEvents() {
-  var _this2 = this;
-  this.choices.forEach(function (choice) {
-    choice.addEventListener("change", function (event) {
-      return _assertClassBrand(_CropperEventHandler_brand, _this2, _handleUrlInputToggle).call(_this2, event, _this2);
-    });
-  });
-}
-function _handleUrlInputToggle(event) {
-  var url_wrapper = document.getElementById("js_url_setting");
-  url_wrapper.classList.toggle("hidden", event.target.value === "off");
-  if (event.target.value === "off") {
-    _CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateCropperState(false);
-  } else {
-    _CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateCropperState(true);
-  }
-}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CropperEventHandler);
 
 /***/ }),
@@ -7309,26 +7739,22 @@ var CropperOverlay = /*#__PURE__*/function () {
     value:
     // オーバーレイ要素の表示状態を制御するメソッド
     function setVisibility(isVisible) {
-      try {
-        // 表示状態に応じたスタイル値を設定
-        var displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE : CropperOverlay.STYLES.HIDDEN;
-        var backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR;
+      // 表示状態に応じたスタイル値を設定
+      var displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE : CropperOverlay.STYLES.HIDDEN;
+      var backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR;
 
-        // 複数要素（lines, points, dots）を一括で処理するための配列
-        var targetElements = [_classPrivateFieldGet(_overlayElements, this).lines, _classPrivateFieldGet(_overlayElements, this).points, _classPrivateFieldGet(_overlayElements, this).dots];
+      // 複数要素（lines, points, dots）を一括で処理するための配列
+      var targetElements = [_classPrivateFieldGet(_overlayElements, this).lines, _classPrivateFieldGet(_overlayElements, this).points, _classPrivateFieldGet(_overlayElements, this).dots];
 
-        // 各要素グループの表示/非表示を切り替え
-        targetElements.forEach(function (elements) {
-          elements.forEach(function (element) {
-            element.style.display = displayStyle;
-          });
+      // 各要素グループの表示/非表示を切り替え
+      targetElements.forEach(function (elements) {
+        elements.forEach(function (element) {
+          element.style.display = displayStyle;
         });
+      });
 
-        // 背景の切り替え
-        _classPrivateFieldGet(_overlayElements, this).selectedArea.style.backgroundColor = backgroundColor;
-      } catch (e) {
-        console.log(e);
-      }
+      // 背景の切り替え
+      _classPrivateFieldGet(_overlayElements, this).selectedArea.style.backgroundColor = backgroundColor;
     }
   }], [{
     key: "updateCropperState",
@@ -7337,7 +7763,6 @@ var CropperOverlay = /*#__PURE__*/function () {
       var cropperContainer = document.querySelector(".cropper-container");
       var cropperBox = document.querySelector(".cropper-crop-box");
       if (!cropper || !cropperContainer || !cropperBox) {
-        console.error("Cropper elements not found in the DOM");
         return;
       }
       if (isEnabled) {
@@ -7434,13 +7859,6 @@ var CropperState = /*#__PURE__*/function () {
   }, {
     key: "getState",
     value: function getState() {
-      // console.log({
-      //       xPercent: this.xPercent,
-      //       yPercent :this.yPercent,
-      //       widthPercent : this.widthPercent ,
-      //       heightPercent :this.heightPercent 
-      // });
-
       return {
         xPercent: this.xPercent,
         yPercent: this.yPercent,
@@ -7509,7 +7927,7 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
       return _ref.apply(this, arguments);
     };
   }())["catch"](function (error) {
-    console.log(error);
+    console.error(error);
   });
 };
 var fetchGetOperation = function fetchGetOperation(url) {
@@ -7670,10 +8088,8 @@ var FileUploader = /*#__PURE__*/function () {
               return _context.abrupt("return");
             case 3:
               if (document.querySelector(".image_edit_modal").classList.contains("hidden")) {
-                console.log("contain");
                 _assertClassBrand(_FileUploader_brand, this, _toggleLoader).call(this, true);
               } else {
-                console.log("not contain");
                 _assertClassBrand(_FileUploader_brand, this, _toggleLoaderforChangeImg).call(this, true);
               }
 
@@ -8229,14 +8645,11 @@ var FormDataStateManager = /*#__PURE__*/function () {
     key: "removeItem",
     value: function removeItem(index) {
       this.formDataArray.splice(index, 1); // 配列からindex番目を削除  
-
-      console.log(this.formDataArray.length + "length");
     }
   }, {
     key: "resetItem",
     value: function resetItem() {
       this.formDataArray.length = 0; // 配列を空にする
-      console.log(this.formDataArray);
     }
 
     /**
@@ -8248,7 +8661,6 @@ var FormDataStateManager = /*#__PURE__*/function () {
     key: "setItem",
     value: function setItem(index, data) {
       this.formDataArray[index] = data;
-      console.log("State after setItem: ", this.formDataArray);
     }
   }]);
 }();
@@ -12776,7 +13188,7 @@ function hasBinary(obj, toJSON) {
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
+/******/ 			id: moduleId,
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
@@ -12789,6 +13201,18 @@ function hasBinary(obj, toJSON) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -12827,6 +13251,11 @@ function hasBinary(obj, toJSON) {
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/nonce */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nc = undefined;
 /******/ 	})();
 /******/ 	
 /************************************************************************/

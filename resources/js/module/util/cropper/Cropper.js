@@ -11,9 +11,6 @@ class Cropper {
             this.cropperInstance = null; // Cropper.js インスタンスを保持
             this.changeBtn = changeBtn;
             this.choices = document.getElementsByName('choice')
-            // Cropper内メソッド、プロパティすべてをthisで受け渡す
-            this.cropperHandler = new CropperEventHandler(this.changeBtn, this)
-            this.cropperHandler.initializeEvents()
             this.cropperState = null;
       }
 
@@ -39,7 +36,22 @@ class Cropper {
             this.image = newImage;
 
             // 新しい Cropper インスタンスを作成
-            this.resizeImage();
+            this.choices.forEach((choice)=>{
+                  const newChoice = choice.cloneNode(true); // 元の要素を複製
+                  choice.replaceWith(newChoice); // 新しい要素と置き換え
+
+                  newChoice.addEventListener("change", (e)=>{
+                        CropperEventHandler.handleUrlInputToggle(e)
+                        if(e.target.value === "on"){
+                              this.resizeImage();
+                        }else{
+                              if(this.cropperInstance){
+                                    this.destroyCropper()
+                              }
+                              
+                        }
+                  })
+            })
       }
 
       resizeImage() {
@@ -61,17 +73,21 @@ class Cropper {
 
       getCropperArea(){
             try{
+                  if(this.cropperInstance){
+                        const cropBoxData = this.cropperInstance.getCropBoxData(); // 最終的な選択範囲
+                        const containerData = this.cropperInstance.getContainerData(); // コンテナのデータ
+                        const imageData = this.cropperInstance.getImageData(); // 画像全体の情報
+            
+                        // 選択範囲の位置とサイズを画像全体に対する割合（%）で計算し保存
+                        this.cropperState = new CropperState(cropBoxData, imageData, containerData);
+                        this.cropperState.updatePercentage()
+                        return this.cropperState.getState()
+                  }
 
-                  const cropBoxData = this.cropperInstance.getCropBoxData(); // 最終的な選択範囲
-                  const containerData = this.cropperInstance.getContainerData(); // コンテナのデータ
-                  const imageData = this.cropperInstance.getImageData(); // 画像全体の情報
-      
-                  // 選択範囲の位置とサイズを画像全体に対する割合（%）で計算し保存
-                  this.cropperState = new CropperState(cropBoxData, imageData, containerData);
-                  this.cropperState.updatePercentage()
-                  return this.cropperState.getState()
             }catch(error){
-                  alert("画像リンク指定でエラーが発生しました。再度実行してくださう。")
+                  console.log(error);
+                  
+                  alert("画像リンク指定でエラーが発生しました。再度実行してください。")
             }
       }
 

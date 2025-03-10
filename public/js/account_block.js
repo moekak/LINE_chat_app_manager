@@ -2274,8 +2274,25 @@ __webpack_require__.r(__webpack_exports__);
 var SYSTEM_URL = {
   IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
   FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId"
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat-system.info/api/chat",
+  CHAT_BASE_URL: "https://chat-system.info"
 };
+
+// // 開発用
+// export default {
+//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
+
+// };
+
+// // 開発用
+// export const SYSTEM_URL = {
+//     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/api/chat",
+//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+// };
 
 /***/ }),
 
@@ -2705,18 +2722,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch)
 /* harmony export */ });
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
+/* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config/config.js */ "./resources/js/config/config.js");
+
 
 var createMessageRowForFetch = function createMessageRowForFetch(res, admin_account_id, sender_uuid) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
   var latestMessageDate = res["latest_message_date"] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["latest_message_date"]) : "";
   var display = res["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"https://chat-system.info/api/chat\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
@@ -2738,7 +2757,7 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
     return category.status !== status;
   }).map(function (category) {
     return "\n                                                <li class=\"dropdown-item js_status_choices\" \n                                                      data-current-status=\"".concat(status, "\"\n                                                      data-status-name=\"").concat(category.status, "\"\n                                                      data-status-id=\"").concat(category.id, "\"\n                                                      data-account-id=\"").concat(res["id"], "\">\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
-  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"https://chat-manager.info/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 
 /***/ }),
@@ -3046,19 +3065,19 @@ var FormController = /*#__PURE__*/function () {
       document.querySelector(".js_image_error").classList.add("hidden");
       choices.forEach(function (choice) {
         if (choice.value === "off") {
-          choice.checked = false;
-        } else {
           choice.checked = true;
+        } else {
+          choice.checked = false;
         }
       });
       var url_wrapper = document.getElementById("js_url_setting");
-      url_wrapper.classList.remove("hidden");
+      url_wrapper.classList.add("hidden");
       buttton.classList.add("disabled_btn");
       if (buttton.innerHTML === "選択範囲変更") {
         buttton.style.backgroundColor = "#fff";
         buttton.innerHTML = "選択範囲確定";
       }
-      submitButton.classList.add("disabled_btn");
+      submitButton.classList.remove("disabled_btn");
       inputFiled.value = "";
     }
   }, {
@@ -3082,7 +3101,6 @@ var FormController = /*#__PURE__*/function () {
           textInput.classList.toggle("hidden", e.target.value === "0");
           if (e.target.value === "0") {
             textElement.value = "";
-            console.log(textElement);
           }
         });
       });
@@ -3213,26 +3231,22 @@ var CropperOverlay = /*#__PURE__*/function () {
     value:
     // オーバーレイ要素の表示状態を制御するメソッド
     function setVisibility(isVisible) {
-      try {
-        // 表示状態に応じたスタイル値を設定
-        var displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE : CropperOverlay.STYLES.HIDDEN;
-        var backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR;
+      // 表示状態に応じたスタイル値を設定
+      var displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE : CropperOverlay.STYLES.HIDDEN;
+      var backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR;
 
-        // 複数要素（lines, points, dots）を一括で処理するための配列
-        var targetElements = [_classPrivateFieldGet(_overlayElements, this).lines, _classPrivateFieldGet(_overlayElements, this).points, _classPrivateFieldGet(_overlayElements, this).dots];
+      // 複数要素（lines, points, dots）を一括で処理するための配列
+      var targetElements = [_classPrivateFieldGet(_overlayElements, this).lines, _classPrivateFieldGet(_overlayElements, this).points, _classPrivateFieldGet(_overlayElements, this).dots];
 
-        // 各要素グループの表示/非表示を切り替え
-        targetElements.forEach(function (elements) {
-          elements.forEach(function (element) {
-            element.style.display = displayStyle;
-          });
+      // 各要素グループの表示/非表示を切り替え
+      targetElements.forEach(function (elements) {
+        elements.forEach(function (element) {
+          element.style.display = displayStyle;
         });
+      });
 
-        // 背景の切り替え
-        _classPrivateFieldGet(_overlayElements, this).selectedArea.style.backgroundColor = backgroundColor;
-      } catch (e) {
-        console.log(e);
-      }
+      // 背景の切り替え
+      _classPrivateFieldGet(_overlayElements, this).selectedArea.style.backgroundColor = backgroundColor;
     }
   }], [{
     key: "updateCropperState",
@@ -3241,7 +3255,6 @@ var CropperOverlay = /*#__PURE__*/function () {
       var cropperContainer = document.querySelector(".cropper-container");
       var cropperBox = document.querySelector(".cropper-crop-box");
       if (!cropper || !cropperContainer || !cropperBox) {
-        console.error("Cropper elements not found in the DOM");
         return;
       }
       if (isEnabled) {
@@ -3340,7 +3353,7 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
       return _ref.apply(this, arguments);
     };
   }())["catch"](function (error) {
-    console.log(error);
+    console.error(error);
   });
 };
 var fetchGetOperation = function fetchGetOperation(url) {
@@ -3580,14 +3593,11 @@ var FormDataStateManager = /*#__PURE__*/function () {
     key: "removeItem",
     value: function removeItem(index) {
       this.formDataArray.splice(index, 1); // 配列からindex番目を削除  
-
-      console.log(this.formDataArray.length + "length");
     }
   }, {
     key: "resetItem",
     value: function resetItem() {
       this.formDataArray.length = 0; // 配列を空にする
-      console.log(this.formDataArray);
     }
 
     /**
@@ -3599,7 +3609,6 @@ var FormDataStateManager = /*#__PURE__*/function () {
     key: "setItem",
     value: function setItem(index, data) {
       this.formDataArray[index] = data;
-      console.log("State after setItem: ", this.formDataArray);
     }
   }]);
 }();

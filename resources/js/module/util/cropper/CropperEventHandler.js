@@ -7,18 +7,18 @@ class CropperEventHandler{
             this.cropper = cropper
       }
 
-      // 画像編集に関連する全てのイベントリスナーを初期化
-      initializeEvents(){
-            this.#detectChoiceEvents()
-      }
+      // // 画像編集に関連する全てのイベントリスナーを初期化
+      // initializeEvents(){
+      //       this.#detectChoiceEvents()
+      // }
 
-      // URLソース選択（ラジオボタン）の変更を監視
-      // 選択状態に応じてURL入力欄の表示/非表示を切り替える
-      #detectChoiceEvents(){
-            this.choices.forEach((choice)=>{
-                  choice.addEventListener("change", (event) => this.#handleUrlInputToggle(event, this))
-            })
-      }
+      // // URLソース選択（ラジオボタン）の変更を監視
+      // // 選択状態に応じてURL入力欄の表示/非表示を切り替える
+      // #detectChoiceEvents(){
+      //       this.choices.forEach((choice)=>{
+      //             choice.addEventListener("change", (event) => this.#handleUrlInputToggle(event, this))
+      //       })
+      // }
 
       // 画像変更ボタンのクリックイベントを監視
       // クリック時にCropperの編集モードを開始
@@ -38,7 +38,7 @@ class CropperEventHandler{
       }
 
       // URL変更要素の表示切替
-      #handleUrlInputToggle(event) {
+      static handleUrlInputToggle(event) {
             const url_wrapper = document.getElementById("js_url_setting");
             url_wrapper.classList.toggle("hidden", event.target.value === "off");
 

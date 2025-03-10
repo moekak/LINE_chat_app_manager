@@ -16,14 +16,14 @@ class FormController{
 
         choices.forEach((choice)=>{
             if(choice.value === "off"){
-                choice.checked = false
-            }else{
                 choice.checked = true
+            }else{
+                choice.checked = false
             }
         })
 
         const url_wrapper = document.getElementById("js_url_setting");
-        url_wrapper.classList.remove("hidden")
+        url_wrapper.classList.add("hidden")
 
         buttton.classList.add("disabled_btn")
         if(buttton.innerHTML === "選択範囲変更"){
@@ -32,7 +32,7 @@ class FormController{
             buttton.innerHTML = "選択範囲確定"
         }
 
-        submitButton.classList.add("disabled_btn")
+        submitButton.classList.remove("disabled_btn")
         inputFiled.value = ""
 
     }
