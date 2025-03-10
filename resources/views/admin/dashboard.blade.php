@@ -497,11 +497,11 @@
             <p class="url_setting_txt">タップ時アクションの利用</p>
             <div class="radio_btn">
                   <div class="form-check">
-                        <input class="form-check-input" value="off" type="radio" name="choice" id="flexRadioDefault1">
+                        <input class="form-check-input" value="off" type="radio" name="choice" id="flexRadioDefault1" checked>
                         <label class="form-check-label" for="flexRadioDefault1">利用しない</label>
                   </div>
                   <div class="form-check">
-                        <input class="form-check-input" value="on" type="radio" name="choice" id="flexRadioDefault2" checked>
+                        <input class="form-check-input" value="on" type="radio" name="choice" id="flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">利用する</label>
                   </div> 
             </div>

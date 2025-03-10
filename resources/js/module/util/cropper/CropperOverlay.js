@@ -60,7 +60,6 @@ class CropperOverlay {
             const cropperBox = document.querySelector(".cropper-crop-box");
 
             if (!cropper || !cropperContainer || !cropperBox) {
-                  console.error("Cropper elements not found in the DOM");
                   return;
             }
 

@@ -3,7 +3,7 @@ import { SYSTEM_URL } from "../../../config/config.js";
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
 import { open_modal } from "../../component/modalOperation.js";
-import ButtonController from "../../component/ui/ButttonController.js";
+import ButtonController from "../../component/ui/ButtonController.js";
 import FormController from "../../component/ui/FormController.js";
 import Cropper from "../cropper/Cropper.js";
 import CropperEventHandler from "../cropper/CropperEventHandler.js";
