@@ -209,7 +209,7 @@ export const initializeAccountStatusManager =()=>{
                   let account_id = e.currentTarget.getAttribute("data-account-id")
                   let current_status_name = e.currentTarget.getAttribute("data-current-status")
 
-                  // もし変更後のステータスが使用中の場合
+                  // もし変更するのステータスが使用中の場合
                   if(current_status_name == "使用中"){
                         open_modal(loader)
                         fetchGetOperation(`/api/account/${account_id}`)

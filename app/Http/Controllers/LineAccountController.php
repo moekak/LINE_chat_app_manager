@@ -6,13 +6,16 @@ use App\Http\Requests\CreateLineAccountRequest;
 use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
 use App\Models\BlockChatUser;
+use App\Models\ChatIdentity;
 use App\Models\ChatUser;
 use App\Models\GreetingMessage;
 use App\Models\LineAccount;
 use App\Models\LineDisplayText;
+use App\Models\ManagerChatAccess;
 use App\Models\PageTitle;
 use App\Models\SecondAccount;
 use App\Models\UserEntity;
+use App\Services\MessageIdentity;
 use App\Services\MessageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -258,7 +261,6 @@ class LineAccountController extends Controller
                 // 予備アカウントをIDを使用し手取得する
                 $second_line_account    = LineAccount::where("id", $second_account_id)->first();
 
-                Log::debug($second_line_account);
                 $second_line_account->update(["account_status" => "1"]);
             }
             $is_success = true;
