@@ -315,66 +315,86 @@ class BroadcastMessageOperator{
     }
 
     async submitBroadcastMessageToServer(){
-        const admin_id = document.getElementById("js_account_id").value
-        const loader = document.querySelector(".loader")
-        const modal = document.querySelector(".broadcasting_message_modal")
-        modal.classList.add("hidden")
-        open_modal(loader)
+        try{
+            const admin_id = document.getElementById("js_account_id").value
+            const loader = document.querySelector(".loader")
+            const modal = document.querySelector(".broadcasting_message_modal")
+            modal.classList.add("hidden")
+            open_modal(loader)
 
-        const formData = this.prepareBroadcastFormData()
+            const formData = this.prepareBroadcastFormData()
 
-        const response = await fetch(`${this.baseUrl}/${admin_id}`, {
-            method: 'POST',
-            body: formData,
-        })
+            const response = await fetch(`${this.baseUrl}/${admin_id}`, {
+                method: 'POST',
+                body: formData,
+            })
 
-        if (!response.ok) {
-            alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
+            if (!response.ok) {
+                alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
+            }
+
+            const data = await response.json(); // レスポンスをJSONに変換
+            return data; // JSONデータを返す
+        }catch(error){
+            console.log(error);
+            
         }
 
-        const data = await response.json(); // レスポンスをJSONに変換
-        return data; // JSONデータを返す
     }
 
     async emitBroadcastMessageToSocket(){
+        try{
+            const response = await this.submitBroadcastMessageToServer()
 
-        const response = await this.submitBroadcastMessageToServer()
+            // モーダルをloaderを閉じる処理
+            document.getElementById("js_messageSetting_modal").classList.add("hidden")
+            document.querySelector(".bg").classList.add("hidden")
+            const admin_id = document.getElementById("js_account_id").value
+            const loader = document.querySelector(".loader")
+            loader.classList.add("hidden")
+            
+            // 成功メッセージを出す処理
+            const success_el = document.getElementById("js_alert_success")
+            success_el.style.display = "block";
+            success_el.innerHTML = this.isGreeting ? "初回挨拶メッセージの設定に成功しました。" : "一斉送信に成功しました"
+            document.querySelector(".js_message_input").value = ""
+            FormController.initializeFileUpload()
+            document.querySelector(".js_accordion_wrapper").innerHTML = ""
+    
+            // 成功メッセージを出して2秒後に批評にする
+            setTimeout(() => {
+                success_el.style.display = "none"
+            }, 2000);
+    
+    
+            if(this.isGreeting){
+                return
+            }
+            const {created_at, data} = response
 
-        // モーダルをloaderを閉じる処理
-        document.getElementById("js_messageSetting_modal").classList.add("hidden")
-        document.querySelector(".bg").classList.add("hidden")
-        const admin_id = document.getElementById("js_account_id").value
-        const loader = document.querySelector(".loader")
-        loader.classList.add("hidden")
-        
-        // 成功メッセージを出す処理
-        const success_el = document.getElementById("js_alert_success")
-        success_el.style.display = "block";
-        success_el.innerHTML = this.isGreeting ? "初回挨拶メッセージの設定に成功しました。" : "一斉送信に成功しました"
-        document.querySelector(".js_message_input").value = ""
-        FormController.initializeFileUpload()
-        document.querySelector(".js_accordion_wrapper").innerHTML = ""
+            console.log(response);
+            
+    
+            // formDataをリセットする
+            formDataStateManager.resetItem()
+    
+            indexStateManager.resetState()
 
-        // 成功メッセージを出して2秒後に批評にする
-        setTimeout(() => {
-            success_el.style.display = "none"
-        }, 2000);
-
-
-        if(this.isGreeting){
-            return
+            console.log("2222");
+            
+            socket.emit("broadcast message", {
+                sendingDatatoBackEnd: data,
+                admin_id: admin_id,
+                created_at: created_at,
+            });
+            console.log("oo");
+            
+        }catch(error){
+            console.log(error);
+            
         }
-        const {created_at, data} = response
 
-        // formDataをリセットする
-        formDataStateManager.resetItem()
 
-        indexStateManager.resetState()
-        socket.emit("broadcast message", {
-            sendingDatatoBackEnd: data,
-            admin_id: admin_id,
-            created_at: created_at,
-        });
     }
 
 }

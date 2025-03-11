@@ -2268,31 +2268,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  socketUrl: 'https://chat-socket.info:3000'
-});
-var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-  CHAT_URL: "https://chat-system.info/api/chat",
-  CHAT_BASE_URL: "https://chat-system.info"
-};
-
-// // 開発用
 // export default {
-//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
+//     socketUrl: 'https://chat-socket.info:3000',
 
 // };
 
-// // 開発用
 // export const SYSTEM_URL = {
 //     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
 //     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
 //     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/api/chat",
-//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+//     CHAT_URL : "https://chat-system.info/api/chat",
+//     CHAT_BASE_URL:"https://chat-system.info"
 // };
+
+// // 開発用
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
+});
+
+// // 開発用
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat.line-chat-system-dev.tokyo/api/chat",
+  CHAT_BASE_URL: "https://chat.line-chat-system-dev.tokyo"
+};
 
 /***/ }),
 
@@ -2599,7 +2600,7 @@ var initializeAccountStatusManager = function initializeAccountStatusManager() {
       var account_id = e.currentTarget.getAttribute("data-account-id");
       var current_status_name = e.currentTarget.getAttribute("data-current-status");
 
-      // もし変更後のステータスが使用中の場合
+      // もし変更するのステータスが使用中の場合
       if (current_status_name == "使用中") {
         (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_7__.open_modal)(loader);
         (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/api/account/".concat(account_id)).then(function (res) {
