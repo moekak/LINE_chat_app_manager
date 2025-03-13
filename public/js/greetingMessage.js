@@ -5998,7 +5998,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // // 開発用
 var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+  IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
   FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
   FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
   CHAT_URL: "https://chat.line-chat-system-dev.tokyo/api/chat",
@@ -7089,6 +7089,7 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
   var broadcasting_modal = document.getElementById("js_messageSetting_modal");
   sending_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
+      document.querySelector(".js_message_submit_btn").classList.add("disabled_btn");
       _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].resetState();
       _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].resetItem();
       e.preventDefault();
