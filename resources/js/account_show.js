@@ -5,6 +5,7 @@ import socket, { registerUser } from "./module/util/socket.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
 import { initializeUserModals } from "./module/component/modalInitializers.js";
 import FormController from "./module/component/ui/FormController.js";
+import { createMessageRowForFetch } from "./module/component/elementTemplate.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -22,6 +23,13 @@ socket.on("chat message", async (actual_sender_id, actual_receiver_id, sender_ty
 socket.on("send_image",async  (sender_id, receiver_id, sender_type)=>{
       // メッセージカウントの表示をリアルタイムで更新する
       await changeDisplayOrder(sender_id, receiver_id, sender_type)
+})
+
+socket.on('user create', async(userData)=>{
+      const parentElement = document.querySelector(".js_table");
+      parentElement.insertAdjacentHTML("afterBegin",createMessageRowForFetch(userData, userData["account_id"], userData["entity_uuid"]));
+      initializeUserModals(socket)
+      await handleChatRedirect()
 })
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
