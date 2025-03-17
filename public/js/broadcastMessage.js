@@ -5978,31 +5978,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  socketUrl: 'https://chat-socket.info:3000'
-});
-var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-  CHAT_URL: "https://chat-system.info/api/chat",
-  CHAT_BASE_URL: "https://chat-system.info"
-};
-
-// // 開発用
 // export default {
-//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
+//     socketUrl: 'https://chat-socket.info:3000',
 
 // };
 
-// // 開発用
 // export const SYSTEM_URL = {
 //     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
 //     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
 //     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/api/chat",
-//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+//     CHAT_URL : "https://chat-system.info/api/chat",
+//     CHAT_BASE_URL:"https://chat-system.info"
 // };
+
+// // 開発用
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
+});
+
+// // 開発用
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat.line-chat-system-dev.tokyo/api/chat",
+  CHAT_BASE_URL: "https://chat.line-chat-system-dev.tokyo"
+};
 
 /***/ }),
 
@@ -6371,7 +6372,7 @@ var initializeAccountStatusManager = function initializeAccountStatusManager() {
       var account_id = e.currentTarget.getAttribute("data-account-id");
       var current_status_name = e.currentTarget.getAttribute("data-current-status");
 
-      // もし変更後のステータスが使用中の場合
+      // もし変更するのステータスが使用中の場合
       if (current_status_name == "使用中") {
         (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_7__.open_modal)(loader);
         (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/api/account/".concat(account_id)).then(function (res) {
@@ -6673,32 +6674,37 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
+              _context.prev = 0;
               admin_id = document.getElementById("js_account_id").value;
               loader = document.querySelector(".loader");
               modal = document.querySelector(".broadcasting_message_modal");
               modal.classList.add("hidden");
               (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_5__.open_modal)(loader);
               formData = this.prepareBroadcastFormData();
-              _context.next = 8;
+              _context.next = 9;
               return fetch("".concat(this.baseUrl, "/").concat(admin_id), {
                 method: 'POST',
                 body: formData
               });
-            case 8:
+            case 9:
               response = _context.sent;
               if (!response.ok) {
                 alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
               }
-              _context.next = 12;
+              _context.next = 13;
               return response.json();
-            case 12:
+            case 13:
               data = _context.sent;
               return _context.abrupt("return", data);
-            case 14:
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](0);
+              console.log(_context.t0);
+            case 20:
             case "end":
               return _context.stop();
           }
-        }, _callee, this);
+        }, _callee, this, [[0, 17]]);
       }));
       function submitBroadcastMessageToServer() {
         return _submitBroadcastMessageToServer.apply(this, arguments);
@@ -6713,9 +6719,10 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              _context2.prev = 0;
+              _context2.next = 3;
               return this.submitBroadcastMessageToServer();
-            case 2:
+            case 3:
               response = _context2.sent;
               // モーダルをloaderを閉じる処理
               document.getElementById("js_messageSetting_modal").classList.add("hidden");
@@ -6737,24 +6744,35 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
                 success_el.style.display = "none";
               }, 2000);
               if (!this.isGreeting) {
-                _context2.next = 17;
+                _context2.next = 18;
                 break;
               }
               return _context2.abrupt("return");
-            case 17:
-              created_at = response.created_at, data = response.data; // formDataをリセットする
+            case 18:
+              created_at = response.created_at, data = response.data;
+              console.log(response);
+
+              // formDataをリセットする
               _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].resetItem();
               _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].resetState();
+              console.log("2222");
               _util_socket_js__WEBPACK_IMPORTED_MODULE_0__["default"].emit("broadcast message", {
                 sendingDatatoBackEnd: data,
                 admin_id: admin_id,
                 created_at: created_at
               });
-            case 21:
+              console.log("oo");
+              _context2.next = 30;
+              break;
+            case 27:
+              _context2.prev = 27;
+              _context2.t0 = _context2["catch"](0);
+              console.log(_context2.t0);
+            case 30:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, this);
+        }, _callee2, this, [[0, 27]]);
       }));
       function emitBroadcastMessageToSocket() {
         return _emitBroadcastMessageToSocket.apply(this, arguments);
@@ -7071,6 +7089,7 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
   var broadcasting_modal = document.getElementById("js_messageSetting_modal");
   sending_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
+      document.querySelector(".js_message_submit_btn").classList.add("disabled_btn");
       _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].resetState();
       _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].resetItem();
       e.preventDefault();
@@ -7236,10 +7255,10 @@ var close_modal_by_click = function close_modal_by_click(modal, btn) {
 
 /***/ }),
 
-/***/ "./resources/js/module/component/ui/buttonController.js":
-/*!***************************************************************!*\
-  !*** ./resources/js/module/component/ui/buttonController.js ***!
-  \***************************************************************/
+/***/ "./resources/js/module/component/ui/ButtonController.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/module/component/ui/ButtonController.js ***!
+  \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7991,7 +8010,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
 /* harmony import */ var _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../component/broadcast/BroadcastMessageOperator.js */ "./resources/js/module/component/broadcast/BroadcastMessageOperator.js");
 /* harmony import */ var _component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _component_ui_buttonController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/buttonController.js */ "./resources/js/module/component/ui/buttonController.js");
+/* harmony import */ var _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/ButtonController.js */ "./resources/js/module/component/ui/ButtonController.js");
 /* harmony import */ var _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../cropper/Cropper.js */ "./resources/js/module/util/cropper/Cropper.js");
 /* harmony import */ var _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cropper/CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
@@ -8140,7 +8159,7 @@ var FileUploader = /*#__PURE__*/function () {
               reader = new FileReader();
               newImage = _assertClassBrand(_FileUploader_brand, this, _createImageElement).call(this, this.file);
               newImage.onload = function (e) {
-                var newImageButton = _component_ui_buttonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_change_area");
+                var newImageButton = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_change_area");
                 _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__["default"](_this.imageElement, newImageButton);
                 var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__["default"](newImageButton, _this.cropper);
                 cropperHandler.changeBtnEvent();

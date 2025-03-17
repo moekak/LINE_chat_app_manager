@@ -50,6 +50,7 @@ export const initializeBroadcastMessageModal = () =>{
 
       sending_btns.forEach((btn)=>{
             btn.addEventListener("click", (e)=>{
+                  document.querySelector(".js_message_submit_btn").classList.add("disabled_btn")
                   indexStateManager.resetState()
                   formDataStateManager.resetItem()
                   e.preventDefault()
