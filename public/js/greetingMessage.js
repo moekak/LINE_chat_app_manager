@@ -5991,7 +5991,7 @@ __webpack_require__.r(__webpack_exports__);
 //     CHAT_BASE_URL:"https://chat-system.info"
 // };
 
-// // 開発用
+// // // 開発用
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
 });
@@ -6749,30 +6749,25 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
               }
               return _context2.abrupt("return");
             case 18:
-              created_at = response.created_at, data = response.data;
-              console.log(response);
-
-              // formDataをリセットする
+              created_at = response.created_at, data = response.data; // formDataをリセットする
               _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].resetItem();
               _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].resetState();
-              console.log("2222");
               _util_socket_js__WEBPACK_IMPORTED_MODULE_0__["default"].emit("broadcast message", {
                 sendingDatatoBackEnd: data,
                 admin_id: admin_id,
                 created_at: created_at
               });
-              console.log("oo");
-              _context2.next = 30;
+              _context2.next = 27;
               break;
-            case 27:
-              _context2.prev = 27;
+            case 24:
+              _context2.prev = 24;
               _context2.t0 = _context2["catch"](0);
               console.log(_context2.t0);
-            case 30:
+            case 27:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, this, [[0, 27]]);
+        }, _callee2, this, [[0, 24]]);
       }));
       function emitBroadcastMessageToSocket() {
         return _emitBroadcastMessageToSocket.apply(this, arguments);

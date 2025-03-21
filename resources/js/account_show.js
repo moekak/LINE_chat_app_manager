@@ -32,6 +32,24 @@ socket.on('user create', async(userData)=>{
       await handleChatRedirect()
 })
 
+// socket.on("message read", (adminUuid, userUuid)=>{
+//       const wrappers = document.querySelectorAll(".js_chatUser_id")
+//       wrappers.forEach((wrapper)=>{
+
+//             console.log(wrapper);
+            
+//             if(wrapper.getAttribute("data-id") === userUuid){
+//                   wrapper.querySelector(".js_message_count").innerHTML = "0"
+//                   wrapper.querySelector(".js_message_count").style.display = "none"
+
+//             }
+//       })
+//       console.log(`adminUuid: ${adminUuid}`);
+//       console.log(`userUuid: ${userUuid}`);
+      
+// })
+
+
 // ページがロードされた後に5秒待ってメッセージを非表示にする
 document.addEventListener("DOMContentLoaded", function () {
       var alert = document.getElementById("js_alert_success");

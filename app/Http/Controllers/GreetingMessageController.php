@@ -18,8 +18,6 @@ class GreetingMessageController extends Controller
         // インスタンスを作成
         try{
 
-            Log::debug("greeting");
-
             DB::beginTransaction();
             $validated = $request->all();
             $savingData = [];

@@ -11,7 +11,7 @@
 //     CHAT_BASE_URL:"https://chat-system.info"
 // };
 
-// // 開発用
+// // // 開発用
 export default {
     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
     

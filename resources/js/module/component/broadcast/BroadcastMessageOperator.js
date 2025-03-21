@@ -371,23 +371,19 @@ class BroadcastMessageOperator{
                 return
             }
             const {created_at, data} = response
-
-            console.log(response);
-            
     
             // formDataをリセットする
             formDataStateManager.resetItem()
     
             indexStateManager.resetState()
 
-            console.log("2222");
-            
+
             socket.emit("broadcast message", {
                 sendingDatatoBackEnd: data,
                 admin_id: admin_id,
                 created_at: created_at,
             });
-            console.log("oo");
+    
             
         }catch(error){
             console.log(error);

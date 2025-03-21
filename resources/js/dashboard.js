@@ -47,6 +47,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+
+// socket.on("message read", (adminUuid, userUuid, unreadCount)=>{
+//     const wrappers = document.querySelectorAll(".js_account_id")
+//     wrappers.forEach((wrapper)=>{
+//         if(wrapper.getAttribute("data-id") === adminUuid){
+//             const current_count = Number(wrapper.querySelector(".js_total_count").innerHTML)
+//             wrapper.querySelector(".js_total_count").innerHTML = current_count - unreadCount
+
+//             if(Number(wrapper.querySelector(".js_total_count").innerHTML) <= 0){
+//                 wrapper.querySelector(".js_total_count").style.display = "none"
+//             }
+
+//         }
+//     })
+
+    
+// })
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "user")
   // サーバーへの接続確認

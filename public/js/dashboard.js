@@ -2281,7 +2281,7 @@ __webpack_require__.r(__webpack_exports__);
 //     CHAT_BASE_URL:"https://chat-system.info"
 // };
 
-// // 開発用
+// // // 開発用
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
 });
@@ -8381,6 +8381,21 @@ document.addEventListener("DOMContentLoaded", function () {
       alert.style.display = "none";
     }, 4000); // フェードアウトの完了を待って非表示にする
   }
+});
+_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"].on("message read", function (adminUuid, userUuid, unreadCount) {
+  var wrappers = document.querySelectorAll(".js_account_id");
+  wrappers.forEach(function (wrapper) {
+    if (wrapper.getAttribute("data-id") === adminUuid) {
+      var current_count = Number(wrapper.querySelector(".js_total_count").innerHTML);
+      wrapper.querySelector(".js_total_count").innerHTML = current_count - unreadCount;
+      if (Number(wrapper.querySelector(".js_total_count").innerHTML) <= 0) {
+        wrapper.querySelector(".js_total_count").style.display = "none";
+      }
+    }
+  });
+  console.log("adminUuid: ".concat(adminUuid));
+  console.log("userUuid: ".concat(userUuid));
+  console.log("unreadCount: ".concat(unreadCount));
 });
 var admin_id = document.getElementById("js_admin_account_id").value;
 (0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_3__.registerUser)(admin_id, "user");

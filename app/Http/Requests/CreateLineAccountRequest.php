@@ -69,7 +69,6 @@ class CreateLineAccountRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     // LINEのAPIを呼び出してトークンの有効性を確認
                     try {
-                        Log::debug($value);
                         $response = Http::withHeaders([
                             'Authorization' => 'Bearer ' . $value
                         ])->get('https://api.line.me/v2/bot/info');
