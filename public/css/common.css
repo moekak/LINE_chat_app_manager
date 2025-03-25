@@ -5,6 +5,14 @@
     --bg-dark-blue: #384042;
     --bg-dark-blue2: #5d696c;
     --bg-dark-blue-hover: #202526;
+    --primary-color: #4a6cf7;
+    --secondary-color: #6e8ef9;
+    --text-color: #333;
+    --border-color: #e1e1e1;
+    --background-color: #f9f9f9;
+    --modal-bg: #ffffff;
+    --danger-color: #f44336;
+    --success-color: #4CAF50;
 }
 
 body {
@@ -732,4 +740,347 @@ p, ul {
 
 .radio_button-style{
     cursor: pointer;
+}
+
+
+/* テンプレート作成モーダル */
+.template_modal{
+    max-height: 80vh;
+    overflow: auto;
+    padding: 0 !important;
+    width: 54%;
+}
+.template_modal::-webkit-scrollbar{
+    width: 0;
+}
+.preview-btn{
+    display: flex;
+    justify-content: end;
+}
+.modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    background-color: var(--modal-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 16px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-content {
+    padding: 24px;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* フォーム要素のスタイル */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.col {
+    flex: 1;
+}
+
+/* カテゴリ管理 */
+.category-management {
+    margin-bottom: 20px;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.category-item {
+    background-color: var(--background-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.delete-category {
+    margin-left: 6px;
+    cursor: pointer;
+    color: var(--danger-color);
+    font-size: 16px;
+}
+
+.add-category {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.add-category input {
+    flex: 1;
+}
+
+/* ファイルのアップロードエリア */
+.file-upload {
+    border: 2px dashed var(--border-color);
+    padding: 30px;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.file-upload:hover {
+    border-color: var(--secondary-color);
+    background-color: rgba(74, 108, 247, 0.05);
+}
+
+.file-upload p {
+    margin-top: 10px;
+    color: #666;
+}
+
+.upload-icon {
+    font-size: 36px;
+    color: var(--primary-color);
+}
+
+/* プレビューエリア */
+.preview-section {
+    margin-top: 24px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+}
+
+.preview-header {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.preview-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.preview-container {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 200px;
+}
+
+.preview-message {
+    max-width: 80%;
+    background-color: white;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-left: 12px;
+}
+
+.preview-message.with-image {
+    padding-bottom: 8px;
+}
+
+.preview-image {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+/* ボタン */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-cancel {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.btn-cancel:hover {
+    background-color: #e5e5e5;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+/* テンプレート一覧表示 */
+.template-list {
+    margin-top: 20px;
+}
+
+.template-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.template-content {
+    flex: 1;
+}
+
+.template-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.template-category {
+    display: inline-block;
+    background-color: var(--background-color);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.template-text {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+}
+
+.template-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.edit-btn:hover {
+    color: var(--primary-color);
+}
+
+.delete-btn:hover {
+    color: var(--danger-color);
 }

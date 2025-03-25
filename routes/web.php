@@ -18,6 +18,10 @@ Route::get('/healthcheck', function () {
     return response('OK', 200);
 });
 
+Route::get('/modal', function () {
+    return View("admin.modal");
+});
+
 
 
 Route::get("/", [LineAccountController::class, "index"])->name("dashboard")->middleware("auth");

@@ -162,6 +162,7 @@
 	</div>      
 </section>
 
+
 {{-- 一斉配信モーダル閉じる前の確認 --}}
 <section class="modal__container js_modal hidden" id="js_broadcast_confirm_modal" style="width: 500px;">
 	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">設定画面を閉じてよろしいですか？</h2>
@@ -288,6 +289,162 @@
 	</form>
 </section>
 
+{{-- テンプレート作成モーダル --}}
+<section class="modal__container template_modal js_modal js_loader" id="js_create_text_modal">
+	<!-- モーダルコンテナ -->
+    <div>
+        <!-- モーダルヘッダー -->
+        <div class="modal-header">
+            <h2>テンプレート作成</h2>
+            <button class="close-btn">&times;</button>
+        </div>
+        
+        <!-- モーダルコンテンツ -->
+        <div class="modal-content">
+            <!-- タブメニュー -->
+            <div class="tabs">
+                <div class="tab active">新規作成</div>
+                <div class="tab">一覧・編集</div>
+            </div>
+            
+            <!-- 新規作成フォーム -->
+            <div class="tab-content">
+                <div class="form-group">
+                    <label for="template-title">テンプレート名</label>
+                    <input type="text" id="template-title" placeholder="例: 挨拶文">
+                </div>
+                
+                <div class="category-management">
+                    <label>カテゴリ</label>
+                    <div class="category-list">
+                        <div class="category-item">挨拶 <span class="delete-category">&times;</span></div>
+                        <div class="category-item">問い合わせ <span class="delete-category">&times;</span></div>
+                        <div class="category-item">依頼 <span class="delete-category">&times;</span></div>
+                    </div>
+                    <div class="add-category">
+                        <input type="text" placeholder="新しいカテゴリを追加">
+                        <button class="btn btn-primary">追加</button>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="category-select">カテゴリを選択</label>
+                            <select id="category-select">
+                                <option value="">カテゴリを選択</option>
+                                <option value="greeting">挨拶</option>
+                                <option value="inquiry">問い合わせ</option>
+                                <option value="request">依頼</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="file-upload">
+                    <div class="upload-icon">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <p>画像をドラッグ＆ドロップ、または<br>クリックしてファイルを選択</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="template-message">テンプレートメッセージ</label>
+                    <textarea id="template-message" placeholder="例: お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。"></textarea>
+                </div>
+				<div class="preview-btn">
+					<button class="btn btn-primary">プレビュー</button>
+				</div>
+				
+                
+                <!-- プレビューセクション -->
+                <div class="preview-section hidden" id="js_template_preview">
+                    <div class="preview-header">
+                        <h3>プレビュー</h3>
+                        <div class="preview-toggle">
+                            <span>自動更新</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+                                <circle cx="16" cy="12" r="3"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="preview-container">
+                        <div class="preview-message with-image">
+                            <img src="/api/placeholder/400/300" alt="preview image" class="preview-image">
+                            <div>お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。</div>
+                        </div>
+                    </div>
+					<!-- ボタン -->
+					<div class="btn-container">
+						<button class="btn btn-cancel">キャンセル</button>
+						<button class="btn btn-primary">保存</button>
+					</div>
+                </div>
+                
+            </div>
+            
+            <!-- 一覧・編集タブ (初期状態では非表示) -->
+            <div class="tab-content" style="display: none;">
+                <div class="template-list">
+                    <!-- テンプレートアイテム -->
+                    <div class="template-item">
+                        <div class="template-content">
+                            <div class="template-title">挨拶文</div>
+                            <div class="template-category">挨拶</div>
+                            <div class="template-text">お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。</div>
+                        </div>
+                        <div class="template-actions">
+                            <button class="action-btn edit-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="action-btn delete-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="template-item">
+                        <div class="template-content">
+                            <div class="template-title">問い合わせ返信</div>
+                            <div class="template-category">問い合わせ</div>
+                            <div class="template-text">お問い合わせいただき、ありがとうございます。現在調査中ですので、もう少しお待ちください。</div>
+                        </div>
+                        <div class="template-actions">
+                            <button class="action-btn edit-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="action-btn delete-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @endsection
 
 
@@ -295,6 +452,39 @@
 @endsection
 
 @section('script')
+<script>
+	// タブ切り替え機能
+	const tabs = document.querySelectorAll('.tab');
+	const tabContents = document.querySelectorAll('.tab-content');
+	
+	tabs.forEach((tab, index) => {
+		tab.addEventListener('click', () => {
+			// アクティブタブの更新
+			tabs.forEach(t => t.classList.remove('active'));
+			tab.classList.add('active');
+			
+			// タブコンテンツの表示/非表示
+			tabContents.forEach(content => {
+				content.style.display = 'none';
+			});
+			tabContents[index].style.display = 'block';
+		});
+	});
+	
+	// テキストエリアの入力に応じてプレビューを更新
+	const templateMessage = document.getElementById('template-message');
+	const previewMessageText = document.querySelector('.preview-message div');
+	
+	templateMessage.addEventListener('input', () => {
+		previewMessageText.textContent = templateMessage.value || 'プレビューが表示されます';
+	});
+	
+	// クローズボタン
+	const closeBtn = document.querySelector('.close-btn');
+	closeBtn.addEventListener('click', () => {
+		document.querySelector('.modal-container').style.display = 'none';
+	});
+</script>
 
 @if ($errors->any())
 	@php

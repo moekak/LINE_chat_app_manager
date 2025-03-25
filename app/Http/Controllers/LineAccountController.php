@@ -5,19 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateLineAccountRequest;
 use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
-use App\Models\BlockChatUser;
-use App\Models\ChatIdentity;
 use App\Models\ChatUser;
-use App\Models\GreetingMessage;
 use App\Models\LineAccount;
 use App\Models\LineDisplayText;
-use App\Models\ManagerChatAccess;
 use App\Models\PageTitle;
 use App\Models\SecondAccount;
 use App\Models\UserEntity;
-use App\Services\MessageIdentity;
-use App\Services\MessageService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -136,24 +129,25 @@ class LineAccountController extends Controller
         $title = PageTitle::where("admin_id", $id)->first();
         $line_display_text = LineDisplayText::where("admin_id", $id)->select("id", "text", "is_show")->first();
 
-        $users = ChatUser::whereNotIn('id', function($query) {
-                // サブクエリ
-                $query->select('chat_user_id')
-                    ->from('block_chat_users')
-                    ->whereIn('id', function($subQuery) {
-                        $subQuery->select('id')
-                            ->from('block_chat_users')
-                            ->where("is_blocked", '1')
-                            ->latest()
-                            ->groupBy('chat_user_id');
-                    });
+        $users = ChatUser::whereNotIn('chat_users.id', function($query) {
+            $query->select('chat_user_id')
+                ->from('block_chat_users')
+                ->whereIn('id', function($subQuery) {
+                    $subQuery->select('id')
+                        ->from('block_chat_users')
+                        ->where("is_blocked", '1')
+                        ->latest()
+                        ->groupBy('chat_user_id');
+                });
             })
-            ->where('account_id', $id)
+            ->where('chat_users.account_id', $id)
+            ->leftJoin('user_message_reads', 'chat_users.id', '=', 'user_message_reads.chat_user_id')
             ->select([
                 'chat_users.account_id',
-                'chat_users.created_at', 
+                'chat_users.created_at',
                 'chat_users.line_name',
                 'chat_users.id',
+                DB::raw('COALESCE(user_message_reads.unread_count, 0) as unread_count')
             ])
             ->selectSub(
                 DB::table('user_entities')
@@ -164,24 +158,18 @@ class LineAccountController extends Controller
                 'entity_uuid'
             )
             ->selectSub(
-                DB::table('user_message_reads')
-                    ->select(DB::raw('COALESCE(unread_count, 0)'))
-                    ->whereColumn('chat_user_id', 'chat_users.id')
-                    ->limit(1),
-                'unread_count'
-            )
-            ->selectSub(
                 DB::table('message_summaries')
                     ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
                     ->whereRaw('admin_id = ?', [$id])
                     ->whereColumn('user_id', 'chat_users.id')
-                    ->limit(1),  // 最新の1件のみ取得
+                    ->limit(1),
                 'latest_message_date'
             )
-            ->orderBy('unread_count', 'desc')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('unread_count', 'desc') // 未読数が多い順に優先
+            ->orderBy('chat_users.created_at', 'desc') // 未読数が同じなら新しい順
             ->take(self::MESSAGES_PER_PAGE)
             ->get();
+    
         return view("admin.account_show", ["user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text]);
     }
 
