@@ -2719,8 +2719,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createAccountDataRow: () => (/* binding */ createAccountDataRow),
 /* harmony export */   createBroadcastMessageRow: () => (/* binding */ createBroadcastMessageRow),
+/* harmony export */   createImageBlock: () => (/* binding */ createImageBlock),
 /* harmony export */   createMessageRow: () => (/* binding */ createMessageRow),
-/* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch)
+/* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch),
+/* harmony export */   createTextBlock: () => (/* binding */ createTextBlock)
 /* harmony export */ });
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
 /* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config/config.js */ "./resources/js/config/config.js");
@@ -2760,6 +2762,12 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
     return "\n                                                <li class=\"dropdown-item js_status_choices\" \n                                                      data-current-status=\"".concat(status, "\"\n                                                      data-status-name=\"").concat(category.status, "\"\n                                                      data-status-id=\"").concat(category.id, "\"\n                                                      data-account-id=\"").concat(res["id"], "\">\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
   }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
+var createTextBlock = function createTextBlock() {
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <div class=\"handle\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"></line>\n                              <line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"></line>\n                              <line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"></line>\n                              <line x1=\"3\" y1=\"6\" x2=\"3.01\" y2=\"6\"></line>\n                              <line x1=\"3\" y1=\"12\" x2=\"3.01\" y2=\"12\"></line>\n                              <line x1=\"3\" y1=\"18\" x2=\"3.01\" y2=\"18\"></line>\n                        </svg>\n                  </div>\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\"></textarea>\n            </div>\n      ";
+};
+var createImageBlock = function createImageBlock() {
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <div class=\"handle\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"></line>\n                                    <line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"></line>\n                                    <line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"></line>\n                                    <line x1=\"3\" y1=\"6\" x2=\"3.01\" y2=\"6\"></line>\n                                    <line x1=\"3\" y1=\"12\" x2=\"3.01\" y2=\"12\"></line>\n                                    <line x1=\"3\" y1=\"18\" x2=\"3.01\" y2=\"18\"></line>\n                              </svg>\n                        </div>\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" accept=\"image/*\">\n                        <div class=\"image-placeholder\">\n                              <img src=\"/img/icons8-plus-50.png\" alt=\"\">\n                              <p>\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                        </div>\n                  </div>\n            </div>\n      ";
+};
 
 /***/ }),
 
@@ -2791,6 +2799,168 @@ var fetchSpecificUserInfo = function fetchSpecificUserInfo(e, modal) {
     (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleEditUserName)(res, modal);
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/module/component/messageTemplate/MessageTemplateOperator.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+var _MessageTemplateOperator_brand = /*#__PURE__*/new WeakSet();
+var MessageTemplateOperator = /*#__PURE__*/function () {
+  function MessageTemplateOperator() {
+    _classCallCheck(this, MessageTemplateOperator);
+    // テキストブロックを追加
+    _classPrivateMethodInitSpec(this, _MessageTemplateOperator_brand);
+    this.contentBlocks = document.getElementById('content-blocks');
+    this.addTextBtn = document.getElementById('add-text');
+    this.addImageBtn = document.getElementById('add-image');
+    this.previewContainer = document.getElementById('preview-container');
+    // カウンター（ユニークなIDを生成するため）
+    this.blockCounter = 3; // すでに2つのブロックがあるため3から開始
+    this.tabs = document.querySelectorAll('.tab');
+    this.tabContents = document.querySelectorAll('.tab-content');
+    this.initialize();
+  }
+  return _createClass(MessageTemplateOperator, [{
+    key: "initialize",
+    value: function initialize() {
+      var _this = this;
+      // 新しいブロックが追加されたときのためのMutationObserverを設定
+      var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            _assertClassBrand(_MessageTemplateOperator_brand, _this, _setupSortableBlocks).call(_this);
+          }
+        });
+      });
+      observer.observe(this.contentBlocks, {
+        childList: true
+      });
+      _assertClassBrand(_MessageTemplateOperator_brand, this, _setupSortableBlocks).call(this);
+      // タブ切り替え
+      _assertClassBrand(_MessageTemplateOperator_brand, this, _toggleTabs).call(this);
+      // ボタンのクリックイベントをセットアップ
+      this.addTextBtn.addEventListener('click', _assertClassBrand(_MessageTemplateOperator_brand, this, _addTextBlock).bind(this));
+      this.addImageBtn.addEventListener('click', _assertClassBrand(_MessageTemplateOperator_brand, this, _addImageBlock).bind(this));
+
+      // 初期ブロックのリスナーをセットアップ
+      document.querySelectorAll('.content-block').forEach(function (block) {
+        _assertClassBrand(_MessageTemplateOperator_brand, _this, _setupBlockListeners).call(_this, block);
+      });
+      this.contentBlocks.addEventListener('dragover', function (e) {
+        e.preventDefault();
+      });
+    }
+  }]);
+}();
+function _addTextBlock() {
+  var blockId = "block-".concat(this.blockCounter++);
+  var textBlock = document.createElement('div');
+  textBlock.className = 'content-block text-block';
+  textBlock.draggable = true;
+  textBlock.dataset.type = 'text';
+  textBlock.dataset.id = blockId;
+  textBlock.innerHTML = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createTextBlock)();
+  console.log(this.contentBlocks);
+  this.contentBlocks.appendChild(textBlock);
+  _assertClassBrand(_MessageTemplateOperator_brand, this, _setupBlockListeners).call(this, textBlock);
+}
+// 画像ブロックを追加
+function _addImageBlock() {
+  var blockId = "block-".concat(this.blockCounter++);
+  var imageBlock = document.createElement('div');
+  imageBlock.className = 'content-block image-block';
+  imageBlock.draggable = true;
+  imageBlock.dataset.type = 'image';
+  imageBlock.dataset.id = blockId;
+  imageBlock.innerHTML = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createImageBlock)();
+  this.contentBlocks.appendChild(imageBlock);
+  _assertClassBrand(_MessageTemplateOperator_brand, this, _setupBlockListeners).call(this, imageBlock);
+}
+function _setupBlockListeners(block) {
+  // 削除ボタンのイベントリスナー
+  var deleteBtn = block.querySelector('.delete-block');
+  deleteBtn.addEventListener('click', function () {
+    block.remove();
+  });
+
+  // ドラッグ＆ドロップのイベントリスナー
+  block.addEventListener('#dragStart', _assertClassBrand(_MessageTemplateOperator_brand, this, _dragStart).bind(this));
+  block.addEventListener('#dragEnd', _assertClassBrand(_MessageTemplateOperator_brand, this, _dragEnd).bind(this));
+}
+function _dragStart(e) {
+  console.log(e.currentTarget);
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.setData('text/plain', this.dataset.id);
+}
+function _dragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+}
+function _dargOver(e) {
+  e.preventDefault();
+  var draggingBlock = document.querySelector('.dragging');
+  var targetBlock = this;
+  if (draggingBlock !== targetBlock) {
+    var container = document.getElementById('content-blocks');
+    var blockRect = targetBlock.getBoundingClientRect();
+    var mouseY = e.clientY;
+
+    // マウスがブロックの上半分にあるかどうかを判定
+    var isAboveHalf = mouseY < blockRect.top + blockRect.height / 2;
+    console.log(draggingBlock);
+    if (isAboveHalf) {
+      container.insertBefore(draggingBlock, targetBlock);
+    } else {
+      container.insertBefore(draggingBlock, targetBlock.nextSibling);
+    }
+  }
+}
+// ブロック間のドラッグ＆ドロップを可能にする
+function _setupSortableBlocks() {
+  var _this2 = this;
+  var blocks = document.querySelectorAll('.content-block');
+  blocks.forEach(function (block) {
+    block.addEventListener('dragover', _assertClassBrand(_MessageTemplateOperator_brand, _this2, _dargOver));
+  });
+}
+function _toggleTabs() {
+  var _this3 = this;
+  this.tabs.forEach(function (tab, index) {
+    tab.addEventListener('click', function () {
+      // アクティブタブの更新
+      tabs.forEach(function (t) {
+        return t.classList.remove('active');
+      });
+      tab.classList.add('active');
+
+      // タブコンテンツの表示/非表示
+      _this3.tabContents.forEach(function (content) {
+        content.style.display = 'none';
+      });
+      _this3.tabContents[index].style.display = 'block';
+    });
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MessageTemplateOperator);
 
 /***/ }),
 
@@ -8340,6 +8510,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/component/modalInitializers.js */ "./resources/js/module/component/modalInitializers.js");
 /* harmony import */ var _module_component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _module_component_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/component/elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
+/* harmony import */ var _module_component_messageTemplate_MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/component/messageTemplate/MessageTemplateOperator.js */ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -8352,8 +8523,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 //ユーザー管理に関連するモーダルの初期化
 (0,_module_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_4__.initializeUserModals)(_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
+new _module_component_messageTemplate_MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var admin_id = document.getElementById("js_admin_account_id").value;
 (0,_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__.registerUser)(admin_id, "admin");
 // サーバーへの接続確認
@@ -8415,18 +8588,23 @@ _module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on('user create',
     return _ref3.apply(this, arguments);
   };
 }());
-_module_util_socket_js__WEBPACK_IMPORTED_MODULE_2__["default"].on("message read", function (adminUuid, userUuid) {
-  var wrappers = document.querySelectorAll(".js_chatUser_id");
-  wrappers.forEach(function (wrapper) {
-    console.log(wrapper);
-    if (wrapper.getAttribute("data-id") === userUuid) {
-      wrapper.querySelector(".js_message_count").innerHTML = "0";
-      wrapper.querySelector(".js_message_count").style.display = "none";
-    }
-  });
-  console.log("adminUuid: ".concat(adminUuid));
-  console.log("userUuid: ".concat(userUuid));
-});
+
+// socket.on("message read", (adminUuid, userUuid)=>{
+//       const wrappers = document.querySelectorAll(".js_chatUser_id")
+//       wrappers.forEach((wrapper)=>{
+
+//             console.log(wrapper);
+
+//             if(wrapper.getAttribute("data-id") === userUuid){
+//                   wrapper.querySelector(".js_message_count").innerHTML = "0"
+//                   wrapper.querySelector(".js_message_count").style.display = "none"
+
+//             }
+//       })
+//       console.log(`adminUuid: ${adminUuid}`);
+//       console.log(`userUuid: ${userUuid}`);
+
+// })
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
 document.addEventListener("DOMContentLoaded", function () {

@@ -1,11 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Zen+Kaku+Gothic+New&display=swap");
 
 :root {
-    ---bg-blue: #2088d7;
     --bg-dark-blue: #384042;
     --bg-dark-blue2: #5d696c;
     --bg-dark-blue-hover: #202526;
-    --primary-color: #4a6cf7;
+    --primary-color: #2088d7;
     --secondary-color: #6e8ef9;
     --text-color: #333;
     --border-color: #e1e1e1;
@@ -89,7 +88,7 @@ p, ul {
     color: rgba(255, 255, 255, 0.748);
 }
 .bg-blue {
-    background-color: var(---bg-blue);
+    background-color: var(--primary-color);
 }
 .bg-white{
     background-color: #fff;
@@ -845,14 +844,11 @@ textarea {
     padding: 10px 12px;
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s;
 }
 
 input[type="text"]:focus,
 select:focus,
 textarea:focus {
-    border-color: var(--primary-color);
     outline: none;
 }
 
@@ -1033,21 +1029,68 @@ textarea {
     margin-bottom: 0;
 }
 
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-    .row {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .template-item {
-        flex-direction: column;
-    }
-    
-    .template-actions {
-        margin-top: 12px;
-        align-self: flex-end;
-    }
+/* テンプレート一覧表示 */
+.template-list {
+    margin-top: 20px;
+}
+
+.template-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.template-content {
+    flex: 1;
+}
+
+.template-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.template-category {
+    display: inline-block;
+    background-color: var(--background-color);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.template-text {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+}
+
+.template-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.edit-btn:hover {
+    color: var(--primary-color);
+}
+
+.delete-btn:hover {
+    color: var(--danger-color);
 }
 
 /* コンテンツブロック管理 */
@@ -1108,7 +1151,9 @@ textarea {
     transition: all 0.2s;
     color: #666;
 }
-
+.image-placeholder p{
+    color: var(--border-color);
+}
 .image-placeholder:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
@@ -1192,4 +1237,7 @@ input:focus + .toggle-slider {
 
 input:checked + .toggle-slider:before {
     transform: translateX(16px);
+}
+#category-select{
+    color: rgb(128 128 128);
 }

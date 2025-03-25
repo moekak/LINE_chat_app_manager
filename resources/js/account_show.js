@@ -6,9 +6,12 @@ import InfiniteScroll from "./module/util/InfiniteScroll.js";
 import { initializeUserModals } from "./module/component/modalInitializers.js";
 import FormController from "./module/component/ui/FormController.js";
 import { createMessageRowForFetch } from "./module/component/elementTemplate.js";
+import MessageTemplateOperator from "./module/component/messageTemplate/MessageTemplateOperator.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
+
+new MessageTemplateOperator()
 
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "admin")
