@@ -55,6 +55,18 @@ export const close_modal = () =>{
       })
 }
 
+export const open_loader =() =>{
+      const loader = document.querySelector(".loader")
+      const bg  =  document.querySelector(".bg")
+
+      bg.classList.remove("hidden")
+      loader.classList.remove("hidden")
+}
+export const close_loader =() =>{
+      const loader = document.querySelector(".loader")
+      loader.classList.add("hidden")
+}
+
 
 export const close_modal_by_click = (modal, btn) =>{
       const bg  =  document.querySelector(".bg")

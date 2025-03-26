@@ -60,7 +60,10 @@ uploads.forEach((upload) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const fileUploader = new FileUploader(file, errorTxt)
+        
+        const errorElement = document.querySelector(".js_broadcast_error")
+        const imageErrorElement = document.querySelector(".js_image_error")
+        const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, false, null)
         await fileUploader.fileOperation()
 
         // // ドラッグ＆ドロップの初期化

@@ -22,27 +22,34 @@ const MAX_SIZE = 5 * 1024 * 1024
  */
 class FileUploader{
 
-    constructor(file, errorTxtElement){
+    constructor(file, errorTxtElement, errorElement, imageErrorElement, isTemplate, inputElement, modal = null){
         this.file = file
         this.errorTxtElement = errorTxtElement   
         this.newconfirmBtn = null
-        this.errorElement = document.querySelector(".js_broadcast_error")
-        this.imageErrorElement = document.querySelector(".js_image_error")
+        this.errorElement = errorElement
+        this.imageErrorElement = imageErrorElement
+        this.modal = modal
+        this.imageEditModal = document.getElementById("js_image_edit_modal")
+        this.urlErrorElement = document.querySelector(".js_url_error")
+        this.urlInput = document.getElementById("js_url_input")
+        this.isTemplate = isTemplate
+        this.cropArea = []
+        this.url = ""
+        this.inputElement = inputElement
+
+        console.log(this.inputElement);
+        
 
         // イベントを初期化
         this.initializeEvents();
     }
 
     initializeEvents() {
-        this.changeImageBtn = document.getElementById("js_changeImg_btn")
-        this.newChangeImageBtn = this.changeImageBtn.cloneNode(true)
-        this.changeImageBtn.parentNode.replaceChild(this.newChangeImageBtn, this.changeImageBtn)
-
-        this.newChangeImageBtn.addEventListener("click", this.handleDisplayClick.bind(this));
-    }
-
-    handleDisplayClick(){
-        FormController.initializeFileUpload()
+        // 画像切り取りモーダルの画像変更ボタン
+        const button = ButtonController.replaceButton("js_changeImg_btn")
+        button.addEventListener("click", ()=>{
+            FormController.initializeFileUpload() //ファイルアップロードの初期化
+        })
     }
 
     /**
@@ -56,15 +63,14 @@ class FileUploader{
         try{
             if(!this.validateFile()) return
 
-            if(document.querySelector(".image_edit_modal").classList.contains("hidden")){
+            if(this.imageEditModal.classList.contains("hidden")){
                 this.#toggleLoader(true)
             }else{
                 this.#toggleLoaderforChangeImg(true)
             }
             
             // 画像リンクモーダル表示
-            document.querySelector(".js_url_error").classList.add("hidden")
-
+            this.urlErrorElement.classList.add("hidden")
             const compressedFile = await this.#compressedFile()
             await this.handleFileUpload(compressedFile)
         }catch(error){
@@ -88,7 +94,6 @@ class FileUploader{
             const newImageButton = ButtonController.replaceButton("js_change_area")
             this.cropper = new Cropper(this.imageElement, newImageButton)
 
-
             const cropperHandler = new CropperEventHandler(newImageButton,this.cropper)
             cropperHandler.changeBtnEvent()
             this.#changeSubmitBtn()
@@ -100,74 +105,70 @@ class FileUploader{
             container.innerHTML = ""; // 古い画像を削除
             container.appendChild(newImage); // 新しい画像を保存
 
-            // TODODODO
-
-            if(document.querySelector(".image_edit_modal").classList.contains("hidden")){
+            if(this.imageEditModal.classList.contains("hidden")){
                 this.#toggleLoader(false)
             }else{
                 this.#toggleLoaderforChangeImg(false)
             }
     
-            const imageEditModal = document.getElementById("js_image_edit_modal")
-            open_modal(imageEditModal)
+            open_modal(this.imageEditModal)
+
+            // 画像切り取りモーダルが表示されるときに前に出ているモーダルを非表示にする
+            if(this.modal) this.modal.classList.add("hidden");
 
             // URLの設定
-            const urlInput = document.getElementById("js_url_input")
-            let url = ""
-            urlInput.addEventListener("input", (e)=>{
-                url = e.target.value
+            this.urlInput.addEventListener("input", (e)=>{
+                this.url = e.target.value
             })
 
 
             // 画像切り取りが完了して送信ボタンを押した後の処理
-            const confirmBtn = document.getElementById("js_preview_submit_btn")
-            this.newconfirmBtn = confirmBtn.cloneNode(true);
-            confirmBtn.parentNode.replaceChild(this.newconfirmBtn, confirmBtn);
-            const modal = document.getElementById("js_image_edit_modal")
-
+            this.newconfirmBtn = ButtonController.replaceButton("js_preview_submit_btn")
             this.newconfirmBtn.addEventListener("click", ()=>{
                 // URL形式チェック
 
                 FormController.initializeFileUpload()
                 const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
-                const urlInput= document.getElementById("js_url_input")
-
                 const choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
                 const selectedChoices = Array.from(choices).find(choice => choice.checked);
 
 
-                if(selectedChoices.value === "on" && !regex.test(urlInput.value)){
-                        const urlError = document.querySelector(".js_url_error")
-                        urlError.classList.remove("hidden")
+                if(selectedChoices.value === "on" && !regex.test(this.urlInput.value)){
+                        this.urlErrorElement.classList.remove("hidden")
                         return 
                 }
 
 
-                modal.classList.add("hidden")
-
-                let cropArea = this.cropper.getCropperArea()
+                this.imageEditModal.classList.add("hidden")
+                this.cropArea = this.cropper.getCropperArea()
 
 
                 // ラジオボタンの切り替え
             
                 if(selectedChoices.value === "off"){
-                    cropArea = []
-                    url = ""
+                    this.cropArea = []
+                    this.url = ""
+                }
+
+
+                if(this.isTemplate){
+                    this.modal.classList.remove("hidden")
+                    this.inputElement.parentElement.dataset.url = this.url
+                    this.inputElement.parentElement.dataset.cropArea = JSON.stringify(this.cropArea)
+                }else{
+                    const index = document.querySelectorAll(".js_headings").length
+                    BroadcastMessageOperator.displayImageMessageToList(newImage.src,"js_accordion_wrapper", "accordion", index);
+                    // 不要なリストを削除
+                    BroadcastMessageOperator.deleteList("accordion")
+                    // // ボタン状態を更新
+                    toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
+                    reader.readAsDataURL(compressedFile);
+                    // 新しいファイル名を生成し、FormDataArrayに保存
+                    const newFileName = this.generateOriginalFileName()
+                    FileUploader.setImageDataToFormDataArray(compressedFile, newFileName, index, this.url, this.cropArea)
                 }
     
-                const index = document.querySelectorAll(".js_headings").length
-                BroadcastMessageOperator.displayImageMessageToList(newImage.src,"js_accordion_wrapper", "accordion", index);
-                // 不要なリストを削除
-                BroadcastMessageOperator.deleteList("accordion")
 
-                // // ボタン状態を更新
-                toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
-
-                reader.readAsDataURL(compressedFile);
-
-                // 新しいファイル名を生成し、FormDataArrayに保存
-                const newFileName = this.generateOriginalFileName()
-                FileUploader.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea)
             })
         }
 
@@ -228,13 +229,17 @@ class FileUploader{
         indexStateManager.setState()  
     }
 
+    getCropperData(){
+        return {"url": this.url, "cropArea": this.cropArea}
+    }
+
     /**
      * ファイルの形式とサイズを検証
      * - 許可されていない形式やサイズの場合にエラー文言を表示させる
      */
     validateFile(){
         let hasModal = true
-        if(document.getElementById("js_image_edit_modal").classList.contains("hidden")) hasModal = false
+        if(this.imageEditModal.classList.contains("hidden")) hasModal = false
 
         if(!FileUploader.isAllowedType(this.file.type)){
 
@@ -326,14 +331,12 @@ class FileUploader{
     #changeSubmitBtn() {
 
         const choices = document.querySelectorAll('input[name="choice"]');
-        const urlInput = document.getElementById("js_url_input");
         const confirmBtn = document.getElementById("js_change_area");
-        const urlError = document.querySelector(".js_url_error")
 
         // ボタンの状態を更新する関数
         const updateButtonState = () => {
                 const isChoiceOn = [...choices].some(choice => choice.checked && choice.value === "on");
-                const hasUrl = urlInput.value.length > 0;
+                const hasUrl = this.urlInput.value.length > 0;
                 const isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
 
                 if(isChoiceOn){
@@ -353,9 +356,9 @@ class FileUploader{
                 choice.addEventListener("change", updateButtonState);
         });
     
-        urlInput.addEventListener("input", () => {
-                this.actionUrl = urlInput.value; // 必要なら保持
-                urlError.classList.add("hidden")
+        this.urlInput.addEventListener("input", () => {
+                this.actionUrl = this.urlInput.value; // 必要なら保持
+                this.urlErrorElement.classList.add("hidden")
                 updateButtonState();
         });
     

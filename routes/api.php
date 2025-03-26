@@ -6,6 +6,7 @@ use App\Http\Controllers\DecryptDataController;
 use App\Http\Controllers\GreetingMessageController;
 use App\Http\Controllers\LineAccountController;
 use App\Http\Controllers\LineMessageController;
+use App\Http\Controllers\MessageTemplate;
 use App\Http\Controllers\RedirectTokenController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,6 @@ Route::post("/account/lists/{admin_id}/{status_id}", [LineAccountController::cla
 Route::post("/fetch/account", [LineAccountController::class, "fetchSpecificAccount"]);
 
 Route::get("/token/generate", [RedirectTokenController::class, "fetchToken"]);
+Route::post("/create/category", [MessageTemplate::class, "createCategory"]);
+Route::post("/get/categories", [MessageTemplate::class, "fetchCategories"]);
+Route::post("/create/templates", [MessageTemplate::class, "store"]);

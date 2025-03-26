@@ -260,10 +260,10 @@
 	@if ($errors->any())
 	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>
-				@foreach ($errors->all() as $error)
-				<li class="alert_danger">{{$error}}</li>
-				@endforeach  
-			</ul>   
+			@foreach ($errors->all() as $error)
+			<li class="alert_danger">{{$error}}</li>
+			@endforeach  
+		</ul>   
 	</div>  
 	@endif
 	<form action="{{ route('lineDisplayText.store')}}" method="post">
@@ -290,612 +290,199 @@
 </section>
 
 {{-- テンプレート作成モーダル --}}
-<section class="modal__container template_modal js_modal js_loader" id="js_create_text_modal">
+<section class="modal__container template_modal js_modal js_loader hidden" id="js_template_modal">
 	<!-- モーダルコンテナ -->
 	<div>
-        <!-- モーダルヘッダー -->
-        <div class="modal-header">
-            <h2>テンプレート作成</h2>
-            <button class="close-btn">&times;</button>
-        </div>
-        
-        <!-- モーダルコンテンツ -->
-        <div class="modal-content">
-            <!-- タブメニュー -->
-            <div class="tabs">
-                <div class="tab active">新規作成</div>
-                <div class="tab">一覧・編集</div>
-            </div>
-            
-            <!-- 新規作成フォーム -->
-            <div class="tab-content">
-                <div class="form-group">
-                    <label for="template-title">テンプレート名</label>
-                    <input type="text" id="template-title" placeholder="例: 挨拶文">
-                </div>
-                
-                <div class="category-management">
-                    <label>カテゴリ</label>
-                    <div class="category-list">
-                        <div class="category-item">挨拶 <span class="delete-category">&times;</span></div>
-                        <div class="category-item">問い合わせ <span class="delete-category">&times;</span></div>
-                        <div class="category-item">依頼 <span class="delete-category">&times;</span></div>
-                    </div>
-                    <div class="add-category">
-                        <input type="text" placeholder="新しいカテゴリを追加">
-                        <button class="btn btn-primary">追加</button>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="category-select">カテゴリを選択</label>
-                            <select id="category-select">
-                                <option value="">カテゴリを選択</option>
-                                <option value="greeting">挨拶</option>
-                                <option value="inquiry">問い合わせ</option>
-                                <option value="request">依頼</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- コンテンツブロック管理エリア -->
-                <div class="content-blocks" id="content-blocks">
-                    <!-- テキストブロック -->
-                    <div class="content-block text-block" draggable="true" data-type="text" data-id="block-1">
-                        <div class="block-header">
-                            <div class="block-title">
-                                <div class="handle">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                    </svg>
-                                </div>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                                テキスト
-                            </div>
-                            <div class="block-actions">
-                                <button class="btn btn-icon btn-light delete-block">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="block-content">
-                            <textarea class="block-textarea" placeholder="テキストを入力してください"></textarea>
-                        </div>
-                    </div>
-                    
-                    <!-- 画像ブロック -->
-                    <div class="content-block image-block" draggable="true" data-type="image" data-id="block-2">
-                        <div class="block-header">
-                            <div class="block-title">
-                                <div class="handle">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                    </svg>
-                                </div>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                    <polyline points="21 15 16 10 5 21"></polyline>
-                                </svg>
-                                画像
-                            </div>
-                            <div class="block-actions">
-                                <button class="btn btn-icon btn-light delete-block">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="block-content">
-							<div class="image-upload">
-								<input type="file" class="file-input" accept="image/*">
-								<div class="image-placeholder">
-									<img src="{{asset("img/icons8-plus-50.png")}}" alt="">
-									<p>ファイルの選択</p>
-								</div>
+		<!-- モーダルヘッダー -->
+		<div class="modal-header">
+			<h2>テンプレート作成</h2>
+			<button class="close-btn">&times;</button>
+		</div>
+
+		<!-- モーダルコンテンツ -->
+		<div class="modal-content">
+			<!-- タブメニュー -->
+			<div class="tabs">
+				<div class="tab active">新規作成</div>
+				<div class="tab">一覧・編集</div>
+			</div>
+			
+			<!-- 新規作成フォーム -->
+			<form class="tab-content">
+				@csrf
+				<div class="form-group">
+					<label for="template-title">テンプレート名</label>
+					<input type="text" id="template-title" placeholder="例: 挨拶文" name="template_name">
+				</div>
+				
+				<div class="category-management">
+					<label>カテゴリ</label>
+					<div class="add-category">
+						<input type="text" placeholder="新しいカテゴリを追加" name="category_name" id="js_category_input">
+						<button class="btn btn-primary" id="js_category_add_btn">追加</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+						<label for="category-select">カテゴリを選択</label>
+						<select id="category-select" name="category_id">
+							<option value="" disabled selected>カテゴリを選択</option>
+							{{-- <option value="greeting">挨拶</option>
+							<option value="inquiry">問い合わせ</option>
+							<option value="request">依頼</option> --}}
+						</select>
+						</div>
+					</div>
+
+				<!-- コンテンツブロック管理エリア -->
+				<div class="content-blocks" id="content-blocks">
+				<!-- テキストブロック -->
+				<div class="content-block text-block" draggable="true" data-type="text" data-id="block-1">
+					<div class="block-header">
+						<div class="block-title">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+						</svg>
+						テキスト
+						</div>
+						<div class="block-actions">
+							<button class="btn btn-icon btn-light delete-block">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="3 6 5 6 21 6"></polyline>
+								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+								<line x1="10" y1="11" x2="10" y2="17"></line>
+								<line x1="14" y1="11" x2="14" y2="17"></line>
+							</svg>
+							</button>
+						</div>
+					</div>
+					<div class="block-content">
+						<textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text"></textarea>
+					</div>
+				</div>
+					<!-- 画像ブロック -->
+					<div class="content-block image-block" draggable="true" data-type="image" data-id="block-2">
+						<div class="block-header">
+							<div class="block-title">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<circle cx="8.5" cy="8.5" r="1.5"></circle>
+								<polyline points="21 15 16 10 5 21"></polyline>
+								</svg>
+								画像
 							</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 追加ボタン -->
-                <div class="add-block-container">
-                    <button class="btn btn-light" id="add-text">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                        テキストを追加
-                    </button>
-                    <button class="btn btn-light" id="add-image">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        画像を追加
-                    </button>
-                </div>
-                
-                <!-- プレビューセクション -->
-                {{-- <div class="preview-section">
-                    <div class="preview-header">
-                        <h3>プレビュー</h3>
-                        <div class="preview-toggle">
-                            <span>自動更新</span>
-                            <label class="toggle">
-                                <input type="checkbox" id="auto-preview" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="preview-container" id="preview-container">
-                        <div class="preview-message">
-                            <div class="preview-text">お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。</div>
-                        </div>
-                        <div class="preview-message">
-                            <img src="/api/placeholder/400/300" alt="preview image" class="preview-image">
-                        </div>
-                    </div>
-                </div> --}}
-                
-                <!-- ボタン -->
-                <div class="btn-container">
-                    <button class="btn btn-cancel">キャンセル</button>
-                    <button class="btn btn-primary">保存</button>
-                </div>
-            </div>
-            
-            <!-- 一覧・編集タブ (初期状態では非表示) -->
+							<div class="block-actions">
+								<button class="btn btn-icon btn-light delete-block">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="3 6 5 6 21 6"></polyline>
+									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+									<line x1="10" y1="11" x2="10" y2="17"></line>
+									<line x1="14" y1="11" x2="14" y2="17"></line>
+								</svg>
+								</button>
+							</div>
+						</div>
+						<div class="block-content">
+									<div class="image-upload">
+										<input type="file" class="file-input" id="fileInput1" accept="image/*" name="image_path">
+										<label for="fileInput1">
+								<div class="image-placeholder">
+									<img src="{{asset("img/icons8-plus-50.png")}}" alt="" class="image_element">
+									<p class="image-placeholder-txt">ファイルの選択</p>
+								</div>
+								</label>
+									</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 追加ボタン -->
+				<div class="add-block-container">
+					<button class="btn btn-light" id="add-text">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+						</svg>
+						テキストを追加
+					</button>
+					<button class="btn btn-light" id="add-image">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+							<circle cx="8.5" cy="8.5" r="1.5"></circle>
+							<polyline points="21 15 16 10 5 21"></polyline>
+						</svg>
+						画像を追加
+					</button>
+				</div>
+				
+				<!-- ボタン -->
+				<div class="btn-container">
+					<button class="btn btn-cancel">キャンセル</button>
+					<button class="btn btn-primary" id="js_submit_template_btn" type="submit">保存</button>
+				</div>
+			</form>
+			
+			<!-- 一覧・編集タブ (初期状態では非表示) -->
 			<div class="tab-content" style="display: none;">
-                <div class="template-list">
-                    <!-- テンプレートアイテム -->
-                    <div class="template-item">
-                        <div class="template-content">
-                            <div class="template-title">挨拶文</div>
-                            <div class="template-category">挨拶</div>
-                            <div class="template-text">お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。</div>
-                        </div>
-                        <div class="template-actions">
-                            <button class="action-btn edit-btn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                            </button>
-                            <button class="action-btn delete-btn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="template-item">
-                        <div class="template-content">
-                            <div class="template-title">問い合わせ返信</div>
-                            <div class="template-category">問い合わせ</div>
-                            <div class="template-text">お問い合わせいただき、ありがとうございます。現在調査中ですので、もう少しお待ちください。</div>
-                        </div>
-                        <div class="template-actions">
-                            <button class="action-btn edit-btn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                            </button>
-                            <button class="action-btn delete-btn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				<div class="template-list">
+					<!-- テンプレートアイテム -->
+					<div class="template-item">
+						<div class="template-content">
+							<div class="template-title">挨拶文</div>
+							<div class="template-category">挨拶</div>
+							<div class="template-text">お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。</div>
+						</div>
+						<div class="template-actions">
+							<button class="action-btn edit-btn">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+								</svg>
+							</button>
+							<button class="action-btn delete-btn">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="3 6 5 6 21 6"></polyline>
+								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+								<line x1="10" y1="11" x2="10" y2="17"></line>
+								<line x1="14" y1="11" x2="14" y2="17"></line>
+								</svg>
+							</button>
+						</div>
+					</div>
+					
+					<div class="template-item">
+						<div class="template-content">
+							<div class="template-title">問い合わせ返信</div>
+							<div class="template-category">問い合わせ</div>
+							<div class="template-text">お問い合わせいただき、ありがとうございます。現在調査中ですので、もう少しお待ちください。</div>
+						</div>
+						<div class="template-actions">
+							<button class="action-btn edit-btn">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+								</svg>
+							</button>
+							<button class="action-btn delete-btn">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="3 6 5 6 21 6"></polyline>
+								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+								<line x1="10" y1="11" x2="10" y2="17"></line>
+								<line x1="14" y1="11" x2="14" y2="17"></line>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
-
-@endsection
-
-
-@section('content')
 @endsection
 
 @section('script')
-<script>
-	  // 要素の参照を取得
-	  	// const contentBlocks = document.getElementById('content-blocks');
-        // const addTextBtn = document.getElementById('add-text');
-        // const addImageBtn = document.getElementById('add-image');
-        // const previewContainer = document.getElementById('preview-container');
-        // // const autoPreviewToggle = document.getElementById('auto-preview');
-
-        // // カウンター（ユニークなIDを生成するため）
-        // let blockCounter = 3; // すでに2つのブロックがあるため3から開始
-
-        // テキストブロックを追加
-        // function addTextBlock() {
-        //     const blockId = `block-${blockCounter++}`;
-        //     const textBlock = document.createElement('div');
-        //     textBlock.className = 'content-block text-block';
-        //     textBlock.draggable = true;
-        //     textBlock.dataset.type = 'text';
-        //     textBlock.dataset.id = blockId;
-            
-        //     textBlock.innerHTML = `
-        //         <div class="block-header">
-        //             <div class="block-title">
-        //                 <div class="handle">
-        //                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        //                         <line x1="8" y1="6" x2="21" y2="6"></line>
-        //                         <line x1="8" y1="12" x2="21" y2="12"></line>
-        //                         <line x1="8" y1="18" x2="21" y2="18"></line>
-        //                         <line x1="3" y1="6" x2="3.01" y2="6"></line>
-        //                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
-        //                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
-        //                     </svg>
-        //                 </div>
-        //                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        //                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-        //                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-        //                 </svg>
-        //                 テキスト
-        //             </div>
-        //             <div class="block-actions">
-        //                 <button class="btn btn-icon btn-light delete-block">
-        //                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        //                         <polyline points="3 6 5 6 21 6"></polyline>
-        //                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-        //                         <line x1="10" y1="11" x2="10" y2="17"></line>
-        //                         <line x1="14" y1="11" x2="14" y2="17"></line>
-        //                     </svg>
-        //                 </button>
-        //             </div>
-        //         </div>
-        //         <div class="block-content">
-        //             <textarea class="block-textarea" placeholder="テキストを入力してください"></textarea>
-        //         </div>
-        //     `;
-            
-        //     contentBlocks.appendChild(textBlock);
-        //     // setupBlockListeners(textBlock);
-        //     updatePreview();
-        // }
-		// 画像ブロックを追加
-// function addImageBlock() {
-//     const blockId = `block-${blockCounter++}`;
-//     const imageBlock = document.createElement('div');
-//     imageBlock.className = 'content-block image-block';
-//     imageBlock.draggable = true;
-//     imageBlock.dataset.type = 'image';
-//     imageBlock.dataset.id = blockId;
-    
-//     imageBlock.innerHTML = `
-//         <div class="block-header">
-//             <div class="block-title">
-//                 <div class="handle">
-//                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-//                         <line x1="8" y1="6" x2="21" y2="6"></line>
-//                         <line x1="8" y1="12" x2="21" y2="12"></line>
-//                         <line x1="8" y1="18" x2="21" y2="18"></line>
-//                         <line x1="3" y1="6" x2="3.01" y2="6"></line>
-//                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
-//                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
-//                     </svg>
-//                 </div>
-//                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-//                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-//                     <circle cx="8.5" cy="8.5" r="1.5"></circle>
-//                     <polyline points="21 15 16 10 5 21"></polyline>
-//                 </svg>
-//                 画像
-//             </div>
-//             <div class="block-actions">
-//                 <button class="btn btn-icon btn-light delete-block">
-//                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-//                         <polyline points="3 6 5 6 21 6"></polyline>
-//                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-//                         <line x1="10" y1="11" x2="10" y2="17"></line>
-//                         <line x1="14" y1="11" x2="14" y2="17"></line>
-//                     </svg>
-//                 </button>
-//             </div>
-//         </div>
-//         <div class="block-content">
-//             <div class="image-upload">
-// 				<input type="file" class="file-input" accept="image/*">
-// 				<div class="image-placeholder">
-// 					<img src="/img/icons8-plus-50.png" alt="">
-// 					<p>ファイルの選択</p>
-// 				</div>
-// 			</div>
-// 		</div>
-//     `;
-    
-//     contentBlocks.appendChild(imageBlock);
-//     setupBlockListeners(imageBlock);
-//     // setupImageUpload(imageBlock);
-//     // updatePreview();
-// }
-	     // ブロックのイベントリスナーをセットアップ
-		// function setupBlockListeners(block) {
-        //     // 削除ボタンのイベントリスナー
-        //     const deleteBtn = block.querySelector('.delete-block');
-        //     deleteBtn.addEventListener('click', () => {
-        //         block.remove();
-        //         updatePreview();
-        //     });
-            
-        //     // ドラッグ＆ドロップのイベントリスナー
-        //     block.addEventListener('dragstart', dragStart);
-        //     block.addEventListener('dragend', dragEnd);
-            
-        //     // テキストエリアのイベントリスナー（テキストブロックの場合）
-        //     // if (block.classList.contains('text-block')) {
-        //     //     const textarea = block.querySelector('.block-textarea');
-        //     //     textarea.addEventListener('input', updatePreview);
-        //     // }
-        // }
-
-        // // 画像アップロードの処理をセットアップ
-        // function setupImageUpload(block) {
-        //     const fileInput = block.querySelector('.file-input');
-        //     const placeholder = block.querySelector('.image-placeholder');
-            
-        //     // プレースホルダーがクリックされたらファイル選択ダイアログを開く
-        //     if (placeholder) {
-        //         placeholder.addEventListener('click', () => {
-        //             fileInput.click();
-        //         });
-        //     }
-            
-        //     // ファイルが選択されたら画像をプレビュー表示
-        //     fileInput.addEventListener('change', () => {
-        //         const file = fileInput.files[0];
-        //         if (file) {
-        //             const reader = new FileReader();
-        //             reader.onload = (e) => {
-        //                 const imgPreview = document.createElement('img');
-        //                 imgPreview.src = e.target.result;
-        //                 imgPreview.alt = '画像プレビュー';
-        //                 imgPreview.className = 'image-preview';
-                        
-        //                 // プレースホルダーを画像に置き換え
-        //                 const content = block.querySelector('.block-content');
-        //                 content.innerHTML = '';
-        //                 content.appendChild(fileInput); // ファイル入力は保持
-        //                 content.appendChild(imgPreview);
-                        
-        //                 // プレビューを更新
-        //                 updatePreview();
-        //             };
-        //             reader.readAsDataURL(file);
-        //         }
-        //     });
-            
-        //     // ドラッグ＆ドロップの処理
-        //     if (placeholder) {
-        //         placeholder.addEventListener('dragover', (e) => {
-        //             e.preventDefault();
-        //             placeholder.style.borderColor = 'var(--primary-color)';
-        //             placeholder.style.backgroundColor = 'rgba(74, 108, 247, 0.05)';
-        //         });
-                
-        //         placeholder.addEventListener('dragleave', () => {
-        //             placeholder.style.borderColor = 'var(--border-color)';
-        //             placeholder.style.backgroundColor = '';
-        //         });
-                
-        //         placeholder.addEventListener('drop', (e) => {
-        //             e.preventDefault();
-        //             const file = e.dataTransfer.files[0];
-        //             if (file && file.type.startsWith('image/')) {
-        //                 fileInput.files = e.dataTransfer.files;
-                        
-        //                 const reader = new FileReader();
-        //                 reader.onload = (e) => {
-        //                     const imgPreview = document.createElement('img');
-        //                     imgPreview.src = e.target.result;
-        //                     imgPreview.alt = '画像プレビュー';
-        //                     imgPreview.className = 'image-preview';
-                            
-        //                     // プレースホルダーを画像に置き換え
-        //                     const content = block.querySelector('.block-content');
-        //                     content.innerHTML = '';
-        //                     content.appendChild(fileInput); // ファイル入力は保持
-        //                     content.appendChild(imgPreview);
-                            
-        //                     // プレビューを更新
-        //                     updatePreview();
-        //                 };
-        //                 reader.readAsDataURL(file);
-        //             }
-        //         });
-        //     }
-        // }
-
-        // ドラッグ開始時の処理
-        // function dragStart(e) {
-        //     this.classList.add('dragging');
-        //     e.dataTransfer.setData('text/plain', this.dataset.id);
-        // }
-
-        // // ドラッグ終了時の処理
-        // function dragEnd() {
-        //     this.classList.remove('dragging');
-        // }
-
-        // // ドラッグオーバー時の処理
-        // function dragOver(e) {
-        //     e.preventDefault();
-        //     const draggingBlock = document.querySelector('.dragging');
-        //     const targetBlock = this;
-            
-        //     if (draggingBlock !== targetBlock) {
-        //         const container = document.getElementById('content-blocks');
-        //         const blockRect = targetBlock.getBoundingClientRect();
-        //         const mouseY = e.clientY;
-                
-        //         // マウスがブロックの上半分にあるかどうかを判定
-        //         const isAboveHalf = mouseY < blockRect.top + blockRect.height / 2;
-                
-
-		// 		console.log(draggingBlock);
-		// 		console.log(container);
-		// 		console.log(targetBlock);
-				
-        //         if (isAboveHalf) {
-        //             container.insertBefore(draggingBlock, targetBlock);
-        //         } else {
-        //             container.insertBefore(draggingBlock, targetBlock.nextSibling);
-        //         }
-        //     }
-        // }
-
-        // プレビューを更新する関数
-        // function updatePreview() {
-        //     if (!autoPreviewToggle.checked) return;
-            
-        //     const blocks = document.querySelectorAll('.content-block');
-        //     const previewContainer = document.getElementById('preview-container');
-            
-        //     // プレビューをクリア
-        //     previewContainer.innerHTML = '';
-            
-        //     // 各ブロックをプレビューに追加
-        //     blocks.forEach(block => {
-        //         const previewMessage = document.createElement('div');
-        //         previewMessage.className = 'preview-message';
-                
-        //         if (block.dataset.type === 'text') {
-        //             const textarea = block.querySelector('.block-textarea');
-        //             const text = textarea.value;
-                    
-        //             const previewText = document.createElement('div');
-        //             previewText.className = 'preview-text';
-        //             previewText.textContent = text;
-                    
-        //             previewMessage.appendChild(previewText);
-        //         } else if (block.dataset.type === 'image') {
-        //             const imagePreview = block.querySelector('.image-preview');
-                    
-        //             if (imagePreview) {
-        //                 const previewImage = document.createElement('img');
-        //                 previewImage.className = 'preview-image';
-        //                 previewImage.src = imagePreview.src;
-        //                 previewImage.alt = 'プレビュー画像';
-                        
-        //                 previewMessage.appendChild(previewImage);
-        //             }
-        //         }
-                
-        //         previewContainer.appendChild(previewMessage);
-        //     });
-        // }
-
-        // ボタンのクリックイベントをセットアップ
-        // addTextBtn.addEventListener('click', addTextBlock);
-        // addImageBtn.addEventListener('click', addImageBlock);
-        
-        // // 自動プレビュートグルのイベントリスナー
-        // // autoPreviewToggle.addEventListener('change', updatePreview);
-        
-        // // 初期ブロックのリスナーをセットアップ
-        // document.querySelectorAll('.content-block').forEach(block => {
-        //     setupBlockListeners(block);
-            
-        //     // if (block.classList.contains('image-block')) {
-        //     //     setupImageUpload(block);
-        //     // }
-        // });
-        
-        // // ドラッグ＆ドロップの対象エリアを設定
-        // contentBlocks.addEventListener('dragover', (e) => {
-        //     e.preventDefault();
-        // });
-        
-        // ブロック間のドラッグ＆ドロップを可能にする
-        // function setupSortableBlocks() {
-        //     const blocks = document.querySelectorAll('.content-block');
-            
-        //     blocks.forEach(block => {
-        //         block.addEventListener('dragover', dragOver);
-        //     });
-        // }
-        
-        // 初期化時にもドラッグ＆ドロップをセットアップ
-        // setupSortableBlocks();
-        
-        // // 新しいブロックが追加されたときのためのMutationObserverを設定
-        // const observer = new MutationObserver((mutations) => {
-        //     mutations.forEach((mutation) => {
-        //         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-        //             setupSortableBlocks();
-        //         }
-        //     });
-        // });
-        
-        // observer.observe(contentBlocks, { childList: true });
-        
-        // タブ切り替え機能
-        // const tabs = document.querySelectorAll('.tab');
-        // const tabContents = document.querySelectorAll('.tab-content');
-        
-        // tabs.forEach((tab, index) => {
-        //     tab.addEventListener('click', () => {
-        //         // アクティブタブの更新
-        //         tabs.forEach(t => t.classList.remove('active'));
-        //         tab.classList.add('active');
-                
-        //         // タブコンテンツの表示/非表示
-        //         tabContents.forEach(content => {
-        //             content.style.display = 'none';
-        //         });
-        //         tabContents[index].style.display = 'block';
-        //     });
-        // });
-        
-        // クローズボタン
-        // const closeBtn = document.querySelector('.close-btn');
-        // closeBtn.addEventListener('click', () => {
-        //     document.querySelector('.modal-container').style.display = 'none';
-        // });
-    </script>
-</script>
-
 @if ($errors->any())
 	@php
 		$currentRoute = session('route_name');

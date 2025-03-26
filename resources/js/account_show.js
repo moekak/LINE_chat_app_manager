@@ -1,5 +1,5 @@
 
-import { close_modal, close_modal_by_click, open_modal } from "./module/component/modalOperation.js";
+import { close_loader, close_modal, close_modal_by_click, open_loader, open_modal } from "./module/component/modalOperation.js";
 import { changeDisplayOrder, handleChatRedirect} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
@@ -7,6 +7,9 @@ import { initializeUserModals } from "./module/component/modalInitializers.js";
 import FormController from "./module/component/ui/FormController.js";
 import { createMessageRowForFetch } from "./module/component/elementTemplate.js";
 import MessageTemplateOperator from "./module/component/messageTemplate/MessageTemplateOperator.js";
+import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHandler.js";
+import { fetchPostOperation } from "./module/util/fetch.js";
+import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -34,23 +37,6 @@ socket.on('user create', async(userData)=>{
       initializeUserModals(socket)
       await handleChatRedirect()
 })
-
-// socket.on("message read", (adminUuid, userUuid)=>{
-//       const wrappers = document.querySelectorAll(".js_chatUser_id")
-//       wrappers.forEach((wrapper)=>{
-
-//             console.log(wrapper);
-            
-//             if(wrapper.getAttribute("data-id") === userUuid){
-//                   wrapper.querySelector(".js_message_count").innerHTML = "0"
-//                   wrapper.querySelector(".js_message_count").style.display = "none"
-
-//             }
-//       })
-//       console.log(`adminUuid: ${adminUuid}`);
-//       console.log(`userUuid: ${userUuid}`);
-      
-// })
 
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
@@ -86,7 +72,6 @@ close_modal_by_click(modal, btn)
 
 //サイト遷移の処理
 {
-
       handleChatRedirect()
 }
 
@@ -136,3 +121,39 @@ submitForms.forEach((submitForm)=>{
             
       })
 })
+
+// テンプレート作成モーダル
+{
+      const createTemplateBtn = document.getElementById("js_create_template_btn")
+      const templateModal = document.getElementById("js_template_modal")
+
+
+      createTemplateBtn.addEventListener("click", async ()=>{
+
+            open_loader()
+            const adminId = {"admin_id": document.getElementById("js_account_id").value}
+            try{
+                  const response = await fetchPostOperation(adminId, API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY)
+
+                  response["categories"].forEach((res)=>{
+                        FormController.populateSelectOptions(res["id"], res["category_name"])
+                  })
+                  
+                  open_modal(templateModal)
+                  close_loader()
+            }catch(error){
+                  console.log(error);
+                  
+            }
+
+      })
+}
+
+// テンプレート作成画像アップロード
+{
+      const uploads = document.querySelectorAll(".file-input");
+      const errorTxt = document.querySelector(".js_error_txt");
+      const templateModal = document.getElementById("js_template_modal");
+      const imageUploadHandler = new ImageUploadHandler()
+      imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
+}

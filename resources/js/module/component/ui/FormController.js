@@ -1,4 +1,4 @@
-import CropperOverlay from "../../util/cropper/CropperOverlay.js"
+
 
 class FormController{
     static initializeInput(){
@@ -62,6 +62,14 @@ class FormController{
         })
     }
 
+
+    static populateSelectOptions(id, category_name){
+        const option = document.createElement("option")
+        const selectParentElement = document.getElementById("category-select")
+        option.value = id
+        option.innerHTML = category_name
+        selectParentElement.appendChild(option)
+    }
 }
 
 export default FormController;

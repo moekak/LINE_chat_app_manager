@@ -2763,10 +2763,10 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
   }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <div class=\"handle\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"></line>\n                              <line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"></line>\n                              <line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"></line>\n                              <line x1=\"3\" y1=\"6\" x2=\"3.01\" y2=\"6\"></line>\n                              <line x1=\"3\" y1=\"12\" x2=\"3.01\" y2=\"12\"></line>\n                              <line x1=\"3\" y1=\"18\" x2=\"3.01\" y2=\"18\"></line>\n                        </svg>\n                  </div>\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\"></textarea>\n            </div>\n      ";
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\"></textarea>\n            </div>\n      ";
 };
-var createImageBlock = function createImageBlock() {
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <div class=\"handle\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"></line>\n                                    <line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"></line>\n                                    <line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"></line>\n                                    <line x1=\"3\" y1=\"6\" x2=\"3.01\" y2=\"6\"></line>\n                                    <line x1=\"3\" y1=\"12\" x2=\"3.01\" y2=\"12\"></line>\n                                    <line x1=\"3\" y1=\"18\" x2=\"3.01\" y2=\"18\"></line>\n                              </svg>\n                        </div>\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" accept=\"image/*\">\n                        <div class=\"image-placeholder\">\n                              <img src=\"/img/icons8-plus-50.png\" alt=\"\">\n                              <p>\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                        </div>\n                  </div>\n            </div>\n      ";
+var createImageBlock = function createImageBlock(blockCounter) {
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
 };
 
 /***/ }),
@@ -2979,8 +2979,10 @@ var initializeSimpleBar = function initializeSimpleBar() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   close_loader: () => (/* binding */ close_loader),
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
 /* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
+/* harmony export */   open_loader: () => (/* binding */ open_loader),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
 /* harmony export */ });
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
@@ -3026,6 +3028,16 @@ var close_modal = function close_modal() {
     }
   });
 };
+var open_loader = function open_loader() {
+  var loader = document.querySelector(".loader");
+  var bg = document.querySelector(".bg");
+  bg.classList.remove("hidden");
+  loader.classList.remove("hidden");
+};
+var close_loader = function close_loader() {
+  var loader = document.querySelector(".loader");
+  loader.classList.add("hidden");
+};
 var close_modal_by_click = function close_modal_by_click(modal, btn) {
   var bg = document.querySelector(".bg");
   btn.addEventListener("click", function () {
@@ -3047,14 +3059,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _util_cropper_CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/cropper/CropperOverlay.js */ "./resources/js/module/util/cropper/CropperOverlay.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
 var FormController = /*#__PURE__*/function () {
   function FormController() {
     _classCallCheck(this, FormController);
@@ -3114,6 +3124,15 @@ var FormController = /*#__PURE__*/function () {
           }
         });
       });
+    }
+  }, {
+    key: "populateSelectOptions",
+    value: function populateSelectOptions(id, category_name) {
+      var option = document.createElement("option");
+      var selectParentElement = document.getElementById("category-select");
+      option.value = id;
+      option.innerHTML = category_name;
+      selectParentElement.appendChild(option);
     }
   }]);
 }();
@@ -3198,113 +3217,6 @@ var DynamicListManager = /*#__PURE__*/function () {
   }]);
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DynamicListManager);
-
-/***/ }),
-
-/***/ "./resources/js/module/util/cropper/CropperOverlay.js":
-/*!************************************************************!*\
-  !*** ./resources/js/module/util/cropper/CropperOverlay.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _CropperOverlay;
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
-function _classPrivateFieldInitSpec(e, t, a) { _checkPrivateRedeclaration(e, t), t.set(e, a); }
-function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classPrivateFieldGet(s, a) { return s.get(_assertClassBrand(s, a)); }
-function _classPrivateFieldSet(s, a, r) { return s.set(_assertClassBrand(s, a), r), r; }
-function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
-var _overlayElements = /*#__PURE__*/new WeakMap();
-var _CropperOverlay_brand = /*#__PURE__*/new WeakSet();
-var CropperOverlay = /*#__PURE__*/function () {
-  function CropperOverlay() {
-    _classCallCheck(this, CropperOverlay);
-    // スタイル変更対象のDOM要素をオブジェクトとして格納
-    _classPrivateMethodInitSpec(this, _CropperOverlay_brand);
-    _classPrivateFieldInitSpec(this, _overlayElements, null);
-    _assertClassBrand(_CropperOverlay_brand, this, _initializeElements).call(this);
-  }
-  return _createClass(CropperOverlay, [{
-    key: "setVisibility",
-    value:
-    // オーバーレイ要素の表示状態を制御するメソッド
-    function setVisibility(isVisible) {
-      // 表示状態に応じたスタイル値を設定
-      var displayStyle = isVisible ? CropperOverlay.STYLES.VISIBLE : CropperOverlay.STYLES.HIDDEN;
-      var backgroundColor = isVisible ? CropperOverlay.STYLES.DEFAULT_COLOR : CropperOverlay.STYLES.SELECTED_COLOR;
-
-      // 複数要素（lines, points, dots）を一括で処理するための配列
-      var targetElements = [_classPrivateFieldGet(_overlayElements, this).lines, _classPrivateFieldGet(_overlayElements, this).points, _classPrivateFieldGet(_overlayElements, this).dots];
-
-      // 各要素グループの表示/非表示を切り替え
-      targetElements.forEach(function (elements) {
-        elements.forEach(function (element) {
-          element.style.display = displayStyle;
-        });
-      });
-
-      // 背景の切り替え
-      _classPrivateFieldGet(_overlayElements, this).selectedArea.style.backgroundColor = backgroundColor;
-    }
-  }], [{
-    key: "updateCropperState",
-    value: function updateCropperState(isEnabled) {
-      var cropper = document.querySelector(".cropper-drag-box");
-      var cropperContainer = document.querySelector(".cropper-container");
-      var cropperBox = document.querySelector(".cropper-crop-box");
-      if (!cropper || !cropperContainer || !cropperBox) {
-        return;
-      }
-      if (isEnabled) {
-        cropper.classList.add("cropper-crop", "cropper-modal");
-        cropperContainer.classList.add("cropper-bg");
-        cropperBox.style.display = "block";
-      } else {
-        cropper.classList.remove("cropper-crop", "cropper-modal");
-        cropperContainer.classList.remove("cropper-bg");
-        cropperBox.style.display = "none";
-      }
-    }
-  }]);
-}();
-_CropperOverlay = CropperOverlay;
-function _initializeElements() {
-  _classPrivateFieldSet(_overlayElements, this, {
-    selectedArea: document.querySelector(_CropperOverlay.SELECTORS.SELECTED_AREA),
-    lines: document.querySelectorAll(_CropperOverlay.SELECTORS.LINES),
-    points: document.querySelectorAll(_CropperOverlay.SELECTORS.POINTS),
-    dots: document.querySelectorAll(_CropperOverlay.SELECTORS.DOTS)
-  });
-}
-// スタイル変更したい要素のクラス名の定義
-_defineProperty(CropperOverlay, "SELECTORS", {
-  SELECTED_AREA: '.cropper-face',
-  LINES: '.cropper-line',
-  POINTS: '.cropper-point',
-  DOTS: '.cropper-dashed'
-});
-// toggleで変更するときのスタイル
-// (例)visible = true →　display: block, backgroundColor: #fff
-// (例)visible = false →　display: none, backgroundColor: red
-_defineProperty(CropperOverlay, "STYLES", {
-  HIDDEN: 'none',
-  VISIBLE: 'block',
-  SELECTED_COLOR: 'red',
-  DEFAULT_COLOR: '#fff'
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CropperOverlay);
 
 /***/ }),
 

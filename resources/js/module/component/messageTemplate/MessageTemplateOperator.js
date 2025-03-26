@@ -1,4 +1,10 @@
+import { fetchPostOperation } from "../../util/fetch.js";
 import { createImageBlock, createTextBlock } from "../elementTemplate.js";
+import ButtonController from "../ui/ButtonController.js";
+import ImageUploadHandler from "./ImageUploadHandler.js";
+import { API_ENDPOINTS } from "./../../../config/apiEndPoint.js";
+import FormController from "../ui/FormController.js";
+import { close_loader, open_loader } from "../modalOperation.js";
 
 class MessageTemplateOperator{
     constructor(){
@@ -10,22 +16,12 @@ class MessageTemplateOperator{
         this.blockCounter = 3 // すでに2つのブロックがあるため3から開始
         this.tabs = document.querySelectorAll('.tab');
         this.tabContents = document.querySelectorAll('.tab-content');
+        this.submitTemplateBtn = document.getElementById("js_submit_template_btn")
+        this.categoryAddBtn = null
         this.initialize()
     }
 
-    initialize(){
-        // 新しいブロックが追加されたときのためのMutationObserverを設定
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    this.#setupSortableBlocks();
-                }
-            });
-        });
-
-        observer.observe(this.contentBlocks, { childList: true });
-
-        this.#setupSortableBlocks();
+    async initialize(){
         // タブ切り替え
         this.#toggleTabs()
         // ボタンのクリックイベントをセットアップ
@@ -37,30 +33,101 @@ class MessageTemplateOperator{
             this.#setupBlockListeners(block);
         });
 
-        this.contentBlocks.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
+        this.submitTemplateBtn.addEventListener("click", this.#submitHandler.bind(this))
+
+        this.categoryAddBtn = ButtonController.replaceButton("js_category_add_btn")
+        this.categoryAddBtn.addEventListener("click", this.#addCategoryHandler.bind(this))
+
+    }
+
+    async #addCategoryHandler(e){
+        e.preventDefault()
+        open_loader()
+        const categoryName = document.getElementById("js_category_input")
+        const adminId = document.getElementById("js_account_id")
+        const data = {"category_name": categoryName.value,"admin_id" : adminId.value}
+        categoryName.value = ""
+
+        try{
+            const response = await fetchPostOperation(data, `${API_ENDPOINTS.FETCH_CREATE_CATEGORY}`)
+            console.log(response)
+
+            if(response["message"]){
+                alert(response["message"])
+            }
+            close_loader()
+            FormController.populateSelectOptions(response["id"], response["category_name"])
+
+
+        }catch(error){
+            console.log(error);
+            
+        }
+
+    
+        
+
+    }
+
+    async #submitHandler(e){
+        e.preventDefault()
+        const templateName = document.getElementById("template-title")
+        const categoryId = document.getElementById("category-select")
+        const content_blocks = document.querySelectorAll(".content-block")
+
+        let data = {
+            "template_name": templateName.value,
+            "category_id" : categoryId.value,
+            "content_texts" : [],
+            "image_path" : []
+        }
+        let order = 0
+        let text_index = 0
+        let image_index = 0
+
+        content_blocks.forEach((block)=>{
+            if(block.dataset.type === "image"){
+                const file = block.querySelector(".file-input").files[0]
+                const cropArea = block.querySelector(".image-upload").getAttribute("data-crop-area")
+                
+                const url = block.querySelector(".image-upload").dataset.url
+                const cropData = {"cropArea": cropArea, "url": url}
+                data["image_path"][text_index] = {"content": file, "cropData": cropData, "order": order}
+                text_index ++
+            }else if(block.dataset.type === "text"){
+                const content = block.querySelector(".block-textarea").value
+                data["content_texts"][image_index] = {"content": content, "order": order}
+                image_index ++
+            } 
+            order ++
+        })
+
+        const response = await fetchPostOperation(data, API_ENDPOINTS.FETCH_TEMPLATE_CREATE)
+        console.log(response);
+        
+
+        console.log(data);
+        
     }
 
     // テキストブロックを追加
-    #addTextBlock(){
+    #addTextBlock(e){
+        e.preventDefault()
         const blockId = `block-${this.blockCounter++}`;
         const textBlock = document.createElement('div');
         textBlock.className = 'content-block text-block';
         textBlock.draggable = true;
         textBlock.dataset.type = 'text';
         textBlock.dataset.id = blockId;
-
         textBlock.innerHTML = createTextBlock();
     
-        console.log(this.contentBlocks);
-        
         this.contentBlocks.appendChild(textBlock);
         this.#setupBlockListeners(textBlock);
     }
     
     // 画像ブロックを追加
-    #addImageBlock(){
+    #addImageBlock(e){
+        e.preventDefault()
         const blockId = `block-${this.blockCounter++}`;
         const imageBlock = document.createElement('div');
         imageBlock.className = 'content-block image-block';
@@ -68,10 +135,17 @@ class MessageTemplateOperator{
         imageBlock.dataset.type = 'image';
         imageBlock.dataset.id = blockId;
 
-        imageBlock.innerHTML = createImageBlock()
+        imageBlock.innerHTML = createImageBlock(this.blockCounter)
 
         this.contentBlocks.appendChild(imageBlock);
         this.#setupBlockListeners(imageBlock);
+
+        const uploads = document.querySelectorAll(".file-input");
+        const errorTxt = document.querySelector(".js_error_txt");
+        const templateModal = document.getElementById("js_template_modal");
+
+        const imageUploadHandler = new ImageUploadHandler()
+        imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
     }
 
 
@@ -81,60 +155,14 @@ class MessageTemplateOperator{
         deleteBtn.addEventListener('click', () => {
             block.remove();
         });
-        
-        // ドラッグ＆ドロップのイベントリスナー
-        block.addEventListener('#dragStart', this.#dragStart.bind(this))
-        block.addEventListener('#dragEnd', this.#dragEnd.bind(this));
-    }
 
-    #dragStart(e){
-        console.log(e.currentTarget);
-        
-        e.currentTarget.classList.add('dragging');
-        e.dataTransfer.setData('text/plain', this.dataset.id);
-    }
-
-    #dragEnd(e){
-        e.currentTarget.classList.remove('dragging');
-    }
-
-    #dargOver(e){
-        e.preventDefault();
-        const draggingBlock = document.querySelector('.dragging');
-        const targetBlock = this;
-        
-        if (draggingBlock !== targetBlock) {
-            const container = document.getElementById('content-blocks');
-            const blockRect = targetBlock.getBoundingClientRect();
-            const mouseY = e.clientY;
-            
-            // マウスがブロックの上半分にあるかどうかを判定
-            const isAboveHalf = mouseY < blockRect.top + blockRect.height / 2;
-            
-            console.log(draggingBlock);
-            
-            if (isAboveHalf) {
-                container.insertBefore(draggingBlock, targetBlock);
-            } else {
-                container.insertBefore(draggingBlock, targetBlock.nextSibling);
-            }
-        }
-    }
-
-    // ブロック間のドラッグ＆ドロップを可能にする
-    #setupSortableBlocks(){
-        const blocks = document.querySelectorAll('.content-block');
-            
-        blocks.forEach(block => {
-            block.addEventListener('dragover', this.#dargOver);
-        });
     }
 
     #toggleTabs(){
         this.tabs.forEach((tab, index) => {
             tab.addEventListener('click', () => {
                 // アクティブタブの更新
-                tabs.forEach(t => t.classList.remove('active'));
+                this.tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 
                 // タブコンテンツの表示/非表示
@@ -145,6 +173,8 @@ class MessageTemplateOperator{
             });
         });
     }
+
+
 }
 
 export default MessageTemplateOperator;

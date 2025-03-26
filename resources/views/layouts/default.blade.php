@@ -36,7 +36,7 @@
 </head>
 
 <body>
-      <div class="bg"></div>
+      <div class="bg hidden"></div>
       <div class="loader hidden"></div>
       <div class="fixed_bg hidden"></div>
       <main class="dashboard">
@@ -58,6 +58,9 @@
                               </div>
                               <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_create_text_btn">固定テキスト設定</p>
+                              </div>
+                              <div class="nav__item-option">
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_template_btn">メッセージテンプレート作成</p>
                               </div>
                         @endif
                         @if (Route::currentRouteName() == "dashboard")

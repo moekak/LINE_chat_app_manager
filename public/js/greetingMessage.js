@@ -5961,7 +5961,10 @@ __webpack_require__.r(__webpack_exports__);
 var API_ENDPOINTS = {
   FETCH_BROADCASTMESSAGE: "/api/broadcast_message/store",
   FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId"
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  FETCH_CREATE_CATEGORY: "/api/create/category",
+  FETCH_TEMPLATE_CATEGORY: "/api/get/categories",
+  FETCH_TEMPLATE_CREATE: "/api/create/templates"
 };
 
 /***/ }),
@@ -6985,10 +6988,10 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
   }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <div class=\"handle\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"></line>\n                              <line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"></line>\n                              <line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"></line>\n                              <line x1=\"3\" y1=\"6\" x2=\"3.01\" y2=\"6\"></line>\n                              <line x1=\"3\" y1=\"12\" x2=\"3.01\" y2=\"12\"></line>\n                              <line x1=\"3\" y1=\"18\" x2=\"3.01\" y2=\"18\"></line>\n                        </svg>\n                  </div>\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\"></textarea>\n            </div>\n      ";
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\"></textarea>\n            </div>\n      ";
 };
-var createImageBlock = function createImageBlock() {
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <div class=\"handle\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"></line>\n                                    <line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"></line>\n                                    <line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"></line>\n                                    <line x1=\"3\" y1=\"6\" x2=\"3.01\" y2=\"6\"></line>\n                                    <line x1=\"3\" y1=\"12\" x2=\"3.01\" y2=\"12\"></line>\n                                    <line x1=\"3\" y1=\"18\" x2=\"3.01\" y2=\"18\"></line>\n                              </svg>\n                        </div>\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" accept=\"image/*\">\n                        <div class=\"image-placeholder\">\n                              <img src=\"/img/icons8-plus-50.png\" alt=\"\">\n                              <p>\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                        </div>\n                  </div>\n            </div>\n      ";
+var createImageBlock = function createImageBlock(blockCounter) {
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
 };
 
 /***/ }),
@@ -7201,8 +7204,10 @@ var initializeSimpleBar = function initializeSimpleBar() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   close_loader: () => (/* binding */ close_loader),
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
 /* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
+/* harmony export */   open_loader: () => (/* binding */ open_loader),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
 /* harmony export */ });
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
@@ -7247,6 +7252,16 @@ var close_modal = function close_modal() {
       });
     }
   });
+};
+var open_loader = function open_loader() {
+  var loader = document.querySelector(".loader");
+  var bg = document.querySelector(".bg");
+  bg.classList.remove("hidden");
+  loader.classList.remove("hidden");
+};
+var close_loader = function close_loader() {
+  var loader = document.querySelector(".loader");
+  loader.classList.add("hidden");
 };
 var close_modal_by_click = function close_modal_by_click(modal, btn) {
   var bg = document.querySelector(".bg");
@@ -7316,14 +7331,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _util_cropper_CropperOverlay_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/cropper/CropperOverlay.js */ "./resources/js/module/util/cropper/CropperOverlay.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
 var FormController = /*#__PURE__*/function () {
   function FormController() {
     _classCallCheck(this, FormController);
@@ -7383,6 +7396,15 @@ var FormController = /*#__PURE__*/function () {
           }
         });
       });
+    }
+  }, {
+    key: "populateSelectOptions",
+    value: function populateSelectOptions(id, category_name) {
+      var option = document.createElement("option");
+      var selectParentElement = document.getElementById("category-select");
+      option.value = id;
+      option.innerHTML = category_name;
+      selectParentElement.appendChild(option);
     }
   }]);
 }();
@@ -7669,19 +7691,6 @@ var CropperEventHandler = /*#__PURE__*/function () {
     this.changeBtn = changeBtn;
     this.cropper = cropper;
   }
-
-  // // 画像編集に関連する全てのイベントリスナーを初期化
-  // initializeEvents(){
-  //       this.#detectChoiceEvents()
-  // }
-
-  // // URLソース選択（ラジオボタン）の変更を監視
-  // // 選択状態に応じてURL入力欄の表示/非表示を切り替える
-  // #detectChoiceEvents(){
-  //       this.choices.forEach((choice)=>{
-  //             choice.addEventListener("change", (event) => this.#handleUrlInputToggle(event, this))
-  //       })
-  // }
 
   // 画像変更ボタンのクリックイベントを監視
   // クリック時にCropperの編集モードを開始
@@ -8061,15 +8070,25 @@ var MAX_SIZE = 5 * 1024 * 1024;
  */
 var _FileUploader_brand = /*#__PURE__*/new WeakSet();
 var FileUploader = /*#__PURE__*/function () {
-  function FileUploader(file, errorTxtElement) {
+  function FileUploader(file, errorTxtElement, errorElement, imageErrorElement, isTemplate, inputElement) {
+    var _modal = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
     _classCallCheck(this, FileUploader);
     // 新しい画像要素を作成
     _classPrivateMethodInitSpec(this, _FileUploader_brand);
     this.file = file;
     this.errorTxtElement = errorTxtElement;
     this.newconfirmBtn = null;
-    this.errorElement = document.querySelector(".js_broadcast_error");
-    this.imageErrorElement = document.querySelector(".js_image_error");
+    this.errorElement = errorElement;
+    this.imageErrorElement = imageErrorElement;
+    this.modal = _modal;
+    this.imageEditModal = document.getElementById("js_image_edit_modal");
+    this.urlErrorElement = document.querySelector(".js_url_error");
+    this.urlInput = document.getElementById("js_url_input");
+    this.isTemplate = isTemplate;
+    this.cropArea = [];
+    this.url = "";
+    this.inputElement = inputElement;
+    console.log(this.inputElement);
 
     // イベントを初期化
     this.initializeEvents();
@@ -8077,15 +8096,11 @@ var FileUploader = /*#__PURE__*/function () {
   return _createClass(FileUploader, [{
     key: "initializeEvents",
     value: function initializeEvents() {
-      this.changeImageBtn = document.getElementById("js_changeImg_btn");
-      this.newChangeImageBtn = this.changeImageBtn.cloneNode(true);
-      this.changeImageBtn.parentNode.replaceChild(this.newChangeImageBtn, this.changeImageBtn);
-      this.newChangeImageBtn.addEventListener("click", this.handleDisplayClick.bind(this));
-    }
-  }, {
-    key: "handleDisplayClick",
-    value: function handleDisplayClick() {
-      _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
+      // 画像切り取りモーダルの画像変更ボタン
+      var button = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_changeImg_btn");
+      button.addEventListener("click", function () {
+        _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload(); //ファイルアップロードの初期化
+      });
     }
 
     /**
@@ -8109,14 +8124,14 @@ var FileUploader = /*#__PURE__*/function () {
               }
               return _context.abrupt("return");
             case 3:
-              if (document.querySelector(".image_edit_modal").classList.contains("hidden")) {
+              if (this.imageEditModal.classList.contains("hidden")) {
                 _assertClassBrand(_FileUploader_brand, this, _toggleLoader).call(this, true);
               } else {
                 _assertClassBrand(_FileUploader_brand, this, _toggleLoaderforChangeImg).call(this, true);
               }
 
               // 画像リンクモーダル表示
-              document.querySelector(".js_url_error").classList.add("hidden");
+              this.urlErrorElement.classList.add("hidden");
               _context.next = 7;
               return _assertClassBrand(_FileUploader_brand, this, _compressedFile).call(this);
             case 7:
@@ -8175,64 +8190,61 @@ var FileUploader = /*#__PURE__*/function () {
                 container.innerHTML = ""; // 古い画像を削除
                 container.appendChild(newImage); // 新しい画像を保存
 
-                // TODODODO
-
-                if (document.querySelector(".image_edit_modal").classList.contains("hidden")) {
+                if (_this.imageEditModal.classList.contains("hidden")) {
                   _assertClassBrand(_FileUploader_brand, _this, _toggleLoader).call(_this, false);
                 } else {
                   _assertClassBrand(_FileUploader_brand, _this, _toggleLoaderforChangeImg).call(_this, false);
                 }
-                var imageEditModal = document.getElementById("js_image_edit_modal");
-                (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_modal)(imageEditModal);
+                (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_modal)(_this.imageEditModal);
+
+                // 画像切り取りモーダルが表示されるときに前に出ているモーダルを非表示にする
+                if (_this.modal) _this.modal.classList.add("hidden");
 
                 // URLの設定
-                var urlInput = document.getElementById("js_url_input");
-                var url = "";
-                urlInput.addEventListener("input", function (e) {
-                  url = e.target.value;
+                _this.urlInput.addEventListener("input", function (e) {
+                  _this.url = e.target.value;
                 });
 
                 // 画像切り取りが完了して送信ボタンを押した後の処理
-                var confirmBtn = document.getElementById("js_preview_submit_btn");
-                _this.newconfirmBtn = confirmBtn.cloneNode(true);
-                confirmBtn.parentNode.replaceChild(_this.newconfirmBtn, confirmBtn);
-                var modal = document.getElementById("js_image_edit_modal");
+                _this.newconfirmBtn = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_preview_submit_btn");
                 _this.newconfirmBtn.addEventListener("click", function () {
                   // URL形式チェック
 
                   _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
                   var regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
-                  var urlInput = document.getElementById("js_url_input");
                   var choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
                   var selectedChoices = Array.from(choices).find(function (choice) {
                     return choice.checked;
                   });
-                  if (selectedChoices.value === "on" && !regex.test(urlInput.value)) {
-                    var urlError = document.querySelector(".js_url_error");
-                    urlError.classList.remove("hidden");
+                  if (selectedChoices.value === "on" && !regex.test(_this.urlInput.value)) {
+                    _this.urlErrorElement.classList.remove("hidden");
                     return;
                   }
-                  modal.classList.add("hidden");
-                  var cropArea = _this.cropper.getCropperArea();
+                  _this.imageEditModal.classList.add("hidden");
+                  _this.cropArea = _this.cropper.getCropperArea();
 
                   // ラジオボタンの切り替え
 
                   if (selectedChoices.value === "off") {
-                    cropArea = [];
-                    url = "";
+                    _this.cropArea = [];
+                    _this.url = "";
                   }
-                  var index = document.querySelectorAll(".js_headings").length;
-                  _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].displayImageMessageToList(newImage.src, "js_accordion_wrapper", "accordion", index);
-                  // 不要なリストを削除
-                  _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].deleteList("accordion");
-
-                  // // ボタン状態を更新
-                  (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"));
-                  reader.readAsDataURL(compressedFile);
-
-                  // 新しいファイル名を生成し、FormDataArrayに保存
-                  var newFileName = _this.generateOriginalFileName();
-                  FileUploader.setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea);
+                  if (_this.isTemplate) {
+                    _this.modal.classList.remove("hidden");
+                    _this.inputElement.parentElement.dataset.url = _this.url;
+                    _this.inputElement.parentElement.dataset.cropArea = JSON.stringify(_this.cropArea);
+                  } else {
+                    var index = document.querySelectorAll(".js_headings").length;
+                    _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].displayImageMessageToList(newImage.src, "js_accordion_wrapper", "accordion", index);
+                    // 不要なリストを削除
+                    _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].deleteList("accordion");
+                    // // ボタン状態を更新
+                    (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.toggleDisplayButtonState)(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"));
+                    reader.readAsDataURL(compressedFile);
+                    // 新しいファイル名を生成し、FormDataArrayに保存
+                    var newFileName = _this.generateOriginalFileName();
+                    FileUploader.setImageDataToFormDataArray(compressedFile, newFileName, index, _this.url, _this.cropArea);
+                  }
                 });
               };
             case 3:
@@ -8267,15 +8279,23 @@ var FileUploader = /*#__PURE__*/function () {
      * @param {number} index - 保存先のインデックス
      */
   }, {
-    key: "validateFile",
-    value:
+    key: "getCropperData",
+    value: function getCropperData() {
+      return {
+        "url": this.url,
+        "cropArea": this.cropArea
+      };
+    }
+
     /**
      * ファイルの形式とサイズを検証
      * - 許可されていない形式やサイズの場合にエラー文言を表示させる
      */
-    function validateFile() {
+  }, {
+    key: "validateFile",
+    value: function validateFile() {
       var hasModal = true;
-      if (document.getElementById("js_image_edit_modal").classList.contains("hidden")) hasModal = false;
+      if (this.imageEditModal.classList.contains("hidden")) hasModal = false;
       if (!FileUploader.isAllowedType(this.file.type)) {
         return _assertClassBrand(_FileUploader_brand, this, _validationError).call(this, "許可されているファイル形式は JPG, PNGのみです。", hasModal);
       }
@@ -8408,16 +8428,14 @@ function _toggleLoaderforChangeImg(isLoading) {
 function _changeSubmitBtn() {
   var _this2 = this;
   var choices = document.querySelectorAll('input[name="choice"]');
-  var urlInput = document.getElementById("js_url_input");
   var confirmBtn = document.getElementById("js_change_area");
-  var urlError = document.querySelector(".js_url_error");
 
   // ボタンの状態を更新する関数
   var updateButtonState = function updateButtonState() {
     var isChoiceOn = _toConsumableArray(choices).some(function (choice) {
       return choice.checked && choice.value === "on";
     });
-    var hasUrl = urlInput.value.length > 0;
+    var hasUrl = _this2.urlInput.value.length > 0;
     var isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
     if (isChoiceOn) {
       if (hasUrl && isConfirmed) {
@@ -8434,9 +8452,9 @@ function _changeSubmitBtn() {
   choices.forEach(function (choice) {
     choice.addEventListener("change", updateButtonState);
   });
-  urlInput.addEventListener("input", function () {
-    _this2.actionUrl = urlInput.value; // 必要なら保持
-    urlError.classList.add("hidden");
+  this.urlInput.addEventListener("input", function () {
+    _this2.actionUrl = _this2.urlInput.value; // 必要なら保持
+    _this2.urlErrorElement.classList.add("hidden");
     updateButtonState();
   });
   confirmBtn.addEventListener("click", function () {
@@ -13364,7 +13382,7 @@ var uploads = document.querySelectorAll(".js_upload");
 uploads.forEach(function (upload) {
   upload.addEventListener("change", /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-      var file, fileUploader;
+      var file, errorElement, imageErrorElement, fileUploader;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -13377,14 +13395,16 @@ uploads.forEach(function (upload) {
             }
             return _context2.abrupt("return");
           case 5:
-            fileUploader = new _module_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_7__["default"](file, errorTxt);
-            _context2.next = 8;
+            errorElement = document.querySelector(".js_broadcast_error");
+            imageErrorElement = document.querySelector(".js_image_error");
+            fileUploader = new _module_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_7__["default"](file, errorTxt, errorElement, imageErrorElement, false, null);
+            _context2.next = 10;
             return fileUploader.fileOperation();
-          case 8:
+          case 10:
             // // ドラッグ＆ドロップの初期化
             _module_component_DragAndDrop_js__WEBPACK_IMPORTED_MODULE_3__["default"].dragAndDrop("accordion", true);
             _module_component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
-          case 10:
+          case 12:
           case "end":
             return _context2.stop();
         }

@@ -129,16 +129,6 @@ export const createTextBlock = () =>{
       return `
             <div class="block-header">
                   <div class="block-title">
-                  <div class="handle">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <line x1="8" y1="6" x2="21" y2="6"></line>
-                              <line x1="8" y1="12" x2="21" y2="12"></line>
-                              <line x1="8" y1="18" x2="21" y2="18"></line>
-                              <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                              <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                              <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                        </svg>
-                  </div>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -157,25 +147,15 @@ export const createTextBlock = () =>{
                   </div>
             </div>
             <div class="block-content">
-                  <textarea class="block-textarea" placeholder="テキストを入力してください"></textarea>
+                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text"></textarea>
             </div>
       `
 }
 
-export const createImageBlock = () =>{
+export const createImageBlock = (blockCounter) =>{
       return `
             <div class="block-header">
                   <div class="block-title">
-                        <div class="handle">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                              </svg>
-                        </div>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                               <circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -196,11 +176,13 @@ export const createImageBlock = () =>{
             </div>
             <div class="block-content">
                   <div class="image-upload">
-                        <input type="file" class="file-input" accept="image/*">
-                        <div class="image-placeholder">
-                              <img src="/img/icons8-plus-50.png" alt="">
-                              <p>ファイルの選択</p>
-                        </div>
+                        <input type="file" class="file-input" id="fileInput${blockCounter}" accept="image/*" name="image_path">
+                        <label for="fileInput${blockCounter}">
+                              <div class="image-placeholder">
+                                    <img src="/img/icons8-plus-50.png" alt="" class="image_element">
+                                    <p class="image-placeholder-txt">ファイルの選択</p>
+                              </div>
+                        </label>
                   </div>
             </div>
       `
