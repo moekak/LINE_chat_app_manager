@@ -5978,6 +5978,8 @@ var API_ENDPOINTS = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ERROR_TEXT: () => (/* binding */ ERROR_TEXT),
+/* harmony export */   SUCCESS_TEXT: () => (/* binding */ SUCCESS_TEXT),
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
@@ -5993,6 +5995,18 @@ __webpack_require__.r(__webpack_exports__);
 //     CHAT_URL : "https://chat-system.info/api/chat",
 //     CHAT_BASE_URL:"https://chat-system.info"
 // };
+
+var ERROR_TEXT = {
+  TEMPLATE_NAME_EMPTY_ERROR: "テンプレート名を入力してください",
+  CATEGORY_EMPTY_ERROR: "カテゴリーを選択してください",
+  CONTENTS_EMPTY_ERROR: "一つ以上メッセージを入力してください。",
+  CREATE_CATEGORY_ERROR: "カテゴリー追加に失敗しました。再度お試しください。",
+  CREATE_TEMPLATE_ERROR: "テンプレート追加に失敗しました。再度お試しください。"
+};
+var SUCCESS_TEXT = {
+  CREATE_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
+  CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。"
+};
 
 // // // 開発用
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6988,7 +7002,7 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
   }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\"></textarea>\n            </div>\n      ";
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\" max=\"1000\"></textarea>\n            </div>\n      ";
 };
 var createImageBlock = function createImageBlock(blockCounter) {
   return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
@@ -7205,9 +7219,12 @@ var initializeSimpleBar = function initializeSimpleBar() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   close_loader: () => (/* binding */ close_loader),
+/* harmony export */   close_loader_template: () => (/* binding */ close_loader_template),
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
 /* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
+/* harmony export */   hide_bg: () => (/* binding */ hide_bg),
 /* harmony export */   open_loader: () => (/* binding */ open_loader),
+/* harmony export */   open_loader_template: () => (/* binding */ open_loader_template),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
 /* harmony export */ });
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
@@ -7263,12 +7280,34 @@ var close_loader = function close_loader() {
   var loader = document.querySelector(".loader");
   loader.classList.add("hidden");
 };
+var hide_bg = function hide_bg() {
+  var bg = document.querySelector(".bg");
+  bg.classList.add("hidden");
+};
 var close_modal_by_click = function close_modal_by_click(modal, btn) {
   var bg = document.querySelector(".bg");
   btn.addEventListener("click", function () {
     bg.classList.add("hidden");
     modal.classList.add("hidden");
   });
+};
+var open_loader_template = function open_loader_template() {
+  var loader = document.querySelector(".loader");
+  var bg = document.querySelector(".bg_temaplteModal");
+  var modal = document.getElementById("js_template_modal");
+  modal.style.zIndex = 998;
+  loader.style.zIndex = 999;
+  loader.classList.remove("hidden");
+  bg.classList.remove("hidden");
+};
+var close_loader_template = function close_loader_template() {
+  var loader = document.querySelector(".loader");
+  var bg = document.querySelector(".bg_temaplteModal");
+  var modal = document.getElementById("js_template_modal");
+  modal.style.zIndex = 999;
+  loader.style.zIndex = 998;
+  loader.classList.add("hidden");
+  bg.classList.add("hidden");
 };
 
 /***/ }),

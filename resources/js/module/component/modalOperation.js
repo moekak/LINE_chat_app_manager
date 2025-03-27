@@ -67,6 +67,11 @@ export const close_loader =() =>{
       loader.classList.add("hidden")
 }
 
+export const hide_bg = ()  =>{
+      const bg  =  document.querySelector(".bg")
+      bg.classList.add("hidden")
+}
+
 
 export const close_modal_by_click = (modal, btn) =>{
       const bg  =  document.querySelector(".bg")
@@ -74,4 +79,25 @@ export const close_modal_by_click = (modal, btn) =>{
             bg.classList.add("hidden")
             modal.classList.add("hidden")
       })
+}
+
+export const open_loader_template =() =>{
+      const loader = document.querySelector(".loader")
+      const bg = document.querySelector(".bg_temaplteModal")
+      const modal = document.getElementById("js_template_modal")
+
+      modal.style.zIndex = 998
+      loader.style.zIndex = 999
+      loader.classList.remove("hidden")
+      bg.classList.remove("hidden")
+}
+export const close_loader_template =() =>{
+      const loader = document.querySelector(".loader")
+      const bg = document.querySelector(".bg_temaplteModal")
+      const modal = document.getElementById("js_template_modal")
+
+      modal.style.zIndex = 999
+      loader.style.zIndex = 998
+      loader.classList.add("hidden")
+      bg.classList.add("hidden")
 }

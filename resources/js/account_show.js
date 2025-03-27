@@ -10,11 +10,12 @@ import MessageTemplateOperator from "./module/component/messageTemplate/MessageT
 import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHandler.js";
 import { fetchPostOperation } from "./module/util/fetch.js";
 import { API_ENDPOINTS } from "./config/apiEndPoint.js";
+import InitializeInputService from "./module/component/messageTemplate/InitializeInputService.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
 
-new MessageTemplateOperator()
+const messageTemplateOperator = new MessageTemplateOperator()
 
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "admin")
@@ -129,7 +130,8 @@ submitForms.forEach((submitForm)=>{
 
 
       createTemplateBtn.addEventListener("click", async ()=>{
-
+            InitializeInputService.intiaizeInputs()
+            messageTemplateOperator.resetBlockCounter()
             open_loader()
             const adminId = {"admin_id": document.getElementById("js_account_id").value}
             try{

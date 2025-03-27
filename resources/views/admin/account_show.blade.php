@@ -290,7 +290,8 @@
 </section>
 
 {{-- テンプレート作成モーダル --}}
-<section class="modal__container template_modal js_modal js_loader hidden" id="js_template_modal">
+<section class="modal__container template_modal js_modal js_loader hidden relative" id="js_template_modal">
+	<div class="bg_temaplteModal hidden"></div>
 	<!-- モーダルコンテナ -->
 	<div>
 		<!-- モーダルヘッダー -->
@@ -306,20 +307,46 @@
 				<div class="tab active">新規作成</div>
 				<div class="tab">一覧・編集</div>
 			</div>
-			
+			<!-- エラーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
+			<div class="form-validation-errors hidden" id="form-errors">
+				<div class="error-header">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="8" x2="12" y2="12"></line>
+						<line x1="12" y1="16" x2="12.01" y2="16"></line>
+					</svg>
+					<span>以下のエラーを修正してください</span>
+				</div>
+				<ul class="error-list" id="js_error_list"></ul>
+			</div>
+
+			<!-- 成功ーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
+			<div class="form-validation-success hidden" id="form-success">
+				<div class="success-header">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+						<polyline points="22 4 12 14.01 9 11.01"></polyline>
+					</svg>
+					<span>カテゴリーの追加に成功しました。</span>
+				</div>
+				<ul class="success-list" id="js_success_list">
+					<!-- <li class="success-item">テンプレートが正常に作成されました</li> -->
+				</ul>
+			</div>
+						
 			<!-- 新規作成フォーム -->
 			<form class="tab-content">
 				@csrf
 				<div class="form-group">
 					<label for="template-title">テンプレート名</label>
-					<input type="text" id="template-title" placeholder="例: 挨拶文" name="template_name">
+					<input type="text" id="template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
 				</div>
 				
 				<div class="category-management">
 					<label>カテゴリ</label>
 					<div class="add-category">
-						<input type="text" placeholder="新しいカテゴリを追加" name="category_name" id="js_category_input">
-						<button class="btn btn-primary" id="js_category_add_btn">追加</button>
+						<input type="text" placeholder="新しいカテゴリを追加" name="category_name" id="js_category_input" max="255">
+						<button class="btn btn-primary" id="js_category_add_btn" disabled>追加</button>
 					</div>
 				</div>
 				<div class="row">
@@ -334,34 +361,35 @@
 						</select>
 						</div>
 					</div>
+				</div>
 
 				<!-- コンテンツブロック管理エリア -->
 				<div class="content-blocks" id="content-blocks">
-				<!-- テキストブロック -->
-				<div class="content-block text-block" draggable="true" data-type="text" data-id="block-1">
-					<div class="block-header">
-						<div class="block-title">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-						</svg>
-						テキスト
-						</div>
-						<div class="block-actions">
-							<button class="btn btn-icon btn-light delete-block">
+					{{-- <!-- テキストブロック -->
+					<div class="content-block text-block" draggable="true" data-type="text" data-id="block-1">
+						<div class="block-header">
+							<div class="block-title">
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="3 6 5 6 21 6"></polyline>
-								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-								<line x1="10" y1="11" x2="10" y2="17"></line>
-								<line x1="14" y1="11" x2="14" y2="17"></line>
+								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
 							</svg>
-							</button>
+							テキスト
+							</div>
+							<div class="block-actions">
+								<button class="btn btn-icon btn-light delete-block">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="3 6 5 6 21 6"></polyline>
+									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+									<line x1="10" y1="11" x2="10" y2="17"></line>
+									<line x1="14" y1="11" x2="14" y2="17"></line>
+								</svg>
+								</button>
+							</div>
+						</div>
+						<div class="block-content">
+							<textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text"></textarea>
 						</div>
 					</div>
-					<div class="block-content">
-						<textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text"></textarea>
-					</div>
-				</div>
 					<!-- 画像ブロック -->
 					<div class="content-block image-block" draggable="true" data-type="image" data-id="block-2">
 						<div class="block-header">
@@ -385,17 +413,17 @@
 							</div>
 						</div>
 						<div class="block-content">
-									<div class="image-upload">
-										<input type="file" class="file-input" id="fileInput1" accept="image/*" name="image_path">
-										<label for="fileInput1">
-								<div class="image-placeholder">
-									<img src="{{asset("img/icons8-plus-50.png")}}" alt="" class="image_element">
-									<p class="image-placeholder-txt">ファイルの選択</p>
-								</div>
-								</label>
+							<div class="image-upload">
+								<input type="file" class="file-input" id="fileInput1" accept="image/*" name="image_path">
+								<label for="fileInput1">
+									<div class="image-placeholder">
+										<img src="{{asset("img/icons8-plus-50.png")}}" alt="" class="image_element">
+										<p class="image-placeholder-txt">ファイルの選択</p>
 									</div>
+								</label>
+							</div>
 						</div>
-					</div>
+					</div> --}}
 				</div>
 				
 				<!-- 追加ボタン -->
@@ -419,7 +447,6 @@
 				
 				<!-- ボタン -->
 				<div class="btn-container">
-					<button class="btn btn-cancel">キャンセル</button>
 					<button class="btn btn-primary" id="js_submit_template_btn" type="submit">保存</button>
 				</div>
 			</form>

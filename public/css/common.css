@@ -106,7 +106,7 @@ p, ul {
     box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.3);
 }
 
-.bg {
+.bg, .bg_temaplteModal {
     position: absolute;
     top: 0;
     left: 0;
@@ -748,7 +748,7 @@ p, ul {
     max-height: 80vh;
     overflow: auto;
     padding: 0 !important;
-    width: 750px;
+    width: 660px;
 }
 .template_modal::-webkit-scrollbar{
     width: 0;
@@ -774,6 +774,9 @@ p, ul {
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .modal-header h2 {
@@ -804,6 +807,7 @@ p, ul {
     padding: 24px;
     overflow-y: auto;
     flex-grow: 1;
+    max-height: 100%;
 }
 
 .tabs {
@@ -977,58 +981,7 @@ textarea {
     background-color: var(--gray-medium);
 }
 
-/* プレビューエリア */
-.preview-section {
-    margin-top: 24px;
-    border-top: 1px solid var(--border-color);
-    padding-top: 24px;
-}
 
-.preview-header {
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.preview-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--primary-color);
-    cursor: pointer;
-}
-
-.preview-container {
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 16px;
-    min-height: 200px;
-}
-
-.preview-message {
-    max-width: 80%;
-    background-color: white;
-    padding: 12px 16px;
-    border-radius: 12px;
-    border-top-left-radius: 0;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin-left: 12px;
-    margin-bottom: 16px;
-}
-
-.preview-message .preview-image {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-
-.preview-message .preview-text {
-    margin-bottom: 0;
-}
 
 /* テンプレート一覧表示 */
 .template-list {
@@ -1244,4 +1197,100 @@ input:checked + .toggle-slider:before {
 }
 #category-select{
     color: rgb(128 128 128);
+}
+
+/* タブの下に表示するエラーメッセージスタイル */
+.form-validation-errors {
+    background-color: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    margin: 16px 0 24px 0;
+    overflow: hidden;
+    animation: errorFadeIn 0.3s ease-out;
+}
+
+@keyframes errorFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-header {
+    display: flex;
+    align-items: center;
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 12px 16px;
+    font-weight: 500;
+    color: #991B1B;
+}
+
+.error-header svg {
+    color: #EF4444;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.error-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.error-item {
+    padding: 8px 16px 8px 40px;
+    position: relative;
+    color: #991B1B;
+    font-size: 14px;
+}
+
+.error-item:not(:last-child) {
+    border-bottom: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.error-item::before {
+    content: "•";
+    position: absolute;
+    left: 20px;
+    color: #EF4444;
+    font-weight: bold;
+
+}
+
+.form-validation-success {
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.success-header {
+    display: flex;
+    align-items: center;
+    color: #0f5132;
+}
+
+.success-header svg {
+    margin-right: 10px;
+    stroke: #0f5132;
+}
+
+.success-list {
+    list-style: none;
+    padding-left: 30px;
+    margin: 0;
+}
+
+.success-item {
+    color: #0f5132;
+    margin-bottom: 5px;
+}
+
+.hidden {
+    display: none;
 }

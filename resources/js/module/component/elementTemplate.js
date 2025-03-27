@@ -147,7 +147,7 @@ export const createTextBlock = () =>{
                   </div>
             </div>
             <div class="block-content">
-                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text"></textarea>
+                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text" max="1000"></textarea>
             </div>
       `
 }

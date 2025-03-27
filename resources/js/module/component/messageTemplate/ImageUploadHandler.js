@@ -1,8 +1,10 @@
 import FileUploader from "../../util/file/FileUploader.js";
 import BroadcastMessageOperator from "../broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "../DragAndDrop.js";
+import { open_loader } from "../modalOperation.js";
 import FormController from "../ui/FormController.js";
 import { API_ENDPOINTS } from "./../../../config/apiEndPoint.js";
+import DataValidator from "./DataValidator.js";
 
 class ImageUploadHandler{
       /**
@@ -17,10 +19,30 @@ class ImageUploadHandler{
                   FormController.initializeImageCropInput();
                   
                   const file = e.target.files[0];
+                  const errors = []
                   if (!file) return;
+
+                  if(!FileUploader.isAllowedType(file.type)){
+                        errors.push("許可されているファイル形式は JPG, PNGのみです")
+                  }if(!FileUploader.isCorrectSize(file.size)){   
+                        errors.push("画像サイズが大きすぎます。5MB以内で指定してください")     
+                  }     
+
+                  if(errors.length > 0){
+                        const dataValidator = new DataValidator()
+                        dataValidator.displayErrorForCreatingCategory(errors)
+                        fileInput.value = ""
+                        return
+                  }
                   
                   const objectURL = URL.createObjectURL(file);
                   
+                  // // ここにファイルアップロードやその他の処理を追加できます
+                  const errorElement = document.querySelector(".js_broadcast_error");
+                  const imageErrorElement = document.querySelector(".js_image_error");
+                  const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, true, e.target, templateModal);
+                  await fileUploader.fileOperation();
+
                   // 関連要素を取得
                   const imageElement = fileInput.parentElement.querySelector(".image_element");
                   const placeholderText = fileInput.parentElement.querySelector(".image-placeholder-txt");
@@ -29,12 +51,6 @@ class ImageUploadHandler{
                   imageElement.src = objectURL;
                   imageElement.classList.add("active");
                   placeholderText.classList.add("hidden");
-                  
-                  // // ここにファイルアップロードやその他の処理を追加できます
-                  const errorElement = document.querySelector(".js_broadcast_error");
-                  const imageErrorElement = document.querySelector(".js_image_error");
-                  const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, true, e.target, templateModal);
-                  await fileUploader.fileOperation();
                   
                   // ドラッグ＆ドロップの初期化
                   DragAndDrop.dragAndDrop("accordion", true);
@@ -50,6 +66,7 @@ class ImageUploadHandler{
             const templateModal = templateModalElement || document.getElementById("js_template_modal");
             
             fileInputs.forEach(fileInput => {
+                  open_loader()
                   fileInput.addEventListener("change", this.#handleFileInputChange(fileInput, errorTxt, templateModal));
             });
       }
