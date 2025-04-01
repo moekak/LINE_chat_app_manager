@@ -9,6 +9,9 @@ class TabController {
     setupListeners() {
         this.tabs.forEach((tab, index) => {
             tab.addEventListener('click', () => {
+                if(index === 0){
+                    document.getElementById("template-edit-form").classList.add("hidden")
+                }
                 this.activateTab(index);
             });
         });

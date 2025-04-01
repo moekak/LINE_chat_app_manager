@@ -14,22 +14,27 @@ class MessageTemplateOperator {
     constructor() {
         // DOM要素
         this.contentBlocks = document.getElementById('content-blocks');
-        this.addTextBtn = document.getElementById('add-text');
-        this.addImageBtn = document.getElementById('add-image');
+        this.addTextBtns = document.querySelectorAll('.add-text');
+        this.addImageBtns = document.querySelectorAll('.add-image');
         this.previewContainer = document.getElementById('preview-container');
-        this.submitTemplateBtn = document.getElementById("js_submit_template_btn");
+        this.submitTemplateBtns = document.querySelectorAll(".js_submit_template_btn");
         this.tabs = document.querySelectorAll('.tab');
         this.tabContents = document.querySelectorAll('.tab-content');
         this.templateModal = document.getElementById("js_template_modal")
         this.categoryAddBtn = null;
-        
+        this.form = document.querySelector(".js_create_from")
         // コンポーネント
+        this.formData;
         this.blockManager = new TemplateBlockManager(this.contentBlocks);
-        this.formData = new TemplateFormData();
         this.tabController = new TabController(this.tabs, this.tabContents);
         this.imageUploadHandler = new ImageUploadHandler()
         
         this.initialize();
+    }
+
+    changeElements(contentBlock, form){
+        this.contentBlocks = contentBlock
+        this.form = form
     }
 
     resetBlockCounter(){
@@ -37,9 +42,17 @@ class MessageTemplateOperator {
     }
     initialize() {
         // ボタンイベントのセットアップ
-        this.addTextBtn.addEventListener('click', this.handleAddTextBlock.bind(this));
-        this.addImageBtn.addEventListener('click', this.handleAddImageBlock.bind(this));
-        this.submitTemplateBtn.addEventListener("click", this.handleSubmit.bind(this));
+        this.addTextBtns.forEach((btn)=>{
+            btn.addEventListener('click', this.handleAddTextBlock.bind(this));
+        })
+        this.addImageBtns.forEach((btn)=>{
+            btn.addEventListener('click', this.handleAddImageBlock.bind(this));
+        })
+        
+        this.submitTemplateBtns.forEach((btn)=>{
+            btn.addEventListener("click", this.handleSubmit.bind(this));
+        })
+        
         
         // 初期ブロックのリスナーをセットアップ
         document.querySelectorAll('.content-block').forEach(block => {
@@ -57,13 +70,15 @@ class MessageTemplateOperator {
 
     handleAddTextBlock(e) {
         e.preventDefault();
-        const newBlock = this.blockManager.addTextBlock();
+        console.log(this.contentBlocks);
+        
+        const newBlock = this.blockManager.addTextBlock(this.contentBlocks);
         this.blockManager.setupBlockListeners(newBlock);
     }
 
     handleAddImageBlock(e) {
         e.preventDefault();
-        const newBlock = this.blockManager.addImageBlock();
+        const newBlock = this.blockManager.addImageBlock(this.contentBlocks);
         this.blockManager.setupBlockListeners(newBlock);
 
         // 画像アップロードハンドラーのセットアップ
@@ -75,6 +90,8 @@ class MessageTemplateOperator {
 
     async handleAddCategory(e) {
         e.preventDefault();
+
+        InitializeInputService.initializeErrorList()
         open_loader_template()
         const categoryName = document.getElementById("js_category_input");
         const adminId = document.getElementById("js_account_id");
@@ -109,6 +126,7 @@ class MessageTemplateOperator {
 
     async handleSubmit(e) {
         e.preventDefault();
+        this.formData = new TemplateFormData(this.form);
         
         // フォームデータ構築とバリデーション
         const { formData, hasContent } = this.formData.buildFormData();
@@ -127,25 +145,31 @@ class MessageTemplateOperator {
             dataValidator.displayErrorMessages();
             return;
         }
-        
-        try {
-            const response = await TemplateApiService.createTemplate(formData);
 
-            if (response["status"] === 500) {
-                open_modal(this.templateModal)
-                dataValidator.displayErrorForCreatingCategory([ERROR_TEXT.CREATE_TEMPLATE_ERROR])
-            }else if(response["status"] === 422){
-                open_modal(this.templateModal)
-                dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
-            }else if(response["status"] === 201){
-                close_loader()
-                hide_bg()
-                dataValidator.displaySuccessMessage(SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS)
-            }
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+          }
+          
+        
+        
+        // try {
+        //     const response = await TemplateApiService.createTemplate(formData);
+
+        //     if (response["status"] === 500) {
+        //         open_modal(this.templateModal)
+        //         dataValidator.displayErrorForCreatingCategory([ERROR_TEXT.CREATE_TEMPLATE_ERROR])
+        //     }else if(response["status"] === 422){
+        //         open_modal(this.templateModal)
+        //         dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
+        //     }else if(response["status"] === 201){
+        //         close_loader()
+        //         hide_bg()
+        //         dataValidator.displaySuccessMessage(SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS)
+        //     }
             
-        } catch (error) {
-            alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
-        }
+        // } catch (error) {
+        //     alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
+        // }
     }
 }
 

@@ -1294,3 +1294,119 @@ input:checked + .toggle-slider:before {
 .hidden {
     display: none;
 }
+
+/* テンプレート編集モーダル用のCSS - 基本的には作成モーダルと同じスタイルを使用 */
+/* 既存のCSSに追加する形で記述しています */
+
+/* 編集モーダル固有のスタイル */
+#js_template_edit_modal .modal-header {
+    background-color: var(--secondary-color); /* 作成と区別するため色を変更 */
+}
+
+/* 編集フォーム用のスタイル */
+.edit-template-form {
+    width: 100%;
+}
+
+/* 編集モードの画像プレビュー */
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+/* コンテンツ編集中インジケーター */
+.editing-indicator {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* 変更済み要素のハイライト */
+.content-block.modified {
+    border-left: 3px solid var(--secondary-color);
+}
+
+/* 削除予定のブロックのスタイル */
+.content-block.to-be-deleted {
+    opacity: 0.5;
+    border: 1px dashed var(--danger-color);
+}
+
+/* 復元ボタン */
+.restore-btn {
+    background-color: var(--gray-light);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.restore-btn:hover {
+    background-color: var(--gray-medium);
+}
+
+/* 更新確認メッセージ */
+.update-confirmation {
+    background-color: var(--success-light);
+    color: var(--success-color);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 非表示の要素へのスタイルをさらに追加 */
+.hidden {
+    display: none !important;
+}
+
+/* モーダル内でのスクロール位置 */
+#js_template_edit_modal .modal-content {
+    overflow-y: auto;
+    max-height: calc(80vh - 60px); /* ヘッダーの高さを考慮 */
+}
+
+/* キャンセルボタンのスタイル */
+#js_cancel_edit_btn {
+    margin-right: auto; /* 左寄せにする */
+}
+
+/* 編集フォームでのバリデーションスタイル */
+#edit-template-title.invalid,
+#edit-category-select.invalid,
+#js_edit_category_input.invalid {
+    border-color: var(--danger-color);
+}
+
+/* 編集中のメモ表示 */
+.edit-notes {
+    background-color: var(--gray-light);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.edit-notes p {
+    margin: 0 0 8px 0;
+}
+
+.edit-notes ul {
+    margin: 0;
+    padding-left: 20px;
+}

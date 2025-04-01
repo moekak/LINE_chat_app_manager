@@ -335,11 +335,11 @@
 			</div>
 						
 			<!-- 新規作成フォーム -->
-			<form class="tab-content">
+			<form class="tab-content js_create_from">
 				@csrf
 				<div class="form-group">
 					<label for="template-title">テンプレート名</label>
-					<input type="text" id="template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
+					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
 				</div>
 				
 				<div class="category-management">
@@ -353,7 +353,7 @@
 					<div class="col">
 						<div class="form-group">
 						<label for="category-select">カテゴリを選択</label>
-						<select id="category-select" name="category_id">
+						<select class="category-select" id="category-select" name="category_id">
 							<option value="" disabled selected>カテゴリを選択</option>
 							{{-- <option value="greeting">挨拶</option>
 							<option value="inquiry">問い合わせ</option>
@@ -365,77 +365,18 @@
 
 				<!-- コンテンツブロック管理エリア -->
 				<div class="content-blocks" id="content-blocks">
-					{{-- <!-- テキストブロック -->
-					<div class="content-block text-block" draggable="true" data-type="text" data-id="block-1">
-						<div class="block-header">
-							<div class="block-title">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-							</svg>
-							テキスト
-							</div>
-							<div class="block-actions">
-								<button class="btn btn-icon btn-light delete-block">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<polyline points="3 6 5 6 21 6"></polyline>
-									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-									<line x1="10" y1="11" x2="10" y2="17"></line>
-									<line x1="14" y1="11" x2="14" y2="17"></line>
-								</svg>
-								</button>
-							</div>
-						</div>
-						<div class="block-content">
-							<textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text"></textarea>
-						</div>
-					</div>
-					<!-- 画像ブロック -->
-					<div class="content-block image-block" draggable="true" data-type="image" data-id="block-2">
-						<div class="block-header">
-							<div class="block-title">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-								<circle cx="8.5" cy="8.5" r="1.5"></circle>
-								<polyline points="21 15 16 10 5 21"></polyline>
-								</svg>
-								画像
-							</div>
-							<div class="block-actions">
-								<button class="btn btn-icon btn-light delete-block">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<polyline points="3 6 5 6 21 6"></polyline>
-									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-									<line x1="10" y1="11" x2="10" y2="17"></line>
-									<line x1="14" y1="11" x2="14" y2="17"></line>
-								</svg>
-								</button>
-							</div>
-						</div>
-						<div class="block-content">
-							<div class="image-upload">
-								<input type="file" class="file-input" id="fileInput1" accept="image/*" name="image_path">
-								<label for="fileInput1">
-									<div class="image-placeholder">
-										<img src="{{asset("img/icons8-plus-50.png")}}" alt="" class="image_element">
-										<p class="image-placeholder-txt">ファイルの選択</p>
-									</div>
-								</label>
-							</div>
-						</div>
-					</div> --}}
 				</div>
 				
 				<!-- 追加ボタン -->
 				<div class="add-block-container">
-					<button class="btn btn-light" id="add-text">
+					<button class="btn btn-light add-text">
 						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
 							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
 						</svg>
 						テキストを追加
 					</button>
-					<button class="btn btn-light" id="add-image">
+					<button class="btn btn-light add-image">
 						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
 							<circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -447,66 +388,133 @@
 				
 				<!-- ボタン -->
 				<div class="btn-container">
-					<button class="btn btn-primary" id="js_submit_template_btn" type="submit">保存</button>
+					<button class="btn btn-primary js_submit_template_btn" type="submit">保存</button>
 				</div>
 			</form>
 			
 			<!-- 一覧・編集タブ (初期状態では非表示) -->
-			<div class="tab-content" style="display: none;">
+			<div class="tab-content tab-edit" style="display: none;">
 				<div class="template-list">
 					<!-- テンプレートアイテム -->
-					<div class="template-item">
-						<div class="template-content">
-							<div class="template-title">挨拶文</div>
-							<div class="template-category">挨拶</div>
-							<div class="template-text">お問い合わせありがとうございます。担当の者が確認次第、ご連絡いたします。</div>
+					@foreach ($templates as $template)
+						<div class="template-item">
+							<div class="template-content">
+								@foreach ($template["contents"] as $content)
+									<div class="js_blockcontents" data-id={{$content["id"]}} data-order={{$content["display_order"]}} data-type={{$content["content_type"]}}> 
+										<input type="hidden" class="js_content_text" value={{$content["content_text"]}}>
+										<input type="hidden" class="js_image_path" value={{$content["image_path"]}} data-crop={{$content["cropArea"]}}>
+									</div>
+						
+								@endforeach
+								<input type="hidden" value={{$template["template_id"]}} class="template_id">
+								<div class="template-title">{{$template["template_name"]}}</div>
+								<div class="template-category" data-id={{$template["category_id"]}}>{{$template["category_name"]}}</div>
+								<div class="template-text">{{$template["contents"][0]["content_type"] === "text" ? $template["contents"][0]["content_text"] : "画像"}}</div>
+							</div>
+							<div class="template-actions">
+								<button class="action-btn edit-btn template_edit-btn">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+									<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+									</svg>
+								</button>
+								<button class="action-btn delete-btn">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="3 6 5 6 21 6"></polyline>
+									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+									<line x1="10" y1="11" x2="10" y2="17"></line>
+									<line x1="14" y1="11" x2="14" y2="17"></line>
+									</svg>
+								</button>
+							</div>
 						</div>
-						<div class="template-actions">
-							<button class="action-btn edit-btn">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-								</svg>
-							</button>
-							<button class="action-btn delete-btn">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="3 6 5 6 21 6"></polyline>
-								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-								<line x1="10" y1="11" x2="10" y2="17"></line>
-								<line x1="14" y1="11" x2="14" y2="17"></line>
-								</svg>
-							</button>
+					@endforeach
+				</div>
+				<!-- モーダルコンテンツ -->
+				<div class="modal-content">
+					<!-- エラーコンテナ -->
+					<div class="form-validation-errors hidden" id="edit-form-errors">
+						<div class="error-header">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="10"></circle>
+								<line x1="12" y1="8" x2="12" y2="12"></line>
+								<line x1="12" y1="16" x2="12.01" y2="16"></line>
+							</svg>
+							<span>以下のエラーを修正してください</span>
 						</div>
+						<ul class="error-list" id="js_edit_error_list"></ul>
 					</div>
-					
-					<div class="template-item">
-						<div class="template-content">
-							<div class="template-title">問い合わせ返信</div>
-							<div class="template-category">問い合わせ</div>
-							<div class="template-text">お問い合わせいただき、ありがとうございます。現在調査中ですので、もう少しお待ちください。</div>
+
+					<!-- 成功ーコンテナ -->
+					<div class="form-validation-success hidden" id="edit-form-success">
+						<div class="success-header">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+								<polyline points="22 4 12 14.01 9 11.01"></polyline>
+							</svg>
+							<span>テンプレートの更新に成功しました。</span>
 						</div>
-						<div class="template-actions">
-							<button class="action-btn edit-btn">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-								</svg>
-							</button>
-							<button class="action-btn delete-btn">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="3 6 5 6 21 6"></polyline>
-								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-								<line x1="10" y1="11" x2="10" y2="17"></line>
-								<line x1="14" y1="11" x2="14" y2="17"></line>
-								</svg>
-							</button>
-						</div>
+						<ul class="success-list" id="js_edit_success_list"></ul>
 					</div>
 				</div>
 			</div>
+			
+			<!-- 編集フォーム -->
+			<form class="edit-template-form js_edit_form hidden" id="template-edit-form">
+				@csrf
+				<input type="hidden" id="edit-template-id" name="template_id">
+				<div class="form-group">
+					<label for="edit-template-title">テンプレート名</label>
+					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+						<label for="edit-category-select">カテゴリを選択</label>
+						<select id="edit-category-select" name="category_id" class="category-select">
+							@foreach ($categories as $category)
+								<option class="edit-category" value={{$category->id}} >{{$category->category_name}}</option>
+							@endforeach
+							
+						</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- コンテンツブロック管理エリア -->
+				<div class="content-blocks" id="edit-content-blocks">
+					<!-- ここにテンプレートの既存コンテンツブロックが表示されます -->
+				</div>
+				
+				<!-- 追加ボタン -->
+				<div class="add-block-container">
+					<button class="btn btn-light add-text">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+						</svg>
+						テキストを追加
+					</button>
+					<button class="btn btn-light add-image">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+							<circle cx="8.5" cy="8.5" r="1.5"></circle>
+							<polyline points="21 15 16 10 5 21"></polyline>
+						</svg>
+						画像を追加
+					</button>
+				</div>
+				
+				<!-- ボタン -->
+				<div class="btn-container">
+					<button class="btn btn-cancel" id="js_cancel_edit_btn" type="button">キャンセル</button>
+					<button class="btn btn-primary js_submit_template_btn" id="js_update_template_btn" type="submit">更新</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </section>
+
 @endsection
 
 @section('script')

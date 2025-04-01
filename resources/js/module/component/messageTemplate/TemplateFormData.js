@@ -1,9 +1,12 @@
 // 2. TemplateFormData.js - フォームデータの収集と構築に特化
 class TemplateFormData {
-    constructor() {
-        this.templateName = document.getElementById("template-title");
-        this.categoryId = document.getElementById("category-select");
+    constructor(form) {
+
+        this.templateName = form.querySelector(".template-title");
+        this.categoryId = form.querySelector(".category-select");
         this.adminId = document.getElementById("js_account_id");
+        this.form = form
+
     }
 
     /**
@@ -12,8 +15,10 @@ class TemplateFormData {
      */
     buildFormData() {
         const formData = new FormData();
-        const content_blocks = document.querySelectorAll(".content-block");
-        
+        const parentElement = this.form.querySelector(".content-blocks")
+        const content_blocks = parentElement.querySelectorAll(".content-block");
+
+
         // 基本データを追加
         formData.append("template_name", this.templateName.value);
         formData.append("category_id", this.categoryId.value);

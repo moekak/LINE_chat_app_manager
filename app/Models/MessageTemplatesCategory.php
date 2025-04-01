@@ -13,4 +13,8 @@ class MessageTemplatesCategory extends Model
         "admin_id",
         "category_name"
     ];
+
+    public function messageTemplates(){
+        return $this->hasMany(MessageTemplate::class, "category_id", "id");
+    }
 }

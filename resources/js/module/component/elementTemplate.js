@@ -125,7 +125,7 @@ export const createAccountDataRow = (res, categories) =>{
       `
 }
 
-export const createTextBlock = () =>{
+export const createTextBlock = (value = null, id = null) =>{
       return `
             <div class="block-header">
                   <div class="block-title">
@@ -147,7 +147,7 @@ export const createTextBlock = () =>{
                   </div>
             </div>
             <div class="block-content">
-                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text" max="1000"></textarea>
+                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text" max="1000" data-id=${id ?? ""}>${value ?? ""}</textarea>
             </div>
       `
 }

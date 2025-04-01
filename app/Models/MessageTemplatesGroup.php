@@ -12,4 +12,8 @@ class MessageTemplatesGroup extends Model
     protected $fillable = [
         "admin_id"
     ];
+
+    public function messageTemplates(){
+        return $this->hasMany(MessageTemplate::class, "group_id");
+    }
 }

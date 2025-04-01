@@ -2,8 +2,7 @@ import { createImageBlock, createTextBlock } from "../elementTemplate.js";
 
 // 1. TemplateBlockManager.js - ブロック管理とUI操作に特化
 class TemplateBlockManager {
-    constructor(contentBlocksContainer) {
-        this.contentBlocks = contentBlocksContainer;
+    constructor() {
         this.blockCounter = 1; // すでに2つのブロックがあるため3から開始
     }
 
@@ -11,7 +10,7 @@ class TemplateBlockManager {
     resetBlockCounter(){
         this.blockCounter = 1
     }
-    addTextBlock() {
+    addTextBlock(contentBlocksContainer) {
         const blockId = `block-${this.blockCounter++}`;
         const textBlock = document.createElement('div');
         textBlock.className = 'content-block text-block';
@@ -20,11 +19,11 @@ class TemplateBlockManager {
         textBlock.dataset.id = blockId;
         textBlock.innerHTML = createTextBlock();
     
-        this.contentBlocks.appendChild(textBlock);
+        contentBlocksContainer.appendChild(textBlock);
         return textBlock; // 新しく作成したブロックを返す
     }
     
-    addImageBlock() {
+    addImageBlock(contentBlocksContainer) {
         const blockId = `block-${this.blockCounter++}`;
         const imageBlock = document.createElement('div');
         imageBlock.className = 'content-block image-block';
@@ -33,7 +32,7 @@ class TemplateBlockManager {
         imageBlock.dataset.id = blockId;
         imageBlock.innerHTML = createImageBlock(this.blockCounter);
 
-        this.contentBlocks.appendChild(imageBlock);
+        contentBlocksContainer.appendChild(imageBlock);
         return imageBlock; // 新しく作成したブロックを返す
     }
 

@@ -30,6 +30,7 @@ class AuthController extends Controller
             // 下記はredirect('/admin/blogs')に類似
             return redirect()->intended('/');
         }
+
     
         // ログイン情報が正しくない場合のみ実行される処理(return すると以降の処理は実行されないため)
         // 一つ前のページ(ログイン画面)にリダイレクト

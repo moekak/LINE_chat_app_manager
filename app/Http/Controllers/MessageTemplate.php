@@ -76,6 +76,7 @@ class MessageTemplate extends Controller
                     'template_name.required' => 'テンプレート名は必須項目です。',
                     'template_name.max' => 'テンプレート名は255文字以内で入力してください。',
                     "admin_id.required" => "無効なデータです",
+                    "admin_id.exists" => "無効なデータです",
                     "category_id.required" => "カテゴリーを選択してください",
                     "category_id.exists" => "無効なデータです",
                 ]);
@@ -106,6 +107,7 @@ class MessageTemplate extends Controller
             
                         $templates[] = [
                             "template_id" => $template_id,
+                            "admin_id" => $admin_id,
                             "content_type" => $content_type,
                             "image_path" => null,
                             "content_text" => $content_text,
@@ -125,7 +127,6 @@ class MessageTemplate extends Controller
                 // // 画像ファイルの取り出し
                 // 画像コンテンツの処理 - 個別に挿入してIDを取得
                 if(isset($imageContents)){
-                    Log::debug("oooo");
                     foreach ($imageContents as $index => $imageData) {
                         $fileKey = "image_path.{$index}.content";
                         
@@ -137,6 +138,7 @@ class MessageTemplate extends Controller
                             // 画像コンテンツを個別に挿入してIDを取得
                             $contentId = DB::table("message_template_contents")->insertGetId([
                                 "template_id" => $messageTemplate->id,
+                                "admin_id" => $admin_id,
                                 "content_type" => "image",
                                 "image_path" => $fileName,
                                 "content_text" => null,

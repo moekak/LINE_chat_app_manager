@@ -11,6 +11,7 @@ import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHa
 import { fetchPostOperation } from "./module/util/fetch.js";
 import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 import InitializeInputService from "./module/component/messageTemplate/InitializeInputService.js";
+import MessageTemplateFormController from "./module/component/messageTemplate/edit/FormController.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -158,4 +159,25 @@ submitForms.forEach((submitForm)=>{
       const templateModal = document.getElementById("js_template_modal");
       const imageUploadHandler = new ImageUploadHandler()
       imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
+}
+
+
+// テンプレート編集処理
+{
+      const editBtns = document.querySelectorAll(".template_edit-btn")
+      const tabEdit = document.querySelector(".tab-edit")
+
+
+      editBtns.forEach((btn)=>{
+            btn.addEventListener("click", (e)=>{
+                  messageTemplateOperator.changeElements(document.getElementById("edit-content-blocks"), document.querySelector(".js_edit_form"))
+                  tabEdit.style.display = "none"
+                  const targetElement = e.currentTarget
+                  
+                  const formController = new MessageTemplateFormController(targetElement)
+                  formController.setDataToEditInputs()
+                  
+            })
+      })
+
 }

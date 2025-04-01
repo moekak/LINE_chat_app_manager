@@ -5,6 +5,7 @@ import { open_loader } from "../modalOperation.js";
 import FormController from "../ui/FormController.js";
 import { API_ENDPOINTS } from "./../../../config/apiEndPoint.js";
 import DataValidator from "./DataValidator.js";
+import InitializeInputService from "./InitializeInputService.js";
 
 class ImageUploadHandler{
       /**
@@ -16,6 +17,7 @@ class ImageUploadHandler{
 
       #handleFileInputChange(fileInput, errorTxt, templateModal) {
             return async function(e) {
+                  InitializeInputService.initializeErrorList()
                   FormController.initializeImageCropInput();
                   
                   const file = e.target.files[0];

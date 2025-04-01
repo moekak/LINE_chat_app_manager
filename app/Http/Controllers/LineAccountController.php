@@ -8,6 +8,9 @@ use App\Models\AccountStatus;
 use App\Models\ChatUser;
 use App\Models\LineAccount;
 use App\Models\LineDisplayText;
+use App\Models\MessageTemplate;
+use App\Models\MessageTemplateContent;
+use App\Models\MessageTemplatesCategory;
 use App\Models\PageTitle;
 use App\Models\SecondAccount;
 use App\Models\UserEntity;
@@ -128,7 +131,6 @@ class LineAccountController extends Controller
         $account_name = LineAccount::where("id", $id)->value("account_name");
         $title = PageTitle::where("admin_id", $id)->first();
         $line_display_text = LineDisplayText::where("admin_id", $id)->select("id", "text", "is_show")->first();
-
         $users = ChatUser::whereNotIn('chat_users.id', function($query) {
             $query->select('chat_user_id')
                 ->from('block_chat_users')
@@ -169,8 +171,15 @@ class LineAccountController extends Controller
             ->orderBy('chat_users.created_at', 'desc') // 未読数が同じなら新しい順
             ->take(self::MESSAGES_PER_PAGE)
             ->get();
-    
-        return view("admin.account_show", ["user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text]);
+
+
+            // メッセージテンプレートの取得
+            $templates = MessageTemplateContent::getMessageTemplatesForAdmin($id);
+            $categories = MessageTemplatesCategory::where("admin_id", $id)->select("id", "category_name")->get();
+
+
+
+        return view("admin.account_show", ["categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
     }
 
     /**
