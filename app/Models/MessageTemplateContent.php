@@ -41,6 +41,7 @@ class MessageTemplateContent extends Model
                 
                 return [
                     "category_id" => $firstItem->messageTemplate->messageTemplatesCategory->id,
+                    "group_id" => $firstItem->messageTemplate->messageTemplatesGroup->id,
                     'template_id' => $firstItem->template_id,
                     'template_name' => $firstItem->messageTemplate->template_name,
                     'category_name' => $firstItem->messageTemplate->messageTemplatesCategory->category_name,

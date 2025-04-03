@@ -34,3 +34,4 @@ Route::get("/token/generate", [RedirectTokenController::class, "fetchToken"]);
 Route::post("/create/category", [MessageTemplate::class, "createCategory"]);
 Route::post("/get/categories", [MessageTemplate::class, "fetchCategories"]);
 Route::post("/create/templates", [MessageTemplate::class, "store"]);
+Route::post("/update/templates", [MessageTemplate::class, "update"]);

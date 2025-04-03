@@ -3175,6 +3175,17 @@ var FormController = /*#__PURE__*/function () {
       option.innerHTML = category_name;
       selectParentElement.appendChild(option);
     }
+  }, {
+    key: "templateImageStyle",
+    value: function templateImageStyle(fileInput, objectURL) {
+      var imageElement = fileInput.parentElement.querySelector(".image_element");
+      var placeholderText = fileInput.parentElement.querySelector(".image-placeholder-txt");
+
+      // 画像プレビューを設定
+      imageElement.src = objectURL;
+      imageElement.classList.add("active");
+      placeholderText.classList.add("hidden");
+    }
   }]);
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormController);

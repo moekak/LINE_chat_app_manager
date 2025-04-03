@@ -70,6 +70,17 @@ class FormController{
         option.innerHTML = category_name
         selectParentElement.appendChild(option)
     }
+
+
+    static templateImageStyle(fileInput, objectURL){
+        const imageElement = fileInput.parentElement.querySelector(".image_element");
+        const placeholderText = fileInput.parentElement.querySelector(".image-placeholder-txt");
+        
+        // 画像プレビューを設定
+        imageElement.src = objectURL;
+        imageElement.classList.add("active");
+        placeholderText.classList.add("hidden");
+    }
 }
 
 export default FormController;

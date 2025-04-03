@@ -17,6 +17,9 @@ class ImageUploadHandler{
 
       #handleFileInputChange(fileInput, errorTxt, templateModal) {
             return async function(e) {
+
+                  fileInput.dataset.crop = ""
+                  fileInput.dataset.image = ""
                   InitializeInputService.initializeErrorList()
                   FormController.initializeImageCropInput();
                   
@@ -37,22 +40,15 @@ class ImageUploadHandler{
                         return
                   }
                   
-                  const objectURL = URL.createObjectURL(file);
-                  
                   // // ここにファイルアップロードやその他の処理を追加できます
                   const errorElement = document.querySelector(".js_broadcast_error");
                   const imageErrorElement = document.querySelector(".js_image_error");
                   const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, true, e.target, templateModal);
                   await fileUploader.fileOperation();
 
-                  // 関連要素を取得
-                  const imageElement = fileInput.parentElement.querySelector(".image_element");
-                  const placeholderText = fileInput.parentElement.querySelector(".image-placeholder-txt");
-                  
                   // 画像プレビューを設定
-                  imageElement.src = objectURL;
-                  imageElement.classList.add("active");
-                  placeholderText.classList.add("hidden");
+                  const objectURL = URL.createObjectURL(file);
+                  FormController.templateImageStyle(fileInput, objectURL)
                   
                   // ドラッグ＆ドロップの初期化
                   DragAndDrop.dragAndDrop("accordion", true);

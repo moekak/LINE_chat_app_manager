@@ -5,13 +5,13 @@ import ImageUploadHandler from "./ImageUploadHandler.js";
 import DataValidator from "./DataValidator.js";
 import TemplateApiService from "./TemplateApiService.js";
 import ButtonController from "../ui/ButtonController.js";
-import { ERROR_TEXT, SUCCESS_TEXT } from "../../../config/config.js";
-import { close_loader, close_loader_template, hide_bg, open_loader_template, open_modal } from "../modalOperation.js";
+import { ERROR_TEXT } from "../../../config/config.js";
+import { close_loader_template, hide_bg, open_loader_template, open_modal } from "../modalOperation.js";
 import FormController from "../ui/FormController.js";
 import InitializeInputService from "./InitializeInputService.js";
 
 class MessageTemplateOperator {
-    constructor() {
+    constructor(isUpdate = false) {
         // DOM要素
         this.contentBlocks = document.getElementById('content-blocks');
         this.addTextBtns = document.querySelectorAll('.add-text');
@@ -23,6 +23,7 @@ class MessageTemplateOperator {
         this.templateModal = document.getElementById("js_template_modal")
         this.categoryAddBtn = null;
         this.form = document.querySelector(".js_create_from")
+        this.isUpdate = isUpdate
         // コンポーネント
         this.formData;
         this.blockManager = new TemplateBlockManager(this.contentBlocks);
@@ -35,6 +36,9 @@ class MessageTemplateOperator {
     changeElements(contentBlock, form){
         this.contentBlocks = contentBlock
         this.form = form
+    }
+    changeIsUpdate(){
+        this.isUpdate = true
     }
 
     resetBlockCounter(){
@@ -70,8 +74,6 @@ class MessageTemplateOperator {
 
     handleAddTextBlock(e) {
         e.preventDefault();
-        console.log(this.contentBlocks);
-        
         const newBlock = this.blockManager.addTextBlock(this.contentBlocks);
         this.blockManager.setupBlockListeners(newBlock);
     }
@@ -148,28 +150,26 @@ class MessageTemplateOperator {
 
         for (const [key, value] of formData.entries()) {
             console.log(`${key}:`, value);
-          }
-          
+        }
         
-        
-        // try {
-        //     const response = await TemplateApiService.createTemplate(formData);
+        try {
+            const response = await TemplateApiService.createTemplate(formData, this.isUpdate);
 
-        //     if (response["status"] === 500) {
-        //         open_modal(this.templateModal)
-        //         dataValidator.displayErrorForCreatingCategory([ERROR_TEXT.CREATE_TEMPLATE_ERROR])
-        //     }else if(response["status"] === 422){
-        //         open_modal(this.templateModal)
-        //         dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
-        //     }else if(response["status"] === 201){
-        //         close_loader()
-        //         hide_bg()
-        //         dataValidator.displaySuccessMessage(SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS)
-        //     }
+            if (response["status"] === 500) {
+                open_modal(this.templateModal)
+                dataValidator.displayErrorForCreatingCategory([ERROR_TEXT.CREATE_TEMPLATE_ERROR])
+            }else if(response["status"] === 422){
+                open_modal(this.templateModal)
+                dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
+            }else if(response["status"] === 201){
+                close_loader()
+                hide_bg()
+                dataValidator.displaySuccessMessage(SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS)
+            }
             
-        // } catch (error) {
-        //     alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
-        // }
+        } catch (error) {
+            alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
+        }
     }
 }
 

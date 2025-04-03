@@ -14,6 +14,7 @@ class TemplateFormData {
      * @return {Object} - {formData: FormData, hasContent: boolean}
      */
     buildFormData() {
+
         const formData = new FormData();
         const parentElement = this.form.querySelector(".content-blocks")
         const content_blocks = parentElement.querySelectorAll(".content-block");
@@ -23,6 +24,8 @@ class TemplateFormData {
         formData.append("template_name", this.templateName.value);
         formData.append("category_id", this.categoryId.value);
         formData.append("admin_id", this.adminId.value);
+        formData.append("template_id", document.getElementById("js_template_id").value ?? "");
+        formData.append("group_id", document.getElementById("js_group_id").value ?? "");
 
         let order = 0;
         let text_index = 0;
@@ -31,17 +34,29 @@ class TemplateFormData {
 
         content_blocks.forEach((block) => {
             if (block.dataset.type === "image") {
-                const file = block.querySelector(".file-input").files[0];
-                if (!file) return;
+                const fileInput = block.querySelector(".file-input")
+                const file = fileInput.files[0];
+                if (file){
+                    hasContent = true;
+                    const cropArea = block.querySelector(".image-upload").getAttribute("data-crop-area");
+                    const url = block.querySelector(".image-upload").dataset.url;
+                    
+                    formData.append(`image_path[${text_index}][content]`, file);
+                    formData.append(`image_path[${text_index}][cropData][cropArea]`, cropArea);
+                    formData.append(`image_path[${text_index}][cropData][url]`, url);
+                    formData.append(`image_path[${text_index}][order]`, order);
+                }else if(fileInput.dataset.image !== ""){
+                    hasContent = true;
+                    const cropArea = fileInput.dataset.crop;
+                    const imageUrl = fileInput.dataset.image
+
+                    
+                    formData.append(`image_path[${text_index}][contentUrl]`, imageUrl);
+                    formData.append(`image_path[${text_index}][cropData]`, cropArea);
+                    formData.append(`image_path[${text_index}][order]`, order);
+                }
                 
-                hasContent = true;
-                const cropArea = block.querySelector(".image-upload").getAttribute("data-crop-area");
-                const url = block.querySelector(".image-upload").dataset.url;
-                
-                formData.append(`image_path[${text_index}][content]`, file);
-                formData.append(`image_path[${text_index}][cropData][cropArea]`, cropArea);
-                formData.append(`image_path[${text_index}][cropData][url]`, url);
-                formData.append(`image_path[${text_index}][order]`, order);
+
                 
                 text_index++;
             } else if (block.dataset.type === "text") {

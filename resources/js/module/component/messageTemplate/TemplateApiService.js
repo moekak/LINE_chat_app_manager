@@ -9,11 +9,12 @@ class TemplateApiService {
      * @param {FormData} formData - 送信するフォームデータ
      * @return {Promise<Object>} - APIレスポンス
      */
-    static async createTemplate(formData) {
+    static async createTemplate(formData, isUpdate = false) {
         try {
+            const url = isUpdate ? API_ENDPOINTS.FETCH_TEMPLATE_UPDATE: API_ENDPOINTS.FETCH_TEMPLATE_CREATE
             open_loader();
             document.getElementById("js_template_modal").classList.add("hidden")
-            const response = await fetch(API_ENDPOINTS.FETCH_TEMPLATE_CREATE, {
+            const response = await fetch(url, {
                 method: 'POST',
                 body: formData,
             });

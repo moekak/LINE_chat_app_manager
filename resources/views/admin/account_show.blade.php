@@ -407,6 +407,7 @@
 						
 								@endforeach
 								<input type="hidden" value={{$template["template_id"]}} class="template_id">
+								<input type="hidden" value={{$template["group_id"]}} class="group_id">
 								<div class="template-title">{{$template["template_name"]}}</div>
 								<div class="template-category" data-id={{$template["category_id"]}}>{{$template["category_name"]}}</div>
 								<div class="template-text">{{$template["contents"][0]["content_type"] === "text" ? $template["contents"][0]["content_text"] : "画像"}}</div>
@@ -504,6 +505,8 @@
 						画像を追加
 					</button>
 				</div>
+				<input type="hidden" name="template_id" value="" id="js_template_id">
+				<input type="hidden" name="group_id" value="" id="js_group_id">
 				
 				<!-- ボタン -->
 				<div class="btn-container">

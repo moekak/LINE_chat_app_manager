@@ -5964,7 +5964,8 @@ var API_ENDPOINTS = {
   FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
   FETCH_CREATE_CATEGORY: "/api/create/category",
   FETCH_TEMPLATE_CATEGORY: "/api/get/categories",
-  FETCH_TEMPLATE_CREATE: "/api/create/templates"
+  FETCH_TEMPLATE_CREATE: "/api/create/templates",
+  FETCH_TEMPLATE_UPDATE: "/api/update/templates"
 };
 
 /***/ }),
@@ -7446,6 +7447,17 @@ var FormController = /*#__PURE__*/function () {
       option.value = id;
       option.innerHTML = category_name;
       selectParentElement.appendChild(option);
+    }
+  }, {
+    key: "templateImageStyle",
+    value: function templateImageStyle(fileInput, objectURL) {
+      var imageElement = fileInput.parentElement.querySelector(".image_element");
+      var placeholderText = fileInput.parentElement.querySelector(".image-placeholder-txt");
+
+      // 画像プレビューを設定
+      imageElement.src = objectURL;
+      imageElement.classList.add("active");
+      placeholderText.classList.add("hidden");
     }
   }]);
 }();

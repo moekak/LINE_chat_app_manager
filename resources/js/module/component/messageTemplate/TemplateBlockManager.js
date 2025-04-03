@@ -39,7 +39,9 @@ class TemplateBlockManager {
     setupBlockListeners(block) {
         // 削除ボタンのイベントリスナー
         const deleteBtn = block.querySelector('.delete-block');
-        deleteBtn.addEventListener('click', () => {
+        deleteBtn.addEventListener('click', (e) => {
+            
+            e.preventDefault();
             block.remove();
         });
         // 他のブロック関連リスナーもここに追加
