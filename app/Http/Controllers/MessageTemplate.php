@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
 use App\Models\MessageTemplate as ModelsMessageTemplate;
+use App\Models\MessageTemplateContent;
 use App\Models\MessageTemplatesCategory;
 use App\Models\MessageTemplatesGroup;
 use App\Services\ImageService;
+use AWS\CRT\HTTP\Message;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -164,7 +166,9 @@ class MessageTemplate extends Controller
                         }
                     }
                 }
-                
+
+                Log::debug("2222222");
+                // return redirect()->route("account.show", ["id" => $admin_id])->with("success", "テンプレートの作成に成功しました"); 
                 return response()->json(["status" => 201]);
             });
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -207,20 +211,28 @@ class MessageTemplate extends Controller
     
                 $admin_id = $request->input("admin_id");
                 $template_id = $request->input("template_id");
+                $group_id = $request->input("group_id");
                 $category_id = $request->input("category_id");
                 $template_name = $request->input("template_name");
         
-                // メッセージテンプレートグループへのデータ追加
-                $messageTemplateGroup = MessageTemplatesGroup::create(['admin_id' => $admin_id]);
-                // メッセージテンプレート作成
-                $messageTemplate = ModelsMessageTemplate::create(["category_id" => $category_id, "admin_id" => $admin_id, "group_id" => $messageTemplateGroup->id, "template_name" => $template_name]);
+                // メッセージテンプレート既存のデータの削除
+                MessageTemplateContent::where("template_id", $template_id)->delete();
+
+
+                // メッセージテンプレートの更新
+                $templateData = ModelsMessageTemplate::findOrFail($template_id);
+                $templateData->update(["category_id" => $category_id, "group_id" => $group_id, "template_name" => $template_name]);
+
+
+
                 $messageContents = $request->input("content_texts");
                 $imageContents = $request->input("image_path");
+                $imageContentsUpdate = $request->input("image_path_update");
                 if(isset($messageContents)){
         
                     $templates = [];
                     foreach($messageContents as $messageContent){
-                        $template_id = $messageTemplate->id;
+                        $template_id = $template_id;
                         $content_type = "text";
                         $content_text = $messageContent["content"];
                         $display_order = $messageContent["order"];
@@ -243,6 +255,40 @@ class MessageTemplate extends Controller
                     }
                 }
 
+
+                // // 画像ファイルの取り出し
+                // 画像コンテンツの処理 - 個別に挿入してIDを取得
+                if(isset($imageContentsUpdate)){
+                    foreach ($imageContentsUpdate as $index => $imageData) {
+                        
+                        // 画像コンテンツを個別に挿入してIDを取得
+                        $contentId = DB::table("message_template_contents")->insertGetId([
+                            "template_id" => $template_id,
+                            "admin_id" => $admin_id,
+                            "content_type" => "image",
+                            "image_path" => $imageData["contentUrl"],
+                            "content_text" => null,
+                            "display_order" => $imageData["order"],
+                            "created_at" => now(),
+                            "updated_at" => now()
+                        ]);
+                        
+                        // クロップデータがある場合は処理
+                        if (isset($imageData["cropData"])) {
+                            $cropArea = json_decode($imageData["cropData"], true);
+                            // クロップデータを別テーブルに挿入
+                            DB::table("message_template_crop_data")->insert([
+                                "message_template_contents_id" => $contentId,
+                                "url" => $cropArea["url"]?? null,
+                                "x_percent" => $cropArea["x_percent"] ?? 0,
+                                "y_percent" => $cropArea["y_percent"] ?? 0,
+                                "width_percent" => $cropArea["width_percent"] ?? 100,
+                                "height_percent" => $cropArea["height_percent"] ?? 100,
+                            ]);
+                        }
+                    }
+                }
+
         
                 // // 画像ファイルの取り出し
                 // 画像コンテンツの処理 - 個別に挿入してIDを取得
@@ -257,7 +303,7 @@ class MessageTemplate extends Controller
                             
                             // 画像コンテンツを個別に挿入してIDを取得
                             $contentId = DB::table("message_template_contents")->insertGetId([
-                                "template_id" => $messageTemplate->id,
+                                "template_id" => $template_id,
                                 "admin_id" => $admin_id,
                                 "content_type" => "image",
                                 "image_path" => $fileName,
@@ -299,4 +345,10 @@ class MessageTemplate extends Controller
             return response()->json(["status" => 500]);
         }
     }
+
+    public function fetchTemplate(string $admin_id){
+        $templates = MessageTemplateContent::getMessageTemplatesForAdmin($admin_id);
+        return response()->json($templates);
+    }
+
 }

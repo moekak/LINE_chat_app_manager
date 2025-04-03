@@ -17,14 +17,9 @@ class DataValidator{
      * @return {boolean} -エラーメッセージが一つでもあればtrue、なければfalse
      */
     hasInvalidData(){
-
-        console.log(this.categoryId.value);
-        
         if(this.templateName.value == "") this.errors.push(ERROR_TEXT.TEMPLATE_NAME_EMPTY_ERROR)
         if(this.categoryId.value == "" || this.categoryId.value == "カテゴリーを選択") this.errors.push(ERROR_TEXT.CATEGORY_EMPTY_ERROR)
         if(!this.hasContent) this.errors.push(ERROR_TEXT.CONTENTS_EMPTY_ERROR)
-
-        console.log(this.errors);
         
         return this.errors.length > 0
     }

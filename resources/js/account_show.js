@@ -11,8 +11,6 @@ import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHa
 import { fetchPostOperation } from "./module/util/fetch.js";
 import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 import InitializeInputService from "./module/component/messageTemplate/InitializeInputService.js";
-import MessageTemplateFormController from "./module/component/messageTemplate/edit/FormController.js";
-import TemplateBlockManager from "./module/component/messageTemplate/TemplateBlockManager.js";
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
@@ -163,39 +161,3 @@ submitForms.forEach((submitForm)=>{
 }
 
 
-// テンプレート編集処理
-{
-      const editBtns = document.querySelectorAll(".template_edit-btn")
-      const tabEdit = document.querySelector(".tab-edit")
-      const contentBlocks = document.getElementById("edit-content-blocks")
-      const form = document.querySelector(".js_edit_form")
-
-
-      editBtns.forEach((btn)=>{
-            btn.addEventListener("click", (e)=>{
-                  contentBlocks.innerHTML = ""
-                  messageTemplateOperator.changeElements(contentBlocks, form)
-                  messageTemplateOperator.changeIsUpdate()
-                  tabEdit.style.display = "none"
-                  const targetElement = e.currentTarget
-                  
-                  const formController = new MessageTemplateFormController(targetElement)
-                  formController.setDataToEditInputs()
-                  const templateBlockManager = new TemplateBlockManager()
-
-                  form.querySelectorAll('.content-block').forEach(block => {
-                        templateBlockManager.setupBlockListeners(block)
-                  });
-
-                  // テンプレート作成画像アップロード
-                  {
-                        const uploads = document.querySelectorAll(".file-input");
-                        const errorTxt = document.querySelector(".js_error_txt");
-                        const templateModal = document.getElementById("js_template_modal");
-                        const imageUploadHandler = new ImageUploadHandler()
-                        imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
-                  }
-            })
-      })
-
-}

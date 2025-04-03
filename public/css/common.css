@@ -1003,7 +1003,7 @@ textarea {
 }
 
 .template-title {
-    font-weight: 600;
+    /* font-weight: 600; */
     margin-bottom: 6px;
 }
 
@@ -1045,6 +1045,50 @@ textarea {
 
 .delete-btn:hover {
     color: var(--danger-color);
+}
+/* カテゴリーフィルター用スタイル */
+.category-filter-container {
+    margin-bottom:20px ;
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filter-title {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-btn {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #d0d0d0;
+}
+
+.category-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
 }
 
 /* コンテンツブロック管理 */

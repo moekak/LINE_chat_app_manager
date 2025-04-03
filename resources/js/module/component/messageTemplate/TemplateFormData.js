@@ -51,9 +51,9 @@ class TemplateFormData {
                     const imageUrl = fileInput.dataset.image
 
                     
-                    formData.append(`image_path[${text_index}][contentUrl]`, imageUrl);
-                    formData.append(`image_path[${text_index}][cropData]`, cropArea);
-                    formData.append(`image_path[${text_index}][order]`, order);
+                    formData.append(`image_path_update[${text_index}][contentUrl]`, imageUrl);
+                    formData.append(`image_path_update[${text_index}][cropData]`, cropArea);
+                    formData.append(`image_path_update[${text_index}][order]`, order);
                 }
                 
 

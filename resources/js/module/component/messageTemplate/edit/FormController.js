@@ -1,6 +1,9 @@
 import { SYSTEM_URL } from "../../../../config/config.js";
 import { createTextBlock } from "../../elementTemplate.js";
+import { open_loader } from "../../modalOperation.js";
 import FormController from "../../ui/FormController.js";
+import ImageUploadHandler from "../ImageUploadHandler.js";
+import MessageTemplateOperator from "../MessageTemplateOperator.js";
 import TemplateBlockManager from "../TemplateBlockManager.js";
 
 class MessageTemplateFormController{
@@ -35,6 +38,8 @@ class MessageTemplateFormController{
                   this.blockTextarea.innerHTML = content.querySelector(".js_content_text").value
                   this.blockTextarea.dataset.id = content.dataset.id
             } else if (content.dataset.type === "image") {
+                  console.log(content.querySelector(".js_image_path"));
+                  
                   this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock)
                   this.fileInput = this.contentBlocksWrapper.querySelector(".file-input")
                   this.fileInput.dataset.image = content.querySelector(".js_image_path").value
@@ -62,6 +67,52 @@ class MessageTemplateFormController{
 
             
       }
+
+      static initializeEditModal(){
+            const editBtns = document.querySelectorAll(".template_edit-btn")
+            const tabEdit = document.querySelector(".tab-edit")
+            const contentBlocks = document.getElementById("edit-content-blocks")
+            const form = document.querySelector(".js_edit_form")
+            const messageTemplateOperator = new MessageTemplateOperator()
+
+            editBtns.forEach((btn)=>{
+                  btn.addEventListener("click", (e)=>{
+
+                        contentBlocks.innerHTML = ""
+                        messageTemplateOperator.changeElements(contentBlocks, form)
+                        messageTemplateOperator.changeIsUpdate()
+                        tabEdit.style.display = "none"
+                        const targetElement = e.currentTarget
+                        
+                        const formController = new MessageTemplateFormController(targetElement)
+                        formController.setDataToEditInputs()
+                        const templateBlockManager = new TemplateBlockManager()
+      
+                        form.querySelectorAll('.content-block').forEach(block => {
+                              templateBlockManager.setupBlockListeners(block)
+                        });
+      
+                        // テンプレート作成画像アップロード
+                        {
+                              const uploads = document.querySelectorAll(".file-input");
+                              const errorTxt = document.querySelector(".js_error_txt");
+                              const templateModal = document.getElementById("js_template_modal");
+                              const imageUploadHandler = new ImageUploadHandler()
+                              imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
+                        }
+                  })
+            })
+      }
+
+      static initializeTemplateEditModal(){
+            document.querySelector(".template-list").innerHTML = ""
+            document.querySelector(".category-buttons").innerHTML = "";
+            const modal = document.getElementById("js_template_modal")
+            modal.style.zIndex = "985"
+            open_loader()
+      }
+
+
 
 
 }

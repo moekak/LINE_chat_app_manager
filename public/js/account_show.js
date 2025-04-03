@@ -5965,7 +5965,9 @@ var API_ENDPOINTS = {
   FETCH_CREATE_CATEGORY: "/api/create/category",
   FETCH_TEMPLATE_CATEGORY: "/api/get/categories",
   FETCH_TEMPLATE_CREATE: "/api/create/templates",
-  FETCH_TEMPLATE_UPDATE: "/api/update/templates"
+  FETCH_TEMPLATE_UPDATE: "/api/update/templates",
+  FETCH_TEMPLATE_GET: "/api/templates/get",
+  FETCH_CATEGORIES_GET: "/api/categories/get"
 };
 
 /***/ }),
@@ -6957,11 +6959,13 @@ _defineProperty(BroadcastMessageOperator, "hideErrorMsg", function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   crateCategoryButtons: () => (/* binding */ crateCategoryButtons),
 /* harmony export */   createAccountDataRow: () => (/* binding */ createAccountDataRow),
 /* harmony export */   createBroadcastMessageRow: () => (/* binding */ createBroadcastMessageRow),
 /* harmony export */   createImageBlock: () => (/* binding */ createImageBlock),
 /* harmony export */   createMessageRow: () => (/* binding */ createMessageRow),
 /* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch),
+/* harmony export */   createMessageTemplate: () => (/* binding */ createMessageTemplate),
 /* harmony export */   createTextBlock: () => (/* binding */ createTextBlock)
 /* harmony export */ });
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
@@ -7009,6 +7013,16 @@ var createTextBlock = function createTextBlock() {
 };
 var createImageBlock = function createImageBlock(blockCounter) {
   return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
+};
+var createMessageTemplate = function createMessageTemplate(templates) {
+  return templates.map(function (template) {
+    return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
+      return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
+    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+  }).join('');
+};
+var crateCategoryButtons = function crateCategoryButtons(category) {
+  return "\n            <button class=\"category-btn\" data-category=".concat(category["id"], ">").concat(category["category_name"], "</button>\n      ");
 };
 
 /***/ }),
@@ -7095,11 +7109,9 @@ var DataValidator = /*#__PURE__*/function () {
   return _createClass(DataValidator, [{
     key: "hasInvalidData",
     value: function hasInvalidData() {
-      console.log(this.categoryId.value);
       if (this.templateName.value == "") this.errors.push(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.ERROR_TEXT.TEMPLATE_NAME_EMPTY_ERROR);
       if (this.categoryId.value == "" || this.categoryId.value == "カテゴリーを選択") this.errors.push(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.ERROR_TEXT.CATEGORY_EMPTY_ERROR);
       if (!this.hasContent) this.errors.push(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.ERROR_TEXT.CONTENTS_EMPTY_ERROR);
-      console.log(this.errors);
       return this.errors.length > 0;
     }
   }, {
@@ -7474,13 +7486,19 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
       var _this = this;
       // ボタンイベントのセットアップ
       this.addTextBtns.forEach(function (btn) {
-        btn.addEventListener('click', _this.handleAddTextBlock.bind(_this));
+        console.log(btn);
+        var newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', _this.handleAddTextBlock.bind(_this));
       });
       this.addImageBtns.forEach(function (btn) {
-        btn.addEventListener('click', _this.handleAddImageBlock.bind(_this));
+        var newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', _this.handleAddImageBlock.bind(_this));
       });
       this.submitTemplateBtns.forEach(function (btn) {
-        btn.addEventListener("click", _this.handleSubmit.bind(_this));
+        var newBtn = _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_6__["default"].replaceButton(btn.id);
+        newBtn.addEventListener("click", _this.handleSubmit.bind(_this));
       });
 
       // 初期ブロックのリスナーをセットアップ
@@ -7606,6 +7624,7 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
               return _TemplateApiService_js__WEBPACK_IMPORTED_MODULE_5__["default"].createTemplate(formData, this.isUpdate);
             case 13:
               response = _context2.sent;
+              console.log(response);
               if (response["status"] === 500) {
                 (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_8__.open_modal)(this.templateModal);
                 dataValidator.displayErrorForCreatingCategory([_config_config_js__WEBPACK_IMPORTED_MODULE_7__.ERROR_TEXT.CREATE_TEMPLATE_ERROR]);
@@ -7613,21 +7632,22 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
                 (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_8__.open_modal)(this.templateModal);
                 dataValidator.displayErrorForCreatingCategory(_DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"].getAllValidationErrorMessages(response));
               } else if (response["status"] === 201) {
-                close_loader();
+                (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_8__.close_loader)();
                 (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_8__.hide_bg)();
-                dataValidator.displaySuccessMessage(SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS);
+                dataValidator.displaySuccessMessage(_config_config_js__WEBPACK_IMPORTED_MODULE_7__.SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS);
               }
-              _context2.next = 20;
+              _context2.next = 22;
               break;
-            case 17:
-              _context2.prev = 17;
+            case 18:
+              _context2.prev = 18;
               _context2.t0 = _context2["catch"](10);
+              console.log(_context2.t0);
               alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
-            case 20:
+            case 22:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, this, [[10, 17]]);
+        }, _callee2, this, [[10, 18]]);
       }));
       function handleSubmit(_x2) {
         return _handleSubmit.apply(this, arguments);
@@ -7651,16 +7671,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
+/* harmony import */ var _util_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/fetch.js */ "./resources/js/module/util/fetch.js");
+/* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
+/* harmony import */ var _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/ButtonController.js */ "./resources/js/module/component/ui/ButtonController.js");
+/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _edit_FormController_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit/FormController.js */ "./resources/js/module/component/messageTemplate/edit/FormController.js");
+/* harmony import */ var _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./InitializeInputService.js */ "./resources/js/module/component/messageTemplate/InitializeInputService.js");
+/* harmony import */ var _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MessageTemplateOperator.js */ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+
+
+
+
+
+
+
+
+
 // 4. TabController.js - タブ管理に特化
+var _TabController_brand = /*#__PURE__*/new WeakSet();
 var TabController = /*#__PURE__*/function () {
   function TabController(tabs, tabContents) {
     _classCallCheck(this, TabController);
+    _classPrivateMethodInitSpec(this, _TabController_brand);
     this.tabs = tabs;
     this.tabContents = tabContents;
     this.setupListeners();
@@ -7670,12 +7717,67 @@ var TabController = /*#__PURE__*/function () {
     value: function setupListeners() {
       var _this = this;
       this.tabs.forEach(function (tab, index) {
-        tab.addEventListener('click', function () {
-          if (index === 0) {
-            document.getElementById("template-edit-form").classList.add("hidden");
-          }
-          _this.activateTab(index);
-        });
+        var tabElement = document.getElementById(tab.id);
+        if (tabElement && !tabElement.dataset.listenerAttached) {
+          tabElement.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+            var messageTemplateOperator, modal, response, categories, templateRaw, buttonAll;
+            return _regeneratorRuntime().wrap(function _callee$(_context) {
+              while (1) switch (_context.prev = _context.next) {
+                case 0:
+                  console.log("タブクリック処理");
+                  _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeErrorList();
+                  if (index === 0) {
+                    messageTemplateOperator = new _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_8__["default"]();
+                    messageTemplateOperator.changeElements(document.getElementById("content-blocks"), document.querySelector(".js_create_from"));
+                    document.getElementById("template-edit-form").classList.add("hidden");
+                  }
+                  if (!(index === 1)) {
+                    _context.next = 28;
+                    break;
+                  }
+                  _context.prev = 4;
+                  _edit_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeTemplateEditModal();
+                  modal = document.getElementById("js_template_modal");
+                  _context.next = 9;
+                  return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_GET, "/").concat(document.getElementById("js_account_id").value));
+                case 9:
+                  response = _context.sent;
+                  console.log(response);
+                  _context.next = 13;
+                  return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchPostOperation)({
+                    "admin_id": document.getElementById("js_account_id").value
+                  }, "".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY));
+                case 13:
+                  categories = _context.sent;
+                  templateRaw = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__.createMessageTemplate)(response);
+                  buttonAll = '<button class="category-btn active" data-category="all">すべて</button>';
+                  document.querySelector(".template-list").innerHTML += templateRaw;
+                  document.querySelector(".category-buttons").innerHTML += buttonAll;
+                  categories["categories"].forEach(function (category) {
+                    var categoriesRaw = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__.crateCategoryButtons)(category);
+                    document.querySelector(".category-buttons").innerHTML += categoriesRaw;
+                  });
+                  modal.style.zIndex = "999";
+                  (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_5__.close_loader)();
+                  _edit_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeEditModal();
+                  _assertClassBrand(_TabController_brand, _this, _filterCategory).call(_this);
+                  _context.next = 28;
+                  break;
+                case 25:
+                  _context.prev = 25;
+                  _context.t0 = _context["catch"](4);
+                  console.log(_context.t0);
+                case 28:
+                  _this.activateTab(index);
+                  // 他の処理...
+                case 29:
+                case "end":
+                  return _context.stop();
+              }
+            }, _callee, null, [[4, 25]]);
+          })));
+          tabElement.dataset.listenerAttached = "true";
+        }
       });
     }
   }, {
@@ -7695,6 +7797,38 @@ var TabController = /*#__PURE__*/function () {
     }
   }]);
 }();
+function _filterCategory() {
+  var categoryBtns = document.querySelectorAll(".category-btn");
+  var templateItems = document.querySelectorAll(".template-item");
+  categoryBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      categoryBtns.forEach(function (btn) {
+        return btn.classList.remove("active");
+      });
+      btn.classList.add("active");
+      var category = btn.dataset.category;
+      console.log(category);
+      if (category === "all") {
+        templateItems.forEach(function (item) {
+          return item.classList.remove("hidden");
+        });
+        return;
+      }
+      var targetTemplateItems = Array.from(templateItems).filter(function (item) {
+        return item.dataset.id === category;
+      });
+      var otherTemplateItems = Array.from(templateItems).filter(function (item) {
+        return item.dataset.id !== category;
+      });
+      otherTemplateItems.forEach(function (item) {
+        return item.classList.add("hidden");
+      });
+      targetTemplateItems.forEach(function (item) {
+        return item.classList.remove("hidden");
+      });
+    });
+  });
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TabController);
 
 /***/ }),
@@ -7985,9 +8119,9 @@ var TemplateFormData = /*#__PURE__*/function () {
             hasContent = true;
             var _cropArea = fileInput.dataset.crop;
             var imageUrl = fileInput.dataset.image;
-            formData.append("image_path[".concat(text_index, "][contentUrl]"), imageUrl);
-            formData.append("image_path[".concat(text_index, "][cropData]"), _cropArea);
-            formData.append("image_path[".concat(text_index, "][order]"), order);
+            formData.append("image_path_update[".concat(text_index, "][contentUrl]"), imageUrl);
+            formData.append("image_path_update[".concat(text_index, "][cropData]"), _cropArea);
+            formData.append("image_path_update[".concat(text_index, "][order]"), order);
           }
           text_index++;
         } else if (block.dataset.type === "text") {
@@ -8024,8 +8158,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../config/config.js */ "./resources/js/config/config.js");
 /* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
-/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
-/* harmony import */ var _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../TemplateBlockManager.js */ "./resources/js/module/component/messageTemplate/TemplateBlockManager.js");
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ImageUploadHandler.js */ "./resources/js/module/component/messageTemplate/ImageUploadHandler.js");
+/* harmony import */ var _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../MessageTemplateOperator.js */ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js");
+/* harmony import */ var _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../TemplateBlockManager.js */ "./resources/js/module/component/messageTemplate/TemplateBlockManager.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -8035,6 +8172,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
 function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
 function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+
+
 
 
 
@@ -8071,10 +8211,52 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
           category.selected = true;
         }
       });
-      var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
       this.contentsBlock.forEach(function (content) {
         _assertClassBrand(_MessageTemplateFormController_brand, _this, _initializeContentBlock).call(_this, content, templateBlockManager);
       });
+    }
+  }], [{
+    key: "initializeEditModal",
+    value: function initializeEditModal() {
+      var editBtns = document.querySelectorAll(".template_edit-btn");
+      var tabEdit = document.querySelector(".tab-edit");
+      var contentBlocks = document.getElementById("edit-content-blocks");
+      var form = document.querySelector(".js_edit_form");
+      var messageTemplateOperator = new _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
+      editBtns.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          contentBlocks.innerHTML = "";
+          messageTemplateOperator.changeElements(contentBlocks, form);
+          messageTemplateOperator.changeIsUpdate();
+          tabEdit.style.display = "none";
+          var targetElement = e.currentTarget;
+          var formController = new MessageTemplateFormController(targetElement);
+          formController.setDataToEditInputs();
+          var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
+          form.querySelectorAll('.content-block').forEach(function (block) {
+            templateBlockManager.setupBlockListeners(block);
+          });
+
+          // テンプレート作成画像アップロード
+          {
+            var uploads = document.querySelectorAll(".file-input");
+            var errorTxt = document.querySelector(".js_error_txt");
+            var templateModal = document.getElementById("js_template_modal");
+            var imageUploadHandler = new _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_4__["default"]();
+            imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
+          }
+        });
+      });
+    }
+  }, {
+    key: "initializeTemplateEditModal",
+    value: function initializeTemplateEditModal() {
+      document.querySelector(".template-list").innerHTML = "";
+      document.querySelector(".category-buttons").innerHTML = "";
+      var modal = document.getElementById("js_template_modal");
+      modal.style.zIndex = "985";
+      (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_loader)();
     }
   }]);
 }();
@@ -8087,13 +8269,14 @@ function _initializeContentBlock(content, templateBlockManager) {
     this.blockTextarea.innerHTML = content.querySelector(".js_content_text").value;
     this.blockTextarea.dataset.id = content.dataset.id;
   } else if (content.dataset.type === "image") {
+    console.log(content.querySelector(".js_image_path"));
     this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock);
     this.fileInput = this.contentBlocksWrapper.querySelector(".file-input");
     this.fileInput.dataset.image = content.querySelector(".js_image_path").value;
     this.fileInput.dataset.crop = content.querySelector(".js_image_path").dataset.crop;
     this.imageElement = this.contentBlocksWrapper.querySelector(".image_element");
     this.imageElement.src = "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value);
-    _ui_FormController_js__WEBPACK_IMPORTED_MODULE_2__["default"].templateImageStyle(this.imageElement, "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value));
+    _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__["default"].templateImageStyle(this.imageElement, "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value));
   }
   return this.contentBlocksWrapper;
 }
@@ -14586,14 +14769,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
 /* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
 /* harmony import */ var _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./module/component/messageTemplate/InitializeInputService.js */ "./resources/js/module/component/messageTemplate/InitializeInputService.js");
-/* harmony import */ var _module_component_messageTemplate_edit_FormController_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/component/messageTemplate/edit/FormController.js */ "./resources/js/module/component/messageTemplate/edit/FormController.js");
-/* harmony import */ var _module_component_messageTemplate_TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./module/component/messageTemplate/TemplateBlockManager.js */ "./resources/js/module/component/messageTemplate/TemplateBlockManager.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
-
 
 
 
@@ -14790,38 +14969,6 @@ submitForms.forEach(function (submitForm) {
   var _templateModal = document.getElementById("js_template_modal");
   var imageUploadHandler = new _module_component_messageTemplate_ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_8__["default"]();
   imageUploadHandler.setupFileInputs(uploads, errorTxt, _templateModal);
-}
-
-// テンプレート編集処理
-{
-  var editBtns = document.querySelectorAll(".template_edit-btn");
-  var tabEdit = document.querySelector(".tab-edit");
-  var contentBlocks = document.getElementById("edit-content-blocks");
-  var form = document.querySelector(".js_edit_form");
-  editBtns.forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-      contentBlocks.innerHTML = "";
-      messageTemplateOperator.changeElements(contentBlocks, form);
-      messageTemplateOperator.changeIsUpdate();
-      tabEdit.style.display = "none";
-      var targetElement = e.currentTarget;
-      var formController = new _module_component_messageTemplate_edit_FormController_js__WEBPACK_IMPORTED_MODULE_12__["default"](targetElement);
-      formController.setDataToEditInputs();
-      var templateBlockManager = new _module_component_messageTemplate_TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_13__["default"]();
-      form.querySelectorAll('.content-block').forEach(function (block) {
-        templateBlockManager.setupBlockListeners(block);
-      });
-
-      // テンプレート作成画像アップロード
-      {
-        var _uploads = document.querySelectorAll(".file-input");
-        var _errorTxt = document.querySelector(".js_error_txt");
-        var _templateModal2 = document.getElementById("js_template_modal");
-        var _imageUploadHandler = new _module_component_messageTemplate_ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_8__["default"]();
-        _imageUploadHandler.setupFileInputs(_uploads, _errorTxt, _templateModal2);
-      }
-    });
-  });
 }
 })();
 

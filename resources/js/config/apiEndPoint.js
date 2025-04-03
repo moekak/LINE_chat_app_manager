@@ -6,4 +6,6 @@ export const API_ENDPOINTS = {
     FETCH_TEMPLATE_CATEGORY : "/api/get/categories",
     FETCH_TEMPLATE_CREATE : "/api/create/templates",
     FETCH_TEMPLATE_UPDATE : "/api/update/templates",
+    FETCH_TEMPLATE_GET: "/api/templates/get",
+    FETCH_CATEGORIES_GET: "/api/categories/get",
 };

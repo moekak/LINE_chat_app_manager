@@ -5,8 +5,8 @@ import ImageUploadHandler from "./ImageUploadHandler.js";
 import DataValidator from "./DataValidator.js";
 import TemplateApiService from "./TemplateApiService.js";
 import ButtonController from "../ui/ButtonController.js";
-import { ERROR_TEXT } from "../../../config/config.js";
-import { close_loader_template, hide_bg, open_loader_template, open_modal } from "../modalOperation.js";
+import { ERROR_TEXT, SUCCESS_TEXT } from "../../../config/config.js";
+import { close_loader, close_loader_template, hide_bg, open_loader_template, open_modal } from "../modalOperation.js";
 import FormController from "../ui/FormController.js";
 import InitializeInputService from "./InitializeInputService.js";
 
@@ -47,14 +47,21 @@ class MessageTemplateOperator {
     initialize() {
         // ボタンイベントのセットアップ
         this.addTextBtns.forEach((btn)=>{
-            btn.addEventListener('click', this.handleAddTextBlock.bind(this));
+            console.log(btn);
+        
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', this.handleAddTextBlock.bind(this));
         })
         this.addImageBtns.forEach((btn)=>{
-            btn.addEventListener('click', this.handleAddImageBlock.bind(this));
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', this.handleAddImageBlock.bind(this));
         })
         
         this.submitTemplateBtns.forEach((btn)=>{
-            btn.addEventListener("click", this.handleSubmit.bind(this));
+            const newBtn = ButtonController.replaceButton(btn.id)
+            newBtn.addEventListener("click", this.handleSubmit.bind(this));
         })
         
         
@@ -154,6 +161,8 @@ class MessageTemplateOperator {
         
         try {
             const response = await TemplateApiService.createTemplate(formData, this.isUpdate);
+            console.log(response);
+            
 
             if (response["status"] === 500) {
                 open_modal(this.templateModal)
@@ -168,6 +177,8 @@ class MessageTemplateOperator {
             }
             
         } catch (error) {
+            console.log(error);
+            
             alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
         }
     }
