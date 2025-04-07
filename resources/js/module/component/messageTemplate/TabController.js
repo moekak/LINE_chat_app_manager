@@ -1,9 +1,11 @@
 import { API_ENDPOINTS } from "../../../config/apiEndPoint.js";
+import { SUCCESS_TEXT } from "../../../config/config.js";
 import { fetchGetOperation, fetchPostOperation } from "../../util/fetch.js"
 import { crateCategoryButtons, createMessageTemplate } from "../elementTemplate.js";
 import ButtonController from "../ui/ButtonController.js";
 import FormController from "../ui/FormController.js";
-import {close_loader, open_loader} from "./../modalOperation.js"
+import {close_loader, close_loader_template, close_modal, hide_bg, open_loader} from "./../modalOperation.js"
+import DataValidator from "./DataValidator.js";
 import MessageTemplateFormController from "./edit/FormController.js";
 import InitializeInputService from "./InitializeInputService.js";
 import MessageTemplateOperator from "./MessageTemplateOperator.js";
@@ -22,23 +24,19 @@ class TabController {
             const tabElement = document.getElementById(tab.id);
             if (tabElement && !tabElement.dataset.listenerAttached) {
                 tabElement.addEventListener('click', async() => {
-                    console.log("タブクリック処理");
                     InitializeInputService.initializeErrorList()
                 if(index === 0){
                     const messageTemplateOperator = new MessageTemplateOperator()
-                    messageTemplateOperator.changeElements(document.getElementById("content-blocks"), document.querySelector(".js_create_from"))
+                    messageTemplateOperator.changeElements(document.getElementById("create-content-blocks"), document.querySelector(".js_create_form"))
                     document.getElementById("template-edit-form").classList.add("hidden")
                 }
                 if(index === 1){
                     try{
                         MessageTemplateFormController.initializeTemplateEditModal()
                         const modal = document.getElementById("js_template_modal")
-
                         const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_GET}/${document.getElementById("js_account_id").value}`)
-                        console.log(response);
-                        
+
                         const categories = await fetchPostOperation({"admin_id": document.getElementById("js_account_id").value}, `${API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY}`)
- 
         
                         const templateRaw = createMessageTemplate(response)
                         const buttonAll = '<button class="category-btn active" data-category="all">すべて</button>'
@@ -52,6 +50,37 @@ class TabController {
                         close_loader()
                         MessageTemplateFormController.initializeEditModal()
                         this.#filterCategory()
+                        document.querySelector(".tab-edit").classList.remove("hidden")
+
+                        // テンプレート削除
+                        {
+                            const deleteBtns = document.querySelectorAll(".template_delete_btn")
+                            deleteBtns.forEach((btn)=>{
+                                btn.addEventListener("click", async ()=>{
+                                    document.getElementById("js_template_modal").classList.add("hidden")
+                                    open_loader()
+                                    const template_id = btn.closest(".template-item").querySelector(".template_id").value
+                                    try{
+                                        const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_DELETE}/${template_id}`)
+                                        const dataValidator = new DataValidator()
+                                        if(response["status"] === 201){
+                                            close_loader()
+                                            hide_bg()
+                                            dataValidator.displaySuccessMessage(SUCCESS_TEXT.DELETE_TEMPLATE)
+                                        }else if(response["status"] === 500){
+                                            close_loader()
+                                            hide_bg()
+                                            alert("テンプレートの削除に失敗しました。もう一度お試しください。")
+                                            
+                                        }
+                                    }catch(error){
+                                        close_loader()
+                                        hide_bg()
+                                        alert("テンプレートの削除に失敗しました。もう一度お試しください。")
+                                    }
+                                })
+                            })
+                        }
                     }catch(error){
                         console.log(error);
                         
@@ -87,8 +116,7 @@ class TabController {
                 categoryBtns.forEach(btn => btn.classList.remove("active"))
                 btn.classList.add("active")
                 const category = btn.dataset.category
-                console.log(category);
-                
+
                 if(category === "all"){
                     templateItems.forEach(item => item.classList.remove("hidden"))
                     return

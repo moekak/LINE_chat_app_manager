@@ -2,7 +2,9 @@
 import FormController from "./ui/FormController.js"
 
 export const open_modal = (modal)=>{
+      const loader = document.querySelector(".loader")
       document.querySelector(".bg").classList.remove("hidden")
+      loader.classList.add("hidden")
       modal.classList.remove("hidden")
 }
 
@@ -23,6 +25,9 @@ export const close_modal = () =>{
       
 
       bg.addEventListener("click", ()=>{
+            if(!loader.classList.contains("hidden")){
+                  return;
+            }
 
             if(imageEditModal.classList.contains("hidden") == false){
                   imageEditModal.classList.add("hidden")
@@ -101,3 +106,35 @@ export const close_loader_template =() =>{
       loader.classList.add("hidden")
       bg.classList.add("hidden")
 }
+
+export const open_image_edit_modal = () =>{
+      const modal = document.querySelector(".image_edit_modal")
+      const fixed_bg = document.querySelector(".fixed_bg")
+      const loader = document.querySelector(".loader")
+      loader.classList.add("hidden")
+      modal.classList.remove("hidden")
+      fixed_bg.classList.remove("hidden")
+}
+
+export const close_image_edit_modal = (inputElement) =>{
+      const fixed_bg = document.querySelector(".fixed_bg")
+      const imageEditModal = document.querySelector(".image_edit_modal")
+      const modal = document.getElementById("js_template_modal")
+      const loader = document.querySelector(".loader")
+
+      const newBtn = fixed_bg.cloneNode(true);
+      fixed_bg.parentNode.replaceChild(newBtn, fixed_bg);
+      newBtn.addEventListener("click", ()=>{
+
+            inputElement.value = ""
+
+            if(!loader.classList.contains("hidden")){
+                  return;
+            }
+            imageEditModal.classList.add("hidden")
+            newBtn.classList.add("hidden")
+            modal.classList.remove("hidden")  
+
+      })
+}
+

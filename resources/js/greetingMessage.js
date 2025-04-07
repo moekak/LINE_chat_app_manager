@@ -16,6 +16,33 @@ const modal                 = document.querySelector(".broadcasting_message_moda
 
 greeting_btn.addEventListener("click", async()=>{
 
+    // fileアップロードcrop
+    const greetingText = document.querySelector(".js_broadcast_error")
+    const errorTxt = document.querySelector(".js_error_txt")
+    const uploads = document.querySelectorAll(".js_upload");
+
+    uploads.forEach((upload) => {
+        upload.addEventListener("change", async (e) => {
+            FormController.initializeImageCropInput()
+
+            greetingText.classList.add("hidden")
+
+            const file = e.target.files[0];
+            if (!file) return;
+
+            
+            const errorElement = document.querySelector(".js_broadcast_error")
+            const imageErrorElement = document.querySelector(".js_image_error")
+            const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, false, "", document.getElementById("js_messageSetting_modal"))
+            await fileUploader.fileOperation()
+
+            // // ドラッグ＆ドロップの初期化
+            DragAndDrop.dragAndDrop("accordion", true);
+            BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
+
+        });
+    });
+
     // 現在設定されているメッセージを取得する
     const adminId =document.getElementById("js_account_id").value
     const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_GREETINGMESSAE_GET}/${adminId}`)
@@ -47,30 +74,30 @@ greeting_btn.addEventListener("click", async()=>{
 
 
 
-const greetingText = document.querySelector(".js_broadcast_error")
-const errorTxt = document.querySelector(".js_error_txt")
-const uploads = document.querySelectorAll(".js_upload");
+// const greetingText = document.querySelector(".js_broadcast_error")
+// const errorTxt = document.querySelector(".js_error_txt")
+// const uploads = document.querySelectorAll(".js_upload");
 
-uploads.forEach((upload) => {
-    upload.addEventListener("change", async (e) => {
-        FormController.initializeImageCropInput()
+// uploads.forEach((upload) => {
+//     upload.addEventListener("change", async (e) => {
+//         FormController.initializeImageCropInput()
 
-        greetingText.classList.add("hidden")
+//         greetingText.classList.add("hidden")
 
-        const file = e.target.files[0];
-        if (!file) return;
+//         const file = e.target.files[0];
+//         if (!file) return;
 
         
-        const errorElement = document.querySelector(".js_broadcast_error")
-        const imageErrorElement = document.querySelector(".js_image_error")
-        const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, false, null)
-        await fileUploader.fileOperation()
+//         const errorElement = document.querySelector(".js_broadcast_error")
+//         const imageErrorElement = document.querySelector(".js_image_error")
+//         const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, false, null)
+//         await fileUploader.fileOperation()
 
-        // // ドラッグ＆ドロップの初期化
-        DragAndDrop.dragAndDrop("accordion", true);
-        BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
+//         // // ドラッグ＆ドロップの初期化
+//         DragAndDrop.dragAndDrop("accordion", true);
+//         BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
 
-    });
-});
+//     });
+// });
 
 

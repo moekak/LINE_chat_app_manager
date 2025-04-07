@@ -21,7 +21,8 @@ export const ERROR_TEXT = {
 
 export const SUCCESS_TEXT = {
     CREATE_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
-    CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。"
+    CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。",
+    DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 }
 
 // // // 開発用

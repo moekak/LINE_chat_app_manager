@@ -1,7 +1,7 @@
 import FileUploader from "../../util/file/FileUploader.js";
 import BroadcastMessageOperator from "../broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "../DragAndDrop.js";
-import { open_loader } from "../modalOperation.js";
+import { close_image_edit_modal, open_loader } from "../modalOperation.js";
 import FormController from "../ui/FormController.js";
 import { API_ENDPOINTS } from "./../../../config/apiEndPoint.js";
 import DataValidator from "./DataValidator.js";
@@ -15,11 +15,9 @@ class ImageUploadHandler{
        * @param {HTMLElement} templateModalElement - テンプレートモーダル要素
        */
 
-      #handleFileInputChange(fileInput, errorTxt, templateModal) {
+      #handleFileInputChange(fileInput, errorTxt) {
             return async function(e) {
 
-                  fileInput.dataset.crop = ""
-                  fileInput.dataset.image = ""
                   InitializeInputService.initializeErrorList()
                   FormController.initializeImageCropInput();
                   
@@ -43,12 +41,11 @@ class ImageUploadHandler{
                   // // ここにファイルアップロードやその他の処理を追加できます
                   const errorElement = document.querySelector(".js_broadcast_error");
                   const imageErrorElement = document.querySelector(".js_image_error");
-                  const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, true, e.target, templateModal);
+                  const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, true, e.target, document.getElementById("js_template_modal"));
+                  close_image_edit_modal(e.target)
                   await fileUploader.fileOperation();
 
                   // 画像プレビューを設定
-                  const objectURL = URL.createObjectURL(file);
-                  FormController.templateImageStyle(fileInput, objectURL)
                   
                   // ドラッグ＆ドロップの初期化
                   DragAndDrop.dragAndDrop("accordion", true);
@@ -56,16 +53,20 @@ class ImageUploadHandler{
             };
       }
 
-      setupFileInputs(selector, errorTxtElement, templateModalElement) {
-            // セレクタが文字列の場合は要素を取得
-            const fileInputs = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-            
+      setupFileInputs(isEdit, errorTxtElement) {
             const errorTxt = errorTxtElement || document.querySelector(".js_error_txt");
-            const templateModal = templateModalElement || document.getElementById("js_template_modal");
-            
-            fileInputs.forEach(fileInput => {
+            let uploads = []
+
+            if(isEdit){
+                  uploads = document.querySelector(".js_edit_form")?.querySelectorAll(".file-input");
+            }else{
+                  uploads = document.querySelector(".js_create_form")?.querySelectorAll(".file-input");
+            }
+
+
+            uploads?.forEach(fileInput => {
                   open_loader()
-                  fileInput.addEventListener("change", this.#handleFileInputChange(fileInput, errorTxt, templateModal));
+                  fileInput.addEventListener("change", this.#handleFileInputChange(fileInput, errorTxt));
             });
       }
 

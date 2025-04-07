@@ -2,7 +2,8 @@
 import { SYSTEM_URL } from "../../../config/config.js";
 import { toggleDisplayButtonState } from "../../component/accountUIOperations.js"
 import BroadcastMessageOperator from "../../component/broadcast/BroadcastMessageOperator.js";
-import { open_modal } from "../../component/modalOperation.js";
+import { templateImageData } from "../../component/messageTemplate/DataGenerator.js";
+import { open_image_edit_modal, open_modal } from "../../component/modalOperation.js";
 import ButtonController from "../../component/ui/ButtonController.js";
 import FormController from "../../component/ui/FormController.js";
 import Cropper from "../cropper/Cropper.js";
@@ -22,14 +23,16 @@ const MAX_SIZE = 5 * 1024 * 1024
  */
 class FileUploader{
 
-    constructor(file, errorTxtElement, errorElement, imageErrorElement, isTemplate, inputElement, modal = null){
+    constructor(file, errorTxtElement, errorElement, imageErrorElement, isTemplate, inputElement,modal){
+
         this.file = file
         this.errorTxtElement = errorTxtElement   
         this.newconfirmBtn = null
         this.errorElement = errorElement
         this.imageErrorElement = imageErrorElement
-        this.modal = modal
-        this.imageEditModal = document.getElementById("js_image_edit_modal")
+        this.modal = document.getElementById("js_template_modal")
+        this.targetModal = modal
+        this.imageEditModal = document.querySelector(".image_edit_modal")
         this.urlErrorElement = document.querySelector(".js_url_error")
         this.urlInput = document.getElementById("js_url_input")
         this.isTemplate = isTemplate
@@ -37,11 +40,10 @@ class FileUploader{
         this.url = ""
         this.inputElement = inputElement
 
-        console.log(this.inputElement);
-        
 
         // イベントを初期化
         this.initializeEvents();
+
     }
 
     initializeEvents() {
@@ -50,7 +52,9 @@ class FileUploader{
         button.addEventListener("click", ()=>{
             FormController.initializeFileUpload() //ファイルアップロードの初期化
         })
+
     }
+
 
     /**
      * ファイル操作のメイン処理
@@ -104,14 +108,21 @@ class FileUploader{
             const container = document.getElementById("image-container");
             container.innerHTML = ""; // 古い画像を削除
             container.appendChild(newImage); // 新しい画像を保存
-
+            
             if(this.imageEditModal.classList.contains("hidden")){
                 this.#toggleLoader(false)
             }else{
                 this.#toggleLoaderforChangeImg(false)
             }
+
+            if(this.isTemplate){
+                open_image_edit_modal()
+            }else{
+                open_modal(this.imageEditModal)
+            }
     
-            open_modal(this.imageEditModal)
+            
+            
 
             // 画像切り取りモーダルが表示されるときに前に出ているモーダルを非表示にする
             if(this.modal) this.modal.classList.add("hidden");
@@ -125,6 +136,7 @@ class FileUploader{
             // 画像切り取りが完了して送信ボタンを押した後の処理
             this.newconfirmBtn = ButtonController.replaceButton("js_preview_submit_btn")
             this.newconfirmBtn.addEventListener("click", ()=>{
+                
                 // URL形式チェック
 
                 FormController.initializeFileUpload()
@@ -149,12 +161,42 @@ class FileUploader{
                     this.cropArea = []
                     this.url = ""
                 }
-
-
+                
                 if(this.isTemplate){
+
                     this.modal.classList.remove("hidden")
                     this.inputElement.parentElement.dataset.url = this.url
                     this.inputElement.parentElement.dataset.cropArea = JSON.stringify(this.cropArea)
+
+                    const fileInputElementId = this.inputElement.closest(".content-block").dataset.id
+                    const numberPart = fileInputElementId.match(/\d+/)[0];
+                    
+
+                    // // 画像データ作成
+
+                    const fileData = templateImageData.find(item => item.order === numberPart);
+                    if (fileData) {
+                        // Update existing item
+                        fileData.content = this.file;
+                        fileData.cropUrl = this.url;
+                        fileData.cropData = JSON.stringify(this.cropArea);
+                        fileData.order = numberPart;
+                    } else {
+                        // Add new item
+                        templateImageData.push({
+                            "content": this.file,
+                            "cropUrl": this.url,
+                            "cropData": JSON.stringify(this.cropArea),
+                            "order": numberPart
+                        });
+                    }
+
+
+
+
+
+                    
+                    FormController.templateImageStyle(this.inputElement, newImage.src)
                 }else{
                     const index = document.querySelectorAll(".js_headings").length
                     BroadcastMessageOperator.displayImageMessageToList(newImage.src,"js_accordion_wrapper", "accordion", index);
@@ -290,17 +332,15 @@ class FileUploader{
     }
 
     #toggleLoader(isLoading){
-
-        const messageModal = document.getElementById("js_messageSetting_modal")
         const loader = document.querySelector(".loader")
         const fixed_bg = document.querySelector(".fixed_bg")
 
         if(isLoading){
-            messageModal.style.zIndex = 0
+            this.targetModal.style.zIndex = 0
             loader.classList.remove("hidden")
             fixed_bg.classList.remove("hidden")
         }else{
-            messageModal.style.zIndex = 999
+            this.targetModal.style.zIndex = 999
             loader.classList.remove("add")
             fixed_bg.classList.add("hidden")
         }
@@ -308,18 +348,17 @@ class FileUploader{
 
     #toggleLoaderforChangeImg(isLoading){
         const modal = document.querySelector(".image_edit_modal")
-        const settingModal = document.getElementById("js_messageSetting_modal")
         const loader = document.querySelector(".loader")
         const bg = document.querySelector(".fixed_bg")
 
         if(isLoading){
             modal.style.zIndex = "997"
-            settingModal.style.zIndex="997"
+            this.targetModal.style.zIndex="997"
             loader.classList.remove("hidden")
             bg.classList.remove("hidden")
         }else{
             modal.style.zIndex = "999"
-            settingModal.style.zIndex="999"
+            this.targetModal.style.zIndex="999"
             loader.classList.add("hidden")
             bg.classList.add("hidden")
         }

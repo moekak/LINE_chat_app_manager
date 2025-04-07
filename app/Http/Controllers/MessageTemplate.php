@@ -223,8 +223,6 @@ class MessageTemplate extends Controller
                 $templateData = ModelsMessageTemplate::findOrFail($template_id);
                 $templateData->update(["category_id" => $category_id, "group_id" => $group_id, "template_name" => $template_name]);
 
-
-
                 $messageContents = $request->input("content_texts");
                 $imageContents = $request->input("image_path");
                 $imageContentsUpdate = $request->input("image_path_update");
@@ -351,4 +349,14 @@ class MessageTemplate extends Controller
         return response()->json($templates);
     }
 
+    public function destroy(string $id){
+        try{
+            ModelsMessageTemplate::destroy($id);
+            return response()->json(["status" => 201]);
+        }catch(\Exception $e){
+            Log::debug($e);
+            return response()->json(["status" => 501]);
+        }
+        
+    }
 }

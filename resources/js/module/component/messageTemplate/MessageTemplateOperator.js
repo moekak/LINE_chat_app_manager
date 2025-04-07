@@ -13,7 +13,7 @@ import InitializeInputService from "./InitializeInputService.js";
 class MessageTemplateOperator {
     constructor(isUpdate = false) {
         // DOM要素
-        this.contentBlocks = document.getElementById('content-blocks');
+        this.contentBlocks = document.getElementById('create-content-blocks');
         this.addTextBtns = document.querySelectorAll('.add-text');
         this.addImageBtns = document.querySelectorAll('.add-image');
         this.previewContainer = document.getElementById('preview-container');
@@ -22,11 +22,11 @@ class MessageTemplateOperator {
         this.tabContents = document.querySelectorAll('.tab-content');
         this.templateModal = document.getElementById("js_template_modal")
         this.categoryAddBtn = null;
-        this.form = document.querySelector(".js_create_from")
+        this.form = document.querySelector(".js_create_form")
         this.isUpdate = isUpdate
         // コンポーネント
         this.formData;
-        this.blockManager = new TemplateBlockManager(this.contentBlocks);
+        this.blockManager = new TemplateBlockManager();
         this.tabController = new TabController(this.tabs, this.tabContents);
         this.imageUploadHandler = new ImageUploadHandler()
         
@@ -43,12 +43,11 @@ class MessageTemplateOperator {
 
     resetBlockCounter(){
         this.blockManager.resetBlockCounter()
+        
     }
     initialize() {
         // ボタンイベントのセットアップ
         this.addTextBtns.forEach((btn)=>{
-            console.log(btn);
-        
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
             newBtn.addEventListener('click', this.handleAddTextBlock.bind(this));
@@ -81,6 +80,7 @@ class MessageTemplateOperator {
 
     handleAddTextBlock(e) {
         e.preventDefault();
+
         const newBlock = this.blockManager.addTextBlock(this.contentBlocks);
         this.blockManager.setupBlockListeners(newBlock);
     }
@@ -94,7 +94,7 @@ class MessageTemplateOperator {
         const uploads = document.querySelectorAll(".file-input");
         const errorTxt = document.querySelector(".js_error_txt");
         
-        this.imageUploadHandler.setupFileInputs(uploads, errorTxt, this.templateModal);
+        this.imageUploadHandler.setupFileInputs(this.isUpdate, uploads, errorTxt);
     }
 
     async handleAddCategory(e) {
@@ -113,6 +113,7 @@ class MessageTemplateOperator {
             const response = await TemplateApiService.addCategory(data);
             const dataValidator = new DataValidator()
             categoryName.value = "";
+
             
             close_loader_template()
             if (response["status"] === 500) {
@@ -155,14 +156,15 @@ class MessageTemplateOperator {
             return;
         }
 
-        for (const [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
+
+        for (const pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+          }
+  
         
         try {
             const response = await TemplateApiService.createTemplate(formData, this.isUpdate);
-            console.log(response);
-            
+
 
             if (response["status"] === 500) {
                 open_modal(this.templateModal)
@@ -171,6 +173,7 @@ class MessageTemplateOperator {
                 open_modal(this.templateModal)
                 dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
             }else if(response["status"] === 201){
+                document.querySelector(".fixed_bg").classList.add("hidden")
                 close_loader()
                 hide_bg()
                 dataValidator.displaySuccessMessage(SUCCESS_TEXT.CREATE_TEMPLATE_SUCCESS)

@@ -297,7 +297,7 @@
 		<!-- モーダルヘッダー -->
 		<div class="modal-header">
 			<h2>テンプレート作成</h2>
-			<button class="close-btn">&times;</button>
+			{{-- <button class="close-btn">&times;</button> --}}
 		</div>
 
 		<!-- モーダルコンテンツ -->
@@ -335,7 +335,7 @@
 			</div>
 						
 			<!-- 新規作成フォーム -->
-			<form class="tab-content js_create_from">
+			<form class="tab-content js_create_form">
 				@csrf
 				<div class="form-group">
 					<label for="template-title">テンプレート名</label>
@@ -364,7 +364,7 @@
 				</div>
 
 				<!-- コンテンツブロック管理エリア -->
-				<div class="content-blocks" id="content-blocks">
+				<div class="content-blocks" id="create-content-blocks">
 				</div>
 				
 				<!-- 追加ボタン -->
@@ -435,7 +435,6 @@
 			<!-- 編集フォーム -->
 			<form class="edit-template-form js_edit_form hidden" id="template-edit-form">
 				@csrf
-				<input type="hidden" id="edit-template-id" name="template_id">
 				<div class="form-group">
 					<label for="edit-template-title">テンプレート名</label>
 					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>

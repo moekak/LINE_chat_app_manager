@@ -2292,7 +2292,8 @@ var ERROR_TEXT = {
 };
 var SUCCESS_TEXT = {
   CREATE_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
-  CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。"
+  CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。",
+  DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
 // // // 開発用
@@ -2790,7 +2791,7 @@ var createMessageTemplate = function createMessageTemplate(templates) {
   return templates.map(function (template) {
     return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
       return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
-    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
@@ -3007,11 +3008,13 @@ var initializeSimpleBar = function initializeSimpleBar() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   close_image_edit_modal: () => (/* binding */ close_image_edit_modal),
 /* harmony export */   close_loader: () => (/* binding */ close_loader),
 /* harmony export */   close_loader_template: () => (/* binding */ close_loader_template),
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
 /* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
 /* harmony export */   hide_bg: () => (/* binding */ hide_bg),
+/* harmony export */   open_image_edit_modal: () => (/* binding */ open_image_edit_modal),
 /* harmony export */   open_loader: () => (/* binding */ open_loader),
 /* harmony export */   open_loader_template: () => (/* binding */ open_loader_template),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
@@ -3019,7 +3022,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 
 var open_modal = function open_modal(modal) {
+  var loader = document.querySelector(".loader");
   document.querySelector(".bg").classList.remove("hidden");
+  loader.classList.add("hidden");
   modal.classList.remove("hidden");
 };
 var close_modal = function close_modal() {
@@ -3035,6 +3040,9 @@ var close_modal = function close_modal() {
     });
   }
   bg.addEventListener("click", function () {
+    if (!loader.classList.contains("hidden")) {
+      return;
+    }
     if (imageEditModal.classList.contains("hidden") == false) {
       imageEditModal.classList.add("hidden");
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__["default"].initializeFileUpload();
@@ -3097,6 +3105,30 @@ var close_loader_template = function close_loader_template() {
   loader.style.zIndex = 998;
   loader.classList.add("hidden");
   bg.classList.add("hidden");
+};
+var open_image_edit_modal = function open_image_edit_modal() {
+  var modal = document.querySelector(".image_edit_modal");
+  var fixed_bg = document.querySelector(".fixed_bg");
+  var loader = document.querySelector(".loader");
+  loader.classList.add("hidden");
+  modal.classList.remove("hidden");
+  fixed_bg.classList.remove("hidden");
+};
+var close_image_edit_modal = function close_image_edit_modal() {
+  var fixed_bg = document.querySelector(".fixed_bg");
+  var imageEditModal = document.querySelector(".image_edit_modal");
+  var modal = document.getElementById("js_template_modal");
+  var loader = document.querySelector(".loader");
+  var newBtn = fixed_bg.cloneNode(true);
+  fixed_bg.parentNode.replaceChild(newBtn, fixed_bg);
+  newBtn.addEventListener("click", function () {
+    if (!loader.classList.contains("hidden")) {
+      return;
+    }
+    imageEditModal.classList.add("hidden");
+    newBtn.classList.add("hidden");
+    modal.classList.remove("hidden");
+  });
 };
 
 /***/ }),

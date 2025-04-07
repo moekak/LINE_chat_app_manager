@@ -5967,7 +5967,8 @@ var API_ENDPOINTS = {
   FETCH_TEMPLATE_CREATE: "/api/create/templates",
   FETCH_TEMPLATE_UPDATE: "/api/update/templates",
   FETCH_TEMPLATE_GET: "/api/templates/get",
-  FETCH_CATEGORIES_GET: "/api/categories/get"
+  FETCH_CATEGORIES_GET: "/api/categories/get",
+  FETCH_TEMPLATE_DELETE: "/api/template/delete"
 };
 
 /***/ }),
@@ -6008,7 +6009,8 @@ var ERROR_TEXT = {
 };
 var SUCCESS_TEXT = {
   CREATE_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
-  CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。"
+  CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。",
+  DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
 // // // 開発用
@@ -7018,7 +7020,7 @@ var createMessageTemplate = function createMessageTemplate(templates) {
   return templates.map(function (template) {
     return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
       return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
-    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
@@ -7055,6 +7057,21 @@ var fetchSpecificUserInfo = function fetchSpecificUserInfo(e, modal) {
     (0,_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleEditUserName)(res, modal);
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/module/component/messageTemplate/DataGenerator.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/module/component/messageTemplate/DataGenerator.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   templateImageData: () => (/* binding */ templateImageData)
+/* harmony export */ });
+var templateImageData = [];
 
 /***/ }),
 
@@ -7235,11 +7252,13 @@ var initializeSimpleBar = function initializeSimpleBar() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   close_image_edit_modal: () => (/* binding */ close_image_edit_modal),
 /* harmony export */   close_loader: () => (/* binding */ close_loader),
 /* harmony export */   close_loader_template: () => (/* binding */ close_loader_template),
 /* harmony export */   close_modal: () => (/* binding */ close_modal),
 /* harmony export */   close_modal_by_click: () => (/* binding */ close_modal_by_click),
 /* harmony export */   hide_bg: () => (/* binding */ hide_bg),
+/* harmony export */   open_image_edit_modal: () => (/* binding */ open_image_edit_modal),
 /* harmony export */   open_loader: () => (/* binding */ open_loader),
 /* harmony export */   open_loader_template: () => (/* binding */ open_loader_template),
 /* harmony export */   open_modal: () => (/* binding */ open_modal)
@@ -7247,7 +7266,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 
 var open_modal = function open_modal(modal) {
+  var loader = document.querySelector(".loader");
   document.querySelector(".bg").classList.remove("hidden");
+  loader.classList.add("hidden");
   modal.classList.remove("hidden");
 };
 var close_modal = function close_modal() {
@@ -7263,6 +7284,9 @@ var close_modal = function close_modal() {
     });
   }
   bg.addEventListener("click", function () {
+    if (!loader.classList.contains("hidden")) {
+      return;
+    }
     if (imageEditModal.classList.contains("hidden") == false) {
       imageEditModal.classList.add("hidden");
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_0__["default"].initializeFileUpload();
@@ -7325,6 +7349,30 @@ var close_loader_template = function close_loader_template() {
   loader.style.zIndex = 998;
   loader.classList.add("hidden");
   bg.classList.add("hidden");
+};
+var open_image_edit_modal = function open_image_edit_modal() {
+  var modal = document.querySelector(".image_edit_modal");
+  var fixed_bg = document.querySelector(".fixed_bg");
+  var loader = document.querySelector(".loader");
+  loader.classList.add("hidden");
+  modal.classList.remove("hidden");
+  fixed_bg.classList.remove("hidden");
+};
+var close_image_edit_modal = function close_image_edit_modal() {
+  var fixed_bg = document.querySelector(".fixed_bg");
+  var imageEditModal = document.querySelector(".image_edit_modal");
+  var modal = document.getElementById("js_template_modal");
+  var loader = document.querySelector(".loader");
+  var newBtn = fixed_bg.cloneNode(true);
+  fixed_bg.parentNode.replaceChild(newBtn, fixed_bg);
+  newBtn.addEventListener("click", function () {
+    if (!loader.classList.contains("hidden")) {
+      return;
+    }
+    imageEditModal.classList.add("hidden");
+    newBtn.classList.add("hidden");
+    modal.classList.remove("hidden");
+  });
 };
 
 /***/ }),
@@ -8088,14 +8136,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../config/config.js */ "./resources/js/config/config.js");
 /* harmony import */ var _component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../component/accountUIOperations.js */ "./resources/js/module/component/accountUIOperations.js");
 /* harmony import */ var _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../component/broadcast/BroadcastMessageOperator.js */ "./resources/js/module/component/broadcast/BroadcastMessageOperator.js");
-/* harmony import */ var _component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/ui/ButtonController.js */ "./resources/js/module/component/ui/ButtonController.js");
-/* harmony import */ var _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
-/* harmony import */ var _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../cropper/Cropper.js */ "./resources/js/module/util/cropper/Cropper.js");
-/* harmony import */ var _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cropper/CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
-/* harmony import */ var _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
-/* harmony import */ var _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
-/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
+/* harmony import */ var _component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/messageTemplate/DataGenerator.js */ "./resources/js/module/component/messageTemplate/DataGenerator.js");
+/* harmony import */ var _component_modalOperation_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../component/modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../component/ui/ButtonController.js */ "./resources/js/module/component/ui/ButtonController.js");
+/* harmony import */ var _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cropper/Cropper.js */ "./resources/js/module/util/cropper/Cropper.js");
+/* harmony import */ var _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../cropper/CropperEventHandler.js */ "./resources/js/module/util/cropper/CropperEventHandler.js");
+/* harmony import */ var _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
+/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -8126,6 +8175,7 @@ function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.h
 
 
 
+
 var MAX_SIZE = 5 * 1024 * 1024;
 
 /**
@@ -8137,8 +8187,7 @@ var MAX_SIZE = 5 * 1024 * 1024;
  */
 var _FileUploader_brand = /*#__PURE__*/new WeakSet();
 var FileUploader = /*#__PURE__*/function () {
-  function FileUploader(file, errorTxtElement, errorElement, imageErrorElement, isTemplate, inputElement) {
-    var _modal = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+  function FileUploader(file, errorTxtElement, errorElement, imageErrorElement, isTemplate, inputElement, _modal) {
     _classCallCheck(this, FileUploader);
     // 新しい画像要素を作成
     _classPrivateMethodInitSpec(this, _FileUploader_brand);
@@ -8147,15 +8196,15 @@ var FileUploader = /*#__PURE__*/function () {
     this.newconfirmBtn = null;
     this.errorElement = errorElement;
     this.imageErrorElement = imageErrorElement;
-    this.modal = _modal;
-    this.imageEditModal = document.getElementById("js_image_edit_modal");
+    this.modal = document.getElementById("js_template_modal");
+    this.targetModal = _modal;
+    this.imageEditModal = document.querySelector(".image_edit_modal");
     this.urlErrorElement = document.querySelector(".js_url_error");
     this.urlInput = document.getElementById("js_url_input");
     this.isTemplate = isTemplate;
     this.cropArea = [];
     this.url = "";
     this.inputElement = inputElement;
-    console.log(this.inputElement);
 
     // イベントを初期化
     this.initializeEvents();
@@ -8164,9 +8213,9 @@ var FileUploader = /*#__PURE__*/function () {
     key: "initializeEvents",
     value: function initializeEvents() {
       // 画像切り取りモーダルの画像変更ボタン
-      var button = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_changeImg_btn");
+      var button = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_5__["default"].replaceButton("js_changeImg_btn");
       button.addEventListener("click", function () {
-        _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload(); //ファイルアップロードの初期化
+        _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeFileUpload(); //ファイルアップロードの初期化
       });
     }
 
@@ -8244,9 +8293,9 @@ var FileUploader = /*#__PURE__*/function () {
               reader = new FileReader();
               newImage = _assertClassBrand(_FileUploader_brand, this, _createImageElement).call(this, this.file);
               newImage.onload = function (e) {
-                var newImageButton = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_change_area");
-                _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_6__["default"](_this.imageElement, newImageButton);
-                var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_7__["default"](newImageButton, _this.cropper);
+                var newImageButton = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_5__["default"].replaceButton("js_change_area");
+                _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_7__["default"](_this.imageElement, newImageButton);
+                var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_8__["default"](newImageButton, _this.cropper);
                 cropperHandler.changeBtnEvent();
                 _assertClassBrand(_FileUploader_brand, _this, _changeSubmitBtn).call(_this);
                 // 新しい画像要素を Cropper に更新
@@ -8262,7 +8311,11 @@ var FileUploader = /*#__PURE__*/function () {
                 } else {
                   _assertClassBrand(_FileUploader_brand, _this, _toggleLoaderforChangeImg).call(_this, false);
                 }
-                (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_modal)(_this.imageEditModal);
+                if (_this.isTemplate) {
+                  (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_4__.open_image_edit_modal)();
+                } else {
+                  (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_4__.open_modal)(_this.imageEditModal);
+                }
 
                 // 画像切り取りモーダルが表示されるときに前に出ているモーダルを非表示にする
                 if (_this.modal) _this.modal.classList.add("hidden");
@@ -8273,11 +8326,11 @@ var FileUploader = /*#__PURE__*/function () {
                 });
 
                 // 画像切り取りが完了して送信ボタンを押した後の処理
-                _this.newconfirmBtn = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_4__["default"].replaceButton("js_preview_submit_btn");
+                _this.newconfirmBtn = _component_ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_5__["default"].replaceButton("js_preview_submit_btn");
                 _this.newconfirmBtn.addEventListener("click", function () {
                   // URL形式チェック
 
-                  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
+                  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeFileUpload();
                   var regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
                   var choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
                   var selectedChoices = Array.from(choices).find(function (choice) {
@@ -8300,6 +8353,30 @@ var FileUploader = /*#__PURE__*/function () {
                     _this.modal.classList.remove("hidden");
                     _this.inputElement.parentElement.dataset.url = _this.url;
                     _this.inputElement.parentElement.dataset.cropArea = JSON.stringify(_this.cropArea);
+                    var fileInputElementId = _this.inputElement.closest(".content-block").dataset.id;
+                    var numberPart = fileInputElementId.match(/\d+/)[0];
+
+                    // // 画像データ作成
+
+                    var fileData = _component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__.templateImageData.find(function (item) {
+                      return item.order === numberPart;
+                    });
+                    if (fileData) {
+                      // Update existing item
+                      fileData.content = _this.file;
+                      fileData.cropUrl = _this.url;
+                      fileData.cropData = JSON.stringify(_this.cropArea);
+                      fileData.order = numberPart;
+                    } else {
+                      // Add new item
+                      _component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__.templateImageData.push({
+                        "content": _this.file,
+                        "cropUrl": _this.url,
+                        "cropData": JSON.stringify(_this.cropArea),
+                        "order": numberPart
+                      });
+                    }
+                    _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].templateImageStyle(_this.inputElement, newImage.src);
                   } else {
                     var index = document.querySelectorAll(".js_headings").length;
                     _component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].displayImageMessageToList(newImage.src, "js_accordion_wrapper", "accordion", index);
@@ -8392,8 +8469,8 @@ var FileUploader = /*#__PURE__*/function () {
         cropArea: JSON.stringify(cropArea),
         url: url
       };
-      _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].setItem(index, data);
-      _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_9__["default"].setState();
+      _state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_9__["default"].setItem(index, data);
+      _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_10__["default"].setState();
     }
   }, {
     key: "isAllowedType",
@@ -8433,7 +8510,7 @@ function _compressedFile2() {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           _context4.next = 2;
-          return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_10__["default"])(this.file, {
+          return (0,browser_image_compression__WEBPACK_IMPORTED_MODULE_11__["default"])(this.file, {
             maxSizeMB: 1,
             maxWidthOrHeight: 1024,
             useWebWorker: true
@@ -8449,7 +8526,7 @@ function _compressedFile2() {
   return _compressedFile2.apply(this, arguments);
 }
 function _validationError(txt, hasModal) {
-  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeFileUpload();
+  _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeFileUpload();
   if (hasModal) {
     document.querySelector(".js_image_error").classList.remove("hidden");
     document.querySelector(".js_image_error").innerHTML = txt;
@@ -8460,32 +8537,30 @@ function _validationError(txt, hasModal) {
   return false;
 }
 function _toggleLoader(isLoading) {
-  var messageModal = document.getElementById("js_messageSetting_modal");
   var loader = document.querySelector(".loader");
   var fixed_bg = document.querySelector(".fixed_bg");
   if (isLoading) {
-    messageModal.style.zIndex = 0;
+    this.targetModal.style.zIndex = 0;
     loader.classList.remove("hidden");
     fixed_bg.classList.remove("hidden");
   } else {
-    messageModal.style.zIndex = 999;
+    this.targetModal.style.zIndex = 999;
     loader.classList.remove("add");
     fixed_bg.classList.add("hidden");
   }
 }
 function _toggleLoaderforChangeImg(isLoading) {
   var modal = document.querySelector(".image_edit_modal");
-  var settingModal = document.getElementById("js_messageSetting_modal");
   var loader = document.querySelector(".loader");
   var bg = document.querySelector(".fixed_bg");
   if (isLoading) {
     modal.style.zIndex = "997";
-    settingModal.style.zIndex = "997";
+    this.targetModal.style.zIndex = "997";
     loader.classList.remove("hidden");
     bg.classList.remove("hidden");
   } else {
     modal.style.zIndex = "999";
-    settingModal.style.zIndex = "999";
+    this.targetModal.style.zIndex = "999";
     loader.classList.add("hidden");
     bg.classList.add("hidden");
   }
@@ -13398,17 +13473,58 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // グローバル変数
 var greeting_btn = document.getElementById("js_create_message_btn");
 var modal = document.querySelector(".broadcasting_message_modal");
-greeting_btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-  var adminId, response, broadcastMessageOperatorInstance;
-  return _regeneratorRuntime().wrap(function _callee$(_context) {
-    while (1) switch (_context.prev = _context.next) {
+greeting_btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+  var greetingText, errorTxt, uploads, adminId, response, broadcastMessageOperatorInstance;
+  return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+    while (1) switch (_context2.prev = _context2.next) {
       case 0:
+        // fileアップロードcrop
+        greetingText = document.querySelector(".js_broadcast_error");
+        errorTxt = document.querySelector(".js_error_txt");
+        uploads = document.querySelectorAll(".js_upload");
+        uploads.forEach(function (upload) {
+          upload.addEventListener("change", /*#__PURE__*/function () {
+            var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+              var file, errorElement, imageErrorElement, fileUploader;
+              return _regeneratorRuntime().wrap(function _callee$(_context) {
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    _module_component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeImageCropInput();
+                    greetingText.classList.add("hidden");
+                    file = e.target.files[0];
+                    if (file) {
+                      _context.next = 5;
+                      break;
+                    }
+                    return _context.abrupt("return");
+                  case 5:
+                    errorElement = document.querySelector(".js_broadcast_error");
+                    imageErrorElement = document.querySelector(".js_image_error");
+                    fileUploader = new _module_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_7__["default"](file, errorTxt, errorElement, imageErrorElement, false, "", document.getElementById("js_messageSetting_modal"));
+                    _context.next = 10;
+                    return fileUploader.fileOperation();
+                  case 10:
+                    // // ドラッグ＆ドロップの初期化
+                    _module_component_DragAndDrop_js__WEBPACK_IMPORTED_MODULE_3__["default"].dragAndDrop("accordion", true);
+                    _module_component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
+                  case 12:
+                  case "end":
+                    return _context.stop();
+                }
+              }, _callee);
+            }));
+            return function (_x) {
+              return _ref2.apply(this, arguments);
+            };
+          }());
+        });
+
         // 現在設定されているメッセージを取得する
         adminId = document.getElementById("js_account_id").value;
-        _context.next = 3;
+        _context2.next = 7;
         return (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_6__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_GREETINGMESSAE_GET, "/").concat(adminId));
-      case 3:
-        response = _context.sent;
+      case 7:
+        response = _context2.sent;
         broadcastMessageOperatorInstance = _module_component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
         _module_component_DragAndDrop_js__WEBPACK_IMPORTED_MODULE_3__["default"].dragAndDrop("accordion", true);
         response.forEach(function (res) {
@@ -13437,51 +13553,37 @@ greeting_btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE_
           _module_component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].deleteList("accordion");
         });
         (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_4__.open_modal)(modal);
-      case 8:
+      case 12:
       case "end":
-        return _context.stop();
+        return _context2.stop();
     }
-  }, _callee);
+  }, _callee2);
 })));
-var greetingText = document.querySelector(".js_broadcast_error");
-var errorTxt = document.querySelector(".js_error_txt");
-var uploads = document.querySelectorAll(".js_upload");
-uploads.forEach(function (upload) {
-  upload.addEventListener("change", /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-      var file, errorElement, imageErrorElement, fileUploader;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            _module_component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].initializeImageCropInput();
-            greetingText.classList.add("hidden");
-            file = e.target.files[0];
-            if (file) {
-              _context2.next = 5;
-              break;
-            }
-            return _context2.abrupt("return");
-          case 5:
-            errorElement = document.querySelector(".js_broadcast_error");
-            imageErrorElement = document.querySelector(".js_image_error");
-            fileUploader = new _module_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_7__["default"](file, errorTxt, errorElement, imageErrorElement, false, null);
-            _context2.next = 10;
-            return fileUploader.fileOperation();
-          case 10:
-            // // ドラッグ＆ドロップの初期化
-            _module_component_DragAndDrop_js__WEBPACK_IMPORTED_MODULE_3__["default"].dragAndDrop("accordion", true);
-            _module_component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
-          case 12:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2);
-    }));
-    return function (_x) {
-      return _ref2.apply(this, arguments);
-    };
-  }());
-});
+
+// const greetingText = document.querySelector(".js_broadcast_error")
+// const errorTxt = document.querySelector(".js_error_txt")
+// const uploads = document.querySelectorAll(".js_upload");
+
+// uploads.forEach((upload) => {
+//     upload.addEventListener("change", async (e) => {
+//         FormController.initializeImageCropInput()
+
+//         greetingText.classList.add("hidden")
+
+//         const file = e.target.files[0];
+//         if (!file) return;
+
+//         const errorElement = document.querySelector(".js_broadcast_error")
+//         const imageErrorElement = document.querySelector(".js_image_error")
+//         const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, false, null)
+//         await fileUploader.fileOperation()
+
+//         // // ドラッグ＆ドロップの初期化
+//         DragAndDrop.dragAndDrop("accordion", true);
+//         BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
+
+//     });
+// });
 })();
 
 /******/ })()

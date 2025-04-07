@@ -1,19 +1,21 @@
 import { SYSTEM_URL } from "../../../../config/config.js";
 import { createTextBlock } from "../../elementTemplate.js";
-import { open_loader } from "../../modalOperation.js";
+import { close_loader, open_loader } from "../../modalOperation.js";
 import FormController from "../../ui/FormController.js";
+import { templateImageData } from "../DataGenerator.js";
 import ImageUploadHandler from "../ImageUploadHandler.js";
 import MessageTemplateOperator from "../MessageTemplateOperator.js";
 import TemplateBlockManager from "../TemplateBlockManager.js";
 
 class MessageTemplateFormController{
       constructor(targetElement){
+
             this.targetElement = targetElement
             this.templateContent = targetElement.closest(".template-item");
             this.templateNameElement = this.templateContent.querySelector(".template-title");
             this.templateCategoryElement = this.templateContent.querySelector(".template-category");
-            this.templateIdElement = document.querySelector(".template_id")
-            this.groupIdElement = document.querySelector(".group_id")
+            this.templateIdElement = this.templateContent.querySelector(".template_id")
+            this.groupIdElement = this.templateContent.querySelector(".group_id")
 
             this.editTemplateName = document.getElementById("edit-template-title")
             this.editCategories = document.querySelectorAll(".edit-category")
@@ -38,17 +40,33 @@ class MessageTemplateFormController{
                   this.blockTextarea.innerHTML = content.querySelector(".js_content_text").value
                   this.blockTextarea.dataset.id = content.dataset.id
             } else if (content.dataset.type === "image") {
-                  console.log(content.querySelector(".js_image_path"));
-                  
                   this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock)
                   this.fileInput = this.contentBlocksWrapper.querySelector(".file-input")
-                  this.fileInput.dataset.image = content.querySelector(".js_image_path").value
-                  this.fileInput.dataset.crop = content.querySelector(".js_image_path").dataset.crop
                   this.imageElement = this.contentBlocksWrapper.querySelector(".image_element")
                   this.imageElement.src = `${SYSTEM_URL.IMAGE_URL}/${content.querySelector(".js_image_path").value}`
                   FormController.templateImageStyle(this.imageElement, `${SYSTEM_URL.IMAGE_URL}/${content.querySelector(".js_image_path").value}`)
+
+                  const errorTxt = document.querySelector(".js_error_txt");
+                  const imageUploadHandler = new ImageUploadHandler()
+                  imageUploadHandler.setupFileInputs(true, errorTxt);
+
+                  // // 画像データ作成
+
+
+                  
+                  const fileInputElementId = this.fileInput.closest(".content-block").dataset.id
+                  const numberPart = fileInputElementId.match(/\d+/)[0];
+
+
+                  templateImageData.push(
+                        {
+                              "contentUrl" : content.querySelector(".js_image_path").value,
+                              "cropData": content.querySelector(".js_image_path").dataset.crop ?? [],
+                              "order" : numberPart
+                        }
+                  )
+                        
             }
-            
             return this.contentBlocksWrapper;
       }
 
@@ -75,8 +93,12 @@ class MessageTemplateFormController{
             const form = document.querySelector(".js_edit_form")
             const messageTemplateOperator = new MessageTemplateOperator()
 
+
+
             editBtns.forEach((btn)=>{
                   btn.addEventListener("click", (e)=>{
+                        templateImageData.length = 0
+
 
                         contentBlocks.innerHTML = ""
                         messageTemplateOperator.changeElements(contentBlocks, form)
@@ -93,13 +115,8 @@ class MessageTemplateFormController{
                         });
       
                         // テンプレート作成画像アップロード
-                        {
-                              const uploads = document.querySelectorAll(".file-input");
-                              const errorTxt = document.querySelector(".js_error_txt");
-                              const templateModal = document.getElementById("js_template_modal");
-                              const imageUploadHandler = new ImageUploadHandler()
-                              imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
-                        }
+                        MessageTemplateFormController.initializeCropManagement(true)
+                        close_loader()
                   })
             })
       }
@@ -111,6 +128,13 @@ class MessageTemplateFormController{
             modal.style.zIndex = "985"
             open_loader()
       }
+
+      static initializeCropManagement(isEdit = false){
+            // テンプレート作成画像アップロード
+            const errorTxt = document.querySelector(".js_error_txt");
+            const imageUploadHandler = new ImageUploadHandler()
+            imageUploadHandler.setupFileInputs(isEdit, errorTxt);
+}
 
 
 

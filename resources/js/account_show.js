@@ -11,11 +11,12 @@ import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHa
 import { fetchPostOperation } from "./module/util/fetch.js";
 import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 import InitializeInputService from "./module/component/messageTemplate/InitializeInputService.js";
+import { templateImageData } from "./module/component/messageTemplate/DataGenerator.js";
+
 
 //ユーザー管理に関連するモーダルの初期化
 initializeUserModals(socket)
 
-const messageTemplateOperator = new MessageTemplateOperator()
 
 const admin_id = document.getElementById("js_admin_account_id").value
 registerUser(admin_id, "admin")
@@ -126,38 +127,49 @@ submitForms.forEach((submitForm)=>{
 // テンプレート作成モーダル
 {
       const createTemplateBtn = document.getElementById("js_create_template_btn")
+      // ボタンを複製して置き換える代わりに、単純に既存のイベントリスナーを削除する
+      createTemplateBtn.removeEventListener("click", handleTemplateButtonClick);
       const templateModal = document.getElementById("js_template_modal")
 
 
-      createTemplateBtn.addEventListener("click", async ()=>{
-            InitializeInputService.intiaizeInputs()
-            messageTemplateOperator.resetBlockCounter()
-            open_loader()
-            const adminId = {"admin_id": document.getElementById("js_account_id").value}
-            try{
-                  const response = await fetchPostOperation(adminId, API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY)
+      createTemplateBtn.addEventListener("click", () => {
+            templateImageData.length = 0
+            handleTemplateButtonClick();
+      });
 
-                  response["categories"].forEach((res)=>{
-                        FormController.populateSelectOptions(res["id"], res["category_name"])
-                  })
+      // 非同期処理を別関数に切り出す
+      async function handleTemplateButtonClick() {
+
+            InitializeInputService.intiaizeInputs();
+            new MessageTemplateOperator();
+            open_loader();
+            
+            const adminId = {"admin_id": document.getElementById("js_account_id").value};
+            try {
+                  const response = await fetchPostOperation(adminId, API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY);
                   
-                  open_modal(templateModal)
-                  close_loader()
-            }catch(error){
+                  response["categories"].forEach((res) => {
+                        FormController.populateSelectOptions(res["id"], res["category_name"]);
+                  });
+                  
+                  open_modal(templateModal);
+                  close_loader();
+            } catch(error) {
                   console.log(error);
-                  
             }
+      }
+}
 
+
+
+// テンプレート編集
+{
+
+      // キャンセル処理
+      const cancelBtn = document.getElementById("js_cancel_edit_btn")
+
+      cancelBtn.addEventListener("click", ()=>{
+            document.querySelector(".tab-edit").style.display = "block"
+            document.getElementById("template-edit-form").classList.add("hidden")
       })
 }
-
-// テンプレート作成画像アップロード
-{
-      const uploads = document.querySelectorAll(".file-input");
-      const errorTxt = document.querySelector(".js_error_txt");
-      const templateModal = document.getElementById("js_template_modal");
-      const imageUploadHandler = new ImageUploadHandler()
-      imageUploadHandler.setupFileInputs(uploads, errorTxt, templateModal);
-}
-
-

@@ -1,3 +1,5 @@
+import { templateImageData } from "./DataGenerator.js";
+
 // 2. TemplateFormData.js - フォームデータの収集と構築に特化
 class TemplateFormData {
     constructor(form) {
@@ -27,49 +29,56 @@ class TemplateFormData {
         formData.append("template_id", document.getElementById("js_template_id").value ?? "");
         formData.append("group_id", document.getElementById("js_group_id").value ?? "");
 
-        let order = 0;
+
+
         let text_index = 0;
         let image_index = 0;
         let hasContent = false;
 
         content_blocks.forEach((block) => {
+            
             if (block.dataset.type === "image") {
                 const fileInput = block.querySelector(".file-input")
-                const file = fileInput.files[0];
-                if (file){
-                    hasContent = true;
-                    const cropArea = block.querySelector(".image-upload").getAttribute("data-crop-area");
-                    const url = block.querySelector(".image-upload").dataset.url;
-                    
-                    formData.append(`image_path[${text_index}][content]`, file);
-                    formData.append(`image_path[${text_index}][cropData][cropArea]`, cropArea);
-                    formData.append(`image_path[${text_index}][cropData][url]`, url);
-                    formData.append(`image_path[${text_index}][order]`, order);
-                }else if(fileInput.dataset.image !== ""){
-                    hasContent = true;
-                    const cropArea = fileInput.dataset.crop;
-                    const imageUrl = fileInput.dataset.image
+                const fileInputElementId = fileInput.closest(".content-block").dataset.id
+                const numberPart = fileInputElementId.match(/\d+/)[0];
 
-                    
-                    formData.append(`image_path_update[${text_index}][contentUrl]`, imageUrl);
-                    formData.append(`image_path_update[${text_index}][cropData]`, cropArea);
-                    formData.append(`image_path_update[${text_index}][order]`, order);
+                const fileData = templateImageData.find(item => item.order === numberPart);
+                
+
+                if(fileData){
+                    if (fileData["content"]){
+                        hasContent = true;
+                        
+                        formData.append(`image_path[${image_index}][content]`, fileData["content"]);
+                        formData.append(`image_path[${image_index}][cropData][cropArea]`, fileData["cropData"]);
+                        formData.append(`image_path[${image_index}][cropData][url]`, fileData["cropUrl"]);
+                        formData.append(`image_path[${image_index}][order]`, fileData["order"]);
+                    }else{
+
+                        hasContent = true;
+                        formData.append(`image_path_update[${image_index}][contentUrl]`, fileData["contentUrl"]);
+                        formData.append(`image_path_update[${image_index}][cropData]`, fileData["cropData"]);
+                        formData.append(`image_path_update[${image_index}][order]`, fileData["order"]);
+                    }
+                }else{
+                    return
                 }
-                
-
-                
-                text_index++;
+                image_index++;
             } else if (block.dataset.type === "text") {
                 const content = block.querySelector(".block-textarea").value;
+                const order = block.querySelector(".block-textarea").closest(".content-block").dataset.id
+                const numberPart = order.match(/\d+/)[0];
                 if (content === "") return;
 
                 hasContent = true;
-                formData.append(`content_texts[${image_index}][content]`, content);
-                formData.append(`content_texts[${image_index}][order]`, order);
-                image_index++;
+                formData.append(`content_texts[${text_index}][content]`, content);
+                formData.append(`content_texts[${text_index}][order]`, numberPart);
+                text_index++;
             }
-            order++;
         });
+
+
+        
 
         return { formData, hasContent };
     }
