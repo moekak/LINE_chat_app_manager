@@ -9,6 +9,7 @@ use App\Http\Controllers\ChatUserController;
 use App\Http\Controllers\CreateTitleController;
 use App\Http\Controllers\LineDisplayTextController;
 use App\Http\Controllers\LineMessageController;
+use App\Http\Controllers\MessageTemplate;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SecondAccountController;
 use App\Http\Controllers\UserBlockController;
@@ -52,3 +53,5 @@ Route::get("/account/block/{id}", [ChatUserController::class, "block"])->name("a
 Route::post("/line/message/update/{id}", [LineMessageController::class, "update"])->name("message.update")->middleware("auth");
 Route::post("/title/update", [CreateTitleController::class, "store"])->name("title.update")->middleware("auth");
 
+Route::post("/category/create", [MessageTemplate::class, "categoryStore"])->name("category.store")->middleware("auth");
+Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"])->name("category.edit")->middleware("auth");

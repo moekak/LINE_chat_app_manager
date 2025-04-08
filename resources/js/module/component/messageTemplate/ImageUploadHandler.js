@@ -33,7 +33,7 @@ class ImageUploadHandler{
 
                   if(errors.length > 0){
                         const dataValidator = new DataValidator()
-                        dataValidator.displayErrorForCreatingCategory(errors)
+                        dataValidator.displayErrorList(errors)
                         fileInput.value = ""
                         return
                   }

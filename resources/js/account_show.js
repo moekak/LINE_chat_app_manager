@@ -12,6 +12,8 @@ import { fetchPostOperation } from "./module/util/fetch.js";
 import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 import InitializeInputService from "./module/component/messageTemplate/InitializeInputService.js";
 import { templateImageData } from "./module/component/messageTemplate/DataGenerator.js";
+import DataValidator from "./module/component/messageTemplate/DataValidator.js";
+import TabController from "./module/component/messageTemplate/TabController.js";
 
 
 //ユーザー管理に関連するモーダルの初期化
@@ -43,11 +45,27 @@ socket.on('user create', async(userData)=>{
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
 document.addEventListener("DOMContentLoaded", function () {
+      
       var alert = document.getElementById("js_alert_success");
       if (alert) {
             setTimeout(function () {
                   alert.style.display = "none";
             }, 4000); // フェードアウトの完了を待って非表示にする
+      }
+
+      // カテゴリーでのエラーメッセージの表示
+      if (typeof window.hasError !== 'undefined' && window.hasError) {
+            const dataValidator = new DataValidator()
+            dataValidator.displayErrorList(window.errorMessages)
+
+            document.getElementById("js_template_modal").classList.remove("hidden")
+            document.querySelector(".bg").classList.remove("hidden")
+            document.querySelector(".js_create_form").style.display = "none"
+            document.querySelector(".js_category_form ").classList.remove("hidden")
+            document.getElementById("js_tab_new").classList.remove("active")
+            document.getElementById("js_tab_category").classList.add("active")
+
+            new TabController(document.querySelectorAll('.tab'), document.querySelectorAll('.tab-content'));
       }
 });
 
@@ -171,5 +189,34 @@ submitForms.forEach((submitForm)=>{
       cancelBtn.addEventListener("click", ()=>{
             document.querySelector(".tab-edit").style.display = "block"
             document.getElementById("template-edit-form").classList.add("hidden")
+      })
+}
+
+
+// カテゴリー編集
+{
+      const categoryEditBtns = document.querySelectorAll(".edit-category-btn")
+      categoryEditBtns.forEach((btn)=>{
+            btn.addEventListener("click", ()=>{
+                  const inputElement = btn.closest(".category-item-row").querySelector(".category-edit-input")
+                  const saveBtn = btn.closest(".category-actions").querySelector(".save-category-btn")
+
+                  inputElement.classList.remove("disabled")
+                  inputElement.readOnly = false;
+                  saveBtn.classList.remove("disabled")
+            })
+      })
+
+
+      const cancelBtns = document.querySelectorAll(".cancel-edit-btn")
+      cancelBtns.forEach((btn)=>{
+            btn.addEventListener("click", ()=>{
+                  const inputElement = btn.closest(".category-item-row").querySelector(".category-edit-input")
+                  const saveBtn = btn.closest(".category-actions").querySelector(".save-category-btn")
+
+                  inputElement.classList.add("disabled")
+                  inputElement.readOnly = true;
+                  saveBtn.classList.add("disabled")
+            })
       })
 }

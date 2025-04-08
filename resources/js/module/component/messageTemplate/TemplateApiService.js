@@ -33,23 +33,6 @@ class TemplateApiService {
         }
     }
 
-    /**
-     * カテゴリを追加するAPIリクエストを送信
-     * @param {Object} data - カテゴリ情報
-     * @return {Promise<Object>} - APIレスポンス
-     */
-    static async addCategory(data) {
-        try {
-            open_loader();
-            const response = await fetchPostOperation(data, API_ENDPOINTS.FETCH_CREATE_CATEGORY);
-            return response;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        } finally {
-            close_loader();
-        }
-    }
 }
 
 

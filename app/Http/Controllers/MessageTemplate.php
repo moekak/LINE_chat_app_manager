@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\CreateMessageTemplateCategory;
+use App\Http\Requests\EditMessageTemplateCategory;
 use App\Models\MessageTemplate as ModelsMessageTemplate;
 use App\Models\MessageTemplateContent;
 use App\Models\MessageTemplatesCategory;
@@ -358,5 +360,27 @@ class MessageTemplate extends Controller
             return response()->json(["status" => 501]);
         }
         
+    }
+    
+
+    public function categoryStore(CreateMessageTemplateCategory $request){
+        try{
+            $validated = $request->validated();
+            MessageTemplatesCategory::create($validated);
+            return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの追加に成功しました。");  
+        }catch(\Exception $e){
+            Log::debug($e);
+        }
+    }
+    
+    public function categoryEdit(EditMessageTemplateCategory $request){
+        try{
+            $validated = $request->validated();
+            $category = MessageTemplatesCategory::findOrFail($validated["id"]);
+            $category->update(["category_name" => $validated["category_name"]]);
+            return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの更新に成功しました。");  
+        }catch(\Exception $e){
+            Log::debug($e);
+        }
     }
 }

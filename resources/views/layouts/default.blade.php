@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="{{ asset('css/common.css') }}">
       <link rel="shortcut icon" href="{{asset("img/icons8-chat-32.png")}}">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
       <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
       <noscript>
             <style>

@@ -279,28 +279,14 @@ p, ul {
 }
 
 
-.operation_icon:nth-child(2):hover::after{
-    position: absolute;
-    content: "編集";
-    top: -40px;
-    width: max-content;
-    z-index: 989;
-    font-size: 13px;
-    color: #000;
-    font-weight: 500;
-    background: #fff;
-    padding: 10px;
-
-}
-
 .js_redirect_btn{
     background-color: #2088d7;
 }
-.operation_icon:nth-child(2){
+.js_edit_user_btn, .js_edit_account_btn{
     background-color: #e5a72b;
     position: relative;
 }
-.operation_icon:nth-child(3), .js_delete_account_btn{
+.js_delete_account_btn, .js_block_btn{
     background-color: #d74141;
 }
 .js_send_message_btn{
@@ -909,8 +895,166 @@ textarea {
 .add-category input {
     flex: 1;
 }
+/* カテゴリ一覧表示用スタイル */
+.category-list-container {
+    margin-top: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    background-color: var(--light-bg-color, #f9f9f9);
+}
+
+.category-list-container h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: var(--text-color);
+}
+.save-category-btn.disabled{
+    pointer-events: none;
+    opacity: 50%;
+}
+
+.category-list-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.category-list-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.category-list-table th,
+.category-list-table td {
+    padding: 12px 15px;
+    text-align: left;
+
+}
+
+.category-list-table th {
+    background-color: var(--bg-light-color, #f5f5f5);
+    font-weight: 500;
+}
+
+.category-list-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.category-item-row {
+    transition: background-color 0.2s;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.category-name {
+    font-weight: 500;
+}
+
+.category-edit-input.disabled{
+    background: transparent;
+    border: none !important;
+}
+.category-edit-input{
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.category-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+/* ページネーション */
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 5px;
+}
+
+.pagination li {
+    display: inline-block;
+}
+
+.pagination li a,
+.pagination li span {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.pagination li.active span {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination li a:hover {
+    background-color: var(--light-bg-color, #f5f5f5);
+}
 
 /* ボタン */
+.btn-edit, .btn-save, .btn-cancel {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-edit {
+    background-color: var(--light-bg-color, #f0f0f0);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-save {
+    background-color: var(--success-color, #28a745);
+    color: white;
+    border: 1px solid var(--success-color, #28a745);
+}
+.btn-save:hover{
+    background-color: #1c7531 !important;
+    color: white !important;
+}
+
+.btn-cancel {
+    background-color: var(--light-bg-color, #f0f0f0);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color, #dc3545);
+    color: white;
+    border: 1px solid var(--danger-color, #dc3545);
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.delete-category-form {
+    display: inline;
+}
 .btn-container {
     display: flex;
     justify-content: flex-end;
@@ -945,14 +1089,7 @@ textarea {
     justify-content: center;
 }
 
-.btn-cancel {
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
 
-.btn-cancel:hover {
-    background-color: #e5e5e5;
-}
 
 .btn-primary {
     background-color: var(--primary-color);
@@ -963,14 +1100,7 @@ textarea {
     background-color: var(--secondary-color);
 }
 
-.btn-danger {
-    background-color: var(--danger-color);
-    color: white;
-}
 
-.btn-danger:hover {
-    background-color: #d32f2f;
-}
 
 .btn-light {
     background-color: var(--gray-light);

@@ -87,6 +87,12 @@ class TabController {
                     }
                     
                 }
+
+                if(index === 2){
+                    
+                    document.querySelector(".js_category_form").classList.remove("hidden")
+                    document.querySelector(".js_edit_form").classList.add("hidden")
+                }
                 this.activateTab(index);
                     // 他の処理...
                 });

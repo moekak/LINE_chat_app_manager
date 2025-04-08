@@ -68,13 +68,6 @@ class MessageTemplateOperator {
         document.querySelectorAll('.content-block').forEach(block => {
             this.blockManager.setupBlockListeners(block);
         });
-
-        // カテゴリ追加ボタンのセットアップ
-        this.categoryAddBtn = ButtonController.replaceButton("js_category_add_btn");
-        document.getElementById("js_category_input").addEventListener("input", e =>{
-            this.categoryAddBtn.disabled = e.target.value.length <= 0
-        })
-        this.categoryAddBtn.addEventListener("click", this.handleAddCategory.bind(this));
     }
 
 
@@ -97,42 +90,6 @@ class MessageTemplateOperator {
         this.imageUploadHandler.setupFileInputs(this.isUpdate, uploads, errorTxt);
     }
 
-    async handleAddCategory(e) {
-        e.preventDefault();
-
-        InitializeInputService.initializeErrorList()
-        open_loader_template()
-        const categoryName = document.getElementById("js_category_input");
-        const adminId = document.getElementById("js_account_id");
-        const data = {
-            "category_name": categoryName.value,
-            "admin_id": adminId.value
-        };
-        
-        try {
-            const response = await TemplateApiService.addCategory(data);
-            const dataValidator = new DataValidator()
-            categoryName.value = "";
-
-            
-            close_loader_template()
-            if (response["status"] === 500) {
-                dataValidator.displayErrorForCreatingCategory([ERROR_TEXT.CREATE_CATEGORY_ERROR])
-            }else if(response["status"] === 422){
-                dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
-            }else if(response["status"] === 201){
-                dataValidator.displayCategorySuccessMessage()
-                InitializeInputService.initializeCategoryInput()
-                FormController.populateSelectOptions(response["id"], response["category_name"]);
-            }
-            
-
-        } catch (error) {
-            console.log(error);
-            
-            alert("カテゴリの追加中にエラーが発生しました");
-        }
-    }
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -156,22 +113,16 @@ class MessageTemplateOperator {
             return;
         }
 
-
-        for (const pair of formData.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`);
-          }
-  
-        
         try {
             const response = await TemplateApiService.createTemplate(formData, this.isUpdate);
 
 
             if (response["status"] === 500) {
                 open_modal(this.templateModal)
-                dataValidator.displayErrorForCreatingCategory([ERROR_TEXT.CREATE_TEMPLATE_ERROR])
+                dataValidator.displayErrorList([ERROR_TEXT.CREATE_TEMPLATE_ERROR])
             }else if(response["status"] === 422){
                 open_modal(this.templateModal)
-                dataValidator.displayErrorForCreatingCategory(DataValidator.getAllValidationErrorMessages(response))
+                dataValidator.displayErrorList(DataValidator.getAllValidationErrorMessages(response))
             }else if(response["status"] === 201){
                 document.querySelector(".fixed_bg").classList.add("hidden")
                 close_loader()

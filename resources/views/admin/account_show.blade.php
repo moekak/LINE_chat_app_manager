@@ -66,7 +66,7 @@
 									<input type="hidden" name="admin_id" class="js_admin_el">
 									<input type="hidden" name="user_id" class="js_user_el">
 									<input type="hidden" name="token" class="js_token">
-									<button type="submit" class="operation_icon js_redirect_btn" data-user-id={{$chat_user['id']}} data-admin-id={{$id}}><img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ"></button>
+									<button type="submit" title="トーク" class="operation_icon js_redirect_btn" data-user-id={{$chat_user['id']}} data-admin-id={{$id}}><img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ"></button>
 								</form>
 								<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
 								<button class="operation_icon js_block_btn" data-uuid="{{$chat_user["entity_uuid"]}}" data-name="{{$chat_user["line_name"]}}" data-id="{{$chat_user["id"]}}"><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
@@ -306,6 +306,7 @@
 			<div class="tabs">
 				<div class="tab active" id="js_tab_new">新規作成</div>
 				<div class="tab" id="js_tab_edit">一覧・編集</div>
+				<div class="tab" id="js_tab_category">カテゴリー</div>
 			</div>
 			<!-- エラーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
 			<div class="form-validation-errors hidden" id="form-errors">
@@ -341,23 +342,13 @@
 					<label for="template-title">テンプレート名</label>
 					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
 				</div>
-				
-				<div class="category-management">
-					<label>カテゴリ</label>
-					<div class="add-category">
-						<input type="text" placeholder="新しいカテゴリを追加" name="category_name" id="js_category_input" max="255">
-						<button class="btn btn-primary" id="js_category_add_btn" disabled>追加</button>
-					</div>
-				</div>
+			
 				<div class="row">
 					<div class="col">
 						<div class="form-group">
 						<label for="category-select">カテゴリを選択</label>
 						<select class="category-select" id="category-select" name="category_id">
 							<option value="" disabled selected>カテゴリを選択</option>
-							{{-- <option value="greeting">挨拶</option>
-							<option value="inquiry">問い合わせ</option>
-							<option value="request">依頼</option> --}}
 						</select>
 						</div>
 					</div>
@@ -485,6 +476,63 @@
 					<button class="btn btn-primary js_submit_template_btn" id="js_update_template_btn" type="submit">更新</button>
 				</div>
 			</form>
+
+			{{-- カテゴリー追加、編集フォーム --}}
+			<div class="tab-content js_category_form hidden" >
+				@csrf
+				<div class="category-management">
+					<label>カテゴリ</label>
+					<form class="add-category" method="POST" action="{{route("category.store")}}">
+						@csrf
+						<input type="text" placeholder="新しいカテゴリを追加" value="{{old("category_name")}}" name="category_name" id="js_category_input" max="255">
+						<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
+						<button class="btn btn-primary">追加</button>
+					</form>
+					
+					<!-- カテゴリ一覧表示と編集機能 -->
+					<div class="category-list-container">
+						<h4>カテゴリ一覧</h4>
+						<div class="category-list-table">
+							<table>
+								<thead>
+									<tr>
+										<th w40>カテゴリ名</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($categories as $category)
+									<form action="{{route("category.edit")}}" method="POST">
+										@csrf
+										<tr class="category-item-row" data-id="{{ $category->id }}">
+											<td>
+												{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
+												<input type="hidden" name="id" value="{{ $category->id }}">
+												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
+												<input type="text" name="category_name" class="category-edit-input disabled" readonly value="{{ $category->category_name }}">
+											</td>
+											<td class="category-actions">
+												<button type="button" class="btn btn-edit edit-category-btn" title="編集">
+													<i class="fas fa-edit"></i>
+												</button>
+												<button type="submit" class="btn btn-save save-category-btn disabled" title="保存">
+													<i class="fas fa-check"></i>
+												</button>
+												<button type="button" class="btn btn-cancel cancel-edit-btn" title="キャンセル">
+													<i class="fas fa-times"></i>
+												</button>
+											</td>
+										</tr>
+									</form>
+									
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
@@ -537,4 +585,23 @@
 <script src="{{ mix("js/account_show.js")}}"></script>
 <script src="{{ mix("js/greetingMessage.js")}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+@if ($errors->any())
+    @php
+        $currentRoute = session('route_name');
+    @endphp
+    
+    @if ($currentRoute === 'category')
+        <script>
+            // JavaScript で使用するためにグローバル変数として設定
+            window.hasError = true;
+            window.errorMessages = {!! json_encode($errors->all()) !!};
+
+        </script>
+    @endif
+@else
+    <script>
+        window.hasError = false;
+    </script>
+@endif
+
 @endsection

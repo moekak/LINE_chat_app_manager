@@ -28,7 +28,7 @@ class DataValidator{
 
     }
 
-    displayErrorForCreatingCategory(errorMsgs){
+    displayErrorList(errorMsgs){
         errorMsgs.forEach((errorMsg)=>{
             const li = this.#createErrorElement()
             li.innerHTML = errorMsg
