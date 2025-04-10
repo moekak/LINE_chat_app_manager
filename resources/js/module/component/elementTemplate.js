@@ -197,6 +197,12 @@ export const createMessageTemplate = (templates) => {
             }else{
                   categoryName = template.category_name
             }
+            let templateName = ""
+            if (template.template_name.length > 40) {
+                  templateName =  template.template_name.substring(0, 40) + '...';
+            }else{
+                  templateName = template.template_name
+            }
             return `
             <div class="template-item" data-id=${template["category_id"]}>
                   <div class="template-content">
@@ -208,7 +214,7 @@ export const createMessageTemplate = (templates) => {
                         `).join('')}
                         <input type="hidden" value="${template.template_id}" class="template_id">
                         <input type="hidden" value="${template.group_id}" class="group_id">
-                        <div class="template-title" style="font-weight: 600;">${template.template_name}</div>
+                        <div class="template-title" style="font-weight: 600;">${templateName}</div>
                         <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
                         <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
                   </div>

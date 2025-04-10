@@ -19,9 +19,7 @@ class ImageUploadHandler{
             return async function(e) {
 
                   open_loader()
-                  
-
-                  InitializeInputService.initializeErrorList()
+            
                   FormController.initializeImageCropInput();
                   
                   const file = e.target.files[0];
@@ -40,29 +38,36 @@ class ImageUploadHandler{
                               document.querySelector(".js_image_error").classList.remove("hidden")
                               document.querySelector(".js_image_error").innerHTML = "許可されているファイル形式は JPG, PNGのみです"
                               FormController.showCropperSetting()
+
+                              if(document.getElementById("js_image_edit_modal").classList.contains("hidden") == false){
+                                    errors.length = 0
+                                    return 
+                              }
                         }
 
                   }if(!FileUploader.isCorrectSize(file.size)){   
                         errors.push("画像サイズが大きすぎます。5MB以内で指定してください")  
                         
-                        console.log(document.querySelector(".change_img").id );
-                        
                         if(document.querySelector(".change_img").id == "fileInputEdit"){
+
                               document.querySelector(".js_image_error").classList.remove("hidden")
                               document.querySelector(".js_image_error").innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください"
                               
                               FormController.showCropperSetting()
+                              if(document.getElementById("js_image_edit_modal").classList.contains("hidden") == false){
+                                    errors.length = 0
+                                    return 
+                              }
                         }
                   }     
 
                   if(errors.length > 0){
-
-                        console.log(errors);
-                        
                         const dataValidator = new DataValidator()
                         dataValidator.displayErrorList(errors)
                         fileInput.value = ""
                         return
+                  }else{
+                        InitializeInputService.initializeErrorList()
                   }
                   
                   // // ここにファイルアップロードやその他の処理を追加できます
@@ -96,10 +101,6 @@ class ImageUploadHandler{
 
 
             uploads?.forEach(fileInput => {
-                  console.log(fileInput);
-                  console.log("222");
-                  
-                  
                   fileInput.addEventListener("change", this.#handleFileInputChange(fileInput, errorTxt));
             });
       }

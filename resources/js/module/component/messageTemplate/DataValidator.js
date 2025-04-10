@@ -34,12 +34,7 @@ class DataValidator{
             li.innerHTML = errorMsg
             this.errorListWrapper.append(li)
         })
-        document.getElementById("form-errors").classList.remove("hidden")
-
-        console.log(document.getElementById("form-errors"));
-        
-
-        
+        this.formError.classList.remove("hidden")
         const modalContent = document.getElementById('js_template_modal');
         modalContent.scrollTop = 0;
 
@@ -55,7 +50,7 @@ class DataValidator{
             li.innerHTML = error
             this.errorListWrapper.append(li)
         });
-        document.getElementById("form-errors").classList.remove("hidden")
+        this.formError.classList.remove("hidden")
 
         const modalContent = document.getElementById('js_template_modal');
         modalContent.scrollTop = 0;

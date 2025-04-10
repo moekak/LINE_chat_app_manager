@@ -7024,9 +7024,15 @@ var createMessageTemplate = function createMessageTemplate(templates) {
     } else {
       categoryName = template.category_name;
     }
+    var templateName = "";
+    if (template.template_name.length > 40) {
+      templateName = template.template_name.substring(0, 40) + '...';
+    } else {
+      templateName = template.template_name;
+    }
     return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
       return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
-    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(templateName, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
@@ -7155,8 +7161,7 @@ var DataValidator = /*#__PURE__*/function () {
         li.innerHTML = errorMsg;
         _this.errorListWrapper.append(li);
       });
-      document.getElementById("form-errors").classList.remove("hidden");
-      console.log(document.getElementById("form-errors"));
+      this.formError.classList.remove("hidden");
       var modalContent = document.getElementById('js_template_modal');
       modalContent.scrollTop = 0;
     }
@@ -7174,7 +7179,7 @@ var DataValidator = /*#__PURE__*/function () {
         li.innerHTML = error;
         _this2.errorListWrapper.append(li);
       });
-      document.getElementById("form-errors").classList.remove("hidden");
+      this.formError.classList.remove("hidden");
       var modalContent = document.getElementById('js_template_modal');
       modalContent.scrollTop = 0;
     }
@@ -7296,8 +7301,6 @@ var ImageUploadHandler = /*#__PURE__*/function () {
         uploads = (_document$querySelect2 = document.querySelector(".js_create_form")) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.querySelectorAll(".file-input");
       }
       (_uploads = uploads) === null || _uploads === void 0 || _uploads.forEach(function (fileInput) {
-        console.log(fileInput);
-        console.log("222");
         fileInput.addEventListener("change", _assertClassBrand(_ImageUploadHandler_brand, _this, _handleFileInputChange).call(_this, fileInput, errorTxt));
       });
     }
@@ -7311,60 +7314,81 @@ function _handleFileInputChange(fileInput, errorTxt) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_loader)();
-            _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeErrorList();
             _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeImageCropInput();
             file = e.target.files[0];
             errors = [];
             if (file) {
-              _context.next = 7;
+              _context.next = 6;
               break;
             }
             return _context.abrupt("return");
-          case 7:
+          case 6:
             console.log("wey");
-            if (!_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAllowedType(file.type)) {
-              errors.push("許可されているファイル形式は JPG, PNGのみです");
-              if (document.querySelector(".change_img").id == "fileInputEdit") {
-                document.querySelector(".js_image_error").classList.remove("hidden");
-                document.querySelector(".js_image_error").innerHTML = "許可されているファイル形式は JPG, PNGのみです";
-                _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
-              }
-            }
-            if (!_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isCorrectSize(file.size)) {
-              errors.push("画像サイズが大きすぎます。5MB以内で指定してください");
-              console.log(document.querySelector(".change_img").id);
-              if (document.querySelector(".change_img").id == "fileInputEdit") {
-                document.querySelector(".js_image_error").classList.remove("hidden");
-                document.querySelector(".js_image_error").innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください";
-                _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
-              }
-            }
-            if (!(errors.length > 0)) {
+            if (_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAllowedType(file.type)) {
               _context.next = 16;
               break;
             }
-            console.log(errors);
+            errors.push("許可されているファイル形式は JPG, PNGのみです");
+            if (!(document.querySelector(".change_img").id == "fileInputEdit")) {
+              _context.next = 16;
+              break;
+            }
+            document.querySelector(".js_image_error").classList.remove("hidden");
+            document.querySelector(".js_image_error").innerHTML = "許可されているファイル形式は JPG, PNGのみです";
+            _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
+            if (!(document.getElementById("js_image_edit_modal").classList.contains("hidden") == false)) {
+              _context.next = 16;
+              break;
+            }
+            errors.length = 0;
+            return _context.abrupt("return");
+          case 16:
+            if (_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isCorrectSize(file.size)) {
+              _context.next = 25;
+              break;
+            }
+            errors.push("画像サイズが大きすぎます。5MB以内で指定してください");
+            if (!(document.querySelector(".change_img").id == "fileInputEdit")) {
+              _context.next = 25;
+              break;
+            }
+            document.querySelector(".js_image_error").classList.remove("hidden");
+            document.querySelector(".js_image_error").innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください";
+            _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
+            if (!(document.getElementById("js_image_edit_modal").classList.contains("hidden") == false)) {
+              _context.next = 25;
+              break;
+            }
+            errors.length = 0;
+            return _context.abrupt("return");
+          case 25:
+            if (!(errors.length > 0)) {
+              _context.next = 32;
+              break;
+            }
             dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
             dataValidator.displayErrorList(errors);
             fileInput.value = "";
             return _context.abrupt("return");
-          case 16:
+          case 32:
+            _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeErrorList();
+          case 33:
             // // ここにファイルアップロードやその他の処理を追加できます
             errorElement = document.querySelector(".js_broadcast_error");
             imageErrorElement = document.querySelector(".js_image_error");
             fileUploader = new _util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"](file, errorTxt, errorElement, imageErrorElement, true, e.target, document.getElementById("js_template_modal"));
             (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.close_image_edit_modal)(e.target);
             document.querySelector(".change_img").id = "fileInputEdit";
-            _context.next = 23;
+            _context.next = 40;
             return fileUploader.fileOperation();
-          case 23:
+          case 40:
             // 画像プレビューを設定
 
             // ドラッグ＆ドロップの初期化
             _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_2__["default"].dragAndDrop("accordion", true);
             _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_5__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
             e.target.value = '';
-          case 26:
+          case 43:
           case "end":
             return _context.stop();
         }

@@ -1,5 +1,2 @@
-websocket通信を実現する
-
-composer require pusher/pusher-php-server
-yarn add laravel-echo pusher-js
-
+npm install --global yarn
+yarn add laravel-mix     
