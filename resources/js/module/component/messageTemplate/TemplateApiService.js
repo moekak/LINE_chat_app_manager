@@ -20,7 +20,7 @@ class TemplateApiService {
             });
 
             if (!response.ok) {
-                throw new Error("テンプレート作成でエラーが発生しました");
+                throw new Error("メッセージテンプレート作成でエラーが発生しました");
             }
 
             const data = await response.json();

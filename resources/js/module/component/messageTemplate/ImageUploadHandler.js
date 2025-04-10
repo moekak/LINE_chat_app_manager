@@ -18,6 +18,9 @@ class ImageUploadHandler{
       #handleFileInputChange(fileInput, errorTxt) {
             return async function(e) {
 
+                  open_loader()
+                  
+
                   InitializeInputService.initializeErrorList()
                   FormController.initializeImageCropInput();
                   
@@ -25,13 +28,37 @@ class ImageUploadHandler{
                   const errors = []
                   if (!file) return;
 
+
+                  console.log("wey");
+                  
+
                   if(!FileUploader.isAllowedType(file.type)){
+
                         errors.push("許可されているファイル形式は JPG, PNGのみです")
+
+                        if(document.querySelector(".change_img").id == "fileInputEdit"){
+                              document.querySelector(".js_image_error").classList.remove("hidden")
+                              document.querySelector(".js_image_error").innerHTML = "許可されているファイル形式は JPG, PNGのみです"
+                              FormController.showCropperSetting()
+                        }
+
                   }if(!FileUploader.isCorrectSize(file.size)){   
-                        errors.push("画像サイズが大きすぎます。5MB以内で指定してください")     
+                        errors.push("画像サイズが大きすぎます。5MB以内で指定してください")  
+                        
+                        console.log(document.querySelector(".change_img").id );
+                        
+                        if(document.querySelector(".change_img").id == "fileInputEdit"){
+                              document.querySelector(".js_image_error").classList.remove("hidden")
+                              document.querySelector(".js_image_error").innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください"
+                              
+                              FormController.showCropperSetting()
+                        }
                   }     
 
                   if(errors.length > 0){
+
+                        console.log(errors);
+                        
                         const dataValidator = new DataValidator()
                         dataValidator.displayErrorList(errors)
                         fileInput.value = ""
@@ -43,6 +70,8 @@ class ImageUploadHandler{
                   const imageErrorElement = document.querySelector(".js_image_error");
                   const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, true, e.target, document.getElementById("js_template_modal"));
                   close_image_edit_modal(e.target)
+
+                  document.querySelector(".change_img").id = "fileInputEdit";
                   await fileUploader.fileOperation();
 
                   // 画像プレビューを設定
@@ -50,6 +79,8 @@ class ImageUploadHandler{
                   // ドラッグ＆ドロップの初期化
                   DragAndDrop.dragAndDrop("accordion", true);
                   BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
+
+                  e.target.value = '';
             };
       }
 
@@ -65,7 +96,10 @@ class ImageUploadHandler{
 
 
             uploads?.forEach(fileInput => {
-                  open_loader()
+                  console.log(fileInput);
+                  console.log("222");
+                  
+                  
                   fileInput.addEventListener("change", this.#handleFileInputChange(fileInput, errorTxt));
             });
       }

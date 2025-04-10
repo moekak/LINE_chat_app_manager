@@ -2782,20 +2782,32 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
 var createTextBlock = function createTextBlock() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\" max=\"1000\" data-id=".concat(id !== null && id !== void 0 ? id : "", ">").concat(value !== null && value !== void 0 ? value : "", "</textarea>\n            </div>\n      ");
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\" maxLength=\"1000\" data-id=".concat(id !== null && id !== void 0 ? id : "", ">").concat(value !== null && value !== void 0 ? value : "", "</textarea>\n            </div>\n      ");
 };
 var createImageBlock = function createImageBlock(blockCounter) {
   return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
 };
 var createMessageTemplate = function createMessageTemplate(templates) {
   return templates.map(function (template) {
+    var categoryName = "";
+    if (template.category_name.length > 40) {
+      categoryName = template.category_name.substring(0, 40) + '...';
+    } else {
+      categoryName = template.category_name;
+    }
     return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
       return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
-    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
-  return "\n            <button class=\"category-btn\" data-category=".concat(category["id"], ">").concat(category["category_name"], "</button>\n      ");
+  var name = "";
+  if (category["category_name"].length > 15) {
+    name = category["category_name"].substring(0, 15) + '...';
+  } else {
+    name = category["category_name"];
+  }
+  return "\n            <button class=\"category-btn\" data-category=".concat(category["id"], " title=\"").concat(category["category_name"], "\">").concat(name, "</button>\n      ");
 };
 
 /***/ }),
@@ -3145,12 +3157,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 var FormController = /*#__PURE__*/function () {
   function FormController() {
     _classCallCheck(this, FormController);
@@ -3230,6 +3244,18 @@ var FormController = /*#__PURE__*/function () {
       imageElement.src = objectURL;
       imageElement.classList.add("active");
       placeholderText.classList.add("hidden");
+    }
+  }, {
+    key: "showCropperSetting",
+    value: function showCropperSetting() {
+      var setting = document.getElementById("js_url_setting");
+      setting.classList.remove("hidden");
+      document.getElementById("js_preview_submit_btn").classList.add("disabled_btn");
+      var checkOff = document.getElementById("flexRadioDefault1");
+      var checkOn = document.getElementById("flexRadioDefault2");
+      checkOff.checked = false;
+      checkOn.checked = true;
+      (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_loader)();
     }
   }]);
 }();
@@ -3379,12 +3405,13 @@ var InfiniteScroll = /*#__PURE__*/function () {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               if (!(!this.hasNoValue && !this.isFetchFlag)) {
-                _context.next = 46;
+                _context.next = 47;
                 break;
               }
+              this.dataCount = document.querySelectorAll(".js_chatUser_id").length;
               _this$element = this.element, scrollTop = _this$element.scrollTop, scrollHeight = _this$element.scrollHeight, clientHeight = _this$element.clientHeight; // 一番下までスクロールしたかを判定
               if (!(scrollTop + clientHeight + 50 >= scrollHeight)) {
-                _context.next = 45;
+                _context.next = 46;
                 break;
               }
               this.isFetchFlag = true;
@@ -3393,23 +3420,23 @@ var InfiniteScroll = /*#__PURE__*/function () {
                 "dataCount": this.dataCount,
                 "accountList": this.fileType == "accountShow" ? this.userAccount : this.accountList
               };
-              _context.prev = 6;
-              _context.next = 9;
+              _context.prev = 7;
+              _context.next = 10;
               return (0,_fetch_js__WEBPACK_IMPORTED_MODULE_3__.fetchPostOperation)(data, this.baseUrl);
-            case 9:
+            case 10:
               response = _context.sent;
               hasNoData = response["accountData"] ? response["accountData"].length === 0 : response.length === 0;
               if (!hasNoData) {
-                _context.next = 16;
+                _context.next = 17;
                 break;
               }
               this.hasNoValue = true; // もうデータがない場合は停止
               this.loader.classList.add("hidden");
-              _context.next = 33;
+              _context.next = 34;
               break;
-            case 16:
+            case 17:
               if (!(this.fileType === "accountShow")) {
-                _context.next = 24;
+                _context.next = 25;
                 break;
               }
               response.forEach(function (res) {
@@ -3418,12 +3445,12 @@ var InfiniteScroll = /*#__PURE__*/function () {
               //ユーザー管理に関連するモーダルの初期化
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeUserModals)(_socket_js__WEBPACK_IMPORTED_MODULE_4__["default"]);
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeSimpleBar)();
-              _context.next = 22;
+              _context.next = 23;
               return (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleChatRedirect)();
-            case 22:
-              _context.next = 33;
+            case 23:
+              _context.next = 34;
               break;
-            case 24:
+            case 25:
               response["accountData"].forEach(function (res) {
                 _this.parentElement.insertAdjacentHTML("beforeend", (0,_component_elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__.createAccountDataRow)(res, response["categories"]));
               });
@@ -3437,31 +3464,31 @@ var InfiniteScroll = /*#__PURE__*/function () {
               (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.initializeAccountStatusManager)();
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeSimpleBar)();
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeSimpleBar)();
-              _context.next = 33;
+              _context.next = 34;
               return (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleChatRedirect)();
-            case 33:
-              _context.next = 38;
+            case 34:
+              _context.next = 39;
               break;
-            case 35:
-              _context.prev = 35;
-              _context.t0 = _context["catch"](6);
+            case 36:
+              _context.prev = 36;
+              _context.t0 = _context["catch"](7);
               console.error("Failed to fetch data:", _context.t0);
-            case 38:
-              _context.prev = 38;
+            case 39:
+              _context.prev = 39;
               this.isFetchFlag = false;
               this.dataCount = this.dataCount + MESSAGES_PER_PAGE;
               this.loader.classList.add("hidden");
-              return _context.finish(38);
-            case 43:
-              _context.next = 46;
+              return _context.finish(39);
+            case 44:
+              _context.next = 47;
               break;
-            case 45:
-              this.loader.classList.add("hidden");
             case 46:
+              this.loader.classList.add("hidden");
+            case 47:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[6, 35, 38, 43]]);
+        }, _callee, this, [[7, 36, 39, 44]]);
       }));
       function handleScroll() {
         return _handleScroll.apply(this, arguments);

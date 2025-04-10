@@ -29,6 +29,8 @@ class InfiniteScroll{
 
       async handleScroll(){
             if(!this.hasNoValue && !this.isFetchFlag){
+                  this.dataCount = document.querySelectorAll(".js_chatUser_id").length
+
                   const {scrollTop, scrollHeight, clientHeight} = this.element
                   // 一番下までスクロールしたかを判定
                   if (scrollTop + clientHeight + 50 >= scrollHeight) {

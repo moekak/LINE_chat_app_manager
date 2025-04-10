@@ -171,6 +171,7 @@ submitForms.forEach((submitForm)=>{
                   });
                   
                   open_modal(templateModal);
+                  templateModal.style.zIndex = 999
                   close_loader();
             } catch(error) {
                   console.log(error);
@@ -220,3 +221,4 @@ submitForms.forEach((submitForm)=>{
             })
       })
 }
+

@@ -38,6 +38,7 @@ class FileUploader{
         this.isTemplate = isTemplate
         this.cropArea = []
         this.url = ""
+        this.choices = document.querySelectorAll('input[name="choice"]');
         this.inputElement = inputElement
 
 
@@ -95,12 +96,14 @@ class FileUploader{
         const newImage = this.#createImageElement(this.file);
 
         newImage.onload = e =>{
+
+    
             const newImageButton = ButtonController.replaceButton("js_change_area")
             this.cropper = new Cropper(this.imageElement, newImageButton)
 
             const cropperHandler = new CropperEventHandler(newImageButton,this.cropper)
             cropperHandler.changeBtnEvent()
-            this.#changeSubmitBtn()
+
             // 新しい画像要素を Cropper に更新
             this.cropper.updateImage(newImage);
 
@@ -109,6 +112,8 @@ class FileUploader{
             container.innerHTML = ""; // 古い画像を削除
             container.appendChild(newImage); // 新しい画像を保存
             
+            document.querySelector(".change_img").id = "fileInputEdit";
+
             if(this.imageEditModal.classList.contains("hidden")){
                 this.#toggleLoader(false)
             }else{
@@ -120,6 +125,7 @@ class FileUploader{
             }else{
                 open_modal(this.imageEditModal)
             }
+            this.changeSubmitBtn()
     
             
             
@@ -141,8 +147,7 @@ class FileUploader{
 
                 FormController.initializeFileUpload()
                 const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
-                const choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
-                const selectedChoices = Array.from(choices).find(choice => choice.checked);
+                const selectedChoices = Array.from(this.choices).find(choice => choice.checked);
 
 
                 if(selectedChoices.value === "on" && !regex.test(this.urlInput.value)){
@@ -284,10 +289,18 @@ class FileUploader{
         if(this.imageEditModal.classList.contains("hidden")) hasModal = false
 
         if(!FileUploader.isAllowedType(this.file.type)){
+            // cropperページから画像を切り替えた場合の処理
+            if(document.querySelector(".change_img").id == "fileInputEdit"){
+                    FormController.showCropperSetting()
+            }
 
             return this.#validationError("許可されているファイル形式は JPG, PNGのみです。", hasModal)
         }
         if(!FileUploader.isCorrectSize(this.file.size)){
+            // cropperページから画像を切り替えた場合の処理
+            if(document.querySelector(".change_img").id == "fileInputEdit"){
+                    FormController.showCropperSetting()
+            }
             return this.#validationError("画像サイズが大きすぎます。5MB以内で指定してください。", hasModal)
         }
         return true
@@ -367,46 +380,65 @@ class FileUploader{
 
     // 送信ボタンの色を変更する
     // 送信ボタンの色を変更する
-    #changeSubmitBtn() {
-
-        const choices = document.querySelectorAll('input[name="choice"]');
+     // ボタンの状態を更新する関数
+    updateButtonState() {
         const confirmBtn = document.getElementById("js_change_area");
+        
+            // document全体からname='choice'の要素を検索して状態をチェック
+        const choiceElements = document.querySelectorAll('input[name="choice"]');
+        const isChoiceOn = Array.from(choiceElements).some(choice => choice.checked && choice.value === "on");
+        
+        const hasUrl = this.urlInput.value.length > 0;
+        const hasValidImage = document.querySelector(".js_image_error").classList.contains("hidden");
+        const isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
 
-        // ボタンの状態を更新する関数
-        const updateButtonState = () => {
-                const isChoiceOn = [...choices].some(choice => choice.checked && choice.value === "on");
-                const hasUrl = this.urlInput.value.length > 0;
-                const isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
+        console.log("updateButtonState called, isChoiceOn:", isChoiceOn);
 
-                if(isChoiceOn){
-                    if (hasUrl && isConfirmed) {
-                        this.newconfirmBtn.classList.remove("disabled_btn");
-                    } else {
-                        this.newconfirmBtn.classList.add("disabled_btn");
-                    }
-                }else{
-
-                    this.newconfirmBtn.classList.remove("disabled_btn");
-                }
-        };
-    
-        // 各イベントリスナーでボタン状態を更新
-        choices.forEach(choice => {
-                choice.addEventListener("change", updateButtonState);
-        });
-    
-        this.urlInput.addEventListener("input", () => {
-                this.actionUrl = this.urlInput.value; // 必要なら保持
-                this.urlErrorElement.classList.add("hidden")
-                updateButtonState();
-        });
-    
-
-        confirmBtn.addEventListener("click", () => {
-                updateButtonState();
-        });
+        console.log(hasUrl);
+        console.log(isConfirmed);
+        console.log(hasValidImage);
+        
+        
+        if(isChoiceOn) {
+            if (hasUrl && isConfirmed && hasValidImage) {
+                document.getElementById("js_preview_submit_btn")?.classList.remove("disabled_btn");
+            } else {
+                document.getElementById("js_preview_submit_btn")?.classList.add("disabled_btn");
+            }
+        } else {
+            if(hasValidImage){
+                document.getElementById("js_preview_submit_btn")?.classList.remove("disabled_btn");
+            }
+            
+        }
     }
+    changeSubmitBtn() {
+        const confirmBtn = document.getElementById("js_change_area");
+        
+        // thisを束縛して、イベントハンドラ内でもthisが正しく参照できるようにする
+        const boundUpdateButtonState = this.updateButtonState.bind(this);
+        
+        document.addEventListener('change', function(e) {
 
+            console.log(e.target.name);
+            
+            if (e.target.name === 'choice'){
+                boundUpdateButtonState(); // 計算したisChoiceOnを渡す
+            }
+        })
+        // 各イベントリスナーでボタン状態を更新
+        this.choices.forEach(choice => {
+            choice.addEventListener("change", () => {
+                console.log("イベント発火：", choice.value);
+                // ここで直接処理を書いてみる
+                const isChoiceOn = choice.checked && choice.value === "on";
+                console.log("isChoiceOn:", isChoiceOn);
+            });
+        });
+        this.urlInput.addEventListener("input", boundUpdateButtonState);
+        
+        confirmBtn.addEventListener("click", boundUpdateButtonState);
+    }
 
     static convertFileNameToFile = async (fileName) =>{
         const baseUrl = SYSTEM_URL.IMAGE_URL

@@ -26,7 +26,7 @@ class EditMessageTemplateCategory extends FormRequest
         return [
             "id" =>  ['required', 'integer', 'exists:message_templates_categories,id'],
             "admin_id" =>  ['required', 'integer', 'exists:line_accounts,id'],
-            "category_name" =>  ['required', 'string', 'max:255'],
+            "category_name_edit" =>  ['required', 'string', 'max:255'],
         ];
     }
 
@@ -40,8 +40,8 @@ class EditMessageTemplateCategory extends FormRequest
             'id.required' => '無効なデータです。再度お試しください。',
             'id.exists' => '無効なデータです。再度お試しください。',
             'id.integer' => '無効なデータです。再度お試しください。',
-            'category_name.required' => 'カテゴリー名は空にできません。',
-            'category_name.max' => 'カテゴリー名は255文字以内で入力してください。',
+            'category_name_edit.required' => 'カテゴリー名は空にできません。',
+            'category_name_edit.max' => 'カテゴリー名は255文字以内で入力してください。',
         ];
     }
 }

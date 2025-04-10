@@ -143,7 +143,7 @@
             flex: 1;
         }
 
-        /* カテゴリ管理 */
+        /* カテゴリー管理 */
         .category-management {
             margin-bottom: 20px;
         }
@@ -402,14 +402,14 @@
                 </div>
                 
                 <div class="category-management">
-                    <label>カテゴリ</label>
+                    <label>カテゴリー</label>
                     <div class="category-list">
                         <div class="category-item">挨拶 <span class="delete-category">&times;</span></div>
                         <div class="category-item">問い合わせ <span class="delete-category">&times;</span></div>
                         <div class="category-item">依頼 <span class="delete-category">&times;</span></div>
                     </div>
                     <div class="add-category">
-                        <input type="text" placeholder="新しいカテゴリを追加">
+                        <input type="text" placeholder="新しいカテゴリーを追加">
                         <button class="btn btn-primary">追加</button>
                     </div>
                 </div>
@@ -417,9 +417,9 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="category-select">カテゴリを選択</label>
+                            <label for="category-select">カテゴリーを選択</label>
                             <select id="category-select">
-                                <option value="">カテゴリを選択</option>
+                                <option value="">カテゴリーを選択</option>
                                 <option value="greeting">挨拶</option>
                                 <option value="inquiry">問い合わせ</option>
                                 <option value="request">依頼</option>

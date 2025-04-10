@@ -40,7 +40,7 @@ class MessageTemplateFormController{
                   this.blockTextarea.innerHTML = content.querySelector(".js_content_text").value
                   this.blockTextarea.dataset.id = content.dataset.id
             } else if (content.dataset.type === "image") {
-                  this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock)
+                  this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock, true)
                   this.fileInput = this.contentBlocksWrapper.querySelector(".file-input")
                   this.imageElement = this.contentBlocksWrapper.querySelector(".image_element")
                   this.imageElement.src = `${SYSTEM_URL.IMAGE_URL}/${content.querySelector(".js_image_path").value}`

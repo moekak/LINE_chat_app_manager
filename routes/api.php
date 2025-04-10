@@ -37,5 +37,4 @@ Route::post("/create/templates", [MessageTemplate::class, "store"]);
 Route::post("/update/templates", [MessageTemplate::class, "update"]);
 Route::get("/templates/get/{admin_id}", [MessageTemplate::class, "fetchTemplate"]);
 
-Route::get("/template/delete/{template_id}", [MessageTemplate::class, "destroy"]);
 

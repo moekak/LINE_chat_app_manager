@@ -300,13 +300,6 @@ class LineAccountController extends Controller
                 'entity_uuid'
             )
             ->selectSub(
-                DB::table('user_message_reads')
-                    ->select(DB::raw('COALESCE(unread_count, 0)'))
-                    ->whereColumn('chat_user_id', 'chat_users.id')
-                    ->limit(1),
-                'unread_count'
-            )
-            ->selectSub(
                 DB::table('message_summaries')
                     ->select(DB::raw('DATE_FORMAT(latest_user_message_date, "%Y-%m-%d %H:%i")'))
                     ->whereRaw('admin_id = ?', [$admin_id])
@@ -314,12 +307,12 @@ class LineAccountController extends Controller
                     ->limit(1),  // 最新の1件のみ取得
                 'latest_message_date'
             )
-            ->orderBy('unread_count', 'desc')
-            ->orderBy('created_at', 'desc')
+            ->selectRaw('COALESCE((SELECT COALESCE(unread_count, 0) FROM user_message_reads WHERE chat_user_id = chat_users.id LIMIT 1), 0) as unread_count')
+            ->orderBy('unread_count', 'desc') // 未読数が多い順に優先
+            ->orderBy('chat_users.created_at', 'desc') // 未読数が同じなら新しい順
             ->skip($request->input("dataCount"))
             ->take(self::MESSAGES_PER_PAGE)
             ->get();
-
         return response()->json($users);
     }
 

@@ -55,3 +55,6 @@ Route::post("/title/update", [CreateTitleController::class, "store"])->name("tit
 
 Route::post("/category/create", [MessageTemplate::class, "categoryStore"])->name("category.store")->middleware("auth");
 Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"])->name("category.edit")->middleware("auth");
+
+
+Route::delete("/template/delete", [MessageTemplate::class, "destroy"])->name("template.destory");

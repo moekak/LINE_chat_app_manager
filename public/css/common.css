@@ -576,9 +576,9 @@ p, ul {
     z-index: 999;
     max-height: 600px;
     overflow-y: auto;
-    padding: 60px 50px;
+    padding: 60px 35px;
     display: flex;
-    gap: 50px;
+    gap: 33px;
 }
 .preview_box{
     max-width: 530px;
@@ -858,7 +858,7 @@ textarea {
     flex: 1;
 }
 
-/* カテゴリ管理 */
+/* カテゴリー管理 */
 .category-management {
     margin-bottom: 20px;
 }
@@ -895,7 +895,7 @@ textarea {
 .add-category input {
     flex: 1;
 }
-/* カテゴリ一覧表示用スタイル */
+/* カテゴリー一覧表示用スタイル */
 .category-list-container {
     margin-top: 30px;
     border: 1px solid var(--border-color);

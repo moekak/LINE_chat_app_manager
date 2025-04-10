@@ -296,7 +296,7 @@
 	<div>
 		<!-- モーダルヘッダー -->
 		<div class="modal-header">
-			<h2>テンプレート作成</h2>
+			<h2>メッセージテンプレート作成</h2>
 			{{-- <button class="close-btn">&times;</button> --}}
 		</div>
 
@@ -346,9 +346,9 @@
 				<div class="row">
 					<div class="col">
 						<div class="form-group">
-						<label for="category-select">カテゴリを選択</label>
+						<label for="category-select">カテゴリーを選択</label>
 						<select class="category-select" id="category-select" name="category_id">
-							<option value="" disabled selected>カテゴリを選択</option>
+							<option value="" disabled selected>カテゴリーを選択</option>
 						</select>
 						</div>
 					</div>
@@ -433,7 +433,7 @@
 				<div class="row">
 					<div class="col">
 						<div class="form-group">
-						<label for="edit-category-select">カテゴリを選択</label>
+						<label for="edit-category-select">カテゴリーを選択</label>
 						<select id="edit-category-select" name="category_id" class="category-select">
 							@foreach ($categories as $category)
 								<option class="edit-category" value={{$category->id}} >{{$category->category_name}}</option>
@@ -481,22 +481,22 @@
 			<div class="tab-content js_category_form hidden" >
 				@csrf
 				<div class="category-management">
-					<label>カテゴリ</label>
+					<label>カテゴリー</label>
 					<form class="add-category" method="POST" action="{{route("category.store")}}">
 						@csrf
-						<input type="text" placeholder="新しいカテゴリを追加" value="{{old("category_name")}}" name="category_name" id="js_category_input" max="255">
+						<input type="text" placeholder="新しいカテゴリーを追加" value="{{old("category_name")}}" name="category_name" id="js_category_input" maxlength="255">
 						<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
 						<button class="btn btn-primary">追加</button>
 					</form>
 					
-					<!-- カテゴリ一覧表示と編集機能 -->
+					<!-- カテゴリー一覧表示と編集機能 -->
 					<div class="category-list-container">
-						<h4>カテゴリ一覧</h4>
+						<h4>カテゴリー一覧</h4>
 						<div class="category-list-table">
 							<table>
 								<thead>
 									<tr>
-										<th w40>カテゴリ名</th>
+										<th w40>カテゴリー名</th>
 										<th>操作</th>
 									</tr>
 								</thead>
@@ -509,7 +509,7 @@
 												{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
 												<input type="hidden" name="id" value="{{ $category->id }}">
 												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-												<input type="text" name="category_name" class="category-edit-input disabled" readonly value="{{ $category->category_name }}">
+												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}">
 											</td>
 											<td class="category-actions">
 												<button type="button" class="btn btn-edit edit-category-btn" title="編集">
@@ -535,6 +535,26 @@
 			</div>
 		</div>
 	</div>
+</section>
+
+
+{{-- テンプレート削除モーダル閉じる前の確認 --}}
+<section class="modal__container js_modal hidden" id="js_template_confirm_modal" style="width: 500px;">
+	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">テンプレートを削除しますか？</h2>
+	<p>テンプレートを削除してよろしいですか？削除すると、設定した全てのデータが完全に消去され、元に戻すことはできません。</p>
+	<div style="margin-top: 15px"></div>
+	<form class="delete_account-btn-container" method="POST" action="{{route("template.destory")}}">
+		<input type="hidden" name="template_id" value="" id="js_delete_templete_id">
+		<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
+		@csrf
+		@method('DELETE')
+		<div class="btn-box">
+			<button id="js_cancel_template_btn" type="button" readonly style="width: 100%;">キャンセル</button>
+		</div>
+		<div class="cancel-btn btn-box js_delete_template_from delete-btn ">
+			<button type="submit" style="color: #fff;width: 100%;" readonly >削除</button>
+		</div>
+	</form>
 </section>
 
 @endsection

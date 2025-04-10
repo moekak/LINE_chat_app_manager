@@ -147,7 +147,7 @@ export const createTextBlock = (value = null, id = null) =>{
                   </div>
             </div>
             <div class="block-content">
-                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text" max="1000" data-id=${id ?? ""}>${value ?? ""}</textarea>
+                  <textarea class="block-textarea" placeholder="テキストを入力してください" name="content_text" maxLength="1000" data-id=${id ?? ""}>${value ?? ""}</textarea>
             </div>
       `
 }
@@ -189,7 +189,14 @@ export const createImageBlock = (blockCounter) =>{
 }
 
 export const createMessageTemplate = (templates) => {
+
       return templates.map(template => {
+            let categoryName = ""
+            if (template.category_name.length > 40) {
+                  categoryName =  template.category_name.substring(0, 40) + '...';
+            }else{
+                  categoryName = template.category_name
+            }
             return `
             <div class="template-item" data-id=${template["category_id"]}>
                   <div class="template-content">
@@ -202,7 +209,7 @@ export const createMessageTemplate = (templates) => {
                         <input type="hidden" value="${template.template_id}" class="template_id">
                         <input type="hidden" value="${template.group_id}" class="group_id">
                         <div class="template-title" style="font-weight: 600;">${template.template_name}</div>
-                        <div class="template-category" data-id="${template.category_id}">${template.category_name}</div>
+                        <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
                         <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
                   </div>
                   <div class="template-actions">
@@ -228,8 +235,14 @@ export const createMessageTemplate = (templates) => {
 
 
 export const crateCategoryButtons =(category)=>{
+      let name = ""
+      if(category["category_name"].length > 15){
+            name =  category["category_name"].substring(0, 15) + '...';
+      }else{
+            name = category["category_name"]
+      }
 
       return `
-            <button class="category-btn" data-category=${category["id"]}>${category["category_name"]}</button>
+            <button class="category-btn" data-category=${category["id"]} title="${category["category_name"]}">${name}</button>
       `
 }

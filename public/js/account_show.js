@@ -7011,20 +7011,32 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
 var createTextBlock = function createTextBlock() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\" max=\"1000\" data-id=".concat(id !== null && id !== void 0 ? id : "", ">").concat(value !== null && value !== void 0 ? value : "", "</textarea>\n            </div>\n      ");
+  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\" maxLength=\"1000\" data-id=".concat(id !== null && id !== void 0 ? id : "", ">").concat(value !== null && value !== void 0 ? value : "", "</textarea>\n            </div>\n      ");
 };
 var createImageBlock = function createImageBlock(blockCounter) {
   return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
 };
 var createMessageTemplate = function createMessageTemplate(templates) {
   return templates.map(function (template) {
+    var categoryName = "";
+    if (template.category_name.length > 40) {
+      categoryName = template.category_name.substring(0, 40) + '...';
+    } else {
+      categoryName = template.category_name;
+    }
     return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
       return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
-    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(template.category_name, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\">").concat(template.template_name, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
-  return "\n            <button class=\"category-btn\" data-category=".concat(category["id"], ">").concat(category["category_name"], "</button>\n      ");
+  var name = "";
+  if (category["category_name"].length > 15) {
+    name = category["category_name"].substring(0, 15) + '...';
+  } else {
+    name = category["category_name"];
+  }
+  return "\n            <button class=\"category-btn\" data-category=".concat(category["id"], " title=\"").concat(category["category_name"], "\">").concat(name, "</button>\n      ");
 };
 
 /***/ }),
@@ -7142,10 +7154,11 @@ var DataValidator = /*#__PURE__*/function () {
         var li = _assertClassBrand(_DataValidator_brand, _this, _createErrorElement).call(_this);
         li.innerHTML = errorMsg;
         _this.errorListWrapper.append(li);
-        _this.formError.classList.remove("hidden");
-        var modalContent = document.getElementById('js_template_modal');
-        modalContent.scrollTop = 0;
       });
+      document.getElementById("form-errors").classList.remove("hidden");
+      console.log(document.getElementById("form-errors"));
+      var modalContent = document.getElementById('js_template_modal');
+      modalContent.scrollTop = 0;
     }
 
     /**
@@ -7161,7 +7174,7 @@ var DataValidator = /*#__PURE__*/function () {
         li.innerHTML = error;
         _this2.errorListWrapper.append(li);
       });
-      this.formError.classList.remove("hidden");
+      document.getElementById("form-errors").classList.remove("hidden");
       var modalContent = document.getElementById('js_template_modal');
       modalContent.scrollTop = 0;
     }
@@ -7283,7 +7296,8 @@ var ImageUploadHandler = /*#__PURE__*/function () {
         uploads = (_document$querySelect2 = document.querySelector(".js_create_form")) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.querySelectorAll(".file-input");
       }
       (_uploads = uploads) === null || _uploads === void 0 || _uploads.forEach(function (fileInput) {
-        (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_loader)();
+        console.log(fileInput);
+        console.log("222");
         fileInput.addEventListener("change", _assertClassBrand(_ImageUploadHandler_brand, _this, _handleFileInputChange).call(_this, fileInput, errorTxt));
       });
     }
@@ -7296,45 +7310,61 @@ function _handleFileInputChange(fileInput, errorTxt) {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
+            (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_loader)();
             _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeErrorList();
             _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeImageCropInput();
             file = e.target.files[0];
             errors = [];
             if (file) {
-              _context.next = 6;
+              _context.next = 7;
               break;
             }
             return _context.abrupt("return");
-          case 6:
+          case 7:
+            console.log("wey");
             if (!_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAllowedType(file.type)) {
               errors.push("許可されているファイル形式は JPG, PNGのみです");
+              if (document.querySelector(".change_img").id == "fileInputEdit") {
+                document.querySelector(".js_image_error").classList.remove("hidden");
+                document.querySelector(".js_image_error").innerHTML = "許可されているファイル形式は JPG, PNGのみです";
+                _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
+              }
             }
             if (!_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isCorrectSize(file.size)) {
               errors.push("画像サイズが大きすぎます。5MB以内で指定してください");
+              console.log(document.querySelector(".change_img").id);
+              if (document.querySelector(".change_img").id == "fileInputEdit") {
+                document.querySelector(".js_image_error").classList.remove("hidden");
+                document.querySelector(".js_image_error").innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください";
+                _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
+              }
             }
             if (!(errors.length > 0)) {
-              _context.next = 13;
+              _context.next = 16;
               break;
             }
+            console.log(errors);
             dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
             dataValidator.displayErrorList(errors);
             fileInput.value = "";
             return _context.abrupt("return");
-          case 13:
+          case 16:
             // // ここにファイルアップロードやその他の処理を追加できます
             errorElement = document.querySelector(".js_broadcast_error");
             imageErrorElement = document.querySelector(".js_image_error");
             fileUploader = new _util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"](file, errorTxt, errorElement, imageErrorElement, true, e.target, document.getElementById("js_template_modal"));
             (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.close_image_edit_modal)(e.target);
-            _context.next = 19;
+            document.querySelector(".change_img").id = "fileInputEdit";
+            _context.next = 23;
             return fileUploader.fileOperation();
-          case 19:
+          case 23:
             // 画像プレビューを設定
 
             // ドラッグ＆ドロップの初期化
             _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_2__["default"].dragAndDrop("accordion", true);
             _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_5__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
-          case 21:
+            e.target.value = '';
+          case 26:
           case "end":
             return _context.stop();
         }
@@ -7381,6 +7411,7 @@ var InitializeInputService = /*#__PURE__*/function () {
       var createForm = document.querySelector(".js_create_form");
       var editFrom = document.querySelector(".tab-edit");
       var editShowForm = document.querySelector(".js_edit_form");
+      var categoryForm = document.querySelector(".js_category_form");
       errorelement.classList.add("hidden");
       errorList.innerHTML = "";
       templateNames.forEach(function (templateName) {
@@ -7397,8 +7428,11 @@ var InitializeInputService = /*#__PURE__*/function () {
       createForm.style.display = "block";
       editFrom.classList.add("hidden");
       editShowForm.classList.add("hidden");
+      categoryForm.classList.add("hidden");
+      document.getElementById("js_category_input").value = "";
       document.getElementById("js_tab_new").classList.add("active");
       document.getElementById("js_tab_edit").classList.remove("active");
+      document.getElementById("js_tab_category").classList.remove("active");
     }
   }, {
     key: "initializeCategoryInput",
@@ -7592,7 +7626,7 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
               _context.prev = 15;
               _context.t0 = _context["catch"](8);
               console.log(_context.t0);
-              alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
+              alert("メッセージテンプレート作成中にエラーが発生しました。再度お試しください。");
             case 19:
             case "end":
               return _context.stop();
@@ -7674,7 +7708,7 @@ var TabController = /*#__PURE__*/function () {
         var tabElement = document.getElementById(tab.id);
         if (tabElement && !tabElement.dataset.listenerAttached) {
           tabElement.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-            var messageTemplateOperator, modal, response, categories, templateRaw, buttonAll, deleteBtns;
+            var messageTemplateOperator, modal, response, categories, templateRaw, buttonAll, deleteBtns, cancelBtn, btn;
             return _regeneratorRuntime().wrap(function _callee2$(_context2) {
               while (1) switch (_context2.prev = _context2.next) {
                 case 0:
@@ -7685,21 +7719,22 @@ var TabController = /*#__PURE__*/function () {
                     document.getElementById("template-edit-form").classList.add("hidden");
                   }
                   if (!(index === 1)) {
-                    _context2.next = 29;
+                    _context2.next = 34;
                     break;
                   }
                   _context2.prev = 3;
+                  document.getElementById("template-edit-form").classList.add("hidden");
                   _edit_FormController_js__WEBPACK_IMPORTED_MODULE_8__["default"].initializeTemplateEditModal();
                   modal = document.getElementById("js_template_modal");
-                  _context2.next = 8;
+                  _context2.next = 9;
                   return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_2__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_GET, "/").concat(document.getElementById("js_account_id").value));
-                case 8:
+                case 9:
                   response = _context2.sent;
-                  _context2.next = 11;
+                  _context2.next = 12;
                   return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_2__.fetchPostOperation)({
                     "admin_id": document.getElementById("js_account_id").value
                   }, "".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY));
-                case 11:
+                case 12:
                   categories = _context2.sent;
                   templateRaw = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_3__.createMessageTemplate)(response);
                   buttonAll = '<button class="category-btn active" data-category="all">すべて</button>';
@@ -7719,61 +7754,51 @@ var TabController = /*#__PURE__*/function () {
                   deleteBtns = document.querySelectorAll(".template_delete_btn");
                   deleteBtns.forEach(function (btn) {
                     btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-                      var template_id, _response, dataValidator;
+                      var template_id;
                       return _regeneratorRuntime().wrap(function _callee$(_context) {
                         while (1) switch (_context.prev = _context.next) {
                           case 0:
-                            document.getElementById("js_template_modal").classList.add("hidden");
-                            (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.open_loader)();
+                            //削除確認モーダル
+                            document.getElementById("js_template_confirm_modal").classList.remove("hidden");
                             template_id = btn.closest(".template-item").querySelector(".template_id").value;
-                            _context.prev = 3;
-                            _context.next = 6;
-                            return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_2__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_DELETE, "/").concat(template_id));
-                          case 6:
-                            _response = _context.sent;
-                            dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
-                            if (_response["status"] === 201) {
-                              (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.close_loader)();
-                              (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.hide_bg)();
-                              dataValidator.displaySuccessMessage(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SUCCESS_TEXT.DELETE_TEMPLATE);
-                            } else if (_response["status"] === 500) {
-                              (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.close_loader)();
-                              (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.hide_bg)();
-                              alert("テンプレートの削除に失敗しました。もう一度お試しください。");
-                            }
-                            _context.next = 16;
-                            break;
-                          case 11:
-                            _context.prev = 11;
-                            _context.t0 = _context["catch"](3);
-                            (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.close_loader)();
-                            (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.hide_bg)();
-                            alert("テンプレートの削除に失敗しました。もう一度お試しください。");
-                          case 16:
+                            document.getElementById("js_delete_templete_id").value = template_id;
+                            document.getElementById("js_template_modal").style.zIndex = 1;
+                          case 4:
                           case "end":
                             return _context.stop();
                         }
-                      }, _callee, null, [[3, 11]]);
+                      }, _callee);
                     })));
                   });
-                  _context2.next = 29;
+                  // 削除キャンセル
+                  cancelBtn = document.getElementById("js_cancel_template_btn");
+                  cancelBtn.addEventListener("click", function () {
+                    document.getElementById("js_template_confirm_modal").classList.add("hidden");
+                    document.getElementById("js_template_modal").style.zIndex = 999;
+                  });
+                  btn = document.querySelector(".js_delete_template_from");
+                  btn.addEventListener("click", function () {
+                    (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_6__.open_loader)();
+                    document.getElementById("js_template_confirm_modal").classList.add("hidden");
+                  });
+                  _context2.next = 34;
                   break;
-                case 26:
-                  _context2.prev = 26;
+                case 31:
+                  _context2.prev = 31;
                   _context2.t0 = _context2["catch"](3);
                   console.log(_context2.t0);
-                case 29:
+                case 34:
                   if (index === 2) {
                     document.querySelector(".js_category_form").classList.remove("hidden");
                     document.querySelector(".js_edit_form").classList.add("hidden");
                   }
                   _this.activateTab(index);
                   // 他の処理...
-                case 31:
+                case 36:
                 case "end":
                   return _context2.stop();
               }
-            }, _callee2, null, [[3, 26]]);
+            }, _callee2, null, [[3, 31]]);
           })));
           tabElement.dataset.listenerAttached = "true";
         }
@@ -7897,7 +7922,7 @@ var TemplateApiService = /*#__PURE__*/function () {
                 _context.next = 10;
                 break;
               }
-              throw new Error("テンプレート作成でエラーが発生しました");
+              throw new Error("メッセージテンプレート作成でエラーが発生しました");
             case 10:
               _context.next = 12;
               return response.json();
@@ -7986,6 +8011,7 @@ var TemplateBlockManager = /*#__PURE__*/function () {
   }, {
     key: "addImageBlock",
     value: function addImageBlock(contentBlocksContainer) {
+      var hasData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var blockId = "block-".concat(this.blockCounter++);
       var imageBlock = document.createElement('div');
       imageBlock.className = 'content-block image-block';
@@ -7996,6 +8022,10 @@ var TemplateBlockManager = /*#__PURE__*/function () {
       contentBlocksContainer.appendChild(imageBlock);
       var fileId = imageBlock.querySelector(".file-input").id;
       document.querySelector(".image_edit_modal").querySelector(".change_img").htmlFor = fileId;
+      if (hasData) {
+        console.log("hasDataaaa");
+        document.querySelector(".change_img").id = "fileInputEdit";
+      }
       return imageBlock; // 新しく作成したブロックを返す
     }
   }, {
@@ -8260,7 +8290,7 @@ function _initializeContentBlock(content, templateBlockManager) {
     this.blockTextarea.dataset.id = content.dataset.id;
   } else if (content.dataset.type === "image") {
     var _content$querySelecto;
-    this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock);
+    this.contentBlocksWrapper = templateBlockManager.addImageBlock(this.editContentBlock, true);
     this.fileInput = this.contentBlocksWrapper.querySelector(".file-input");
     this.imageElement = this.contentBlocksWrapper.querySelector(".image_element");
     this.imageElement.src = "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value);
@@ -8646,12 +8676,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 var FormController = /*#__PURE__*/function () {
   function FormController() {
     _classCallCheck(this, FormController);
@@ -8731,6 +8763,18 @@ var FormController = /*#__PURE__*/function () {
       imageElement.src = objectURL;
       imageElement.classList.add("active");
       placeholderText.classList.add("hidden");
+    }
+  }, {
+    key: "showCropperSetting",
+    value: function showCropperSetting() {
+      var setting = document.getElementById("js_url_setting");
+      setting.classList.remove("hidden");
+      document.getElementById("js_preview_submit_btn").classList.add("disabled_btn");
+      var checkOff = document.getElementById("flexRadioDefault1");
+      var checkOn = document.getElementById("flexRadioDefault2");
+      checkOff.checked = false;
+      checkOn.checked = true;
+      (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_loader)();
     }
   }]);
 }();
@@ -8880,12 +8924,13 @@ var InfiniteScroll = /*#__PURE__*/function () {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               if (!(!this.hasNoValue && !this.isFetchFlag)) {
-                _context.next = 46;
+                _context.next = 47;
                 break;
               }
+              this.dataCount = document.querySelectorAll(".js_chatUser_id").length;
               _this$element = this.element, scrollTop = _this$element.scrollTop, scrollHeight = _this$element.scrollHeight, clientHeight = _this$element.clientHeight; // 一番下までスクロールしたかを判定
               if (!(scrollTop + clientHeight + 50 >= scrollHeight)) {
-                _context.next = 45;
+                _context.next = 46;
                 break;
               }
               this.isFetchFlag = true;
@@ -8894,23 +8939,23 @@ var InfiniteScroll = /*#__PURE__*/function () {
                 "dataCount": this.dataCount,
                 "accountList": this.fileType == "accountShow" ? this.userAccount : this.accountList
               };
-              _context.prev = 6;
-              _context.next = 9;
+              _context.prev = 7;
+              _context.next = 10;
               return (0,_fetch_js__WEBPACK_IMPORTED_MODULE_3__.fetchPostOperation)(data, this.baseUrl);
-            case 9:
+            case 10:
               response = _context.sent;
               hasNoData = response["accountData"] ? response["accountData"].length === 0 : response.length === 0;
               if (!hasNoData) {
-                _context.next = 16;
+                _context.next = 17;
                 break;
               }
               this.hasNoValue = true; // もうデータがない場合は停止
               this.loader.classList.add("hidden");
-              _context.next = 33;
+              _context.next = 34;
               break;
-            case 16:
+            case 17:
               if (!(this.fileType === "accountShow")) {
-                _context.next = 24;
+                _context.next = 25;
                 break;
               }
               response.forEach(function (res) {
@@ -8919,12 +8964,12 @@ var InfiniteScroll = /*#__PURE__*/function () {
               //ユーザー管理に関連するモーダルの初期化
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeUserModals)(_socket_js__WEBPACK_IMPORTED_MODULE_4__["default"]);
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeSimpleBar)();
-              _context.next = 22;
+              _context.next = 23;
               return (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleChatRedirect)();
-            case 22:
-              _context.next = 33;
+            case 23:
+              _context.next = 34;
               break;
-            case 24:
+            case 25:
               response["accountData"].forEach(function (res) {
                 _this.parentElement.insertAdjacentHTML("beforeend", (0,_component_elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__.createAccountDataRow)(res, response["categories"]));
               });
@@ -8938,31 +8983,31 @@ var InfiniteScroll = /*#__PURE__*/function () {
               (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.initializeAccountStatusManager)();
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeSimpleBar)();
               (0,_component_modalInitializers_js__WEBPACK_IMPORTED_MODULE_0__.initializeSimpleBar)();
-              _context.next = 33;
+              _context.next = 34;
               return (0,_component_accountUIOperations_js__WEBPACK_IMPORTED_MODULE_1__.handleChatRedirect)();
-            case 33:
-              _context.next = 38;
+            case 34:
+              _context.next = 39;
               break;
-            case 35:
-              _context.prev = 35;
-              _context.t0 = _context["catch"](6);
+            case 36:
+              _context.prev = 36;
+              _context.t0 = _context["catch"](7);
               console.error("Failed to fetch data:", _context.t0);
-            case 38:
-              _context.prev = 38;
+            case 39:
+              _context.prev = 39;
               this.isFetchFlag = false;
               this.dataCount = this.dataCount + MESSAGES_PER_PAGE;
               this.loader.classList.add("hidden");
-              return _context.finish(38);
-            case 43:
-              _context.next = 46;
+              return _context.finish(39);
+            case 44:
+              _context.next = 47;
               break;
-            case 45:
-              this.loader.classList.add("hidden");
             case 46:
+              this.loader.classList.add("hidden");
+            case 47:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[6, 35, 38, 43]]);
+        }, _callee, this, [[7, 36, 39, 44]]);
       }));
       function handleScroll() {
         return _handleScroll.apply(this, arguments);
@@ -9514,12 +9559,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
 /* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -9572,6 +9611,7 @@ var FileUploader = /*#__PURE__*/function () {
     this.isTemplate = isTemplate;
     this.cropArea = [];
     this.url = "";
+    this.choices = document.querySelectorAll('input[name="choice"]');
     this.inputElement = inputElement;
 
     // イベントを初期化
@@ -9665,7 +9705,7 @@ var FileUploader = /*#__PURE__*/function () {
                 _this.cropper = new _cropper_Cropper_js__WEBPACK_IMPORTED_MODULE_7__["default"](_this.imageElement, newImageButton);
                 var cropperHandler = new _cropper_CropperEventHandler_js__WEBPACK_IMPORTED_MODULE_8__["default"](newImageButton, _this.cropper);
                 cropperHandler.changeBtnEvent();
-                _assertClassBrand(_FileUploader_brand, _this, _changeSubmitBtn).call(_this);
+
                 // 新しい画像要素を Cropper に更新
                 _this.cropper.updateImage(newImage);
 
@@ -9674,6 +9714,7 @@ var FileUploader = /*#__PURE__*/function () {
                 container.innerHTML = ""; // 古い画像を削除
                 container.appendChild(newImage); // 新しい画像を保存
 
+                document.querySelector(".change_img").id = "fileInputEdit";
                 if (_this.imageEditModal.classList.contains("hidden")) {
                   _assertClassBrand(_FileUploader_brand, _this, _toggleLoader).call(_this, false);
                 } else {
@@ -9684,6 +9725,7 @@ var FileUploader = /*#__PURE__*/function () {
                 } else {
                   (0,_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_4__.open_modal)(_this.imageEditModal);
                 }
+                _this.changeSubmitBtn();
 
                 // 画像切り取りモーダルが表示されるときに前に出ているモーダルを非表示にする
                 if (_this.modal) _this.modal.classList.add("hidden");
@@ -9700,8 +9742,7 @@ var FileUploader = /*#__PURE__*/function () {
 
                   _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeFileUpload();
                   var regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
-                  var choices = document.getElementsByName('choice'); // ラジオボタン要素を取得
-                  var selectedChoices = Array.from(choices).find(function (choice) {
+                  var selectedChoices = Array.from(_this.choices).find(function (choice) {
                     return choice.checked;
                   });
                   if (selectedChoices.value === "on" && !regex.test(_this.urlInput.value)) {
@@ -9809,9 +9850,17 @@ var FileUploader = /*#__PURE__*/function () {
       var hasModal = true;
       if (this.imageEditModal.classList.contains("hidden")) hasModal = false;
       if (!FileUploader.isAllowedType(this.file.type)) {
+        // cropperページから画像を切り替えた場合の処理
+        if (document.querySelector(".change_img").id == "fileInputEdit") {
+          _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].showCropperSetting();
+        }
         return _assertClassBrand(_FileUploader_brand, this, _validationError).call(this, "許可されているファイル形式は JPG, PNGのみです。", hasModal);
       }
       if (!FileUploader.isCorrectSize(this.file.size)) {
+        // cropperページから画像を切り替えた場合の処理
+        if (document.querySelector(".change_img").id == "fileInputEdit") {
+          _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].showCropperSetting();
+        }
         return _assertClassBrand(_FileUploader_brand, this, _validationError).call(this, "画像サイズが大きすぎます。5MB以内で指定してください。", hasModal);
       }
       return true;
@@ -9822,6 +9871,67 @@ var FileUploader = /*#__PURE__*/function () {
      * @param {string} fileType - ファイルのMIMEタイプ
      * @returns {boolean} - 許可されている形式ならtrue
      */
+  }, {
+    key: "updateButtonState",
+    value:
+    // 送信ボタンの色を変更する
+    // 送信ボタンの色を変更する
+    // ボタンの状態を更新する関数
+    function updateButtonState() {
+      var confirmBtn = document.getElementById("js_change_area");
+
+      // document全体からname='choice'の要素を検索して状態をチェック
+      var choiceElements = document.querySelectorAll('input[name="choice"]');
+      var isChoiceOn = Array.from(choiceElements).some(function (choice) {
+        return choice.checked && choice.value === "on";
+      });
+      var hasUrl = this.urlInput.value.length > 0;
+      var hasValidImage = document.querySelector(".js_image_error").classList.contains("hidden");
+      var isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
+      console.log("updateButtonState called, isChoiceOn:", isChoiceOn);
+      console.log(hasUrl);
+      console.log(isConfirmed);
+      console.log(hasValidImage);
+      if (isChoiceOn) {
+        if (hasUrl && isConfirmed && hasValidImage) {
+          var _document$getElementB;
+          (_document$getElementB = document.getElementById("js_preview_submit_btn")) === null || _document$getElementB === void 0 || _document$getElementB.classList.remove("disabled_btn");
+        } else {
+          var _document$getElementB2;
+          (_document$getElementB2 = document.getElementById("js_preview_submit_btn")) === null || _document$getElementB2 === void 0 || _document$getElementB2.classList.add("disabled_btn");
+        }
+      } else {
+        if (hasValidImage) {
+          var _document$getElementB3;
+          (_document$getElementB3 = document.getElementById("js_preview_submit_btn")) === null || _document$getElementB3 === void 0 || _document$getElementB3.classList.remove("disabled_btn");
+        }
+      }
+    }
+  }, {
+    key: "changeSubmitBtn",
+    value: function changeSubmitBtn() {
+      var confirmBtn = document.getElementById("js_change_area");
+
+      // thisを束縛して、イベントハンドラ内でもthisが正しく参照できるようにする
+      var boundUpdateButtonState = this.updateButtonState.bind(this);
+      document.addEventListener('change', function (e) {
+        console.log(e.target.name);
+        if (e.target.name === 'choice') {
+          boundUpdateButtonState(); // 計算したisChoiceOnを渡す
+        }
+      });
+      // 各イベントリスナーでボタン状態を更新
+      this.choices.forEach(function (choice) {
+        choice.addEventListener("change", function () {
+          console.log("イベント発火：", choice.value);
+          // ここで直接処理を書いてみる
+          var isChoiceOn = choice.checked && choice.value === "on";
+          console.log("isChoiceOn:", isChoiceOn);
+        });
+      });
+      this.urlInput.addEventListener("input", boundUpdateButtonState);
+      confirmBtn.addEventListener("click", boundUpdateButtonState);
+    }
   }], [{
     key: "setImageDataToFormDataArray",
     value: function setImageDataToFormDataArray(compressedFile, newFileName, index, url, cropArea) {
@@ -9932,44 +10042,6 @@ function _toggleLoaderforChangeImg(isLoading) {
     loader.classList.add("hidden");
     bg.classList.add("hidden");
   }
-}
-// 送信ボタンの色を変更する
-// 送信ボタンの色を変更する
-function _changeSubmitBtn() {
-  var _this2 = this;
-  var choices = document.querySelectorAll('input[name="choice"]');
-  var confirmBtn = document.getElementById("js_change_area");
-
-  // ボタンの状態を更新する関数
-  var updateButtonState = function updateButtonState() {
-    var isChoiceOn = _toConsumableArray(choices).some(function (choice) {
-      return choice.checked && choice.value === "on";
-    });
-    var hasUrl = _this2.urlInput.value.length > 0;
-    var isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
-    if (isChoiceOn) {
-      if (hasUrl && isConfirmed) {
-        _this2.newconfirmBtn.classList.remove("disabled_btn");
-      } else {
-        _this2.newconfirmBtn.classList.add("disabled_btn");
-      }
-    } else {
-      _this2.newconfirmBtn.classList.remove("disabled_btn");
-    }
-  };
-
-  // 各イベントリスナーでボタン状態を更新
-  choices.forEach(function (choice) {
-    choice.addEventListener("change", updateButtonState);
-  });
-  this.urlInput.addEventListener("input", function () {
-    _this2.actionUrl = _this2.urlInput.value; // 必要なら保持
-    _this2.urlErrorElement.classList.add("hidden");
-    updateButtonState();
-  });
-  confirmBtn.addEventListener("click", function () {
-    updateButtonState();
-  });
 }
 _defineProperty(FileUploader, "convertFileNameToFile", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(fileName) {
@@ -15025,18 +15097,19 @@ submitForms.forEach(function (submitForm) {
               _module_component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__["default"].populateSelectOptions(res["id"], res["category_name"]);
             });
             (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(templateModal);
+            templateModal.style.zIndex = 999;
             (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_loader)();
-            _context4.next = 16;
+            _context4.next = 17;
             break;
-          case 13:
-            _context4.prev = 13;
+          case 14:
+            _context4.prev = 14;
             _context4.t0 = _context4["catch"](4);
             console.log(_context4.t0);
-          case 16:
+          case 17:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[4, 13]]);
+      }, _callee4, null, [[4, 14]]);
     }));
     return function handleTemplateButtonClick() {
       return _ref4.apply(this, arguments);

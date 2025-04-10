@@ -25,8 +25,8 @@ class MessageTemplate extends Controller
                 "category_name" => ["required", "string", "max:255"],
                 "admin_id" => ["required", "exists:line_accounts,id"],
             ], [
-                'category_name.required' => 'カテゴリ名は必須項目です。',
-                'category_name.max' => 'カテゴリ名は255文字以内で入力してください。',
+                'category_name.required' => 'カテゴリー名は必須項目です。',
+                'category_name.max' => 'カテゴリー名は255文字以内で入力してください。',
                 "admin_id.required" => "無効なデータです",
                 "admin_id.exists" => "無効なデータです"
             ]);
@@ -130,14 +130,17 @@ class MessageTemplate extends Controller
         
                 // // 画像ファイルの取り出し
                 // 画像コンテンツの処理 - 個別に挿入してIDを取得
+                Log::debug($imageContents);
                 if(isset($imageContents)){
                     foreach ($imageContents as $index => $imageData) {
                         $fileKey = "image_path.{$index}.content";
-                        
                         if ($request->hasFile($fileKey)) {
                             $file = $request->file($fileKey);
+                            Log::debug($file);
                             $imageService = new ImageService();
                             $fileName = $imageService->saveImage($file);
+
+                            Log::debug($fileName);
                             
                             // 画像コンテンツを個別に挿入してIDを取得
                             $contentId = DB::table("message_template_contents")->insertGetId([
@@ -168,8 +171,6 @@ class MessageTemplate extends Controller
                         }
                     }
                 }
-
-                Log::debug("2222222");
                 // return redirect()->route("account.show", ["id" => $admin_id])->with("success", "テンプレートの作成に成功しました"); 
                 return response()->json(["status" => 201]);
             });
@@ -351,13 +352,12 @@ class MessageTemplate extends Controller
         return response()->json($templates);
     }
 
-    public function destroy(string $id){
+    public function destroy(Request $request){
         try{
-            ModelsMessageTemplate::destroy($id);
-            return response()->json(["status" => 201]);
+            ModelsMessageTemplate::destroy($request->input("template_id"));
+            return redirect()->route("account.show", ["id" => $request->input("admin_id")])->with("success", "テンプレートの削除に成功しました。"); 
         }catch(\Exception $e){
             Log::debug($e);
-            return response()->json(["status" => 501]);
         }
         
     }
@@ -377,7 +377,7 @@ class MessageTemplate extends Controller
         try{
             $validated = $request->validated();
             $category = MessageTemplatesCategory::findOrFail($validated["id"]);
-            $category->update(["category_name" => $validated["category_name"]]);
+            $category->update(["category_name" => $validated["category_name_edit"]]);
             return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの更新に成功しました。");  
         }catch(\Exception $e){
             Log::debug($e);

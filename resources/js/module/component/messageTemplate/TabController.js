@@ -32,6 +32,7 @@ class TabController {
                 }
                 if(index === 1){
                     try{
+                        document.getElementById("template-edit-form").classList.add("hidden")
                         MessageTemplateFormController.initializeTemplateEditModal()
                         const modal = document.getElementById("js_template_modal")
                         const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_GET}/${document.getElementById("js_account_id").value}`)
@@ -57,29 +58,35 @@ class TabController {
                             const deleteBtns = document.querySelectorAll(".template_delete_btn")
                             deleteBtns.forEach((btn)=>{
                                 btn.addEventListener("click", async ()=>{
-                                    document.getElementById("js_template_modal").classList.add("hidden")
-                                    open_loader()
+
+                                    //削除確認モーダル
+                                    document.getElementById("js_template_confirm_modal").classList.remove("hidden")
                                     const template_id = btn.closest(".template-item").querySelector(".template_id").value
-                                    try{
-                                        const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_DELETE}/${template_id}`)
-                                        const dataValidator = new DataValidator()
-                                        if(response["status"] === 201){
-                                            close_loader()
-                                            hide_bg()
-                                            dataValidator.displaySuccessMessage(SUCCESS_TEXT.DELETE_TEMPLATE)
-                                        }else if(response["status"] === 500){
-                                            close_loader()
-                                            hide_bg()
-                                            alert("テンプレートの削除に失敗しました。もう一度お試しください。")
-                                            
-                                        }
-                                    }catch(error){
-                                        close_loader()
-                                        hide_bg()
-                                        alert("テンプレートの削除に失敗しました。もう一度お試しください。")
-                                    }
+                                    document.getElementById("js_delete_templete_id").value = template_id
+
+                                    document.getElementById("js_template_modal").style.zIndex = 1
                                 })
                             })
+                        }
+
+                        {
+                            // 削除キャンセル
+                            const cancelBtn = document.getElementById("js_cancel_template_btn")
+                            cancelBtn.addEventListener("click", ()=>{
+                                document.getElementById("js_template_confirm_modal").classList.add("hidden")
+                                document.getElementById("js_template_modal").style.zIndex = 999
+                            })
+                        }
+
+                        // ローダー出す処理
+
+                        {
+                            const btn = document.querySelector(".js_delete_template_from")
+                            btn.addEventListener("click", ()=>{
+                                open_loader()
+                                document.getElementById("js_template_confirm_modal").classList.add("hidden")
+                            })
+
                         }
                     }catch(error){
                         console.log(error);

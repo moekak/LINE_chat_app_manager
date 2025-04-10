@@ -8,6 +8,7 @@ class InitializeInputService{
         const createForm = document.querySelector(".js_create_form")
         const editFrom = document.querySelector(".tab-edit")
         const editShowForm = document.querySelector(".js_edit_form")
+        const categoryForm = document.querySelector(".js_category_form")
 
         errorelement.classList.add("hidden")
         errorList.innerHTML = ""
@@ -31,9 +32,12 @@ class InitializeInputService{
         createForm.style.display ="block"
         editFrom.classList.add("hidden")
         editShowForm.classList.add("hidden")
+        categoryForm.classList.add("hidden")
 
+        document.getElementById("js_category_input").value = ""
         document.getElementById("js_tab_new").classList.add("active")
         document.getElementById("js_tab_edit").classList.remove("active")
+        document.getElementById("js_tab_category").classList.remove("active")
 
     }
 

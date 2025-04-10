@@ -34,35 +34,39 @@ class MessageTemplateContent extends Model
     public static function getMessageTemplatesForAdmin($admin_id)
     {
         return MessageTemplateContent::WithContentsForAdmin($admin_id)
-            ->get()
-            ->groupBy("template_id")
-            ->map(function ($group) {
-                $firstItem = $group->first();
-                
-                return [
-                    "category_id" => $firstItem->messageTemplate->messageTemplatesCategory->id,
-                    "group_id" => $firstItem->messageTemplate->messageTemplatesGroup->id,
-                    'template_id' => $firstItem->template_id,
-                    'template_name' => $firstItem->messageTemplate->template_name,
-                    'category_name' => $firstItem->messageTemplate->messageTemplatesCategory->category_name,
-                    'admin_id' => $firstItem->admin_id,
-                    'contents' => $group->map(function ($item) {
-                        return [
-                            "id" => $item->id,
-                            'content_text' => $item->content_text,
-                            'image_path' => $item->image_path,
-                            'cropArea' => $item->cropData && $item->cropData->width_percent ? json_encode([
-                                'height_percent' => $item->cropData->height_percent,
-                                'width_percent' => $item->cropData->width_percent,
-                                'x_percent' => $item->cropData->x_percent,
-                                'y_percent' => $item->cropData->y_percent,
-                                'url' => $item->cropData->url
-                            ]) : null,
-                            'content_type' => $item->content_type,
-                            'display_order' => $item->display_order,
-                        ];
-                    })->sortBy('display_order')->values()->all()
-                ];
-            })->values()->all(); // コレクションを配列に変換
+        ->get()
+        ->groupBy("template_id")
+        ->map(function ($group) {
+            $firstItem = $group->first();
+            
+            return [
+                "category_id" => $firstItem->messageTemplate->messageTemplatesCategory->id,
+                "group_id" => $firstItem->messageTemplate->messageTemplatesGroup->id,
+                'template_id' => $firstItem->template_id,
+                'template_name' => $firstItem->messageTemplate->template_name,
+                'category_name' => $firstItem->messageTemplate->messageTemplatesCategory->category_name,
+                'admin_id' => $firstItem->admin_id,
+                'created_at' => $firstItem->created_at, // created_at を追加
+                'contents' => $group->map(function ($item) {
+                    return [
+                        "id" => $item->id,
+                        'content_text' => $item->content_text,
+                        'image_path' => $item->image_path,
+                        'cropArea' => $item->cropData && $item->cropData->width_percent ? json_encode([
+                            'height_percent' => $item->cropData->height_percent,
+                            'width_percent' => $item->cropData->width_percent,
+                            'x_percent' => $item->cropData->x_percent,
+                            'y_percent' => $item->cropData->y_percent,
+                            'url' => $item->cropData->url
+                        ]) : null,
+                        'content_type' => $item->content_type,
+                        'display_order' => $item->display_order,
+                    ];
+                })->sortBy('display_order')->values()->all()
+            ];
+        })
+        ->sortByDesc('created_at') // created_at の降順で並べ替え
+        ->values()
+        ->all();
     }
 }

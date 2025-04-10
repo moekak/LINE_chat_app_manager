@@ -1,3 +1,4 @@
+import { close_loader } from "../modalOperation.js"
 
 
 class FormController{
@@ -80,6 +81,20 @@ class FormController{
         imageElement.src = objectURL;
         imageElement.classList.add("active");
         placeholderText.classList.add("hidden");
+    }
+
+    static showCropperSetting(){
+        const setting = document.getElementById("js_url_setting")
+        setting.classList.remove("hidden")
+        document.getElementById("js_preview_submit_btn").classList.add("disabled_btn")
+
+        const checkOff = document.getElementById("flexRadioDefault1")
+        const checkOn = document.getElementById("flexRadioDefault2")
+
+        checkOff.checked = false
+        checkOn.checked = true
+        close_loader()
+
     }
 }
 

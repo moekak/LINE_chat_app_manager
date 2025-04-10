@@ -80,6 +80,7 @@ class MessageTemplateOperator {
 
     handleAddImageBlock(e) {
         e.preventDefault();
+
         const newBlock = this.blockManager.addImageBlock(this.contentBlocks);
         this.blockManager.setupBlockListeners(newBlock);
 
@@ -88,6 +89,7 @@ class MessageTemplateOperator {
         const errorTxt = document.querySelector(".js_error_txt");
         
         this.imageUploadHandler.setupFileInputs(this.isUpdate, uploads, errorTxt);
+
     }
 
 
@@ -133,7 +135,7 @@ class MessageTemplateOperator {
         } catch (error) {
             console.log(error);
             
-            alert("テンプレート作成中にエラーが発生しました。再度お試しください。");
+            alert("メッセージテンプレート作成中にエラーが発生しました。再度お試しください。");
         }
     }
 }

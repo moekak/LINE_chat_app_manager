@@ -41,7 +41,7 @@ class TemplateBlockManager {
         return textBlock; // 新しく作成したブロックを返す
     }
     
-    addImageBlock(contentBlocksContainer) {
+    addImageBlock(contentBlocksContainer, hasData = false) {
 
         const blockId = `block-${this.blockCounter++}`;
         const imageBlock = document.createElement('div');
@@ -55,6 +55,12 @@ class TemplateBlockManager {
 
         const fileId = imageBlock.querySelector(".file-input").id
         document.querySelector(".image_edit_modal").querySelector(".change_img").htmlFor = fileId
+        if(hasData){
+            console.log("hasDataaaa");
+            
+            document.querySelector(".change_img").id = "fileInputEdit"
+        }
+        
 
         return imageBlock; // 新しく作成したブロックを返す
     }
