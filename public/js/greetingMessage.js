@@ -6102,7 +6102,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   changeAccountDisplayOrder: () => (/* binding */ changeAccountDisplayOrder),
 /* harmony export */   changeDisplayOrder: () => (/* binding */ changeDisplayOrder),
-/* harmony export */   handleChatRedirect: () => (/* binding */ handleChatRedirect),
 /* harmony export */   handleEditUserName: () => (/* binding */ handleEditUserName),
 /* harmony export */   increateMessageCount: () => (/* binding */ increateMessageCount),
 /* harmony export */   initializeAccountStatusManager: () => (/* binding */ initializeAccountStatusManager),
@@ -6161,7 +6160,7 @@ var changeDisplayOrder = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           if (!(sender_type == "user")) {
-            _context.next = 40;
+            _context.next = 36;
             break;
           }
           elements = document.querySelectorAll(".js_chatUser_id");
@@ -6171,13 +6170,13 @@ var changeDisplayOrder = /*#__PURE__*/function () {
           _iterator.s();
         case 6:
           if ((_step = _iterator.n()).done) {
-            _context.next = 24;
+            _context.next = 22;
             break;
           }
           element = _step.value;
           id = element.getAttribute("data-id");
           if (!(id == sender_id)) {
-            _context.next = 22;
+            _context.next = 20;
             break;
           }
           newCloneDiv = element.cloneNode(true);
@@ -6191,41 +6190,36 @@ var changeDisplayOrder = /*#__PURE__*/function () {
 
           //ユーザー管理に関連するモーダルの初期化
           (0,_modalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeUserModals)(_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
-          _context.next = 21;
-          return handleChatRedirect();
-        case 21:
           return _context.abrupt("return");
-        case 22:
+        case 20:
           _context.next = 6;
           break;
-        case 24:
-          _context.next = 29;
+        case 22:
+          _context.next = 27;
           break;
-        case 26:
-          _context.prev = 26;
+        case 24:
+          _context.prev = 24;
           _context.t0 = _context["catch"](4);
           _iterator.e(_context.t0);
-        case 29:
-          _context.prev = 29;
+        case 27:
+          _context.prev = 27;
           _iterator.f();
-          return _context.finish(29);
-        case 32:
-          _context.next = 34;
+          return _context.finish(27);
+        case 30:
+          _context.next = 32;
           return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/api/user/".concat(sender_id, "/account/").concat(receiver_id));
-        case 34:
+        case 32:
           response = _context.sent;
           parentElement.insertAdjacentHTML('afterbegin', (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__.createMessageRow)(response[0], response["admin_account_id"]));
           _util_state_UserStateManager_js__WEBPACK_IMPORTED_MODULE_4__["default"].setState(response[0]["id"]);
 
           //ユーザー管理に関連するモーダルの初期化
           (0,_modalInitializers_js__WEBPACK_IMPORTED_MODULE_5__.initializeUserModals)(_util_socket_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
-          _context.next = 40;
-          return handleChatRedirect();
-        case 40:
+        case 36:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[4, 26, 29, 32]]);
+    }, _callee, null, [[4, 24, 27, 30]]);
   }));
   return function changeDisplayOrder(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
@@ -6428,56 +6422,16 @@ var initializeAccountStatusManager = function initializeAccountStatusManager() {
     });
   };
 };
-var handleChatRedirect = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-    var redirect_btns;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
-        case 0:
-          redirect_btns = document.querySelectorAll(".js_redirect_btn");
-          redirect_btns.forEach(function (btn) {
-            btn.addEventListener("click", /*#__PURE__*/function () {
-              var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-                var admin_id, user_id;
-                return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-                  while (1) switch (_context4.prev = _context4.next) {
-                    case 0:
-                      admin_id = e.currentTarget.getAttribute("data-admin-id");
-                      user_id = e.currentTarget.getAttribute("data-user-id");
-                      e.preventDefault();
-                      _context4.next = 5;
-                      return submitRedirectForm(admin_id, user_id);
-                    case 5:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }, _callee4);
-              }));
-              return function (_x8) {
-                return _ref5.apply(this, arguments);
-              };
-            }());
-          });
-        case 2:
-        case "end":
-          return _context5.stop();
-      }
-    }, _callee5);
-  }));
-  return function handleChatRedirect() {
-    return _ref4.apply(this, arguments);
-  };
-}();
 var submitRedirectForm = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6(adminId, userId) {
+  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(adminId, userId) {
     var token, tokenElement, user_id, admin_id, form;
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-      while (1) switch (_context6.prev = _context6.next) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
-          _context6.next = 2;
+          _context4.next = 2;
           return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/api/token/generate");
         case 2:
-          token = _context6.sent;
+          token = _context4.sent;
           tokenElement = document.querySelector(".js_token");
           user_id = document.querySelector(".js_user_el");
           admin_id = document.querySelector(".js_admin_el");
@@ -6488,12 +6442,12 @@ var submitRedirectForm = /*#__PURE__*/function () {
           form.submit();
         case 11:
         case "end":
-          return _context6.stop();
+          return _context4.stop();
       }
-    }, _callee6);
+    }, _callee4);
   }));
-  return function submitRedirectForm(_x9, _x10) {
-    return _ref6.apply(this, arguments);
+  return function submitRedirectForm(_x8, _x9) {
+    return _ref4.apply(this, arguments);
   };
 }();
 var toggleDisplayButtonState = function toggleDisplayButtonState(btn, message) {
@@ -6978,13 +6932,13 @@ var createMessageRowForFetch = function createMessageRowForFetch(res, admin_acco
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
   var latestMessageDate = res["latest_message_date"] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["latest_message_date"]) : "";
   var display = res["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" title=\"\u30C8\u30FC\u30AF\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                  \t<a href=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res["id"], "/").concat(admin_account_id, "\">\n                              <button type=\"submit\" title=\"\u30C8\u30FC\u30AF\" class=\"operation_icon redirect_btn\">\n                                    <img src=\"/img/icons8-message-24.png\" alt=\"\">\n                              </button>\n                        </a>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <form action=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "\" method=\"POST\" class=\"js_redirect_form\">\n                              <input type=\"hidden\" name=\"admin_id\" class=\"js_admin_el\">\n                              <input type=\"hidden\" name=\"user_id\" class=\"js_user_el\">\n                              <input type=\"hidden\" name=\"token\" class=\"js_token\">\n                              <button type=\"submit\" title=\"\u30C8\u30FC\u30AF\" class=\"operation_icon js_redirect_btn\" data-user-id=\"").concat(res[0]["id"], "\" data-admin-id=").concat(admin_account_id, "><img src=\"/img/icons8-message-24.png\" alt=\"\"></button>\n                        </form>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]["id"], "/").concat(admin_account_id, "\">\n                              <button type=\"submit\" title=\"\u30C8\u30FC\u30AF\" class=\"operation_icon redirect_btn\">\n                                    <img src=\"/img/icons8-message-24.png\" alt=\"\">\n                              </button>\n                        </a>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
@@ -8362,7 +8316,7 @@ var FileUploader = /*#__PURE__*/function () {
 
                   _component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_6__["default"].initializeFileUpload();
                   var regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
-                  var selectedChoices = Array.from(_this.choices).find(function (choice) {
+                  var selectedChoices = Array.from(document.querySelectorAll('input[name="choice"]')).find(function (choice) {
                     return choice.checked;
                   });
                   if (selectedChoices.value === "on" && !regex.test(_this.urlInput.value)) {
@@ -8508,10 +8462,6 @@ var FileUploader = /*#__PURE__*/function () {
       var hasUrl = this.urlInput.value.length > 0;
       var hasValidImage = document.querySelector(".js_image_error").classList.contains("hidden");
       var isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
-      console.log("updateButtonState called, isChoiceOn:", isChoiceOn);
-      console.log(hasUrl);
-      console.log(isConfirmed);
-      console.log(hasValidImage);
       if (isChoiceOn) {
         if (hasUrl && isConfirmed && hasValidImage) {
           var _document$getElementB;
@@ -8535,7 +8485,6 @@ var FileUploader = /*#__PURE__*/function () {
       // thisを束縛して、イベントハンドラ内でもthisが正しく参照できるようにする
       var boundUpdateButtonState = this.updateButtonState.bind(this);
       document.addEventListener('change', function (e) {
-        console.log(e.target.name);
         if (e.target.name === 'choice') {
           boundUpdateButtonState(); // 計算したisChoiceOnを渡す
         }

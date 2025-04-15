@@ -147,7 +147,7 @@ class FileUploader{
 
                 FormController.initializeFileUpload()
                 const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*(\?.*)?$/;
-                const selectedChoices = Array.from(this.choices).find(choice => choice.checked);
+                const selectedChoices = Array.from(document.querySelectorAll('input[name="choice"]')).find(choice => choice.checked);
 
 
                 if(selectedChoices.value === "on" && !regex.test(this.urlInput.value)){
@@ -168,11 +168,9 @@ class FileUploader{
                 }
                 
                 if(this.isTemplate){
-
                     this.modal.classList.remove("hidden")
                     this.inputElement.parentElement.dataset.url = this.url
                     this.inputElement.parentElement.dataset.cropArea = JSON.stringify(this.cropArea)
-
                     const fileInputElementId = this.inputElement.closest(".content-block").dataset.id
                     const numberPart = fileInputElementId.match(/\d+/)[0];
                     
@@ -196,11 +194,6 @@ class FileUploader{
                         });
                     }
 
-
-
-
-
-                    
                     FormController.templateImageStyle(this.inputElement, newImage.src)
                 }else{
                     const index = document.querySelectorAll(".js_headings").length
@@ -392,12 +385,6 @@ class FileUploader{
         const hasValidImage = document.querySelector(".js_image_error").classList.contains("hidden");
         const isConfirmed = confirmBtn.innerHTML !== "選択範囲確定";
 
-        console.log("updateButtonState called, isChoiceOn:", isChoiceOn);
-
-        console.log(hasUrl);
-        console.log(isConfirmed);
-        console.log(hasValidImage);
-        
         
         if(isChoiceOn) {
             if (hasUrl && isConfirmed && hasValidImage) {
@@ -419,8 +406,6 @@ class FileUploader{
         const boundUpdateButtonState = this.updateButtonState.bind(this);
         
         document.addEventListener('change', function(e) {
-
-            console.log(e.target.name);
             
             if (e.target.name === 'choice'){
                 boundUpdateButtonState(); // 計算したisChoiceOnを渡す

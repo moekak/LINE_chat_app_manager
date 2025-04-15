@@ -15,7 +15,7 @@ export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
                   <td class="js_latest_message_date">${latestMessageDate}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                  	<a href="${SYSTEM_URL.CHAT_URL}?userId=${res["id"]}&adminId=${admin_account_id}">
+                  	<a href="${SYSTEM_URL.CHAT_URL}/${res["id"]}/${admin_account_id}">
                               <button type="submit" title="トーク" class="operation_icon redirect_btn">
                                     <img src="/img/icons8-message-24.png" alt="">
                               </button>
@@ -40,7 +40,7 @@ export const createMessageRow = (res, admin_account_id) =>{
                   <td class="js_latest_message_date">${latestMessageDate}</td>
                   <td>${createdAtTokyo}</td>
                   <td class="operation">
-                        <a href="${SYSTEM_URL.CHAT_URL}?userId=${res[0]["id"]}&adminId=${admin_account_id}">
+                        <a href="${SYSTEM_URL.CHAT_URL}/${res[0]["id"]}/${admin_account_id}">
                               <button type="submit" title="トーク" class="operation_icon redirect_btn">
                                     <img src="/img/icons8-message-24.png" alt="">
                               </button>

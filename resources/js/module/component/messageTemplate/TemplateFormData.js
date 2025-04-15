@@ -77,9 +77,6 @@ class TemplateFormData {
             }
         });
 
-
-        
-
         return { formData, hasContent };
     }
 }

@@ -62,7 +62,7 @@
 							<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
 							<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 							<td class="operation">
-								<a href="{{config('services.chat_url')}}?userId={{$chat_user['id']}}&adminId={{$id}}">
+								<a href="{{config('services.chat_url')}}/{{$chat_user['id']}}/{{$id}}">
 									<button type="submit" title="トーク" class="operation_icon redirect_btn">
 										<img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ">
 									</button>

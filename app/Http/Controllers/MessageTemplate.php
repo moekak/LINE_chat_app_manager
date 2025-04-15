@@ -70,6 +70,7 @@ class MessageTemplate extends Controller
     }
 
     public function store(Request $request){
+        Log::debug($request->all());
         try{
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
