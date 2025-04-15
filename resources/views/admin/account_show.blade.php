@@ -62,12 +62,11 @@
 							<td class="js_latest_message_date">{{$chat_user["latest_message_date"] ? $chat_user["latest_message_date"] : ""}}</td>
 							<td><?= $chat_user["created_at"]->format('Y-m-d H:i') ?></td>
 							<td class="operation">
-								<form action="{{config('services.chat_api')}}" method="POST" class="js_redirect_form">
-									<input type="hidden" name="admin_id" class="js_admin_el">
-									<input type="hidden" name="user_id" class="js_user_el">
-									<input type="hidden" name="token" class="js_token">
-									<button type="submit" title="トーク" class="operation_icon js_redirect_btn" data-user-id={{$chat_user['id']}} data-admin-id={{$id}}><img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ"></button>
-								</form>
+								<a href="{{config('services.chat_url')}}?userId={{$chat_user['id']}}&adminId={{$id}}">
+									<button type="submit" title="トーク" class="operation_icon redirect_btn">
+										<img src="{{ asset('img/icons8-message-24.png') }}" alt="メッセージ">
+									</button>
+								</a>
 								<button class="operation_icon js_edit_user_btn" data-id={{$chat_user["id"]}}><img src="{{asset("img/icons8-edit-24.png")}}" alt=""></button>
 								<button class="operation_icon js_block_btn" data-uuid="{{$chat_user["entity_uuid"]}}" data-name="{{$chat_user["line_name"]}}" data-id="{{$chat_user["id"]}}"><img src="{{asset("img/icons8-no-entry-24.png")}}" alt=""></button>
 							</td>

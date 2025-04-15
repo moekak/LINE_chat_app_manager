@@ -46,7 +46,6 @@ export const changeDisplayOrder = async (sender_id, receiver_id, sender_type) =>
 
                         //ユーザー管理に関連するモーダルの初期化
                         initializeUserModals(socket)
-                        await handleChatRedirect()
                         return 
                   }
             }
@@ -57,7 +56,6 @@ export const changeDisplayOrder = async (sender_id, receiver_id, sender_type) =>
 
             //ユーザー管理に関連するモーダルの初期化
             initializeUserModals(socket)
-            await handleChatRedirect()
       }
       
 }
@@ -249,17 +247,7 @@ export const initializeAccountStatusManager =()=>{
 }
 
 
-export const handleChatRedirect = async () => {
-      const redirect_btns = document.querySelectorAll(".js_redirect_btn");
-      redirect_btns.forEach((btn) => {
-            btn.addEventListener("click", async (e) => {
-                  let admin_id = e.currentTarget.getAttribute("data-admin-id")
-                  let user_id = e.currentTarget.getAttribute("data-user-id")
-                  e.preventDefault();
-                  await submitRedirectForm(admin_id, user_id);
-            });
-      });
-};
+
 
 
 

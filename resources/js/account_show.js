@@ -39,7 +39,6 @@ socket.on('user create', async(userData)=>{
       const parentElement = document.querySelector(".js_table");
       parentElement.insertAdjacentHTML("afterBegin",createMessageRowForFetch(userData, userData["account_id"], userData["entity_uuid"]));
       initializeUserModals(socket)
-      await handleChatRedirect()
 })
 
 
@@ -88,11 +87,6 @@ close_modal_by_click(modal, btn)
       
       new InfiniteScroll(element, base_url, parentElement, fileType)
 
-}
-
-//サイト遷移の処理
-{
-      handleChatRedirect()
 }
 
 

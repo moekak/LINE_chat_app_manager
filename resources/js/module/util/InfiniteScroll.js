@@ -58,7 +58,7 @@ class InfiniteScroll{
                                            //ユーザー管理に関連するモーダルの初期化
                                           initializeUserModals(socket)
                                           initializeSimpleBar()
-                                          await handleChatRedirect()
+                                    
                                     }else{
                                           response["accountData"].forEach((res)=>{
                                                 this.parentElement.insertAdjacentHTML("beforeend", createAccountDataRow(res, response["categories"]));
@@ -75,7 +75,7 @@ class InfiniteScroll{
                                           initializeSimpleBar()
 
                                           initializeSimpleBar()
-                                          await handleChatRedirect()
+                                    
 
                                     }
                               }
