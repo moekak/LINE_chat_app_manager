@@ -339,7 +339,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="template-title">テンプレート名</label>
-					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
+					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
 				</div>
 			
 				<div class="row">
@@ -427,7 +427,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="edit-template-title">テンプレート名</label>
-					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
+					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
 				</div>
 				<div class="row">
 					<div class="col">
