@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Log;
 
 class BroadcastMessageController extends Controller
 {
+
+    public function index(string $id){
+        $broadcastMessages = BroadcastMessage::getBroadcastMessage($id);
+        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages, "adminId" => $id]);
+    }
+
     public function store(Request $request, $admin_id){
         try{
 
@@ -162,4 +168,15 @@ class BroadcastMessageController extends Controller
         }
         
     }
+
+
+    public function searchByMessage(Request $request){
+        $search = $request->input("search");
+        $admin_id = $request->input("admin_id");
+
+        $broadcastMessage = BroadcastMessage::searchByMessage($search, $admin_id);
+        print_r($broadcastMessage);
+    }
+
+
 }

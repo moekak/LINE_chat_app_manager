@@ -17,4 +17,8 @@ class BroadcastImagesCropArea extends Model
         "height_percent",
         "url"
     ];
+
+    public function broadcastMessage(){
+        return $this->belongsTo(BroadcastMessage::class, "broadcast_message_id", "id");
+    }
 }

@@ -58,3 +58,7 @@ Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"])->name("c
 
 
 Route::delete("/template/delete", [MessageTemplate::class, "destroy"])->name("template.destory");
+
+
+Route::get("/broadcast/message/list/{id}", [BroadcastMessageController::class, "index"])->name("broadcast_message.list")->middleware("auth");
+Route::post("/search/broadcast/message", [BroadcastMessageController::class, "searchByMessage"])->name("search.message")->middleware("auth");
