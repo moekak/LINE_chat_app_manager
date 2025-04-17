@@ -75,9 +75,9 @@ class LineAccountController extends Controller
         // 予備アカウントを取得する(LINEAccount)
         $second_accounts = LineAccount::where("user_id", $user->id)->whereIn("account_status", ["2", "3"])->get();
         // アカウントのステータスの種類をすべて取得(キャッシュ取得)
-        $account_status = Cache::remember('account_status', 60*24, function() {
-            return AccountStatus::all();
-        });
+        $account_status =AccountStatus::all();
+
+
 
         return view("admin.dashboard", [ "active_accounts" => $active_accounts, "inactive_accounts" => $inactive_accounts, "suspended_accounts" => $suspended_accounts, "banned_accounts" => $banned_accounts, "user" => $user, "account_status" => $account_status, "second_accounts" => $second_accounts]);
     }
@@ -121,7 +121,6 @@ class LineAccountController extends Controller
             SecondAccount::create($second_account_data);
         }
 
-        // // node.jsに通知を送信
         return redirect()->route("dashboard")->with("success", "アカウントの保存に成功しました。");
     }
 
@@ -131,6 +130,7 @@ class LineAccountController extends Controller
         $account_name = LineAccount::where("id", $id)->value("account_name");
         $title = PageTitle::where("admin_id", $id)->first();
         $line_display_text = LineDisplayText::where("admin_id", $id)->select("id", "text", "is_show")->first();
+        
         $users = ChatUser::whereNotIn('chat_users.id', function($query) {
             $query->select('chat_user_id')
                 ->from('block_chat_users')
@@ -149,7 +149,7 @@ class LineAccountController extends Controller
                 'chat_users.created_at',
                 'chat_users.line_name',
                 'chat_users.id',
-                DB::raw('COALESCE(user_message_reads.unread_count, 0) as unread_count')
+                DB::raw('COALESCE(MAX(user_message_reads.unread_count), 0) as unread_count')
             ])
             ->selectSub(
                 DB::table('user_entities')
@@ -167,6 +167,14 @@ class LineAccountController extends Controller
                     ->limit(1),
                 'latest_message_date'
             )
+            ->groupBy([
+                'chat_users.account_id',
+                'chat_users.created_at',
+                'chat_users.line_name',
+                'chat_users.id',
+                'entity_uuid',
+                'latest_message_date'
+            ])
             ->orderBy('unread_count', 'desc') // 未読数が多い順に優先
             ->orderBy('chat_users.created_at', 'desc') // 未読数が同じなら新しい順
             ->take(self::MESSAGES_PER_PAGE)
@@ -176,8 +184,6 @@ class LineAccountController extends Controller
             // メッセージテンプレートの取得
             $templates = MessageTemplateContent::getMessageTemplatesForAdmin($id);
             $categories = MessageTemplatesCategory::where("admin_id", $id)->select("id", "category_name")->get();
-
-
 
         return view("admin.account_show", ["categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
     }

@@ -9,6 +9,7 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
       <link rel="stylesheet" href="{{ asset('css/common.css') }}">
       <link rel="shortcut icon" href="{{asset("img/icons8-chat-32.png")}}">
+      @yield('style')
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"/>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
       <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
@@ -60,6 +61,9 @@
                               </div>
                               <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_create_template_btn">メッセージテンプレート作成</p>
+                              </div>
+                              <div class="nav__item-option">
+                                    <a href="{{route("broadcast_message.list", ["id" => Route::current()->parameter('id')])}}"  class="nav__item-option__txt txt-gray" id="js_update_line_btn" data-id="{{$user->id}}">一斉配信履歴</a>
                               </div>
                         @endif
                         @if (Route::currentRouteName() == "dashboard")
