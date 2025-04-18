@@ -32,7 +32,6 @@ class TemplateBlockManager {
         const blockId = `block-${this.blockCounter++}`;
         const textBlock = document.createElement('div');
         textBlock.className = 'content-block text-block';
-        textBlock.draggable = true;
         textBlock.dataset.type = 'text';
         textBlock.dataset.id = blockId;
         textBlock.innerHTML = createTextBlock();
@@ -46,7 +45,7 @@ class TemplateBlockManager {
         const blockId = `block-${this.blockCounter++}`;
         const imageBlock = document.createElement('div');
         imageBlock.className = 'content-block image-block';
-        imageBlock.draggable = true;
+
         imageBlock.dataset.type = 'image';
         imageBlock.dataset.id = blockId;
         imageBlock.innerHTML = createImageBlock(this.blockCounter);

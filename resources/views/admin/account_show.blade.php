@@ -508,7 +508,7 @@
 												{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
 												<input type="hidden" name="id" value="{{ $category->id }}">
 												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}">
+												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}" maxlength="255">
 											</td>
 											<td class="category-actions">
 												<button type="button" class="btn btn-edit edit-category-btn" title="編集">
