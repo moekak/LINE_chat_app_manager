@@ -72,7 +72,7 @@ class MessageTemplateFormController{
 
       setDataToEditInputs(){
             this.editForm.classList.remove("hidden")
-            this.editTemplateName.value = this.templateNameElement.innerHTML
+            this.editTemplateName.value = this.templateNameElement.dataset.name
             this.editCategories.forEach((category)=>{
                   if(category.value == this.templateCategoryElement.dataset.id){
                         category.selected = true

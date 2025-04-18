@@ -339,7 +339,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="template-title">テンプレート名</label>
-					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
+					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
 				</div>
 			
 				<div class="row">
@@ -427,7 +427,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="edit-template-title">テンプレート名</label>
-					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" max="255" required>
+					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
 				</div>
 				<div class="row">
 					<div class="col">
@@ -508,7 +508,7 @@
 												{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
 												<input type="hidden" name="id" value="{{ $category->id }}">
 												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}">
+												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}" maxlength="255">
 											</td>
 											<td class="category-actions">
 												<button type="button" class="btn btn-edit edit-category-btn" title="編集">
