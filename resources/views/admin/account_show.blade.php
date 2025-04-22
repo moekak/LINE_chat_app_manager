@@ -295,7 +295,7 @@
 	<div>
 		<!-- モーダルヘッダー -->
 		<div class="modal-header">
-			<h2>メッセージテンプレート作成</h2>
+			<h2>テンプレート作成</h2>
 			{{-- <button class="close-btn">&times;</button> --}}
 		</div>
 

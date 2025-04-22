@@ -7,7 +7,8 @@ class TemplateBlockManager {
         if (TemplateBlockManager.instance) {
             return TemplateBlockManager.instance;
         }
-        
+
+    
         // 新しいインスタンスを作成
         TemplateBlockManager.instance = this;
         
@@ -27,6 +28,7 @@ class TemplateBlockManager {
         this.blockCounter = 1
     }
 
+    
 
     addTextBlock(contentBlocksContainer) {
         const blockId = `block-${this.blockCounter++}`;
@@ -55,8 +57,6 @@ class TemplateBlockManager {
         const fileId = imageBlock.querySelector(".file-input").id
         document.querySelector(".image_edit_modal").querySelector(".change_img").htmlFor = fileId
         if(hasData){
-            console.log("hasDataaaa");
-            
             document.querySelector(".change_img").id = "fileInputEdit"
         }
         

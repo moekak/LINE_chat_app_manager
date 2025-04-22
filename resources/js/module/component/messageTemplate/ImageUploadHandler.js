@@ -26,10 +26,6 @@ class ImageUploadHandler{
                   const errors = []
                   if (!file) return;
 
-
-                  console.log("wey");
-                  
-
                   if(!FileUploader.isAllowedType(file.type)){
 
                         errors.push("許可されているファイル形式は JPG, PNGのみです")

@@ -81,6 +81,10 @@ input[type="text"] {
       font-weight: bold;
       transition: background-color 0.3s;
 }
+.button.disabled{
+      opacity: 50%;
+      pointer-events: none;
+}
 
 .button:hover {
       background-color: #3a5fc2;
@@ -339,4 +343,25 @@ input[type="checkbox"] {
       .message-content {
             padding: 0 10px 15px 60px;
       }
+}
+
+
+.reset-button {
+      padding: 10px 15px;
+      background-color: #f0f0f0;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+      background-color: #e0e0e0;
+}
+.broadcast_message_img{
+      width: 100%;
+      max-width: 281px;
 }

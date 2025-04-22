@@ -9,21 +9,25 @@
         <form class="search-row" method="POST" action="{{route("search.message")}}">
             @csrf
             <div class="search-input">
-                <input type="text" name="search" placeholder="メッセージを検索...">
+                <input type="text" name="search" placeholder="メッセージを検索..." id="search_input">
                 <input type="hidden" name="admin_id" value="{{$adminId}}">
                 <span class="search-icon">🔍</span>
             </div>
-            <button class="submit">検索</button>
+            <button class="submit button disabled js_message_search">検索</button>
+            <a href="{{ route('broadcast_message.list', ['id' => $adminId]) }}" class="reset-button">すべて表示</a>
         </form>
         
-        <div class="filter-row">
+        <form class="filter-row" method="POST" action="{{route("search.date")}}">
+            @csrf
             <div class="filter-label">配信期間:</div>
             <div class="date-range">
-                <input type="date">
+                <input type="date" name="start_date" class="js_start_date">
                 <span>〜</span>
-                <input type="date">
+                <input type="date" name="end_date"  class="js_end_date">
+                <input type="hidden" name="admin_id" value="{{$adminId}}">
             </div>
-        </div>
+            <button class="submit button disabled js_date_search">検索</button>
+        </form>
     </div>
 
     
@@ -42,7 +46,7 @@
                         <div>
                             <span class="toggle-icon">▶</span>
                             {{ $messages[0]->resource_type == "broadcast_text" ? 
-                            (strlen($messages[0]->resource) > 100 ? substr($messages[0]->resource, 0, 100) . '...' : $messages[0]->resource) 
+                            (mb_strlen($messages[0]->resource) > 100 ? mb_substr($messages[0]->resource, 0, 100) . '...' : $messages[0]->resource) 
                             : "画像" }}
                         </div>
                     </div>
@@ -53,7 +57,7 @@
                                     @if ($message->resource_type === "broadcast_text")
                                         <p>{{$message->resource}}</p>
                                     @elseif($message->resource_type === "broadcast_img")
-                                        <img src="{{ asset('storage/images/'.$message->resource) }}">
+                                        <img src="{{ Storage::disk('s3')->url('images/' . $message->resource) }}" alt="" class="broadcast_message_img">
                                     @endif
                                     
                                     <span class="message-time">{{$message->created_at->format("H:i")}}</span>
@@ -68,16 +72,9 @@
             
         </div>
     </div>
-    
-    <div class="pagination">
-        <div class="page-item">＜</div>
-        <div class="page-item active">1</div>
-        <div class="page-item">2</div>
-        <div class="page-item">3</div>
-        <div class="page-item">4</div>
-        <div class="page-item">5</div>
-        <div class="page-item">＞</div>
-    </div>
+    @if(isset($paginator))
+        {{ $paginator->links('pagination::custom') }}
+    @endif
 </div>
 @endsection
 
@@ -103,36 +100,38 @@
             }
         });
     });
+
+
+    const messageSearchBtn = document.querySelector(".js_message_search");
+    const dateSearchBtn = document.querySelector(".js_date_search");
+
+    document.getElementById("search_input").addEventListener("input", (e)=>{
+        const value = e.target.value
+        messageSearchBtn.classList.toggle("disabled", value.length <= 0)
+    })
+
+
+    let hasStartValue = false
+    let hasEndValue = false
+    const startDate = document.querySelector(".js_start_date")
+    const endDate = document.querySelector(".js_end_date")
+
+    startDate.addEventListener("input", (e)=>{
+        const value = e.target.value
+        hasStartValue = value.length > 0
+        hasValidData()
+    })
     
-    // チェックボックスのクリックイベントの伝播を停止
-    document.querySelectorAll('.message-checkbox input[type="checkbox"]').forEach(function(checkbox) {
-        checkbox.addEventListener('click', function(e) {
-            e.stopPropagation();
-            
-            // 全選択の状態を更新
-            updateSelectAllState();
-        });
-    });
-    
-    // 全選択のチェックボックスの状態を更新する関数
-    function updateSelectAllState() {
-        let allCheckboxes = document.querySelectorAll('.message-item input[type="checkbox"]');
-        let checkedCheckboxes = document.querySelectorAll('.message-item input[type="checkbox"]:checked');
-        
-        document.getElementById('select-all').checked = allCheckboxes.length === checkedCheckboxes.length;
+    endDate.addEventListener("input", (e)=>{
+        const value = e.target.value
+        hasEndValue = value.length > 0
+        hasValidData()
+    })
+
+    function hasValidData(){
+        dateSearchBtn.classList.toggle("disabled", !hasStartValue || !hasEndValue)
     }
     
-    // ページネーション機能（デモ用）
-    document.querySelectorAll('.page-item').forEach(function(item) {
-        item.addEventListener('click', function() {
-            // すべてのページアイテムからアクティブクラスを削除
-            document.querySelectorAll('.page-item').forEach(function(pageItem) {
-                pageItem.classList.remove('active');
-            });
-            
-            // クリックされたアイテムにアクティブクラスを追加
-            this.classList.add('active');
-        });
-    });
+
 </script>
 @endsection

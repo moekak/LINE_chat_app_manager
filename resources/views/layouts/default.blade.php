@@ -60,7 +60,7 @@
                                     <p class="nav__item-option__txt txt-gray" id="js_create_text_btn">固定テキスト設定</p>
                               </div>
                               <div class="nav__item-option">
-                                    <p class="nav__item-option__txt txt-gray" id="js_create_template_btn">メッセージテンプレート作成</p>
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_template_btn">テンプレート作成</p>
                               </div>
                               {{-- <div class="nav__item-option">
                                     <a href="{{route("broadcast_message.list", ["id" => Route::current()->parameter('id')])}}"  class="nav__item-option__txt txt-gray" id="js_update_line_btn" data-id="{{$user->id}}">一斉配信履歴</a>

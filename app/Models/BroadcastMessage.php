@@ -37,11 +37,40 @@ class BroadcastMessage extends Model
         return $query->with("broadcastMessageGroup");
     }
 
+    public function scopeWithDtartDate($query, $start_date){
+        $query->whereDate("created_at", ">=", $start_date);
+    }
+    public function scopeWithEndDate($query, $end_date){
+        $query->whereDate("created_at", "<=", $end_date);
+    }
+
     public static function getBroadcastMessage($admin_id){
-        return BroadcastMessage::OfAdmin($admin_id)->OfWithGroup()->get()->groupBy("broadcast_message_group_id");
+        $paginator = BroadcastMessage::OfAdmin($admin_id)->OfWithGroup()->paginate(7);
+        $messages = collect($paginator->items())->groupBy("broadcast_message_group_id");
+        
+        return [
+            'messages' => $messages,
+            'paginator' => $paginator
+        ];
+        
     }
 
     public static function searchByMessage($search, $admin_id){
-        return BroadcastMessage::OfAdmin($admin_id)->OfSearch($search)->get();
+        $paginator = BroadcastMessage::OfAdmin($admin_id)->paginate(7);
+        $messages = collect($paginator->items())->OfWithGroup()->OfSearch($search)->groupBy("broadcast_message_group_id");
+        
+        return [
+            'messages' => $messages,
+            'paginator' => $paginator
+        ];
+    }
+    public static function searchByDate($start_date, $end_date,  $admin_id){
+        $paginator = BroadcastMessage::OfAdmin($admin_id)->OfWithGroup()->WithDtartDate($start_date)->WithEndDate($end_date)->paginate(7);
+        $messages = collect($paginator->items())->groupBy("broadcast_message_group_id");
+        
+        return [
+            'messages' => $messages,
+            'paginator' => $paginator
+        ];
     }
 }

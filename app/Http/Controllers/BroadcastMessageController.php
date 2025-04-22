@@ -20,7 +20,7 @@ class BroadcastMessageController extends Controller
 
     public function index(string $id){
         $broadcastMessages = BroadcastMessage::getBroadcastMessage($id);
-        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages, "adminId" => $id]);
+        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $id]);
     }
 
     public function store(Request $request, $admin_id){
@@ -174,8 +174,18 @@ class BroadcastMessageController extends Controller
         $search = $request->input("search");
         $admin_id = $request->input("admin_id");
 
-        $broadcastMessage = BroadcastMessage::searchByMessage($search, $admin_id);
-        print_r($broadcastMessage);
+        $broadcastMessages = BroadcastMessage::searchByMessage($search, $admin_id);
+        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
+    }
+
+    public function searchByDate(Request $request){
+        $start_date = $request->input("start_date");
+        $end_date = $request->input("end_date");
+        $admin_id = $request->input("admin_id");
+
+
+        $broadcastMessages = BroadcastMessage::searchByDate($start_date, $end_date, $admin_id);
+        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
     }
 
 

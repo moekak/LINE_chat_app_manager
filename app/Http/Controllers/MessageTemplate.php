@@ -70,7 +70,6 @@ class MessageTemplate extends Controller
     }
 
     public function store(Request $request){
-        Log::debug($request->all());
         try{
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
@@ -131,18 +130,14 @@ class MessageTemplate extends Controller
         
                 // // 画像ファイルの取り出し
                 // 画像コンテンツの処理 - 個別に挿入してIDを取得
-                Log::debug($imageContents);
                 if(isset($imageContents)){
                     foreach ($imageContents as $index => $imageData) {
                         $fileKey = "image_path.{$index}.content";
                         if ($request->hasFile($fileKey)) {
                             $file = $request->file($fileKey);
-                            Log::debug($file);
+
                             $imageService = new ImageService();
                             $fileName = $imageService->saveImage($file);
-
-                            Log::debug($fileName);
-                            
                             // 画像コンテンツを個別に挿入してIDを取得
                             $contentId = DB::table("message_template_contents")->insertGetId([
                                 "template_id" => $messageTemplate->id,
@@ -191,7 +186,6 @@ class MessageTemplate extends Controller
 
     public function update(Request $request){
         try{
-            Log::debug($request->all());
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
                     "category_id" => ["required", "string", "exists:message_templates_categories,id"],

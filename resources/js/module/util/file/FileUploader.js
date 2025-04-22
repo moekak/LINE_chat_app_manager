@@ -414,10 +414,8 @@ class FileUploader{
         // 各イベントリスナーでボタン状態を更新
         this.choices.forEach(choice => {
             choice.addEventListener("change", () => {
-                console.log("イベント発火：", choice.value);
                 // ここで直接処理を書いてみる
                 const isChoiceOn = choice.checked && choice.value === "on";
-                console.log("isChoiceOn:", isChoiceOn);
             });
         });
         this.urlInput.addEventListener("input", boundUpdateButtonState);
