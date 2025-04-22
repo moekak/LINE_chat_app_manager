@@ -378,4 +378,25 @@ class MessageTemplate extends Controller
             Log::debug($e);
         }
     }
+
+    
+
+    public function updateOrder(Request $request){
+        print_r($request->all());
+        exit;
+        $orders = $request->input("template_order");
+        $ids = array_values($orders);
+        $groups = MessageTemplatesGroup::whereIn('id', $ids)->get();
+        
+        foreach($orders as $index => $id){
+            $group = $groups->where('id', $id)->first();
+            if($group){
+                $group->display_order = $index;
+                $group->save();
+            }
+        }
+
+        return redirect()->route("account.show", ["id" => $request->input("admin_id")])->with("success", "カテゴリーの更新に成功しました。");  
+
+    }
 }

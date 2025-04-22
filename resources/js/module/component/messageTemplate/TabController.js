@@ -124,6 +124,7 @@ class TabController {
     #filterCategory(){
         const categoryBtns = document.querySelectorAll(".category-btn")
         const templateItems = document.querySelectorAll(".template-item")
+        const wrapper = document.getElementById("js_template_list")
         categoryBtns.forEach((btn)=>{
             btn.addEventListener("click",()=>{
                 categoryBtns.forEach(btn => btn.classList.remove("active"))
@@ -134,10 +135,56 @@ class TabController {
                     templateItems.forEach(item => item.classList.remove("hidden"))
                     return
                 }
-                const targetTemplateItems = Array.from(templateItems).filter(item => item.dataset.id === category)
-                const otherTemplateItems = Array.from(templateItems).filter(item => item.dataset.id !== category)
-                otherTemplateItems.forEach(item => item.classList.add("hidden"))
-                targetTemplateItems.forEach(item => item.classList.remove("hidden"))
+
+                
+                // 選択されたカテゴリーの要素を取得し並び替え
+                const filteredItems = Array.from(templateItems).filter(item => item.dataset.id === category);
+                const sortedItems = filteredItems.sort((a, b) => {
+                    const orderA = parseInt(a.dataset.order) || 0;
+                    const orderB = parseInt(b.dataset.order) || 0;
+                    return orderA - orderB;
+                });
+
+                // 非表示にするアイテム
+                templateItems.forEach(item => {
+                    if (item.dataset.id !== category) {
+                        item.classList.add("hidden");
+                    }
+                });
+
+                // フォームデータを保持しながら並び替える
+                // クローンせずに一時的なデータ保持
+                const formData = new Map();
+                
+                // 各要素のフォームデータを一時保存
+                sortedItems.forEach(item => {
+                    const inputs = item.querySelectorAll('input, select, textarea');
+                    const itemData = new Map();
+                    
+                    inputs.forEach(input => {
+                        if (input.name) {
+                            itemData.set(input.name, input.value);
+                        }
+                    });
+                    
+                    formData.set(item, itemData);
+                    item.classList.remove("hidden");
+                });
+                
+                // 並び替えた順にDOMに再追加
+                sortedItems.forEach(item => {
+                    wrapper.appendChild(item);
+                    
+                    // フォームデータを復元
+                    const itemData = formData.get(item);
+                    if (itemData) {
+                        itemData.forEach((value, name) => {
+                            const input = item.querySelector(`[name="${name}"]`);
+                            if (input) input.value = value;
+                        });
+                    }
+                });
+
 
             })
         })

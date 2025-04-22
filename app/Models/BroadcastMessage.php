@@ -37,40 +37,84 @@ class BroadcastMessage extends Model
         return $query->with("broadcastMessageGroup");
     }
 
-    public function scopeWithDtartDate($query, $start_date){
+    public function scopeWithStartDate($query, $start_date){
         $query->whereDate("created_at", ">=", $start_date);
     }
     public function scopeWithEndDate($query, $end_date){
         $query->whereDate("created_at", "<=", $end_date);
     }
-
-    public static function getBroadcastMessage($admin_id){
-        $paginator = BroadcastMessage::OfAdmin($admin_id)->OfWithGroup()->paginate(7);
-        $messages = collect($paginator->items())->groupBy("broadcast_message_group_id");
+    public static function getBroadcastMessage($admin_id)
+    {
+        // グループIDをまず取得
+        $groupIds = BroadcastMessage::OfAdmin($admin_id)
+            ->select('broadcast_message_group_id')
+            ->groupBy('broadcast_message_group_id')
+            ->paginate(7);
+        
+        // 取得したグループIDに基づいてメッセージを取得
+        $groupIdsArray = collect($groupIds->items())->pluck('broadcast_message_group_id')->toArray();
+        
+        $messages = BroadcastMessage::OfAdmin($admin_id)
+            ->OfWithGroup()
+            ->whereIn('broadcast_message_group_id', $groupIdsArray)
+            ->get()
+            ->groupBy('broadcast_message_group_id');
         
         return [
             'messages' => $messages,
-            'paginator' => $paginator
+            'paginator' => $groupIds
         ];
-        
     }
 
-    public static function searchByMessage($search, $admin_id){
-        $paginator = BroadcastMessage::OfAdmin($admin_id)->paginate(7);
-        $messages = collect($paginator->items())->OfWithGroup()->OfSearch($search)->groupBy("broadcast_message_group_id");
+    public static function searchByMessage($search, $admin_id)
+    {
+        // グループIDをまず取得
+        $groupIds = BroadcastMessage::OfAdmin($admin_id)
+            ->OfSearch($search)
+            ->select('broadcast_message_group_id')
+            ->groupBy('broadcast_message_group_id')
+            ->paginate(7);
+        
+        // 取得したグループIDに基づいてメッセージを取得
+        $groupIdsArray = collect($groupIds->items())->pluck('broadcast_message_group_id')->toArray();
+        
+        $messages = BroadcastMessage::OfAdmin($admin_id)
+            ->OfWithGroup()
+            ->OfSearch($search)
+            ->whereIn('broadcast_message_group_id', $groupIdsArray)
+            ->get()
+            ->groupBy('broadcast_message_group_id');
         
         return [
             'messages' => $messages,
-            'paginator' => $paginator
+            'paginator' => $groupIds
         ];
     }
-    public static function searchByDate($start_date, $end_date,  $admin_id){
-        $paginator = BroadcastMessage::OfAdmin($admin_id)->OfWithGroup()->WithDtartDate($start_date)->WithEndDate($end_date)->paginate(7);
-        $messages = collect($paginator->items())->groupBy("broadcast_message_group_id");
+    
+    public static function searchByDate($start_date, $end_date, $admin_id)
+    {
+        // タイプミスを修正：WithDtartDate → WithStartDate
+        $groupIds = BroadcastMessage::OfAdmin($admin_id)
+            ->withStartDate($start_date)
+            ->withEndDate($end_date)
+            ->select('broadcast_message_group_id')
+            ->groupBy('broadcast_message_group_id')
+            ->paginate(7);
+        
+        // 取得したグループIDに基づいてメッセージを取得
+        $groupIdsArray = collect($groupIds->items())->pluck('broadcast_message_group_id')->toArray();
+        
+        $messages = BroadcastMessage::OfAdmin($admin_id)
+            ->OfWithGroup()
+            ->withStartDate($start_date)
+            ->withEndDate($end_date)
+            ->whereIn('broadcast_message_group_id', $groupIdsArray)
+            ->get()
+            ->groupBy('broadcast_message_group_id');
         
         return [
             'messages' => $messages,
-            'paginator' => $paginator
+            'paginator' => $groupIds
         ];
     }
 }

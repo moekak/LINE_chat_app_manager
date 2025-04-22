@@ -42,6 +42,7 @@ class MessageTemplateContent extends Model
             return [
                 "category_id" => $firstItem->messageTemplate->messageTemplatesCategory->id,
                 "group_id" => $firstItem->messageTemplate->messageTemplatesGroup->id,
+                "display_order" => $firstItem->messageTemplate->messageTemplatesGroup->display_order,
                 'template_id' => $firstItem->template_id,
                 'template_name' => $firstItem->messageTemplate->template_name,
                 'category_name' => $firstItem->messageTemplate->messageTemplatesCategory->category_name,
@@ -65,7 +66,7 @@ class MessageTemplateContent extends Model
                 })->sortBy('display_order')->values()->all()
             ];
         })
-        ->sortByDesc('created_at') // created_at の降順で並べ替え
+        ->sortByDesc('display_order') // created_at の降順で並べ替え
         ->values()
         ->all();
     }

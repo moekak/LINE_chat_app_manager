@@ -817,6 +817,157 @@ p, ul {
     border-bottom: 2px solid var(--primary-color);
 }
 
+/* 矢印ボタンによる順番変更関連のスタイル */
+.template-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: white;
+    transition: background-color 0.2s;
+}
+
+.template-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.template-order-controls {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    gap: 5px;
+}
+
+.order-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light-color, #f0f0f0);
+    border: 1px solid var(--border-color, #ddd);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding: 0;
+}
+
+.order-btn:hover {
+    background-color: var(--primary-light, #e6f0ff);
+    color: var(--primary-color);
+}
+
+.order-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.move-up-btn {
+    margin-bottom: 2px;
+}
+
+.template-content {
+    flex: 1;
+}
+
+.template-title {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.template-category {
+    display: inline-block;
+    background-color: var(--primary-light, #e6f0ff);
+    color: var(--primary-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+/* .template-text {
+    font-size: 13px;
+    color: var(--text-secondary, #666);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+} */
+
+.template-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.edit-btn {
+    color: var(--primary-color);
+}
+
+.delete-btn {
+    color: var(--danger-color, #dc3545);
+}
+
+/* 並び順保存ボタン */
+.order-save-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.order-save-container .btn svg {
+    margin-right: 8px;
+}
+
+/* 表示順変更の説明 */
+.order-instructions {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-light-color, #f5f5f5);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    color: var(--text-secondary, #666);
+    font-size: 14px;
+}
+
+.order-instructions svg {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.template-list-container {
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.template-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
 /* フォーム要素のスタイル */
 .form-group {
     margin-bottom: 20px;
@@ -1154,7 +1305,7 @@ textarea {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 500px;
+    max-width: 440px;
 }
 
 .template-actions {

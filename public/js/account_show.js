@@ -5987,19 +5987,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// export default {
-//     socketUrl: 'https://chat-socket.info:3000',
-
-// };
-
-// export const SYSTEM_URL = {
-//     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
-//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-//     CHAT_URL : "https://chat-system.info/admin/chat",
-//     CHAT_BASE_URL:"https://chat-system.info"
-// };
-
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://chat-socket.info:3000'
+});
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat-system.info/admin/chat",
+  CHAT_BASE_URL: "https://chat-system.info"
+};
 var ERROR_TEXT = {
   TEMPLATE_NAME_EMPTY_ERROR: "テンプレート名を入力してください",
   CATEGORY_EMPTY_ERROR: "カテゴリーを選択してください",
@@ -6014,18 +6011,19 @@ var SUCCESS_TEXT = {
 };
 
 // // // 開発用
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
-});
+// export default {
+//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
 
-// // 開発用
-var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-  CHAT_URL: "https://chat.line-chat-system-dev.tokyo/admin/chat",
-  CHAT_BASE_URL: "https://chat.line-chat-system-dev.tokyo"
-};
+// };
+
+// // // 開発用
+// export const SYSTEM_URL = {
+//     IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
+//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/admin/chat",
+//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+// };
 
 /***/ }),
 
@@ -6971,7 +6969,7 @@ var createImageBlock = function createImageBlock(blockCounter) {
   return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
 };
 var createMessageTemplate = function createMessageTemplate(templates) {
-  return templates.map(function (template) {
+  return templates.map(function (template, index) {
     var categoryName = "";
     if (template.category_name.length > 40) {
       categoryName = template.category_name.substring(0, 40) + '...';
@@ -6984,9 +6982,9 @@ var createMessageTemplate = function createMessageTemplate(templates) {
     } else {
       templateName = template.template_name;
     }
-    return "\n            <div class=\"template-item\" data-id=".concat(template["category_id"], ">\n                  <div class=\"template-content\">\n                        ").concat(template.contents.map(function (content) {
-      return "\n                              <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                              </div>\n                        ");
-    }).join(''), "\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                        <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                        <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                        <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                        <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                  </div>\n                  <div class=\"template-actions\">\n                        <button class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                              </svg>\n                        </button>\n                        <button class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                              <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            ");
+    return "\n                  <div class=\"template-item\" data-id=".concat(template["category_id"], " data-order=\"").concat(template["display_order"], "\"\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" name=\"template_order[]\">\n                        <div class=\"template-order-controls\">\n                              <button type=\"button\" class=\"order-btn move-up-btn\" title=\"\u4E0A\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"18 15 12 9 6 15\"></polyline>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"order-btn move-down-btn\" title=\"\u4E0B\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"6 9 12 15 18 9\"></polyline>\n                                    </svg>\n                              </button>\n                        </div>\n                        <div class=\"template-content\">\n                              ").concat(template.contents.map(function (content) {
+      return "\n                                    <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
+    }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                        </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
@@ -6996,7 +6994,7 @@ var crateCategoryButtons = function crateCategoryButtons(category) {
   } else {
     name = category["category_name"];
   }
-  return "\n            <button class=\"category-btn\" data-category=".concat(category["id"], " title=\"").concat(category["category_name"], "\">").concat(name, "</button>\n      ");
+  return "\n            <button type=\"button\" class=\"category-btn\" data-category=".concat(category["id"], " title=\"").concat(category["category_name"], "\">").concat(name, "</button>\n      ");
 };
 
 /***/ }),
@@ -7277,72 +7275,71 @@ function _handleFileInputChange(fileInput, errorTxt) {
             }
             return _context.abrupt("return");
           case 6:
-            console.log("wey");
             if (_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAllowedType(file.type)) {
-              _context.next = 16;
+              _context.next = 15;
               break;
             }
             errors.push("許可されているファイル形式は JPG, PNGのみです");
             if (!(document.querySelector(".change_img").id == "fileInputEdit")) {
-              _context.next = 16;
+              _context.next = 15;
               break;
             }
             document.querySelector(".js_image_error").classList.remove("hidden");
             document.querySelector(".js_image_error").innerHTML = "許可されているファイル形式は JPG, PNGのみです";
             _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
             if (!(document.getElementById("js_image_edit_modal").classList.contains("hidden") == false)) {
-              _context.next = 16;
+              _context.next = 15;
               break;
             }
             errors.length = 0;
             return _context.abrupt("return");
-          case 16:
+          case 15:
             if (_util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"].isCorrectSize(file.size)) {
-              _context.next = 25;
+              _context.next = 24;
               break;
             }
             errors.push("画像サイズが大きすぎます。5MB以内で指定してください");
             if (!(document.querySelector(".change_img").id == "fileInputEdit")) {
-              _context.next = 25;
+              _context.next = 24;
               break;
             }
             document.querySelector(".js_image_error").classList.remove("hidden");
             document.querySelector(".js_image_error").innerHTML = "画像サイズが大きすぎます。5MB以内で指定してください";
             _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].showCropperSetting();
             if (!(document.getElementById("js_image_edit_modal").classList.contains("hidden") == false)) {
-              _context.next = 25;
+              _context.next = 24;
               break;
             }
             errors.length = 0;
             return _context.abrupt("return");
-          case 25:
+          case 24:
             if (!(errors.length > 0)) {
-              _context.next = 32;
+              _context.next = 31;
               break;
             }
             dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
             dataValidator.displayErrorList(errors);
             fileInput.value = "";
             return _context.abrupt("return");
-          case 32:
+          case 31:
             _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_7__["default"].initializeErrorList();
-          case 33:
+          case 32:
             // // ここにファイルアップロードやその他の処理を追加できます
             errorElement = document.querySelector(".js_broadcast_error");
             imageErrorElement = document.querySelector(".js_image_error");
             fileUploader = new _util_file_FileUploader_js__WEBPACK_IMPORTED_MODULE_0__["default"](file, errorTxt, errorElement, imageErrorElement, true, e.target, document.getElementById("js_template_modal"));
             (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.close_image_edit_modal)(e.target);
             document.querySelector(".change_img").id = "fileInputEdit";
-            _context.next = 40;
+            _context.next = 39;
             return fileUploader.fileOperation();
-          case 40:
+          case 39:
             // 画像プレビューを設定
 
             // ドラッグ＆ドロップの初期化
             _DragAndDrop_js__WEBPACK_IMPORTED_MODULE_2__["default"].dragAndDrop("accordion", true);
             _broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance("js_accordion_wrapper", "accordion", _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_5__.API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
             e.target.value = '';
-          case 43:
+          case 42:
           case "end":
             return _context.stop();
         }
@@ -7802,6 +7799,7 @@ var TabController = /*#__PURE__*/function () {
 function _filterCategory() {
   var categoryBtns = document.querySelectorAll(".category-btn");
   var templateItems = document.querySelectorAll(".template-item");
+  var wrapper = document.getElementById("js_template_list");
   categoryBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
       categoryBtns.forEach(function (btn) {
@@ -7815,17 +7813,53 @@ function _filterCategory() {
         });
         return;
       }
-      var targetTemplateItems = Array.from(templateItems).filter(function (item) {
+
+      // 選択されたカテゴリーの要素を取得し並び替え
+      var filteredItems = Array.from(templateItems).filter(function (item) {
         return item.dataset.id === category;
       });
-      var otherTemplateItems = Array.from(templateItems).filter(function (item) {
-        return item.dataset.id !== category;
+      var sortedItems = filteredItems.sort(function (a, b) {
+        var orderA = parseInt(a.dataset.order) || 0;
+        var orderB = parseInt(b.dataset.order) || 0;
+        return orderA - orderB;
       });
-      otherTemplateItems.forEach(function (item) {
-        return item.classList.add("hidden");
+
+      // 非表示にするアイテム
+      templateItems.forEach(function (item) {
+        if (item.dataset.id !== category) {
+          item.classList.add("hidden");
+        }
       });
-      targetTemplateItems.forEach(function (item) {
-        return item.classList.remove("hidden");
+
+      // フォームデータを保持しながら並び替える
+      // クローンせずに一時的なデータ保持
+      var formData = new Map();
+
+      // 各要素のフォームデータを一時保存
+      sortedItems.forEach(function (item) {
+        var inputs = item.querySelectorAll('input, select, textarea');
+        var itemData = new Map();
+        inputs.forEach(function (input) {
+          if (input.name) {
+            itemData.set(input.name, input.value);
+          }
+        });
+        formData.set(item, itemData);
+        item.classList.remove("hidden");
+      });
+
+      // 並び替えた順にDOMに再追加
+      sortedItems.forEach(function (item) {
+        wrapper.appendChild(item);
+
+        // フォームデータを復元
+        var itemData = formData.get(item);
+        if (itemData) {
+          itemData.forEach(function (value, name) {
+            var input = item.querySelector("[name=\"".concat(name, "\"]"));
+            if (input) input.value = value;
+          });
+        }
       });
     });
   });
@@ -7979,7 +8013,6 @@ var TemplateBlockManager = /*#__PURE__*/function () {
       var blockId = "block-".concat(this.blockCounter++);
       var textBlock = document.createElement('div');
       textBlock.className = 'content-block text-block';
-      textBlock.draggable = true;
       textBlock.dataset.type = 'text';
       textBlock.dataset.id = blockId;
       textBlock.innerHTML = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createTextBlock)();
@@ -7993,7 +8026,6 @@ var TemplateBlockManager = /*#__PURE__*/function () {
       var blockId = "block-".concat(this.blockCounter++);
       var imageBlock = document.createElement('div');
       imageBlock.className = 'content-block image-block';
-      imageBlock.draggable = true;
       imageBlock.dataset.type = 'image';
       imageBlock.dataset.id = blockId;
       imageBlock.innerHTML = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_0__.createImageBlock)(this.blockCounter);
@@ -8001,7 +8033,6 @@ var TemplateBlockManager = /*#__PURE__*/function () {
       var fileId = imageBlock.querySelector(".file-input").id;
       document.querySelector(".image_edit_modal").querySelector(".change_img").htmlFor = fileId;
       if (hasData) {
-        console.log("hasDataaaa");
         document.querySelector(".change_img").id = "fileInputEdit";
       }
       return imageBlock; // 新しく作成したブロックを返す
@@ -9882,10 +9913,8 @@ var FileUploader = /*#__PURE__*/function () {
       // 各イベントリスナーでボタン状態を更新
       this.choices.forEach(function (choice) {
         choice.addEventListener("change", function () {
-          console.log("イベント発火：", choice.value);
           // ここで直接処理を書いてみる
           var isChoiceOn = choice.checked && choice.value === "on";
-          console.log("isChoiceOn:", isChoiceOn);
         });
       });
       this.urlInput.addEventListener("input", boundUpdateButtonState);

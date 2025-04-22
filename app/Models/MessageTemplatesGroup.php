@@ -10,7 +10,8 @@ class MessageTemplatesGroup extends Model
     use HasFactory;
 
     protected $fillable = [
-        "admin_id"
+        "admin_id",
+        "display_order"
     ];
 
     public function messageTemplates(){

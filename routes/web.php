@@ -63,3 +63,4 @@ Route::delete("/template/delete", [MessageTemplate::class, "destroy"])->name("te
 Route::get("/broadcast/message/list/{id}", [BroadcastMessageController::class, "index"])->name("broadcast_message.list")->middleware("auth");
 Route::post("/search/broadcast/message", [BroadcastMessageController::class, "searchByMessage"])->name("search.message")->middleware("auth");
 Route::post("/search/broadcast/date", [BroadcastMessageController::class, "searchByDate"])->name("search.date")->middleware("auth");
+Route::post("/template/order", [MessageTemplate::class, "updateOrder"])->name("template.order")->middleware("auth");

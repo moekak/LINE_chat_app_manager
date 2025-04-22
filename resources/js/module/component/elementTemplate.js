@@ -188,7 +188,7 @@ export const createImageBlock = (blockCounter) =>{
 
 export const createMessageTemplate = (templates) => {
 
-      return templates.map(template => {
+      return templates.map((template, index) => {
             let categoryName = ""
             if (template.category_name.length > 40) {
                   categoryName =  template.category_name.substring(0, 40) + '...';
@@ -202,37 +202,50 @@ export const createMessageTemplate = (templates) => {
                   templateName = template.template_name
             }
             return `
-            <div class="template-item" data-id=${template["category_id"]}>
-                  <div class="template-content">
-                        ${template.contents.map(content => `
-                              <div class="js_blockcontents" data-id="${content.id}" data-order="${content.display_order}" data-type="${content.content_type}"> 
+                  <div class="template-item" data-id=${template["category_id"]} data-order="${template["display_order"]}"
+                        <input type="hidden" value="${template.template_id}" name="template_order[]">
+                        <div class="template-order-controls">
+                              <button type="button" class="order-btn move-up-btn" title="上に移動">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                    </svg>
+                              </button>
+                              <button type="button" class="order-btn move-down-btn" title="下に移動">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                              </button>
+                        </div>
+                        <div class="template-content">
+                              ${template.contents.map(content => `
+                                    <div class="js_blockcontents" data-id="${content.id}" data-order="${content.display_order}" data-type="${content.content_type}"> 
                                     <input type="hidden" class="js_content_text" value="${content.content_text || ''}">
                                     <input type="hidden" class="js_image_path" value="${content.image_path || ''}" data-crop='${content.cropArea || ''}'>
-                              </div>
-                        `).join('')}
-                        <input type="hidden" value="${template.template_id}" class="template_id">
-                        <input type="hidden" value="${template.group_id}" class="group_id">
-                        <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
-                        <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
-                        <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
-                  </div>
-                  <div class="template-actions">
-                        <button class="action-btn edit-btn template_edit-btn" title="編集">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </div>
+                              `).join('')}
+                              <input type="hidden" value="${template.template_id}" class="template_id">
+                              <input type="hidden" value="${template.group_id}" class="group_id">
+                              <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
+                              <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
+                              <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
+                        </div>
+                        <div class="template-actions">
+                              <button type="button" class="action-btn edit-btn template_edit-btn" title="編集">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                              </svg>
-                        </button>
-                        <button class="action-btn delete-btn template_delete_btn" title="削除">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </svg>
+                              </button>
+                              <button type="button" class="action-btn delete-btn template_delete_btn" title="削除">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="3 6 5 6 21 6"></polyline>
                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                     <line x1="10" y1="11" x2="10" y2="17"></line>
                                     <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                        </button>
-                  </div>
-            </div>
+                                    </svg>
+                              </button>
+                        </div>
+                        </div>
             `;
       }).join('');
 };
@@ -247,6 +260,6 @@ export const crateCategoryButtons =(category)=>{
       }
 
       return `
-            <button class="category-btn" data-category=${category["id"]} title="${category["category_name"]}">${name}</button>
+            <button type="button" class="category-btn" data-category=${category["id"]} title="${category["category_name"]}">${name}</button>
       `
 }
