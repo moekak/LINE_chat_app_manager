@@ -327,7 +327,7 @@
 						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
 						<polyline points="22 4 12 14.01 9 11.01"></polyline>
 					</svg>
-					<span>カテゴリーの追加に成功しました。</span>
+					<span class="js_success_msg"></span>
 				</div>
 				<ul class="success-list" id="js_success_list">
 					<!-- <li class="success-item">テンプレートが正常に作成されました</li> -->
@@ -347,7 +347,10 @@
 						<div class="form-group">
 						<label for="category-select">カテゴリーを選択</label>
 						<select class="category-select" id="category-select" name="category_id">
-							<option value="" disabled selected>カテゴリーを選択</option>
+							<option value="" disabled selected class="category-option">カテゴリーを選択</option>
+							@foreach ($categories as $category)
+								<option class="category-option"  value={{$category->id}} >{{$category->category_name}}</option>
+							@endforeach
 						</select>
 						</div>
 					</div>
@@ -383,13 +386,18 @@
 			</form>
 			
 			<!-- 一覧・編集タブ (初期状態では非表示) -->
-			<form class="tab-content tab-edit" style="display: none;" method="POST" action="{{route("template.order")}}" >
+			<div class="tab-content tab-edit" style="display: none;" >
 				<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
 				@csrf
 				<!-- カテゴリーフィルターを追加 -->
 				<div class="category-filter-container">
 					<div class="filter-title">カテゴリーでフィルター：</div>
 					<div class="category-buttons">
+						<button class="category-btn active" data-category="all" type="button">すべて</button>
+						@foreach ($template_categories as $category)
+							<button class="category-btn" data-category="{{$category->category_name}}" data-id="{{$category->id}}">{{$category->category_name}}</button>
+						@endforeach
+						
 					</div>
 				</div>
 				<!-- 矢印による順番変更の説明 -->
@@ -400,11 +408,6 @@
 						<line x1="8" y1="12" x2="16" y2="12"></line>
 					</svg>
 					<span>矢印ボタンを使用してテンプレートの表示順を変更できます</span>
-				</div>
-				<div class="template-list-container">
-					<div class="template-list" id="js_template_list">
-						<!-- テンプレートアイテム -->
-					</div>
 				</div>
 				<!-- 並び順保存ボタン -->
 				<div class="order-save-container">
@@ -417,6 +420,17 @@
 						並び順を保存
 					</button>
 				</div>
+				<div class="template-list-container">
+					<div class="loader-template-container" id="js_loader-template">
+						<div class="loader-template"></div>
+					</div>
+					
+					<div class="template-list" id="js_template_list">
+						
+						<!-- テンプレートアイテム -->
+					</div>
+				</div>
+
 				
 				<!-- モーダルコンテンツ -->
 				<div class="modal-content">
@@ -440,12 +454,12 @@
 								<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
 								<polyline points="22 4 12 14.01 9 11.01"></polyline>
 							</svg>
-							<span>テンプレートの更新に成功しました。</span>
+							<span class="js_success_msg"></span>
 						</div>
 						<ul class="success-list" id="js_edit_success_list"></ul>
 					</div>
 				</div>
-			</form>
+			</div>
 			
 			<!-- 編集フォーム -->
 			<form class="edit-template-form js_edit_form hidden" id="template-edit-form">

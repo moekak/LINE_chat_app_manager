@@ -2,6 +2,7 @@ class InitializeInputService{
     static intiaizeInputs(){
         const templateNames = document.querySelectorAll(".template-title")
         const categoryId = document.getElementById("category-select")
+        const categoryOptions = document.querySelectorAll(".category-option")
         const blockContents = document.getElementById("create-content-blocks")
         const errorelement = document.getElementById("form-errors")
         const errorList = document.getElementById("js_error_list")
@@ -17,17 +18,15 @@ class InitializeInputService{
         })
 
         categoryId.value = ""
-        categoryId.innerHTML = ""            
-
-
         blockContents.innerHTML = ""
 
-        const option = document.createElement("option")
-        option.disabled = true
-        option.selected = true
-        option.innerHTML = "カテゴリーを選択"
+        categoryOptions.forEach((option)=>{
+            option.selected = false
+            if(option.innerHTML === "カテゴリーを選択"){
+                option.selected = true
+            }
+        })
 
-        categoryId.append(option)  
 
         createForm.style.display ="block"
         editFrom.classList.add("hidden")

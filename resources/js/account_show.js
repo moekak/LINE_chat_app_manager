@@ -149,27 +149,10 @@ submitForms.forEach((submitForm)=>{
             handleTemplateButtonClick();
       });
 
-      // 非同期処理を別関数に切り出す
-      async function handleTemplateButtonClick() {
-
+      function handleTemplateButtonClick() {
             InitializeInputService.intiaizeInputs();
             new MessageTemplateOperator();
-            open_loader();
-            
-            const adminId = {"admin_id": document.getElementById("js_account_id").value};
-            try {
-                  const response = await fetchPostOperation(adminId, API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY);
-                  
-                  response["categories"].forEach((res) => {
-                        FormController.populateSelectOptions(res["id"], res["category_name"]);
-                  });
-                  
-                  open_modal(templateModal);
-                  templateModal.style.zIndex = 999
-                  close_loader();
-            } catch(error) {
-                  console.log(error);
-            }
+            open_modal(templateModal);
       }
 }
 
@@ -193,6 +176,7 @@ submitForms.forEach((submitForm)=>{
       const categoryEditBtns = document.querySelectorAll(".edit-category-btn")
       categoryEditBtns.forEach((btn)=>{
             btn.addEventListener("click", ()=>{
+                  document.getElementById("js_template_list").innerHTML = ""
                   const inputElement = btn.closest(".category-item-row").querySelector(".category-edit-input")
                   const saveBtn = btn.closest(".category-actions").querySelector(".save-category-btn")
 

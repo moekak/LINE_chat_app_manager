@@ -56,18 +56,7 @@ class MessageTemplate extends Controller
         }
     }
 
-    public function fetchCategories(Request $request){
-        try{
 
-            $admin_id = $request->input('admin_id');
-            $categories = MessageTemplatesCategory::select("id", "category_name")->where("admin_id", $admin_id)->get();
-            return response()->json(["categories" => $categories]);
-
-        }catch(\Exception $e){
-            Log::error($e);
-        }
-
-    }
 
     public function store(Request $request){
         try{
@@ -95,7 +84,12 @@ class MessageTemplate extends Controller
                 $template_name = $request->input("template_name");
         
                 // メッセージテンプレートグループへのデータ追加
-                $messageTemplateGroup = MessageTemplatesGroup::create(['admin_id' => $admin_id]);
+                $last_display_order = MessageTemplatesGroup::orderBy("display_order","desc")
+                    ->join("message_templates", "message_templates_groups.id", "=", "message_templates.group_id")
+                    ->where("message_templates.category_id", $category_id)
+                    ->where("message_templates_groups.admin_id", $admin_id)
+                    ->value("message_templates_groups.display_order");
+                $messageTemplateGroup = MessageTemplatesGroup::create(['admin_id' => $admin_id, "display_order" => intval($last_display_order) + 1]);
                 // メッセージテンプレート作成
                 $messageTemplate = ModelsMessageTemplate::create(["category_id" => $category_id, "admin_id" => $admin_id, "group_id" => $messageTemplateGroup->id, "template_name" => $template_name]);
                 $messageContents = $request->input("content_texts");
@@ -382,21 +376,25 @@ class MessageTemplate extends Controller
     
 
     public function updateOrder(Request $request){
-        print_r($request->all());
-        exit;
-        $orders = $request->input("template_order");
-        $ids = array_values($orders);
-        $groups = MessageTemplatesGroup::whereIn('id', $ids)->get();
-        
-        foreach($orders as $index => $id){
-            $group = $groups->where('id', $id)->first();
-            if($group){
-                $group->display_order = $index;
-                $group->save();
+        try{
+            Log::debug("222");
+            $orders = $request->input("template_order");
+            Log::debug($orders);
+            $ids = array_values($orders);
+            $groups = MessageTemplatesGroup::whereIn('id', $ids)->get();
+            
+            foreach($orders as $index => $id){
+                $group = $groups->where('id', $id)->first();
+                if($group){
+                    $group->display_order = $index;
+                    $group->save();
+                }
             }
+    
+            return response()->json(["status" => 201, "message" => "カテゴリーの更新に成功しました"]);
+        }catch(\Exception $e){
+            Log::debug($e);
         }
-
-        return redirect()->route("account.show", ["id" => $request->input("admin_id")])->with("success", "カテゴリーの更新に成功しました。");  
 
     }
 

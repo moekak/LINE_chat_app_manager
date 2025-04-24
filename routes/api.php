@@ -32,10 +32,11 @@ Route::post("/fetch/account", [LineAccountController::class, "fetchSpecificAccou
 
 Route::get("/token/generate", [RedirectTokenController::class, "fetchToken"]);
 Route::post("/create/category", [MessageTemplate::class, "createCategory"]);
-Route::post("/get/categories", [MessageTemplate::class, "fetchCategories"]);
+// Route::post("/get/categories", [MessageTemplate::class, "fetchCategories"]);
 Route::post("/create/templates", [MessageTemplate::class, "store"]);
 Route::post("/update/templates", [MessageTemplate::class, "update"]);
 Route::get("/templates/get/{admin_id}", [MessageTemplate::class, "fetchTemplate"]);
 Route::get("/fetch/template/{category_id}", [MessageTemplate::class, "fetchTemplateByCategory"]);
 
 
+Route::post("/template/order", [MessageTemplate::class, "updateOrder"]);

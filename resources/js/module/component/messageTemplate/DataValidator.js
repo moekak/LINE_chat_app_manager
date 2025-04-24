@@ -56,8 +56,13 @@ class DataValidator{
         modalContent.scrollTop = 0;
     }
 
-    displayCategorySuccessMessage(){
+    static displayCategorySuccessMessage(successMessage){
         const successMsg = document.getElementById("form-success")
+        const message = document.querySelector(".js_success_msg")
+
+        console.log(message);
+        
+        message.innerHTML = successMessage
         successMsg.classList.remove("hidden")
 
         // 成功メッセージを出して2秒後に批評にする

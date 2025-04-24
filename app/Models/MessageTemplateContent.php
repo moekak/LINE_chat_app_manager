@@ -94,6 +94,7 @@ class MessageTemplateContent extends Model
                 "category_id" => $firstItem->messageTemplate->messageTemplatesCategory->id,
                 "group_id" => $firstItem->messageTemplate->messageTemplatesGroup->id,
                 'template_id' => $firstItem->template_id,
+                "display_order" => $firstItem->messageTemplate->messageTemplatesGroup->display_order,
                 'template_name' => $firstItem->messageTemplate->template_name,
                 'category_name' => $firstItem->messageTemplate->messageTemplatesCategory->category_name,
                 'admin_id' => $firstItem->admin_id,
@@ -113,10 +114,10 @@ class MessageTemplateContent extends Model
                         'content_type' => $item->content_type,
                         'display_order' => $item->display_order,
                     ];
-                })->sortBy('display_order')->values()->all()
+                })
             ];
         })
-        ->sortByDesc('created_at') // created_at の降順で並べ替え
+        ->sortBy('display_order') // created_at の降順で並べ替え
         ->values()
         ->all();
     }

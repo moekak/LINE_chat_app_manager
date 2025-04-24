@@ -2285,10 +2285,12 @@ var ERROR_TEXT = {
   CATEGORY_EMPTY_ERROR: "カテゴリーを選択してください",
   CONTENTS_EMPTY_ERROR: "一つ以上メッセージを入力してください。",
   CREATE_CATEGORY_ERROR: "カテゴリー追加に失敗しました。再度お試しください。",
-  CREATE_TEMPLATE_ERROR: "テンプレート追加に失敗しました。再度お試しください。"
+  CREATE_TEMPLATE_ERROR: "テンプレート追加に失敗しました。再度お試しください。",
+  EDIT_TEMPLATE_ERROR: "テンプレート編集に失敗しました。再度お試しください。"
 };
 var SUCCESS_TEXT = {
   CREATE_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
+  EDIT_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
   CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。",
   DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
@@ -2691,6 +2693,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createMessageRow: () => (/* binding */ createMessageRow),
 /* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch),
 /* harmony export */   createMessageTemplate: () => (/* binding */ createMessageTemplate),
+/* harmony export */   createMessageTemplateForAll: () => (/* binding */ createMessageTemplateForAll),
 /* harmony export */   createTextBlock: () => (/* binding */ createTextBlock)
 /* harmony export */ });
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
@@ -2753,9 +2756,9 @@ var createMessageTemplate = function createMessageTemplate(templates) {
     } else {
       templateName = template.template_name;
     }
-    return "\n                  <div class=\"template-item\" data-id=".concat(template["category_id"], " data-order=\"").concat(template["display_order"], "\"\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" name=\"template_order[]\" class=\"template_order\">\n                        <div class=\"template-order-controls\">\n                              <button type=\"button\" class=\"order-btn move-up-btn\" title=\"\u4E0A\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"18 15 12 9 6 15\"></polyline>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"order-btn move-down-btn\" title=\"\u4E0B\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"6 9 12 15 18 9\"></polyline>\n                                    </svg>\n                              </button>\n                        </div>\n                        <div class=\"template-content\">\n                              ").concat(template.contents.map(function (content) {
+    return "\n                  <div class=\"template-item\" data-id=".concat(template["category_id"], " data-order=\"").concat(template["display_order"], "\">\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" name=\"template_order[]\" class=\"template_order\">\n                        <div class=\"template-order-controls\">\n                              <button type=\"button\" class=\"order-btn move-up-btn\" title=\"\u4E0A\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"18 15 12 9 6 15\"></polyline>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"order-btn move-down-btn\" title=\"\u4E0B\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"6 9 12 15 18 9\"></polyline>\n                                    </svg>\n                              </button>\n                        </div>\n                        <div class=\"template-content\">\n                              ").concat(template.contents.map(function (content) {
       return "\n                                    <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
-    }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                        </div>\n            ");
+    }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
   }).join('');
 };
 var crateCategoryButtons = function crateCategoryButtons(category) {
@@ -2766,6 +2769,25 @@ var crateCategoryButtons = function crateCategoryButtons(category) {
     name = category["category_name"];
   }
   return "\n            <button type=\"button\" class=\"category-btn\" data-category=".concat(category["id"], " title=\"").concat(category["category_name"], "\">").concat(name, "</button>\n      ");
+};
+var createMessageTemplateForAll = function createMessageTemplateForAll(templates) {
+  return templates.map(function (template, index) {
+    var categoryName = "";
+    if (template.category_name.length > 40) {
+      categoryName = template.category_name.substring(0, 40) + '...';
+    } else {
+      categoryName = template.category_name;
+    }
+    var templateName = "";
+    if (template.template_name.length > 40) {
+      templateName = template.template_name.substring(0, 40) + '...';
+    } else {
+      templateName = template.template_name;
+    }
+    return "\n                  <div class=\"template-item\" data-id=".concat(template["category_id"], " data-order=\"").concat(template["display_order"], "\">\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" name=\"template_order[]\" class=\"template_order\">\n                        <div class=\"template-content\">\n                              ").concat(template.contents.map(function (content) {
+      return "\n                                    <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
+    }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
+  }).join('');
 };
 
 /***/ }),
@@ -3182,15 +3204,6 @@ var FormController = /*#__PURE__*/function () {
           }
         });
       });
-    }
-  }, {
-    key: "populateSelectOptions",
-    value: function populateSelectOptions(id, category_name) {
-      var option = document.createElement("option");
-      var selectParentElement = document.getElementById("category-select");
-      option.value = id;
-      option.innerHTML = category_name;
-      selectParentElement.appendChild(option);
     }
   }, {
     key: "templateImageStyle",

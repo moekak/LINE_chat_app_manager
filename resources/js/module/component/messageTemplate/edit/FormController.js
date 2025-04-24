@@ -123,7 +123,6 @@ class MessageTemplateFormController{
 
       static initializeTemplateEditModal(){
             document.querySelector(".template-list").innerHTML = ""
-            document.querySelector(".category-buttons").innerHTML = "";
             const modal = document.getElementById("js_template_modal")
             modal.style.zIndex = "985"
             open_loader()
