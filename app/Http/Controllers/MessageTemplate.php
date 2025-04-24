@@ -399,4 +399,15 @@ class MessageTemplate extends Controller
         return redirect()->route("account.show", ["id" => $request->input("admin_id")])->with("success", "カテゴリーの更新に成功しました。");  
 
     }
+
+    public function fetchTemplateByCategory(string $category_id){
+        try{
+            $templates = MessageTemplateContent::getMessageTemplatesByFilter($category_id);
+            return response()->json($templates);
+        }catch(\Exception $e){
+            Log::debug($e);
+            return response()->json(["status" => 500]);
+        }
+
+    }
 }

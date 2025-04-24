@@ -8,5 +8,6 @@ export const API_ENDPOINTS = {
     FETCH_TEMPLATE_UPDATE : "/api/update/templates",
     FETCH_TEMPLATE_GET: "/api/templates/get",
     FETCH_CATEGORIES_GET: "/api/categories/get",
-    FETCH_TEMPLATE_DELETE: "/api/template/delete"
+    FETCH_TEMPLATE_DELETE: "/api/template/delete",
+    FETCH_TEMPLATE_DATA: "/api/fetch/template"
 };

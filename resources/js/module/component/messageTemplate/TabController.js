@@ -9,6 +9,7 @@ import DataValidator from "./DataValidator.js";
 import MessageTemplateFormController from "./edit/FormController.js";
 import InitializeInputService from "./InitializeInputService.js";
 import MessageTemplateOperator from "./MessageTemplateOperator.js";
+import FilterCategory from "./FilterCategory.js"
 
 // 4. TabController.js - タブ管理に特化
 class TabController {
@@ -40,7 +41,7 @@ class TabController {
                         const categories = await fetchPostOperation({"admin_id": document.getElementById("js_account_id").value}, `${API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY}`)
         
                         const templateRaw = createMessageTemplate(response)
-                        const buttonAll = '<button class="category-btn active" data-category="all">すべて</button>'
+                        const buttonAll = '<button class="category-btn active" data-category="all" type="button">すべて</button>'
                         document.querySelector(".template-list").innerHTML += templateRaw
                         document.querySelector(".category-buttons").innerHTML += buttonAll
                         categories["categories"].forEach((category)=>{
@@ -127,64 +128,7 @@ class TabController {
         const wrapper = document.getElementById("js_template_list")
         categoryBtns.forEach((btn)=>{
             btn.addEventListener("click",()=>{
-                categoryBtns.forEach(btn => btn.classList.remove("active"))
-                btn.classList.add("active")
-                const category = btn.dataset.category
-
-                if(category === "all"){
-                    templateItems.forEach(item => item.classList.remove("hidden"))
-                    return
-                }
-
-                
-                // 選択されたカテゴリーの要素を取得し並び替え
-                const filteredItems = Array.from(templateItems).filter(item => item.dataset.id === category);
-                const sortedItems = filteredItems.sort((a, b) => {
-                    const orderA = parseInt(a.dataset.order) || 0;
-                    const orderB = parseInt(b.dataset.order) || 0;
-                    return orderA - orderB;
-                });
-
-                // 非表示にするアイテム
-                templateItems.forEach(item => {
-                    if (item.dataset.id !== category) {
-                        item.classList.add("hidden");
-                    }
-                });
-
-                // フォームデータを保持しながら並び替える
-                // クローンせずに一時的なデータ保持
-                const formData = new Map();
-                
-                // 各要素のフォームデータを一時保存
-                sortedItems.forEach(item => {
-                    const inputs = item.querySelectorAll('input, select, textarea');
-                    const itemData = new Map();
-                    
-                    inputs.forEach(input => {
-                        if (input.name) {
-                            itemData.set(input.name, input.value);
-                        }
-                    });
-                    
-                    formData.set(item, itemData);
-                    item.classList.remove("hidden");
-                });
-                
-                // 並び替えた順にDOMに再追加
-                sortedItems.forEach(item => {
-                    wrapper.appendChild(item);
-                    
-                    // フォームデータを復元
-                    const itemData = formData.get(item);
-                    if (itemData) {
-                        itemData.forEach((value, name) => {
-                            const input = item.querySelector(`[name="${name}"]`);
-                            if (input) input.value = value;
-                        });
-                    }
-                });
-
+                new FilterCategory(btn)
 
             })
         })

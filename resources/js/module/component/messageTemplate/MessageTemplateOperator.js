@@ -6,9 +6,8 @@ import DataValidator from "./DataValidator.js";
 import TemplateApiService from "./TemplateApiService.js";
 import ButtonController from "../ui/ButtonController.js";
 import { ERROR_TEXT, SUCCESS_TEXT } from "../../../config/config.js";
-import { close_loader, close_loader_template, hide_bg, open_loader_template, open_modal } from "../modalOperation.js";
-import FormController from "../ui/FormController.js";
-import InitializeInputService from "./InitializeInputService.js";
+import { close_loader, hide_bg, open_modal } from "../modalOperation.js";
+
 
 class MessageTemplateOperator {
     constructor(isUpdate = false) {
@@ -29,6 +28,7 @@ class MessageTemplateOperator {
         this.blockManager = new TemplateBlockManager();
         this.tabController = new TabController(this.tabs, this.tabContents);
         this.imageUploadHandler = new ImageUploadHandler()
+        this.orderSubmitBtn = document.getElementById("js_save_order_btn")
         
         this.initialize();
     }
@@ -62,6 +62,11 @@ class MessageTemplateOperator {
             const newBtn = ButtonController.replaceButton(btn.id)
             newBtn.addEventListener("click", this.handleSubmit.bind(this));
         })
+
+        // テンプレート並び順変更処理
+        const newBtn = this.orderSubmitBtn.cloneNode(true)
+        this.orderSubmitBtn.replaceWith(newBtn)
+        newBtn.addEventListener("click", this.handleOrderSubmit.bind(this))
         
         
         // 初期ブロックのリスナーをセットアップ
@@ -90,6 +95,30 @@ class MessageTemplateOperator {
         
         this.imageUploadHandler.setupFileInputs(this.isUpdate, uploads, errorTxt);
 
+    }
+
+    handleOrderSubmit(e){
+        // e.preventDefault()
+        // const templateOrderInputs = document.querySelectorAll(".template_order");
+
+        // console.log(templateOrderInputs);
+        
+        // // FormDataオブジェクトを作成
+        // const formData = new FormData();
+
+        // // 各input要素の値をFormDataに追加
+        // templateOrderInputs.forEach((input) => {
+        //     formData.append("template_order[]", input.value);
+        // });
+
+        // // FormDataの内容を確認（デバッグ用）
+        // for (let pair of formData.entries()) {
+        //     console.log(pair[0] + ': ' + pair[1]);
+        // }
+        
+
+        
+        
     }
 
 

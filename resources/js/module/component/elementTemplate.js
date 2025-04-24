@@ -203,7 +203,7 @@ export const createMessageTemplate = (templates) => {
             }
             return `
                   <div class="template-item" data-id=${template["category_id"]} data-order="${template["display_order"]}"
-                        <input type="hidden" value="${template.template_id}" name="template_order[]">
+                        <input type="hidden" value="${template.template_id}" name="template_order[]" class="template_order">
                         <div class="template-order-controls">
                               <button type="button" class="order-btn move-up-btn" title="上に移動">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

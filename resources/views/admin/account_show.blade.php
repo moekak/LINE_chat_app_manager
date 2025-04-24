@@ -630,22 +630,22 @@
 <script src="{{ mix("js/greetingMessage.js")}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 @if ($errors->any())
-    @php
-        $currentRoute = session('route_name');
-    @endphp
-    
-    @if ($currentRoute === 'category')
-        <script>
+	@php
+		$currentRoute = session('route_name');
+	@endphp
+	
+	@if ($currentRoute === 'category')
+      	<script>
             // JavaScript で使用するためにグローバル変数として設定
             window.hasError = true;
             window.errorMessages = {!! json_encode($errors->all()) !!};
 
-        </script>
-    @endif
+        	</script>
+    	@endif
 @else
-    <script>
-        window.hasError = false;
-    </script>
+    	<script>
+        	window.hasError = false;
+    	</script>
 @endif
 
 
@@ -653,218 +653,139 @@
 // 矢印ボタンによる順番変更機能の実装
 document.addEventListener('DOMContentLoaded', function() {
     // テンプレート一覧の初期化とイベント登録
-    function initOrderButtons() {
-        console.log('順番変更ボタンを初期化します');
-        
-        // 上矢印クリックイベントの登録
-        document.querySelectorAll('.move-up-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('上矢印がクリックされました');
-                
-                const templateItem = this.closest('.template-item');
-                const prevItem = templateItem.previousElementSibling;
-                
-                if (prevItem && prevItem.classList.contains('template-item')) {
-                    console.log('項目を上に移動します');
-                    // 前の要素の前に現在の要素を挿入
-                    templateItem.parentNode.insertBefore(templateItem, prevItem);
-                    
-                    // 並び順が変更されたことを示す
-                    markOrderChanged();
-                    
-                    // 矢印ボタンの状態を更新
-                    updateArrowButtonStates();
-                }
-            });
-        });
-        
-        // 下矢印クリックイベントの登録
-        document.querySelectorAll('.move-down-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('下矢印がクリックされました');
-                
-                const templateItem = this.closest('.template-item');
-                const nextItem = templateItem.nextElementSibling;
-                
-                if (nextItem && nextItem.classList.contains('template-item')) {
-                    console.log('項目を下に移動します');
-                    // 次の要素の後に現在の要素を挿入
-                    if (nextItem.nextElementSibling) {
-                        templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
-                    } else {
-                        templateItem.parentNode.appendChild(templateItem);
-                    }
-                    
-                    // 並び順が変更されたことを示す
-                    markOrderChanged();
-                    
-                    // 矢印ボタンの状態を更新
-                    updateArrowButtonStates();
-                }
-            });
-        });
-        
-        // 初期状態で矢印ボタンの状態を設定
-        updateArrowButtonStates();
-    }
-    
-    // 矢印ボタンの状態を更新（最初と最後の項目の矢印を無効化）
-    function updateArrowButtonStates() {
-        const templateItems = document.querySelectorAll('.template-item');
-        
-        templateItems.forEach((item, index) => {
-            const upButton = item.querySelector('.move-up-btn');
-            const downButton = item.querySelector('.move-down-btn');
-            
-            // 最初の項目の上矢印を無効化
-            if (upButton) {
-                upButton.disabled = (index === 0);
-                upButton.classList.toggle('disabled', index === 0);
-            }
-            
-            // 最後の項目の下矢印を無効化
-            if (downButton) {
-                downButton.disabled = (index === templateItems.length - 1);
-                downButton.classList.toggle('disabled', index === templateItems.length - 1);
-            }
-        });
-    }
-    
-    // 並び順が変更されたことを示す（保存ボタンのハイライト）
-    function markOrderChanged() {
-        const saveOrderBtn = document.getElementById('js_save_order_btn');
-        if (saveOrderBtn) {
-            saveOrderBtn.classList.add('highlight');
-            // 変更があったことを示すクラスを追加
-            document.querySelector('.template-list-container').classList.add('order-changed');
-        }
-    }
-    
-    // 保存ボタンのイベント設定
-    const saveOrderBtn = document.getElementById('js_save_order_btn');
-    if (saveOrderBtn) {
-        saveOrderBtn.addEventListener('click', saveTemplateOrder);
-    }
-    
-    // テンプレートの並び順を保存する関数
-    function saveTemplateOrder() {
-        const templateItems = document.querySelectorAll('.template-item');
-        const orderData = [];
-        
-        // すべてのテンプレートIDと新しい順序を収集
-        templateItems.forEach((item, index) => {
-            const templateId = item.querySelector('.template_id').value;
-            orderData.push({
-                id: templateId,
-                order: index + 1
-            });
-        });
-        
-        console.log('保存する順番データ:', orderData);
-        
-        // AJAX リクエストで並び順を保存
-        fetch('/template/update-order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ templates: orderData })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // 成功メッセージを表示
-                const successContainer = document.getElementById('edit-form-success');
-                const successList = document.getElementById('js_edit_success_list');
-                
-                successList.innerHTML = '<li class="success-item">テンプレートの並び順が保存されました</li>';
-                successContainer.classList.remove('hidden');
-                
-                // 3秒後に成功メッセージを非表示
-                setTimeout(() => {
-                    successContainer.classList.add('hidden');
-                }, 3000);
-                
-                // 保存ボタンのハイライトを解除
-                saveOrderBtn.classList.remove('highlight');
-                document.querySelector('.template-list-container').classList.remove('order-changed');
-            } else {
-                // エラーメッセージを表示
-                const errorContainer = document.getElementById('edit-form-errors');
-                const errorList = document.getElementById('js_edit_error_list');
-                
-                errorList.innerHTML = '<li class="error-item">テンプレートの並び順の保存に失敗しました</li>';
-                errorContainer.classList.remove('hidden');
-            }
-        })
-        .catch(error => {
-            console.error('Error saving template order:', error);
-            // エラーメッセージを表示
-            const errorContainer = document.getElementById('edit-form-errors');
-            const errorList = document.getElementById('js_edit_error_list');
-            
-            errorList.innerHTML = '<li class="error-item">テンプレートの並び順の保存中にエラーが発生しました</li>';
-            errorContainer.classList.remove('hidden');
-        });
-    }
-    
-    // 一覧タブがアクティブになった時のイベント設定
-    document.getElementById('js_tab_edit').addEventListener('click', function() {
-        console.log('一覧・編集タブがクリックされました');
-        // タブ切り替え後に初期化（少し遅延させる）
-        setTimeout(() => {
-            initOrderButtons();
-        }, 200);
-    });
-    
+	function initOrderButtons() {
+		console.log('順番変更ボタンを初期化します');
+
+        	// 上矢印クリックイベントの登録
+		document.querySelectorAll('.move-up-btn').forEach(button => {
+			button.addEventListener('click', function(e) {
+				e.preventDefault();
+
+				const templateItem = this.closest('.template-item');
+				const prevItem = templateItem.previousElementSibling;
+				
+				if (prevItem && prevItem.classList.contains('template-item')) {
+					// 前の要素の前に現在の要素を挿入
+					templateItem.parentNode.insertBefore(templateItem, prevItem);
+					
+					// 並び順が変更されたことを示す
+					markOrderChanged();
+					
+					// 矢印ボタンの状態を更新
+					updateArrowButtonStates();
+				}
+			});
+		});
+		// 下矢印クリックイベントの登録
+		document.querySelectorAll('.move-down-btn').forEach(button => {
+			button.addEventListener('click', function(e) {
+				e.preventDefault();
+				const templateItem = this.closest('.template-item');
+				const nextItem = templateItem.nextElementSibling;
+				
+				if (nextItem && nextItem.classList.contains('template-item')) {
+					console.log('項目を下に移動します');
+					// 次の要素の後に現在の要素を挿入
+					if (nextItem.nextElementSibling) {
+						templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
+					} else {
+						templateItem.parentNode.appendChild(templateItem);
+					}
+					
+					// 並び順が変更されたことを示す
+					markOrderChanged();
+					
+					// 矢印ボタンの状態を更新
+					updateArrowButtonStates();
+				}
+			});
+		});
+			
+		// 初期状態で矢印ボタンの状態を設定
+		updateArrowButtonStates();
+	}
+	
+    	// 矢印ボタンの状態を更新（最初と最後の項目の矢印を無効化）
+	function updateArrowButtonStates() {
+		const templateItems = document.querySelectorAll('.template-item');
+
+		templateItems.forEach((item, index) => {
+			const upButton = item.querySelector('.move-up-btn');
+			const downButton = item.querySelector('.move-down-btn');
+			
+			// 最初の項目の上矢印を無効化
+			if (upButton) {
+				upButton.disabled = (index === 0);
+				upButton.classList.toggle('disabled', index === 0);
+			}
+			
+			// 最後の項目の下矢印を無効化
+			if (downButton) {
+				downButton.disabled = (index === templateItems.length - 1);
+				downButton.classList.toggle('disabled', index === templateItems.length - 1);
+			}
+		});
+	}
+
+	// 並び順が変更されたことを示す（保存ボタンのハイライト）
+	function markOrderChanged() {
+		const saveOrderBtn = document.getElementById('js_save_order_btn');
+		if (saveOrderBtn) {
+			saveOrderBtn.classList.add('highlight');
+			// 変更があったことを示すクラスを追加
+			document.querySelector('.template-list-container').classList.add('order-changed');
+		}
+	}
+
+    	// 一覧タブがアクティブになった時のイベント設定
+	document.getElementById('js_tab_edit').addEventListener('click', function() {
+		// タブ切り替え後に初期化（少し遅延させる）
+		setTimeout(() => {
+			initOrderButtons();
+		}, 200);
+	});
+
     // ページ読み込み時に一覧タブがアクティブの場合は初期化
-    if (document.getElementById('js_tab_edit').classList.contains('active')) {
-        console.log('一覧・編集タブがアクティブなので初期化します');
-        initOrderButtons();
-    }
-    
-    // テンプレートリストが動的に読み込まれた時のために
-    // イベント委任を使用して後から追加された要素にもイベントを適用
-    document.addEventListener('click', function(e) {
-        // 上矢印ボタンのクリックイベント
-        if (e.target.closest('.move-up-btn')) {
-            e.preventDefault();
-            console.log('上矢印が委任イベントでクリックされました');
-            
-            const button = e.target.closest('.move-up-btn');
-            const templateItem = button.closest('.template-item');
-            const prevItem = templateItem.previousElementSibling;
-            
-            if (prevItem && prevItem.classList.contains('template-item')) {
-                templateItem.parentNode.insertBefore(templateItem, prevItem);
-                markOrderChanged();
-                updateArrowButtonStates();
-            }
-        }
-        
-        // 下矢印ボタンのクリックイベント
-        if (e.target.closest('.move-down-btn')) {
-            e.preventDefault();
-            console.log('下矢印が委任イベントでクリックされました');
-            
-            const button = e.target.closest('.move-down-btn');
-            const templateItem = button.closest('.template-item');
-            const nextItem = templateItem.nextElementSibling;
-            
-            if (nextItem && nextItem.classList.contains('template-item')) {
-                if (nextItem.nextElementSibling) {
-                    templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
-                } else {
-                    templateItem.parentNode.appendChild(templateItem);
-                }
-                markOrderChanged();
-                updateArrowButtonStates();
-            }
-        }
-    });
+	if (document.getElementById('js_tab_edit').classList.contains('active')) {
+		console.log('一覧・編集タブがアクティブなので初期化します');
+		initOrderButtons();
+	}
+	
+	// テンプレートリストが動的に読み込まれた時のために
+	// イベント委任を使用して後から追加された要素にもイベントを適用
+	document.addEventListener('click', function(e) {
+		// 上矢印ボタンのクリックイベント
+		if (e.target.closest('.move-up-btn')) {
+			e.preventDefault();
+
+			const button = e.target.closest('.move-up-btn');
+			const templateItem = button.closest('.template-item');
+			const prevItem = templateItem.previousElementSibling;
+			
+			if (prevItem && prevItem.classList.contains('template-item')) {
+			templateItem.parentNode.insertBefore(templateItem, prevItem);
+			markOrderChanged();
+			updateArrowButtonStates();
+			}
+		}
+		// 下矢印ボタンのクリックイベント
+		if (e.target.closest('.move-down-btn')) {
+			e.preventDefault();
+			const button = e.target.closest('.move-down-btn');
+			const templateItem = button.closest('.template-item');
+			const nextItem = templateItem.nextElementSibling;
+			
+			if (nextItem && nextItem.classList.contains('template-item')) {
+			if (nextItem.nextElementSibling) {
+				templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
+			} else {
+				templateItem.parentNode.appendChild(templateItem);
+			}
+			markOrderChanged();
+			updateArrowButtonStates();
+			}
+		}
+	});
 });
 </script>
 @endsection
