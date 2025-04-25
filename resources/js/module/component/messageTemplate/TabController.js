@@ -80,22 +80,11 @@ class TabController {
 
     static filterCategory(){
         const categoryBtns = document.querySelectorAll(".category-btn")
-        const wrapper = document.getElementById("js_template_list")
         categoryBtns.forEach((btn)=>{
             const newButton = btn.cloneNode(true)
             btn.replaceWith(newButton)
             newButton.addEventListener("click",(e)=>{
-
-                document.getElementById("js_loader-template").classList.remove("hidden")
-                wrapper.innerHTML = ""
-                if(e.target.dataset.category === "all"){
-                    document.querySelector(".order-instructions").classList.add("hidden")
-                    FilterCategory.getAllTemplateData()
-                }else{
-                    document.querySelector(".order-instructions").classList.remove("hidden")
-                    new FilterCategory(newButton)
-                }
-
+                FilterCategory.fetchFilteredData(e.target.dataset.category, newButton)
             })
         })
     }

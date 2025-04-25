@@ -251,16 +251,22 @@ export const createMessageTemplate = (templates) => {
 };
 
 
-export const crateCategoryButtons =(category)=>{
-      let name = ""
-      if(category["category_name"].length > 15){
-            name =  category["category_name"].substring(0, 15) + '...';
-      }else{
-            name = category["category_name"]
-      }
-
+export const addCategoryButton =(category)=>{
       return `
-            <button type="button" class="category-btn" data-category=${category["id"]} title="${category["category_name"]}">${name}</button>
+            <button type="button" class="category-btn" data-id=${category["id"]} data-category=${category["name"]} title="${category["name"]}">${category["name"]}</button>
+      `
+}
+
+
+
+export const crateCategoryButton =(category)=>{
+      return `
+            <option class="category-option" value=${category["id"]}>${category["name"]}</option>
+      `
+}
+export const editCategoryButton =(category)=>{
+      return `
+            <option class="edit-category" value=${category["id"]}>${category["name"]}</option>
       `
 }
 
@@ -318,3 +324,28 @@ export const createMessageTemplateForAll = (templates) => {
       }).join('');
 };
 
+
+
+export const crateCategoryList =(category)=>{
+      return `
+            <tr class="category-item-row" data-id="${category["id"]}">
+                  <td>
+                        
+                        <input type="hidden" name="id" value="${category["id"]}" class="js_category_id">
+                        <input type="hidden" name="admin_id" value="${category["admin_id"]}" class="js_admin_id">
+                        <input type="text" name="category_name_edit" class="category-edit-input disabled" readonly="" value="${category["name"]}" maxlength="255">
+                  </td>
+                  <td class="category-actions">
+                        <button type="button" class="btn btn-edit edit-category-btn" title="編集">
+                              <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-save save-category-btn disabled" title="保存">
+                              <i class="fas fa-check"></i>
+                        </button>
+                        <button type="button" class="btn btn-cancel cancel-edit-btn" title="キャンセル">
+                              <i class="fas fa-times"></i>
+                        </button>
+                  </td>
+            </tr>
+      `
+}

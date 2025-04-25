@@ -2270,16 +2270,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  socketUrl: 'https://chat-socket.info:3000'
-});
-var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-  CHAT_URL: "https://chat-system.info/admin/chat",
-  CHAT_BASE_URL: "https://chat-system.info"
-};
+// export default {
+//     socketUrl: 'https://chat-socket.info:3000',
+
+// };
+
+// export const SYSTEM_URL = {
+//     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+//     CHAT_URL : "https://chat-system.info/admin/chat",
+//     CHAT_BASE_URL:"https://chat-system.info"
+// };
+
 var ERROR_TEXT = {
   TEMPLATE_NAME_EMPTY_ERROR: "テンプレート名を入力してください",
   CATEGORY_EMPTY_ERROR: "カテゴリーを選択してください",
@@ -2295,20 +2298,19 @@ var SUCCESS_TEXT = {
   DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
-// // // 開発用
-// export default {
-//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
+// // 開発用
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
+});
 
-// };
-
-// // // 開発用
-// export const SYSTEM_URL = {
-//     IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
-//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/admin/chat",
-//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
-// };
+// // 開発用
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat.line-chat-system-dev.tokyo/admin/chat",
+  CHAT_BASE_URL: "https://chat.line-chat-system-dev.tokyo"
+};
 
 /***/ }),
 
@@ -2686,7 +2688,9 @@ var toggleDisplayButtonState = function toggleDisplayButtonState(btn, message) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   crateCategoryButtons: () => (/* binding */ crateCategoryButtons),
+/* harmony export */   addCategoryButton: () => (/* binding */ addCategoryButton),
+/* harmony export */   crateCategoryButton: () => (/* binding */ crateCategoryButton),
+/* harmony export */   crateCategoryList: () => (/* binding */ crateCategoryList),
 /* harmony export */   createAccountDataRow: () => (/* binding */ createAccountDataRow),
 /* harmony export */   createBroadcastMessageRow: () => (/* binding */ createBroadcastMessageRow),
 /* harmony export */   createImageBlock: () => (/* binding */ createImageBlock),
@@ -2694,7 +2698,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch),
 /* harmony export */   createMessageTemplate: () => (/* binding */ createMessageTemplate),
 /* harmony export */   createMessageTemplateForAll: () => (/* binding */ createMessageTemplateForAll),
-/* harmony export */   createTextBlock: () => (/* binding */ createTextBlock)
+/* harmony export */   createTextBlock: () => (/* binding */ createTextBlock),
+/* harmony export */   editCategoryButton: () => (/* binding */ editCategoryButton)
 /* harmony export */ });
 /* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
 /* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config/config.js */ "./resources/js/config/config.js");
@@ -2761,14 +2766,14 @@ var createMessageTemplate = function createMessageTemplate(templates) {
     }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
   }).join('');
 };
-var crateCategoryButtons = function crateCategoryButtons(category) {
-  var name = "";
-  if (category["category_name"].length > 15) {
-    name = category["category_name"].substring(0, 15) + '...';
-  } else {
-    name = category["category_name"];
-  }
-  return "\n            <button type=\"button\" class=\"category-btn\" data-category=".concat(category["id"], " title=\"").concat(category["category_name"], "\">").concat(name, "</button>\n      ");
+var addCategoryButton = function addCategoryButton(category) {
+  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(category["name"], "</button>\n      ");
+};
+var crateCategoryButton = function crateCategoryButton(category) {
+  return "\n            <option class=\"category-option\" value=".concat(category["id"], ">").concat(category["name"], "</option>\n      ");
+};
+var editCategoryButton = function editCategoryButton(category) {
+  return "\n            <option class=\"edit-category\" value=".concat(category["id"], ">").concat(category["name"], "</option>\n      ");
 };
 var createMessageTemplateForAll = function createMessageTemplateForAll(templates) {
   return templates.map(function (template, index) {
@@ -2788,6 +2793,9 @@ var createMessageTemplateForAll = function createMessageTemplateForAll(templates
       return "\n                                    <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
     }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(categoryName, "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
   }).join('');
+};
+var crateCategoryList = function crateCategoryList(category) {
+  return "\n            <tr class=\"category-item-row\" data-id=\"".concat(category["id"], "\">\n                  <td>\n                        \n                        <input type=\"hidden\" name=\"id\" value=\"").concat(category["id"], "\" class=\"js_category_id\">\n                        <input type=\"hidden\" name=\"admin_id\" value=\"").concat(category["admin_id"], "\" class=\"js_admin_id\">\n                        <input type=\"text\" name=\"category_name_edit\" class=\"category-edit-input disabled\" readonly=\"\" value=\"").concat(category["name"], "\" maxlength=\"255\">\n                  </td>\n                  <td class=\"category-actions\">\n                        <button type=\"button\" class=\"btn btn-edit edit-category-btn\" title=\"\u7DE8\u96C6\">\n                              <i class=\"fas fa-edit\"></i>\n                        </button>\n                        <button type=\"button\" class=\"btn btn-save save-category-btn disabled\" title=\"\u4FDD\u5B58\">\n                              <i class=\"fas fa-check\"></i>\n                        </button>\n                        <button type=\"button\" class=\"btn btn-cancel cancel-edit-btn\" title=\"\u30AD\u30E3\u30F3\u30BB\u30EB\">\n                              <i class=\"fas fa-times\"></i>\n                        </button>\n                  </td>\n            </tr>\n      ");
 };
 
 /***/ }),

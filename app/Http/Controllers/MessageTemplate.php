@@ -343,10 +343,13 @@ class MessageTemplate extends Controller
 
     public function destroy(Request $request){
         try{
-            ModelsMessageTemplate::destroy($request->input("template_id"));
-            return redirect()->route("account.show", ["id" => $request->input("admin_id")])->with("success", "テンプレートの削除に成功しました。"); 
+            $template_id = $request->input("template_id");
+            Log::debug($template_id);
+            ModelsMessageTemplate::destroy($template_id);
+            return response()->json(["status" => 201, "template_id" => $template_id]);
         }catch(\Exception $e){
             Log::debug($e);
+            return response()->json(["status" => 500]);
         }
         
     }
@@ -355,10 +358,12 @@ class MessageTemplate extends Controller
     public function categoryStore(CreateMessageTemplateCategory $request){
         try{
             $validated = $request->validated();
-            MessageTemplatesCategory::create($validated);
+            $category = MessageTemplatesCategory::create($validated);
+            return response()->json(["status" => 201, "category" => ["id" => $category->id, "name" => $category->category_name, "admin_id" => $category->admin_id]]);
             return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの追加に成功しました。");  
         }catch(\Exception $e){
             Log::debug($e);
+            return response()->json(["status" => 500]);
         }
     }
     
@@ -367,9 +372,10 @@ class MessageTemplate extends Controller
             $validated = $request->validated();
             $category = MessageTemplatesCategory::findOrFail($validated["id"]);
             $category->update(["category_name" => $validated["category_name_edit"]]);
-            return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの更新に成功しました。");  
+            return response()->json(["status" => 201, "category" => ["id" => $category->id, "name" => $validated["category_name_edit"], "admin_id" => $category->admin_id]]);
         }catch(\Exception $e){
             Log::debug($e);
+            return response()->json(["status" => 500]);
         }
     }
 
@@ -408,4 +414,5 @@ class MessageTemplate extends Controller
         }
 
     }
+
 }

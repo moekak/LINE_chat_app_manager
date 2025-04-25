@@ -411,7 +411,7 @@
 				</div>
 				<!-- 並び順保存ボタン -->
 				<div class="order-save-container">
-					<button class="btn btn-primary" id="js_save_order_btn">
+					<button class="btn btn-primary hidden" id="js_save_order_btn">
 						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
 							<polyline points="17 21 17 13 7 13 7 21"></polyline>
@@ -517,14 +517,12 @@
 
 			{{-- カテゴリー追加、編集フォーム --}}
 			<div class="tab-content js_category_form hidden" >
-				@csrf
 				<div class="category-management">
 					<label>カテゴリー</label>
-					<form class="add-category" method="POST" action="{{route("category.store")}}">
-						@csrf
+					<form class="add-category">
 						<input type="text" placeholder="新しいカテゴリーを追加" value="{{old("category_name")}}" name="category_name" id="js_category_input" maxlength="255">
 						<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-						<button class="btn btn-primary">追加</button>
+						<button class="btn btn-primary" id="js_create_category">追加</button>
 					</form>
 					
 					<!-- カテゴリー一覧表示と編集機能 -->
@@ -538,22 +536,20 @@
 										<th>操作</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="js_category_list">
 									@foreach($categories as $category)
-									<form action="{{route("category.edit")}}" method="POST">
-										@csrf
 										<tr class="category-item-row" data-id="{{ $category->id }}">
 											<td>
 												{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
-												<input type="hidden" name="id" value="{{ $category->id }}">
-												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
+												<input type="hidden" name="id" value="{{ $category->id }}"class="js_category_id">
+												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}" class="js_admin_id">
 												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}" maxlength="255">
 											</td>
 											<td class="category-actions">
 												<button type="button" class="btn btn-edit edit-category-btn" title="編集">
 													<i class="fas fa-edit"></i>
 												</button>
-												<button type="submit" class="btn btn-save save-category-btn disabled" title="保存">
+												<button type="button" class="btn btn-save save-category-btn disabled" title="保存">
 													<i class="fas fa-check"></i>
 												</button>
 												<button type="button" class="btn btn-cancel cancel-edit-btn" title="キャンセル">
@@ -561,8 +557,6 @@
 												</button>
 											</td>
 										</tr>
-									</form>
-									
 									@endforeach
 								</tbody>
 							</table>
@@ -581,11 +575,9 @@
 	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">テンプレートを削除しますか？</h2>
 	<p>テンプレートを削除してよろしいですか？削除すると、設定した全てのデータが完全に消去され、元に戻すことはできません。</p>
 	<div style="margin-top: 15px"></div>
-	<form class="delete_account-btn-container" method="POST" action="{{route("template.destory")}}">
+	<form class="delete_account-btn-container" >
 		<input type="hidden" name="template_id" value="" id="js_delete_templete_id">
-		<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-		@csrf
-		@method('DELETE')
+		<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}" id="js_delete_admin_id">
 		<div class="btn-box">
 			<button id="js_cancel_template_btn" type="button" readonly style="width: 100%;">キャンセル</button>
 		</div>

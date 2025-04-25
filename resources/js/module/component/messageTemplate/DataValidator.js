@@ -24,9 +24,6 @@ class DataValidator{
         return this.errors.length > 0
     }
 
-    generateErrorMessages(){
-
-    }
 
     displayErrorList(errorMsgs){
         errorMsgs.forEach((errorMsg)=>{
@@ -60,10 +57,11 @@ class DataValidator{
         const successMsg = document.getElementById("form-success")
         const message = document.querySelector(".js_success_msg")
 
-        console.log(message);
-        
         message.innerHTML = successMessage
         successMsg.classList.remove("hidden")
+
+        const modalContent = document.getElementById('js_template_modal');
+        modalContent.scrollTop = 0;
 
         // 成功メッセージを出して2秒後に批評にする
         setTimeout(() => {
@@ -79,6 +77,9 @@ class DataValidator{
         setTimeout(() => {
             this.successMessageElement.style.display = "none"
         }, 2000);
+
+        const modalContent = document.getElementById('js_template_modal');
+        modalContent.scrollTop = 0;
     }
     /**
      *  エラー文を表示するためのリスト項目要素を作成する

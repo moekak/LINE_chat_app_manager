@@ -40,3 +40,7 @@ Route::get("/fetch/template/{category_id}", [MessageTemplate::class, "fetchTempl
 
 
 Route::post("/template/order", [MessageTemplate::class, "updateOrder"]);
+Route::post("/template/delete", [MessageTemplate::class, "destroy"]);
+Route::post("/category/create", [MessageTemplate::class, "categoryStore"]);
+
+Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"]);

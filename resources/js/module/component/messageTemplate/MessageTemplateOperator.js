@@ -8,6 +8,8 @@ import ButtonController from "../ui/ButtonController.js";
 import { ERROR_TEXT, SUCCESS_TEXT } from "../../../config/config.js";
 import { close_loader, close_loader_template, hide_bg, open_modal } from "../modalOperation.js";
 import InitializeInputService from "./InitializeInputService.js";
+import Uicontroller from "./UiController.js";
+import FilterCategory from "./FilterCategory.js";
 
 
 class MessageTemplateOperator {
@@ -129,6 +131,11 @@ class MessageTemplateOperator {
                 dataValidator.displayErrorList(DataValidator.getAllValidationErrorMessages(response))
             }else if(response["status"] === 201){
                 if(this.isUpdate){
+                    const uiController = new Uicontroller()
+                    uiController.showTemplateLists()
+                    const activeButton = uiController.getActiveFilterCategory()
+                    console.log(activeButton);
+                    FilterCategory.fetchFilteredData(activeButton.dataset.category, activeButton)
                     DataValidator.displayCategorySuccessMessage("テンプレートの編集に成功しました。")
                 }else{
                     DataValidator.displayCategorySuccessMessage("テンプレートの作成に成功しました。")

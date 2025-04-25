@@ -15,10 +15,15 @@ class FilterCategory{
             this.categoryId = ""
             this.data
             this.#fetchTemplateData()
+
+            console.log(this.orderSubmitBtn);
+            
       }
       
       #handleDisplayOrderSubmit(){
             this.orderSubmitBtn.addEventListener("click", async(e)=>{
+                  console.log("clickされました」");
+                  
                   open_loader_template()
                   e.preventDefault()
                   const templateOrderInputs = document.querySelectorAll('input[name="template_order[]"]');
@@ -53,11 +58,12 @@ class FilterCategory{
                               DataValidator.displayCategorySuccessMessage("テンプレート順番の入れ替えに成功しました。")
                               close_loader_template()
                         }else{
-                              alert("テンプレート順番の入れ替えに失敗しました。再度お試しください。")
+                              const dataValidator = new DataValidator()
+                              dataValidator.displayErrorList(["テンプレート順番の入れ替えに失敗しました。再度お試しください。"])
                         }
                   }catch(error){
-                        console.log(error);
-                        
+                        const dataValidator = new DataValidator()
+                        dataValidator.displayErrorList(["テンプレート順番の入れ替えに失敗しました。再度お試しください。"])
                   }
 
             })
@@ -96,28 +102,6 @@ class FilterCategory{
                         })
                   })
             }
-
-            {
-                  // 削除キャンセル
-                  const cancelBtn = document.getElementById("js_cancel_template_btn")
-                  cancelBtn.addEventListener("click", ()=>{
-                        document.getElementById("js_template_confirm_modal").classList.add("hidden")
-                        document.getElementById("js_template_modal").style.zIndex = 999
-                  })
-            }
-
-            // ローダー出す処理
-
-            {
-                  const btn = document.querySelector(".js_delete_template_from")
-                  btn.addEventListener("click", ()=>{
-                        open_loader()
-                        document.getElementById("js_template_confirm_modal").classList.add("hidden")
-                  })
-
-            }
-
-            
       }
 
 
@@ -156,24 +140,26 @@ class FilterCategory{
                   })
             }
 
-            {
-                  // 削除キャンセル
-                  const cancelBtn = document.getElementById("js_cancel_template_btn")
-                  cancelBtn.addEventListener("click", ()=>{
-                        document.getElementById("js_template_confirm_modal").classList.add("hidden")
-                        document.getElementById("js_template_modal").style.zIndex = 999
-                  })
+      }
+
+
+
+      static fetchFilteredData(category, button){
+            const submitButn = document.getElementById("js_save_order_btn")
+            if(category === "all"){
+                  submitButn.classList.add("hidden")
+            }else{
+                  submitButn.classList.remove("hidden")
             }
-
-            // ローダー出す処理
-
-            {
-                  const btn = document.querySelector(".js_delete_template_from")
-                  btn.addEventListener("click", ()=>{
-                        open_loader()
-                        document.getElementById("js_template_confirm_modal").classList.add("hidden")
-                  })
-
+            const wrapper = document.getElementById("js_template_list")
+            document.getElementById("js_loader-template").classList.remove("hidden")
+            wrapper.innerHTML = ""
+            if(category === "all"){
+                  document.querySelector(".order-instructions").classList.add("hidden")
+                  FilterCategory.getAllTemplateData()
+            }else{
+                  document.querySelector(".order-instructions").classList.remove("hidden")
+                  new FilterCategory(button)
             }
       }
 }

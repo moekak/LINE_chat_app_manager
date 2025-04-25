@@ -108,7 +108,7 @@ p, ul {
 }
 
 .bg, .bg_temaplteModal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -755,8 +755,8 @@ p, ul {
 
 /* テンプレート作成モーダル */
 .template_modal{
-    max-height: 80vh;
-    overflow: auto;
+    max-height: 730px;
+    overflow: hidden;
     padding: 0 !important;
     width: 660px;
 }
@@ -986,8 +986,9 @@ p, ul {
 }
 
 .template-list {
-    max-height: 400px;
+    max-height: 260px;
     overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 
@@ -1077,6 +1078,8 @@ textarea {
     border-radius: 8px;
     padding: 20px;
     background-color: var(--light-bg-color, #f9f9f9);
+    overflow-y: auto;
+    max-height: 405px;
 }
 
 .category-list-container h4 {
@@ -1289,9 +1292,6 @@ textarea {
 
 
 /* テンプレート一覧表示 */
-.template-list {
-    margin-top: 20px;
-}
 
 .template-item {
     border: 1px solid var(--border-color);
@@ -1370,8 +1370,11 @@ textarea {
 
 .category-buttons {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
+    max-height: 76px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    overflow-x: auto;
+    padding-bottom: 15px;
 }
 
 .category-btn {
@@ -1382,7 +1385,10 @@ textarea {
     font-size: 13px;
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2sease;
+    text-wrap: unset;
+    width: 100%;
+    white-space: nowrap;
 }
 
 .category-btn:hover {
@@ -1655,6 +1661,14 @@ input:checked + .toggle-slider:before {
 /* 編集フォーム用のスタイル */
 .edit-template-form {
     width: 100%;
+    height: 525px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.js_create_form {
+    max-height: 525px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* 編集モードの画像プレビュー */
