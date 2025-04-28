@@ -180,6 +180,7 @@ class MessageTemplate extends Controller
 
     public function update(Request $request){
         try{
+            Log::debug($request->all());
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
                     "category_id" => ["required", "string", "exists:message_templates_categories,id"],
@@ -383,7 +384,6 @@ class MessageTemplate extends Controller
 
     public function updateOrder(Request $request){
         try{
-            Log::debug("222");
             $orders = $request->input("template_order");
             Log::debug($orders);
             $ids = array_values($orders);

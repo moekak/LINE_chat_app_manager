@@ -7000,7 +7000,8 @@ var createMessageTemplate = function createMessageTemplate(templates) {
   }).join('');
 };
 var addCategoryButton = function addCategoryButton(category) {
-  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(category["name"], "</button>\n      ");
+  var categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"];
+  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(categoryName, "</button>\n      ");
 };
 var crateCategoryButton = function crateCategoryButton(category) {
   return "\n            <option class=\"category-option\" value=".concat(category["id"], ">").concat(category["name"], "</option>\n      ");
@@ -7145,7 +7146,7 @@ var DataValidator = /*#__PURE__*/function () {
         _this.errorListWrapper.append(li);
       });
       this.formError.classList.remove("hidden");
-      var modalContent = document.getElementById('js_template_modal');
+      var modalContent = document.querySelector('.form-wrapper');
       modalContent.scrollTop = 0;
     }
 
@@ -7163,7 +7164,7 @@ var DataValidator = /*#__PURE__*/function () {
         _this2.errorListWrapper.append(li);
       });
       this.formError.classList.remove("hidden");
-      var modalContent = document.getElementById('js_template_modal');
+      var modalContent = document.querySelector('.form-wrapper');
       modalContent.scrollTop = 0;
     }
   }, {
@@ -7177,7 +7178,7 @@ var DataValidator = /*#__PURE__*/function () {
       setTimeout(function () {
         _this3.successMessageElement.style.display = "none";
       }, 2000);
-      var modalContent = document.getElementById('js_template_modal');
+      var modalContent = document.querySelector('.form-wrapper');
       modalContent.scrollTop = 0;
     }
   }], [{
@@ -7187,7 +7188,7 @@ var DataValidator = /*#__PURE__*/function () {
       var message = document.querySelector(".js_success_msg");
       message.innerHTML = successMessage;
       successMsg.classList.remove("hidden");
-      var modalContent = document.getElementById('js_template_modal');
+      var modalContent = document.querySelector('.form-wrapper');
       modalContent.scrollTop = 0;
 
       // 成功メッセージを出して2秒後に批評にする
@@ -7273,7 +7274,6 @@ var FilterCategory = /*#__PURE__*/function () {
     this.categoryId = "";
     this.data;
     _assertClassBrand(_FilterCategory_brand, this, _fetchTemplateData).call(this);
-    console.log(this.orderSubmitBtn);
   }
   return _createClass(FilterCategory, null, [{
     key: "getAllTemplateData",
@@ -7361,7 +7361,6 @@ function _handleDisplayOrderSubmit() {
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            console.log("clickされました」");
             (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_3__.open_loader_template)();
             e.preventDefault();
             templateOrderInputs = document.querySelectorAll('input[name="template_order[]"]'); // 値を格納する配列を作成
@@ -7376,23 +7375,23 @@ function _handleDisplayOrderSubmit() {
             templateOrders.forEach(function (value) {
               formData.append('template_order[]', value);
             });
-            _context3.prev = 8;
-            _context3.next = 11;
+            _context3.prev = 7;
+            _context3.next = 10;
             return fetch(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_UPDATE_TEMPLATE_ORDER, {
               method: 'POST',
               body: formData
             });
-          case 11:
+          case 10:
             response = _context3.sent;
             if (response.ok) {
-              _context3.next = 14;
+              _context3.next = 13;
               break;
             }
             throw new Error("メッセージテンプレート作成でエラーが発生しました");
-          case 14:
-            _context3.next = 16;
+          case 13:
+            _context3.next = 15;
             return response.json();
-          case 16:
+          case 15:
             data = _context3.sent;
             if (data["status"] === 201) {
               _DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"].displayCategorySuccessMessage("テンプレート順番の入れ替えに成功しました。");
@@ -7401,18 +7400,18 @@ function _handleDisplayOrderSubmit() {
               dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"]();
               dataValidator.displayErrorList(["テンプレート順番の入れ替えに失敗しました。再度お試しください。"]);
             }
-            _context3.next = 24;
+            _context3.next = 23;
             break;
-          case 20:
-            _context3.prev = 20;
-            _context3.t0 = _context3["catch"](8);
+          case 19:
+            _context3.prev = 19;
+            _context3.t0 = _context3["catch"](7);
             _dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"]();
             _dataValidator.displayErrorList(["テンプレート順番の入れ替えに失敗しました。再度お試しください。"]);
-          case 24:
+          case 23:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[8, 20]]);
+      }, _callee3, null, [[7, 19]]);
     }));
     return function (_x) {
       return _ref2.apply(this, arguments);
@@ -7435,11 +7434,15 @@ function _fetchTemplateData2() {
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) switch (_context5.prev = _context5.next) {
         case 0:
+          this.orderSubmitBtn.classList.add("disabled");
           _assertClassBrand(_FilterCategory_brand, this, _changeFilterBtnStyle).call(this);
-          _context5.next = 3;
+          _context5.next = 4;
           return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_DATA, "/").concat(this.categoryId));
-        case 3:
+        case 4:
           this.data = _context5.sent;
+          if (this.data.length > 0) {
+            this.orderSubmitBtn.classList.remove("disabled");
+          }
           templateRaw = (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__.createMessageTemplate)(this.data);
           this.templateWrapper.innerHTML += templateRaw;
           document.getElementById("js_loader-template").classList.add("hidden");
@@ -7466,7 +7469,7 @@ function _fetchTemplateData2() {
               }, _callee4);
             })));
           });
-        case 11:
+        case 13:
         case "end":
           return _context5.stop();
       }
@@ -7857,6 +7860,7 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
+              this.resetBlockCounter();
               this.formData = new _TemplateFormData_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.form);
 
               // フォームデータ構築とバリデーション
@@ -7866,16 +7870,16 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
               // データバリデーション
               dataValidator = new _DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"](this.formData.templateName, this.formData.categoryId, hasContent);
               if (!dataValidator.hasInvalidData()) {
-                _context.next = 8;
+                _context.next = 9;
                 break;
               }
               dataValidator.displayErrorMessages();
               return _context.abrupt("return");
-            case 8:
-              _context.prev = 8;
-              _context.next = 11;
+            case 9:
+              _context.prev = 9;
+              _context.next = 12;
               return _TemplateApiService_js__WEBPACK_IMPORTED_MODULE_5__["default"].createTemplate(formData, this.isUpdate);
-            case 11:
+            case 12:
               response = _context.sent;
               (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_8__.close_loader_template)();
               if (response["status"] === 500) {
@@ -7899,18 +7903,18 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
                   _InitializeInputService_js__WEBPACK_IMPORTED_MODULE_9__["default"].intiaizeInputs();
                 }
               }
-              _context.next = 20;
+              _context.next = 21;
               break;
-            case 16:
-              _context.prev = 16;
-              _context.t0 = _context["catch"](8);
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](9);
               console.log(_context.t0);
               alert("メッセージテンプレート作成中にエラーが発生しました。再度お試しください。");
-            case 20:
+            case 21:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[8, 16]]);
+        }, _callee, this, [[9, 17]]);
       }));
       function handleSubmit(_x) {
         return _handleSubmit.apply(this, arguments);
@@ -8187,7 +8191,7 @@ var TemplateBlockManager = /*#__PURE__*/function () {
   return _createClass(TemplateBlockManager, [{
     key: "resetBlockCounter",
     value: function resetBlockCounter() {
-      this.blockCounter = 1;
+      this.blockCounter = 0;
     }
   }, {
     key: "addTextBlock",
@@ -8279,6 +8283,9 @@ var TemplateFormData = /*#__PURE__*/function () {
     this.categoryId = form.querySelector(".category-select");
     this.adminId = document.getElementById("js_account_id");
     this.form = form;
+    this.text_index = 0;
+    this.image_index = 0;
+    this.hasContent = false;
   }
 
   /**
@@ -8288,7 +8295,11 @@ var TemplateFormData = /*#__PURE__*/function () {
   return _createClass(TemplateFormData, [{
     key: "buildFormData",
     value: function buildFormData() {
-      var _document$getElementB, _document$getElementB2;
+      var _document$getElementB,
+        _document$getElementB2,
+        _this = this;
+      console.log(this.image_index);
+      console.log(this.text_index);
       var formData = new FormData();
       var parentElement = this.form.querySelector(".content-blocks");
       var content_blocks = parentElement.querySelectorAll(".content-block");
@@ -8299,9 +8310,6 @@ var TemplateFormData = /*#__PURE__*/function () {
       formData.append("admin_id", this.adminId.value);
       formData.append("template_id", (_document$getElementB = document.getElementById("js_template_id").value) !== null && _document$getElementB !== void 0 ? _document$getElementB : "");
       formData.append("group_id", (_document$getElementB2 = document.getElementById("js_group_id").value) !== null && _document$getElementB2 !== void 0 ? _document$getElementB2 : "");
-      var text_index = 0;
-      var image_index = 0;
-      var hasContent = false;
       content_blocks.forEach(function (block) {
         if (block.dataset.type === "image") {
           var fileInput = block.querySelector(".file-input");
@@ -8312,35 +8320,35 @@ var TemplateFormData = /*#__PURE__*/function () {
           });
           if (fileData) {
             if (fileData["content"]) {
-              hasContent = true;
-              formData.append("image_path[".concat(image_index, "][content]"), fileData["content"]);
-              formData.append("image_path[".concat(image_index, "][cropData][cropArea]"), fileData["cropData"]);
-              formData.append("image_path[".concat(image_index, "][cropData][url]"), fileData["cropUrl"]);
-              formData.append("image_path[".concat(image_index, "][order]"), fileData["order"]);
+              _this.hasContent = true;
+              formData.append("image_path[".concat(_this.image_index, "][content]"), fileData["content"]);
+              formData.append("image_path[".concat(_this.image_index, "][cropData][cropArea]"), fileData["cropData"]);
+              formData.append("image_path[".concat(_this.image_index, "][cropData][url]"), fileData["cropUrl"]);
+              formData.append("image_path[".concat(_this.image_index, "][order]"), fileData["order"]);
             } else {
-              hasContent = true;
-              formData.append("image_path_update[".concat(image_index, "][contentUrl]"), fileData["contentUrl"]);
-              formData.append("image_path_update[".concat(image_index, "][cropData]"), fileData["cropData"]);
-              formData.append("image_path_update[".concat(image_index, "][order]"), fileData["order"]);
+              _this.hasContent = true;
+              formData.append("image_path_update[".concat(_this.image_index, "][contentUrl]"), fileData["contentUrl"]);
+              formData.append("image_path_update[".concat(_this.image_index, "][cropData]"), fileData["cropData"]);
+              formData.append("image_path_update[".concat(_this.image_index, "][order]"), fileData["order"]);
             }
+            _this.image_index++;
           } else {
             return;
           }
-          image_index++;
         } else if (block.dataset.type === "text") {
           var content = block.querySelector(".block-textarea").value;
           var order = block.querySelector(".block-textarea").closest(".content-block").dataset.id;
           var _numberPart = order.match(/\d+/)[0];
           if (content === "") return;
-          hasContent = true;
-          formData.append("content_texts[".concat(text_index, "][content]"), content);
-          formData.append("content_texts[".concat(text_index, "][order]"), _numberPart);
-          text_index++;
+          _this.hasContent = true;
+          formData.append("content_texts[".concat(_this.text_index, "][content]"), content);
+          formData.append("content_texts[".concat(_this.text_index, "][order]"), _numberPart);
+          _this.text_index++;
         }
       });
       return {
         formData: formData,
-        hasContent: hasContent
+        hasContent: this.hasContent
       };
     }
   }]);
@@ -8639,6 +8647,7 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
       editBtns.forEach(function (btn) {
         btn.addEventListener("click", function (e) {
           _DataGenerator_js__WEBPACK_IMPORTED_MODULE_4__.templateImageData.length = 0;
+          messageTemplateOperator.resetBlockCounter();
           contentBlocks.innerHTML = "";
           messageTemplateOperator.changeElements(contentBlocks, form);
           messageTemplateOperator.changeIsUpdate();

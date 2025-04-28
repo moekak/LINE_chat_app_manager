@@ -252,8 +252,9 @@ export const createMessageTemplate = (templates) => {
 
 
 export const addCategoryButton =(category)=>{
+      const categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"]
       return `
-            <button type="button" class="category-btn" data-id=${category["id"]} data-category=${category["name"]} title="${category["name"]}">${category["name"]}</button>
+            <button type="button" class="category-btn" data-id=${category["id"]} data-category=${category["name"]} title="${category["name"]}">${categoryName}</button>
       `
 }
 

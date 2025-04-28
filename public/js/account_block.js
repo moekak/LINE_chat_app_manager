@@ -2767,7 +2767,8 @@ var createMessageTemplate = function createMessageTemplate(templates) {
   }).join('');
 };
 var addCategoryButton = function addCategoryButton(category) {
-  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(category["name"], "</button>\n      ");
+  var categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"];
+  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(categoryName, "</button>\n      ");
 };
 var crateCategoryButton = function crateCategoryButton(category) {
   return "\n            <option class=\"category-option\" value=".concat(category["id"], ">").concat(category["name"], "</option>\n      ");

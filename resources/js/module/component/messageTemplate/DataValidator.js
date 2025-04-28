@@ -32,7 +32,7 @@ class DataValidator{
             this.errorListWrapper.append(li)
         })
         this.formError.classList.remove("hidden")
-        const modalContent = document.getElementById('js_template_modal');
+        const modalContent = document.querySelector('.form-wrapper');
         modalContent.scrollTop = 0;
 
     }
@@ -49,7 +49,7 @@ class DataValidator{
         });
         this.formError.classList.remove("hidden")
 
-        const modalContent = document.getElementById('js_template_modal');
+        const modalContent = document.querySelector('.form-wrapper');
         modalContent.scrollTop = 0;
     }
 
@@ -60,7 +60,7 @@ class DataValidator{
         message.innerHTML = successMessage
         successMsg.classList.remove("hidden")
 
-        const modalContent = document.getElementById('js_template_modal');
+        const modalContent = document.querySelector('.form-wrapper');
         modalContent.scrollTop = 0;
 
         // 成功メッセージを出して2秒後に批評にする
@@ -78,7 +78,7 @@ class DataValidator{
             this.successMessageElement.style.display = "none"
         }, 2000);
 
-        const modalContent = document.getElementById('js_template_modal');
+        const modalContent = document.querySelector('.form-wrapper');
         modalContent.scrollTop = 0;
     }
     /**

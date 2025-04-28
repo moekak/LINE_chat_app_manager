@@ -25,7 +25,7 @@ class TemplateBlockManager {
 
 
     resetBlockCounter(){
-        this.blockCounter = 1
+        this.blockCounter = 0
     }
 
     

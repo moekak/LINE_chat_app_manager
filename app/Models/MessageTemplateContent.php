@@ -114,7 +114,7 @@ class MessageTemplateContent extends Model
                         'content_type' => $item->content_type,
                         'display_order' => $item->display_order,
                     ];
-                })
+                })->sortBy('display_order')->values()->all()
             ];
         })
         ->sortBy('display_order') // created_at の降順で並べ替え

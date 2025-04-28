@@ -15,15 +15,10 @@ class FilterCategory{
             this.categoryId = ""
             this.data
             this.#fetchTemplateData()
-
-            console.log(this.orderSubmitBtn);
-            
       }
       
       #handleDisplayOrderSubmit(){
             this.orderSubmitBtn.addEventListener("click", async(e)=>{
-                  console.log("clickされました」");
-                  
                   open_loader_template()
                   e.preventDefault()
                   const templateOrderInputs = document.querySelectorAll('input[name="template_order[]"]');
@@ -77,8 +72,13 @@ class FilterCategory{
       }
 
       async #fetchTemplateData(){
+            this.orderSubmitBtn.classList.add("disabled")
             this.#changeFilterBtnStyle()
             this.data = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_DATA}/${this.categoryId}`)
+
+            if(this.data.length > 0){
+                  this.orderSubmitBtn.classList.remove("disabled")
+            }
 
             const templateRaw = createMessageTemplate(this.data)
             this.templateWrapper.innerHTML += templateRaw

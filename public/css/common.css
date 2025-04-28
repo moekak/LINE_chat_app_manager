@@ -986,11 +986,15 @@ p, ul {
 }
 
 .template-list {
-    max-height: 260px;
-    overflow-y: auto;
+    /* max-height: 260px;
+    overflow-y: auto; */
     margin-bottom: 20px;
 }
-
+.form-wrapper{
+    overflow-y: auto;
+    max-height: 554px;
+    overflow-x: hidden;
+}
 
 /* フォーム要素のスタイル */
 .form-group {
@@ -1665,11 +1669,11 @@ input:checked + .toggle-slider:before {
     overflow-y: auto;
     overflow-x: hidden;
 }
-.js_create_form {
+/* .js_create_form {
     max-height: 525px;
     overflow-y: auto;
     overflow-x: hidden;
-}
+} */
 
 /* 編集モードの画像プレビュー */
 .image-preview {

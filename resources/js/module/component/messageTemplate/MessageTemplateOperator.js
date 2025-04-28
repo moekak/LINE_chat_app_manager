@@ -96,6 +96,7 @@ class MessageTemplateOperator {
 
     async handleSubmit(e) {
         e.preventDefault();
+        this.resetBlockCounter()
         this.formData = new TemplateFormData(this.form);
         
         // フォームデータ構築とバリデーション

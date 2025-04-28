@@ -98,6 +98,7 @@ class MessageTemplateFormController{
             editBtns.forEach((btn)=>{
                   btn.addEventListener("click", (e)=>{
                         templateImageData.length = 0
+                        messageTemplateOperator.resetBlockCounter()
 
 
                         contentBlocks.innerHTML = ""
