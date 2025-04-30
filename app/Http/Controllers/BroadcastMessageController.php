@@ -175,7 +175,13 @@ class BroadcastMessageController extends Controller
         $admin_id = $request->input("admin_id");
 
         $broadcastMessages = BroadcastMessage::searchByMessage($search, $admin_id);
-        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
+        // return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
+
+        return redirect()
+        ->route('broadcast_message.list', ['id' => $admin_id])
+        ->with('searchWord', $search)
+        ->with('broadcastMessages', $broadcastMessages["messages"])
+        ->with('paginator', $broadcastMessages["paginator"]);
     }
 
     public function searchByDate(Request $request){

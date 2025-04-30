@@ -9,7 +9,7 @@
         <form class="search-row" method="POST" action="{{route("search.message")}}">
             @csrf
             <div class="search-input">
-                <input type="text" name="search" placeholder="メッセージを検索..." id="search_input">
+                <input type="text" name="search" placeholder="メッセージを検索..." id="search_input" value="{{session("searchWord") ?? ""}}">
                 <input type="hidden" name="admin_id" value="{{$adminId}}">
                 <span class="search-icon">🔍</span>
             </div>

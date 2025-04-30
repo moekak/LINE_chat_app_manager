@@ -251,11 +251,25 @@ export const createMessageTemplate = (templates) => {
 };
 
 
+/**
+ * エスケープ処理
+ * @param {string} - エスケープする前の文字列
+ * @return {string} - エスケープされた文字列
+ */
+const escapeHtml =(str) =>{
+return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+}
+
 
 export const addCategoryButton =(category)=>{
       const categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"]
       return `
-            <button type="button" class="category-btn" data-id="${category["id"]}" data-category="${category["name"]}" title="${category["name"]}">${categoryName}</button>
+            <button type="button" class="category-btn" data-id="${category["id"]}" data-category="${category["name"]}" title="${category["name"]}">${escapeHtml(categoryName)}</button>
       `
 }
 
@@ -263,12 +277,12 @@ export const addCategoryButton =(category)=>{
 
 export const crateCategoryButton =(category)=>{
       return `
-            <option class="category-option" value=${category["id"]}>${category["name"]}</option>
+            <option class="category-option" value=${category["id"]}>${escapeHtml(category["name"])}</option>
       `
 }
 export const editCategoryButton =(category)=>{
       return `
-            <option class="edit-category" value=${category["id"]}>${category["name"]}</option>
+            <option class="edit-category" value=${category["id"]}>${escapeHtml(category["name"])}</option>
       `
 }
 
@@ -302,7 +316,7 @@ export const createMessageTemplateForAll = (templates) => {
                               <input type="hidden" value="${template.template_id}" class="template_id">
                               <input type="hidden" value="${template.group_id}" class="group_id">
                               <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
-                              <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
+                              <div class="template-category" data-id="${template.category_id}">${escapeHtml(categoryName)}</div>
                               <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
                         </div>
                         <div class="template-actions">
