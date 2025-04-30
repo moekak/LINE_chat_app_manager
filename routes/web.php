@@ -42,9 +42,6 @@ Route::get("/account/edit/{id}", [LineAccountController::class, "edit"])->middle
 Route::get("/account/show/{id}", [LineAccountController::class, "show"])->name("account.show")->middleware("auth");
 Route::get("/account/block/user/{id}", [UserBlockController::class, "index"])->name("account.block.user")->middleware("auth");
 Route::get("/account/unblock/{id}", [UserBlockController::class, "update"])->name("account.unblock")->middleware("auth");
-// Route::get("/account/flag/update/invalid/{id}", [LineAccountController::class, "updateFlagForInvalid"])->name("flag.update")->middleware("auth");
-// Route::get("/account/flag/update/valid/{id}", [LineAccountController::class, "updateFlagForValid"])->middleware("auth");
-
 Route::post("/secondAccount/create", [SecondAccountController::class, "create"])->name("secondAccount.create")->middleware("auth");
 Route::post("/user/update/{id}", [ChatUserController::class, "update"])->name("user.update")->middleware("auth");
 

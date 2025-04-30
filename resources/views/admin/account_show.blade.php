@@ -663,8 +663,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // テンプレート一覧の初期化とイベント登録
 	function initOrderButtons() {
-		console.log('順番変更ボタンを初期化します');
-
+\
         	// 上矢印クリックイベントの登録
 		document.querySelectorAll('.move-up-btn').forEach(button => {
 			button.addEventListener('click', function(e) {
@@ -693,7 +692,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				const nextItem = templateItem.nextElementSibling;
 				
 				if (nextItem && nextItem.classList.contains('template-item')) {
-					console.log('項目を下に移動します');
 					// 次の要素の後に現在の要素を挿入
 					if (nextItem.nextElementSibling) {
 						templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
@@ -756,7 +754,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ページ読み込み時に一覧タブがアクティブの場合は初期化
 	if (document.getElementById('js_tab_edit').classList.contains('active')) {
-		console.log('一覧・編集タブがアクティブなので初期化します');
 		initOrderButtons();
 	}
 	

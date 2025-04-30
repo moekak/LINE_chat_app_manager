@@ -19,9 +19,6 @@ class TemplateFormData {
      * @return {Object} - {formData: FormData, hasContent: boolean}
      */
     buildFormData() {
-        console.log(this.image_index);
-        console.log(this.text_index);
-        
 
         const formData = new FormData();
         const parentElement = this.form.querySelector(".content-blocks")
@@ -67,7 +64,7 @@ class TemplateFormData {
                 }
 
             } else if (block.dataset.type === "text") {
-                const content = block.querySelector(".block-textarea").value;
+                const content = block.querySelector(".block-textarea").value.trim();
                 const order = block.querySelector(".block-textarea").closest(".content-block").dataset.id
                 const numberPart = order.match(/\d+/)[0];
                 if (content === "") return;

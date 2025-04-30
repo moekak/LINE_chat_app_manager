@@ -135,7 +135,6 @@ class MessageTemplateOperator {
                     const uiController = new Uicontroller()
                     uiController.showTemplateLists()
                     const activeButton = uiController.getActiveFilterCategory()
-                    console.log(activeButton);
                     FilterCategory.fetchFilteredData(activeButton.dataset.category, activeButton)
                     DataValidator.displayCategorySuccessMessage("テンプレートの編集に成功しました。")
                 }else{

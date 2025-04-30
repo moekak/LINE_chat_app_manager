@@ -8336,7 +8336,7 @@ var TemplateFormData = /*#__PURE__*/function () {
             return;
           }
         } else if (block.dataset.type === "text") {
-          var content = block.querySelector(".block-textarea").value;
+          var content = block.querySelector(".block-textarea").value.trim();
           var order = block.querySelector(".block-textarea").closest(".content-block").dataset.id;
           var _numberPart = order.match(/\d+/)[0];
           if (content === "") return;
@@ -8465,7 +8465,7 @@ var Uicontroller = /*#__PURE__*/function () {
             while (1) switch (_context.prev = _context.next) {
               case 0:
                 dataElement = btn.closest(".category-item-row");
-                if (!(dataElement.querySelector(".category-edit-input").value.length == 0)) {
+                if (!(dataElement.querySelector(".category-edit-input").value.trim().length == 0)) {
                   _context.next = 8;
                   break;
                 }
@@ -15541,7 +15541,7 @@ document.querySelector('.template-title').addEventListener('keydown', function (
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
             e.preventDefault();
-            if (!(document.getElementById("js_category_input").value.length == 0)) {
+            if (!(document.getElementById("js_category_input").value.trim().length == 0)) {
               _context5.next = 8;
               break;
             }

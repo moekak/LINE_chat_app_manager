@@ -72,7 +72,7 @@ export default class Uicontroller{
             saveBtn.forEach((btn)=>{
                   btn.addEventListener("click", async()=>{
                         const dataElement = btn.closest(".category-item-row")
-                        if(dataElement.querySelector(".category-edit-input").value.length == 0){
+                        if(dataElement.querySelector(".category-edit-input").value.trim().length == 0){
                               document.getElementById("js_error_list").innerHTML = ""
                               const dataValidator = new DataValidator()
                               dataValidator.displayErrorList(["カテゴリー名を入力してください。"])
@@ -93,9 +93,6 @@ export default class Uicontroller{
                         const response = await fetchPostOperation(sendingData, API_ENDPOINTS.FETCH_CATEGORY_EDIT)
 
                         if(response["status"] == "201"){
-
-                              console.log(response);
-                              
                               DataValidator.displayCategorySuccessMessage("カテゴリーの編集に成功しました")
                               Uicontroller.displayUpdateCategoryName(btn, inputElement, response["category"]["name"])
                               Uicontroller.addUpdatedCategoryToOptionElement(response["category"])
@@ -144,14 +141,6 @@ export default class Uicontroller{
       static addUpdatedCategoryButtonToFilter(category){
             const categories = document.querySelectorAll(".category-btn")
             const targetCategory = Array.from(categories).find((target)=> target.dataset.id == category["id"])
-
-
-            categories.forEach((category)=>{
-                  console.log(category);
-                  
-            })
-            console.log(category["id"]);
-
 
             if(targetCategory){
                   targetCategory.innerHTML = category["name"]

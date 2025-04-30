@@ -1391,7 +1391,6 @@ textarea {
     cursor: pointer;
     transition: all 0.2sease;
     text-wrap: unset;
-    width: 100%;
     white-space: nowrap;
 }
 

@@ -23,9 +23,6 @@ Route::post("/broadcast_message/store/{admin_id}", [BroadcastMessageController::
 Route::post("/greeting_message/store/{admin_id}", [GreetingMessageController::class, "store"]);
 Route::post("/decrypt", [DecryptDataController::class, "decryptData"]);
 
-
-
-
 Route::post("/user/lists/{admin_id}", [LineAccountController::class, "fetchScrollData"]);
 Route::post("/account/lists/{admin_id}/{status_id}", [LineAccountController::class, "fetchScrollAcocuntData"]);
 Route::post("/fetch/account", [LineAccountController::class, "fetchSpecificAccount"]);

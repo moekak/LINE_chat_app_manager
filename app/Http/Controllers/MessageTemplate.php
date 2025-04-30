@@ -180,7 +180,6 @@ class MessageTemplate extends Controller
 
     public function update(Request $request){
         try{
-            Log::debug($request->all());
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
                     "category_id" => ["required", "string", "exists:message_templates_categories,id"],
@@ -345,7 +344,6 @@ class MessageTemplate extends Controller
     public function destroy(Request $request){
         try{
             $template_id = $request->input("template_id");
-            Log::debug($template_id);
             ModelsMessageTemplate::destroy($template_id);
             return response()->json(["status" => 201, "template_id" => $template_id]);
         }catch(\Exception $e){
@@ -385,7 +383,6 @@ class MessageTemplate extends Controller
     public function updateOrder(Request $request){
         try{
             $orders = $request->input("template_order");
-            Log::debug($orders);
             $ids = array_values($orders);
             $groups = MessageTemplatesGroup::whereIn('id', $ids)->get();
             

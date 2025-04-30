@@ -228,7 +228,7 @@ document.querySelector('.template-title').addEventListener('keydown', function(e
       createCategoryBtn.addEventListener("click", async(e)=>{
             e.preventDefault()
 
-            if(document.getElementById("js_category_input").value.length == 0){
+            if(document.getElementById("js_category_input").value.trim().length == 0){
                   document.getElementById("js_error_list").innerHTML = ""
                   const dataValidator = new DataValidator()
                   dataValidator.displayErrorList(["カテゴリー名を入力してください。"])
