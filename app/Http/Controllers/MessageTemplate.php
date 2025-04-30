@@ -56,18 +56,7 @@ class MessageTemplate extends Controller
         }
     }
 
-    public function fetchCategories(Request $request){
-        try{
 
-            $admin_id = $request->input('admin_id');
-            $categories = MessageTemplatesCategory::select("id", "category_name")->where("admin_id", $admin_id)->get();
-            return response()->json(["categories" => $categories]);
-
-        }catch(\Exception $e){
-            Log::error($e);
-        }
-
-    }
 
     public function store(Request $request){
         try{
@@ -95,7 +84,12 @@ class MessageTemplate extends Controller
                 $template_name = $request->input("template_name");
         
                 // メッセージテンプレートグループへのデータ追加
-                $messageTemplateGroup = MessageTemplatesGroup::create(['admin_id' => $admin_id]);
+                $last_display_order = MessageTemplatesGroup::orderBy("display_order","desc")
+                    ->join("message_templates", "message_templates_groups.id", "=", "message_templates.group_id")
+                    ->where("message_templates.category_id", $category_id)
+                    ->where("message_templates_groups.admin_id", $admin_id)
+                    ->value("message_templates_groups.display_order");
+                $messageTemplateGroup = MessageTemplatesGroup::create(['admin_id' => $admin_id, "display_order" => intval($last_display_order) + 1]);
                 // メッセージテンプレート作成
                 $messageTemplate = ModelsMessageTemplate::create(["category_id" => $category_id, "admin_id" => $admin_id, "group_id" => $messageTemplateGroup->id, "template_name" => $template_name]);
                 $messageContents = $request->input("content_texts");
@@ -349,10 +343,12 @@ class MessageTemplate extends Controller
 
     public function destroy(Request $request){
         try{
-            ModelsMessageTemplate::destroy($request->input("template_id"));
-            return redirect()->route("account.show", ["id" => $request->input("admin_id")])->with("success", "テンプレートの削除に成功しました。"); 
+            $template_id = $request->input("template_id");
+            ModelsMessageTemplate::destroy($template_id);
+            return response()->json(["status" => 201, "template_id" => $template_id]);
         }catch(\Exception $e){
             Log::debug($e);
+            return response()->json(["status" => 500]);
         }
         
     }
@@ -361,10 +357,12 @@ class MessageTemplate extends Controller
     public function categoryStore(CreateMessageTemplateCategory $request){
         try{
             $validated = $request->validated();
-            MessageTemplatesCategory::create($validated);
+            $category = MessageTemplatesCategory::create($validated);
+            return response()->json(["status" => 201, "category" => ["id" => $category->id, "name" => $category->category_name, "admin_id" => $category->admin_id]]);
             return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの追加に成功しました。");  
         }catch(\Exception $e){
             Log::debug($e);
+            return response()->json(["status" => 500]);
         }
     }
     
@@ -373,9 +371,45 @@ class MessageTemplate extends Controller
             $validated = $request->validated();
             $category = MessageTemplatesCategory::findOrFail($validated["id"]);
             $category->update(["category_name" => $validated["category_name_edit"]]);
-            return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの更新に成功しました。");  
+            return response()->json(["status" => 201, "category" => ["id" => $category->id, "name" => $validated["category_name_edit"], "admin_id" => $category->admin_id]]);
+        }catch(\Exception $e){
+            Log::debug($e);
+            return response()->json(["status" => 500]);
+        }
+    }
+
+    
+
+    public function updateOrder(Request $request){
+        try{
+            $orders = $request->input("template_order");
+            $ids = array_values($orders);
+            $groups = MessageTemplatesGroup::whereIn('id', $ids)->get();
+            
+            foreach($orders as $index => $id){
+                $group = $groups->where('id', $id)->first();
+                if($group){
+                    $group->display_order = $index;
+                    $group->save();
+                }
+            }
+    
+            return response()->json(["status" => 201, "message" => "カテゴリーの更新に成功しました"]);
         }catch(\Exception $e){
             Log::debug($e);
         }
+
     }
+
+    public function fetchTemplateByCategory(string $category_id){
+        try{
+            $templates = MessageTemplateContent::getMessageTemplatesByFilter($category_id);
+            return response()->json($templates);
+        }catch(\Exception $e){
+            Log::debug($e);
+            return response()->json(["status" => 500]);
+        }
+
+    }
+
 }

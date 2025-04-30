@@ -307,231 +307,267 @@
 				<div class="tab" id="js_tab_edit">一覧・編集</div>
 				<div class="tab" id="js_tab_category">カテゴリー</div>
 			</div>
-			<!-- エラーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
-			<div class="form-validation-errors hidden" id="form-errors">
-				<div class="error-header">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<circle cx="12" cy="12" r="10"></circle>
-						<line x1="12" y1="8" x2="12" y2="12"></line>
-						<line x1="12" y1="16" x2="12.01" y2="16"></line>
-					</svg>
-					<span>以下のエラーを修正してください</span>
-				</div>
-				<ul class="error-list" id="js_error_list"></ul>
-			</div>
-
-			<!-- 成功ーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
-			<div class="form-validation-success hidden" id="form-success">
-				<div class="success-header">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-						<polyline points="22 4 12 14.01 9 11.01"></polyline>
-					</svg>
-					<span>カテゴリーの追加に成功しました。</span>
-				</div>
-				<ul class="success-list" id="js_success_list">
-					<!-- <li class="success-item">テンプレートが正常に作成されました</li> -->
-				</ul>
-			</div>
-						
-			<!-- 新規作成フォーム -->
-			<form class="tab-content js_create_form">
-				@csrf
-				<div class="form-group">
-					<label for="template-title">テンプレート名</label>
-					<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
-				</div>
-			
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-						<label for="category-select">カテゴリーを選択</label>
-						<select class="category-select" id="category-select" name="category_id">
-							<option value="" disabled selected>カテゴリーを選択</option>
-						</select>
-						</div>
-					</div>
-				</div>
-
-				<!-- コンテンツブロック管理エリア -->
-				<div class="content-blocks" id="create-content-blocks">
-				</div>
-				
-				<!-- 追加ボタン -->
-				<div class="add-block-container">
-					<button class="btn btn-light add-text" id="js_add_text">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+			<div class="form-wrapper">
+				<!-- エラーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
+				<div class="form-validation-errors hidden" id="form-errors">
+					<div class="error-header">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="12" y1="8" x2="12" y2="12"></line>
+							<line x1="12" y1="16" x2="12.01" y2="16"></line>
 						</svg>
-						テキストを追加
-					</button>
-					<button class="btn btn-light add-image" id="js_add_image">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-							<circle cx="8.5" cy="8.5" r="1.5"></circle>
-							<polyline points="21 15 16 10 5 21"></polyline>
-						</svg>
-						画像を追加
-					</button>
-				</div>
-				
-				<!-- ボタン -->
-				<div class="btn-container">
-					<button class="btn btn-primary js_submit_template_btn" id="template_submit_btn" type="submit">保存</button>
-				</div>
-			</form>
-			
-			<!-- 一覧・編集タブ (初期状態では非表示) -->
-			<div class="tab-content tab-edit" style="display: none;">
-				<!-- カテゴリーフィルターを追加 -->
-				<div class="category-filter-container">
-					<div class="filter-title">カテゴリーでフィルター：</div>
-					<div class="category-buttons">
+						<span>以下のエラーを修正してください</span>
 					</div>
+					<ul class="error-list" id="js_error_list"></ul>
 				</div>
-				<div class="template-list">
-					<!-- テンプレートアイテム -->
+
+				<!-- 成功ーコンテナ - タブメニューの直後、フォーム開始前に配置 -->
+				<div class="form-validation-success hidden" id="form-success">
+					<div class="success-header">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+							<polyline points="22 4 12 14.01 9 11.01"></polyline>
+						</svg>
+						<span class="js_success_msg"></span>
+					</div>
+					<ul class="success-list" id="js_success_list">
+						<!-- <li class="success-item">テンプレートが正常に作成されました</li> -->
+					</ul>
 				</div>
-				<!-- モーダルコンテンツ -->
-				<div class="modal-content">
-					<!-- エラーコンテナ -->
-					<div class="form-validation-errors hidden" id="edit-form-errors">
-						<div class="error-header">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<circle cx="12" cy="12" r="10"></circle>
-								<line x1="12" y1="8" x2="12" y2="12"></line>
-								<line x1="12" y1="16" x2="12.01" y2="16"></line>
-							</svg>
-							<span>以下のエラーを修正してください</span>
-						</div>
-						<ul class="error-list" id="js_edit_error_list"></ul>
+							
+				<!-- 新規作成フォーム -->
+				<form class="tab-content js_create_form">
+					@csrf
+					<div class="form-group">
+						<label for="template-title">テンプレート名</label>
+						<input type="text" class="template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
 					</div>
 
-					<!-- 成功ーコンテナ -->
-					<div class="form-validation-success hidden" id="edit-form-success">
-						<div class="success-header">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-								<polyline points="22 4 12 14.01 9 11.01"></polyline>
-							</svg>
-							<span>テンプレートの更新に成功しました。</span>
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+							<label for="category-select">カテゴリーを選択</label>
+							<select class="category-select" id="category-select" name="category_id">
+								<option value="" disabled selected class="category-option">カテゴリーを選択</option>
+								@foreach ($categories as $category)
+									<option class="category-option"  value={{$category->id}} >{{$category->category_name}}</option>
+								@endforeach
+							</select>
+							</div>
 						</div>
-						<ul class="success-list" id="js_edit_success_list"></ul>
 					</div>
-				</div>
-			</div>
-			
-			<!-- 編集フォーム -->
-			<form class="edit-template-form js_edit_form hidden" id="template-edit-form">
-				@csrf
-				<div class="form-group">
-					<label for="edit-template-title">テンプレート名</label>
-					<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-						<label for="edit-category-select">カテゴリーを選択</label>
-						<select id="edit-category-select" name="category_id" class="category-select">
-							@foreach ($categories as $category)
-								<option class="edit-category" value={{$category->id}} >{{$category->category_name}}</option>
+
+					<!-- コンテンツブロック管理エリア -->
+					<div class="content-blocks" id="create-content-blocks">
+					</div>
+					
+					<!-- 追加ボタン -->
+					<div class="add-block-container">
+						<button class="btn btn-light add-text" id="js_add_text">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+							</svg>
+							テキストを追加
+						</button>
+						<button class="btn btn-light add-image" id="js_add_image">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<circle cx="8.5" cy="8.5" r="1.5"></circle>
+								<polyline points="21 15 16 10 5 21"></polyline>
+							</svg>
+							画像を追加
+						</button>
+					</div>
+					
+					<!-- ボタン -->
+					<div class="btn-container">
+						<button class="btn btn-primary js_submit_template_btn" id="template_submit_btn" type="submit">保存</button>
+					</div>
+				</form>
+
+				<!-- 一覧・編集タブ (初期状態では非表示) -->
+				<div class="tab-content tab-edit" style="display: none;" >
+					<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
+					@csrf
+					<!-- カテゴリーフィルターを追加 -->
+					<div class="category-filter-container">
+						<div class="filter-title">カテゴリーでフィルター：</div>
+						<div class="category-buttons">
+							<button class="category-btn active" data-category="all" type="button">すべて</button>
+							@foreach ($template_categories as $category)
+								<button class="category-btn" data-category="{{$category->category_name}}" data-id="{{$category->id}}">{{mb_strlen($category->category_name) > 20 ? mb_substr($category->category_name, 0, 20) . '...' : $category->category_name}}</button>
 							@endforeach
 							
-						</select>
+						</div>
+					</div>
+					<!-- 矢印による順番変更の説明 -->
+					<div class="order-instructions">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<polyline points="12 16 16 12 12 8"></polyline>
+							<line x1="8" y1="12" x2="16" y2="12"></line>
+						</svg>
+						<span>矢印ボタンを使用してテンプレートの表示順を変更できます</span>
+					</div>
+					<!-- 並び順保存ボタン -->
+					<div class="order-save-container">
+						<button class="btn btn-primary disabled hidden" id="js_save_order_btn">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+								<polyline points="17 21 17 13 7 13 7 21"></polyline>
+								<polyline points="7 3 7 8 15 8"></polyline>
+							</svg>
+							並び順を保存
+						</button>
+					</div>
+					<div class="template-list-container">
+						<div class="loader-template-container" id="js_loader-template">
+							<div class="loader-template"></div>
+						</div>
+						
+						<div class="template-list" id="js_template_list">
+							
+							<!-- テンプレートアイテム -->
+						</div>
+					</div>
+
+					
+					<!-- モーダルコンテンツ -->
+					<div class="modal-content">
+						<!-- エラーコンテナ -->
+						<div class="form-validation-errors hidden" id="edit-form-errors">
+							<div class="error-header">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"></circle>
+									<line x1="12" y1="8" x2="12" y2="12"></line>
+									<line x1="12" y1="16" x2="12.01" y2="16"></line>
+								</svg>
+								<span>以下のエラーを修正してください</span>
+							</div>
+							<ul class="error-list" id="js_edit_error_list"></ul>
+						</div>
+
+						<!-- 成功ーコンテナ -->
+						<div class="form-validation-success hidden" id="edit-form-success">
+							<div class="success-header">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+									<polyline points="22 4 12 14.01 9 11.01"></polyline>
+								</svg>
+								<span class="js_success_msg"></span>
+							</div>
+							<ul class="success-list" id="js_edit_success_list"></ul>
 						</div>
 					</div>
 				</div>
 
-				<!-- コンテンツブロック管理エリア -->
-				<div class="content-blocks" id="edit-content-blocks">
-					<!-- ここにテンプレートの既存コンテンツブロックが表示されます -->
-				</div>
-				
-				<!-- 追加ボタン -->
-				<div class="add-block-container">
-					<button type="button" class="btn btn-light add-text" id="js_add_text">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-						</svg>
-						テキストを追加
-					</button>
-					<button type="button" class="btn btn-light add-image" id="js_add_image">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-							<circle cx="8.5" cy="8.5" r="1.5"></circle>
-							<polyline points="21 15 16 10 5 21"></polyline>
-						</svg>
-						画像を追加
-					</button>
-				</div>
-				<input type="hidden" name="template_id" value="" id="js_template_id">
-				<input type="hidden" name="group_id" value="" id="js_group_id">
-				
-				<!-- ボタン -->
-				<div class="btn-container">
-					<button class="btn btn-cancel" id="js_cancel_edit_btn" type="button">キャンセル</button>
-					<button class="btn btn-primary js_submit_template_btn" id="js_update_template_btn" type="submit">更新</button>
-				</div>
-			</form>
-
-			{{-- カテゴリー追加、編集フォーム --}}
-			<div class="tab-content js_category_form hidden" >
-				@csrf
-				<div class="category-management">
-					<label>カテゴリー</label>
-					<form class="add-category" method="POST" action="{{route("category.store")}}">
-						@csrf
-						<input type="text" placeholder="新しいカテゴリーを追加" value="{{old("category_name")}}" name="category_name" id="js_category_input" maxlength="255">
-						<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-						<button class="btn btn-primary">追加</button>
-					</form>
-					
-					<!-- カテゴリー一覧表示と編集機能 -->
-					<div class="category-list-container">
-						<h4>カテゴリー一覧</h4>
-						<div class="category-list-table">
-							<table>
-								<thead>
-									<tr>
-										<th w40>カテゴリー名</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($categories as $category)
-									<form action="{{route("category.edit")}}" method="POST">
-										@csrf
-										<tr class="category-item-row" data-id="{{ $category->id }}">
-											<td>
-												{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
-												<input type="hidden" name="id" value="{{ $category->id }}">
-												<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-												<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}" maxlength="255">
-											</td>
-											<td class="category-actions">
-												<button type="button" class="btn btn-edit edit-category-btn" title="編集">
-													<i class="fas fa-edit"></i>
-												</button>
-												<button type="submit" class="btn btn-save save-category-btn disabled" title="保存">
-													<i class="fas fa-check"></i>
-												</button>
-												<button type="button" class="btn btn-cancel cancel-edit-btn" title="キャンセル">
-													<i class="fas fa-times"></i>
-												</button>
-											</td>
-										</tr>
-									</form>
-									
-									@endforeach
-								</tbody>
-							</table>
+				<!-- 編集フォーム -->
+				<form class="edit-template-form js_edit_form hidden" id="template-edit-form">
+					@csrf
+					<div class="form-group">
+						<label for="edit-template-title">テンプレート名</label>
+						<input type="text" class="template-title" id="edit-template-title" placeholder="例: 挨拶文" name="template_name" maxlength="255" required>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+							<label for="edit-category-select">カテゴリーを選択</label>
+							<select id="edit-category-select" name="category_id" class="category-select">
+								@foreach ($categories as $category)
+									<option class="edit-category" value={{$category->id}} >{{$category->category_name}}</option>
+								@endforeach
+								
+							</select>
+							</div>
 						</div>
+					</div>
+
+					<!-- コンテンツブロック管理エリア -->
+					<div class="content-blocks" id="edit-content-blocks">
+						<!-- ここにテンプレートの既存コンテンツブロックが表示されます -->
+					</div>
+					
+					<!-- 追加ボタン -->
+					<div class="add-block-container">
+						<button type="button" class="btn btn-light add-text" id="js_add_text">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+								<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+							</svg>
+							テキストを追加
+						</button>
+						<button type="button" class="btn btn-light add-image" id="js_add_image">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<circle cx="8.5" cy="8.5" r="1.5"></circle>
+								<polyline points="21 15 16 10 5 21"></polyline>
+							</svg>
+							画像を追加
+						</button>
+					</div>
+					<input type="hidden" name="template_id" value="" id="js_template_id">
+					<input type="hidden" name="group_id" value="" id="js_group_id">
+					
+					<!-- ボタン -->
+					<div class="btn-container">
+						<button class="btn btn-cancel" id="js_cancel_edit_btn" type="button">キャンセル</button>
+						<button class="btn btn-primary js_submit_template_btn" id="js_update_template_btn" type="submit">更新</button>
+					</div>
+				</form>
+
+				{{-- カテゴリー追加、編集フォーム --}}
+				<div class="tab-content js_category_form hidden" >
+					<div class="category-management">
+						<label>カテゴリー</label>
+						<form class="add-category">
+							<input type="text" placeholder="新しいカテゴリーを追加" value="{{old("category_name")}}" name="category_name" id="js_category_input" maxlength="255">
+							<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
+							<button class="btn btn-primary" id="js_create_category">追加</button>
+						</form>
 						
+						<!-- カテゴリー一覧表示と編集機能 -->
+						<div class="category-list-container">
+							<h4>カテゴリー一覧</h4>
+							<div class="category-list-table">
+								<table>
+									<thead>
+										<tr>
+											<th w40>カテゴリー名</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="js_category_list">
+										@foreach($categories as $category)
+											<tr class="category-item-row" data-id="{{ $category->id }}">
+												<td>
+													{{-- <span class="category-name">{{ $category->category_name }}</span> --}}
+													<input type="hidden" name="id" value="{{ $category->id }}"class="js_category_id">
+													<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}" class="js_admin_id">
+													<input type="text" name="category_name_edit" class="category-edit-input disabled" readonly value="{{ $category->category_name }}" maxlength="255">
+												</td>
+												<td class="category-actions">
+													<button type="button" class="btn btn-edit edit-category-btn" title="編集">
+														<i class="fas fa-edit"></i>
+													</button>
+													<button type="button" class="btn btn-save save-category-btn disabled" title="保存">
+														<i class="fas fa-check"></i>
+													</button>
+													<button type="button" class="btn btn-cancel cancel-edit-btn" title="キャンセル">
+														<i class="fas fa-times"></i>
+													</button>
+												</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							
+						</div>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 </section>
@@ -542,11 +578,9 @@
 	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">テンプレートを削除しますか？</h2>
 	<p>テンプレートを削除してよろしいですか？削除すると、設定した全てのデータが完全に消去され、元に戻すことはできません。</p>
 	<div style="margin-top: 15px"></div>
-	<form class="delete_account-btn-container" method="POST" action="{{route("template.destory")}}">
+	<form class="delete_account-btn-container" >
 		<input type="hidden" name="template_id" value="" id="js_delete_templete_id">
-		<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}">
-		@csrf
-		@method('DELETE')
+		<input type="hidden" name="admin_id" value="{{Route::current()->parameter('id');}}" id="js_delete_admin_id">
 		<div class="btn-box">
 			<button id="js_cancel_template_btn" type="button" readonly style="width: 100%;">キャンセル</button>
 		</div>
@@ -605,22 +639,159 @@
 <script src="{{ mix("js/greetingMessage.js")}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 @if ($errors->any())
-    @php
-        $currentRoute = session('route_name');
-    @endphp
-    
-    @if ($currentRoute === 'category')
-        <script>
+	@php
+		$currentRoute = session('route_name');
+	@endphp
+	
+	@if ($currentRoute === 'category')
+      	<script>
             // JavaScript で使用するためにグローバル変数として設定
             window.hasError = true;
             window.errorMessages = {!! json_encode($errors->all()) !!};
 
-        </script>
-    @endif
+        	</script>
+    	@endif
 @else
-    <script>
-        window.hasError = false;
-    </script>
+    	<script>
+        	window.hasError = false;
+    	</script>
 @endif
 
+
+<script>
+// 矢印ボタンによる順番変更機能の実装
+document.addEventListener('DOMContentLoaded', function() {
+    // テンプレート一覧の初期化とイベント登録
+	function initOrderButtons() {
+\
+        	// 上矢印クリックイベントの登録
+		document.querySelectorAll('.move-up-btn').forEach(button => {
+			button.addEventListener('click', function(e) {
+				e.preventDefault();
+
+				const templateItem = this.closest('.template-item');
+				const prevItem = templateItem.previousElementSibling;
+				
+				if (prevItem && prevItem.classList.contains('template-item')) {
+					// 前の要素の前に現在の要素を挿入
+					templateItem.parentNode.insertBefore(templateItem, prevItem);
+					
+					// 並び順が変更されたことを示す
+					markOrderChanged();
+					
+					// 矢印ボタンの状態を更新
+					updateArrowButtonStates();
+				}
+			});
+		});
+		// 下矢印クリックイベントの登録
+		document.querySelectorAll('.move-down-btn').forEach(button => {
+			button.addEventListener('click', function(e) {
+				e.preventDefault();
+				const templateItem = this.closest('.template-item');
+				const nextItem = templateItem.nextElementSibling;
+				
+				if (nextItem && nextItem.classList.contains('template-item')) {
+					// 次の要素の後に現在の要素を挿入
+					if (nextItem.nextElementSibling) {
+						templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
+					} else {
+						templateItem.parentNode.appendChild(templateItem);
+					}
+					
+					// 並び順が変更されたことを示す
+					markOrderChanged();
+					
+					// 矢印ボタンの状態を更新
+					updateArrowButtonStates();
+				}
+			});
+		});
+			
+		// 初期状態で矢印ボタンの状態を設定
+		updateArrowButtonStates();
+	}
+	
+    	// 矢印ボタンの状態を更新（最初と最後の項目の矢印を無効化）
+	function updateArrowButtonStates() {
+		const templateItems = document.querySelectorAll('.template-item');
+
+		templateItems.forEach((item, index) => {
+			const upButton = item.querySelector('.move-up-btn');
+			const downButton = item.querySelector('.move-down-btn');
+			
+			// 最初の項目の上矢印を無効化
+			if (upButton) {
+				upButton.disabled = (index === 0);
+				upButton.classList.toggle('disabled', index === 0);
+			}
+			
+			// 最後の項目の下矢印を無効化
+			if (downButton) {
+				downButton.disabled = (index === templateItems.length - 1);
+				downButton.classList.toggle('disabled', index === templateItems.length - 1);
+			}
+		});
+	}
+
+	// 並び順が変更されたことを示す（保存ボタンのハイライト）
+	function markOrderChanged() {
+		const saveOrderBtn = document.getElementById('js_save_order_btn');
+		if (saveOrderBtn) {
+			saveOrderBtn.classList.add('highlight');
+			// 変更があったことを示すクラスを追加
+			document.querySelector('.template-list-container').classList.add('order-changed');
+		}
+	}
+
+    	// 一覧タブがアクティブになった時のイベント設定
+	document.getElementById('js_tab_edit').addEventListener('click', function() {
+		// タブ切り替え後に初期化（少し遅延させる）
+		setTimeout(() => {
+			initOrderButtons();
+		}, 200);
+	});
+
+    // ページ読み込み時に一覧タブがアクティブの場合は初期化
+	if (document.getElementById('js_tab_edit').classList.contains('active')) {
+		initOrderButtons();
+	}
+	
+	// テンプレートリストが動的に読み込まれた時のために
+	// イベント委任を使用して後から追加された要素にもイベントを適用
+	document.addEventListener('click', function(e) {
+		// 上矢印ボタンのクリックイベント
+		if (e.target.closest('.move-up-btn')) {
+			e.preventDefault();
+
+			const button = e.target.closest('.move-up-btn');
+			const templateItem = button.closest('.template-item');
+			const prevItem = templateItem.previousElementSibling;
+			
+			if (prevItem && prevItem.classList.contains('template-item')) {
+			templateItem.parentNode.insertBefore(templateItem, prevItem);
+			markOrderChanged();
+			updateArrowButtonStates();
+			}
+		}
+		// 下矢印ボタンのクリックイベント
+		if (e.target.closest('.move-down-btn')) {
+			e.preventDefault();
+			const button = e.target.closest('.move-down-btn');
+			const templateItem = button.closest('.template-item');
+			const nextItem = templateItem.nextElementSibling;
+			
+			if (nextItem && nextItem.classList.contains('template-item')) {
+			if (nextItem.nextElementSibling) {
+				templateItem.parentNode.insertBefore(templateItem, nextItem.nextElementSibling);
+			} else {
+				templateItem.parentNode.appendChild(templateItem);
+			}
+			markOrderChanged();
+			updateArrowButtonStates();
+			}
+		}
+	});
+});
+</script>
 @endsection

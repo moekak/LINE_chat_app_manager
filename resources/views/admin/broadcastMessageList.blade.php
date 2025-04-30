@@ -104,17 +104,29 @@
 
     const messageSearchBtn = document.querySelector(".js_message_search");
     const dateSearchBtn = document.querySelector(".js_date_search");
+    const searchInput = document.getElementById("search_input");
+    const searchForm = searchInput.closest("form"); // inputを含むフォーム要素を取得
 
-    document.getElementById("search_input").addEventListener("input", (e)=>{
+    searchInput.addEventListener("input", (e)=>{
         const value = e.target.value
         messageSearchBtn.classList.toggle("disabled", value.length <= 0)
     })
+
+    if (searchForm) {
+    searchForm.addEventListener("submit", (e) => {
+        // 入力が空の場合、送信をキャンセル
+        if (searchInput.value.length <= 0) {
+            e.preventDefault();
+        }
+    });
+}
 
 
     let hasStartValue = false
     let hasEndValue = false
     const startDate = document.querySelector(".js_start_date")
     const endDate = document.querySelector(".js_end_date")
+    const searchFormByDate = startDate.closest("form"); // inputを含むフォーム要素を取得
 
     startDate.addEventListener("input", (e)=>{
         const value = e.target.value
@@ -126,6 +138,12 @@
         const value = e.target.value
         hasEndValue = value.length > 0
         hasValidData()
+    })
+
+    searchFormByDate.addEventListener("submit", (e)=>{
+        if(!hasStartValue || !hasEndValue){
+            e.preventDefault();
+        }
     })
 
     function hasValidData(){

@@ -16,11 +16,13 @@ export const ERROR_TEXT = {
     CATEGORY_EMPTY_ERROR : "カテゴリーを選択してください" ,
     CONTENTS_EMPTY_ERROR : "一つ以上メッセージを入力してください。" ,
     CREATE_CATEGORY_ERROR: "カテゴリー追加に失敗しました。再度お試しください。",
-    CREATE_TEMPLATE_ERROR: "テンプレート追加に失敗しました。再度お試しください。"
+    CREATE_TEMPLATE_ERROR: "テンプレート追加に失敗しました。再度お試しください。",
+    EDIT_TEMPLATE_ERROR: "テンプレート編集に失敗しました。再度お試しください。"
 }
 
 export const SUCCESS_TEXT = {
     CREATE_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
+    EDIT_TEMPLATE_SUCCESS: "テンプレートが正常に作成されました",
     CREATE_NEW_CATEGORY: "カテゴリーの追加に成功しました。",
     DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 }

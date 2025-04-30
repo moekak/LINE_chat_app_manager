@@ -108,7 +108,7 @@ p, ul {
 }
 
 .bg, .bg_temaplteModal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -441,6 +441,29 @@ p, ul {
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
+.loader-template-container{
+    margin-top: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loader-template {
+    width: 40px;
+    height: 40px;
+    border: 5px solid rgba(128, 128, 128, 0.664);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    /* position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%); */
+    z-index: 998;
+}
 .crop_loader {
     width: 48px;
     height: 48px;
@@ -732,8 +755,8 @@ p, ul {
 
 /* テンプレート作成モーダル */
 .template_modal{
-    max-height: 80vh;
-    overflow: auto;
+    max-height: 730px;
+    overflow: hidden;
     padding: 0 !important;
     width: 660px;
 }
@@ -815,6 +838,162 @@ p, ul {
 .tab.active {
     color: var(--primary-color);
     border-bottom: 2px solid var(--primary-color);
+}
+
+/* 矢印ボタンによる順番変更関連のスタイル */
+.template-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: white;
+    transition: background-color 0.2s;
+}
+
+.template-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.template-order-controls {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    gap: 5px;
+}
+
+.order-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light-color, #f0f0f0);
+    border: 1px solid var(--border-color, #ddd);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding: 0;
+}
+
+.order-btn:hover {
+    background-color: var(--primary-light, #e6f0ff);
+    color: var(--primary-color);
+}
+
+.order-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.move-up-btn {
+    margin-bottom: 2px;
+}
+
+.template-content {
+    flex: 1;
+}
+
+.template-title {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.template-category {
+    display: inline-block;
+    background-color: var(--primary-light, #e6f0ff);
+    color: var(--primary-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+/* .template-text {
+    font-size: 13px;
+    color: var(--text-secondary, #666);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+} */
+
+.template-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.edit-btn {
+    color: var(--primary-color);
+}
+
+.delete-btn {
+    color: var(--danger-color, #dc3545);
+}
+
+/* 並び順保存ボタン */
+.order-save-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.order-save-container .btn svg {
+    margin-right: 8px;
+}
+
+/* 表示順変更の説明 */
+.order-instructions {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-light-color, #f5f5f5);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    color: var(--text-secondary, #666);
+    font-size: 14px;
+}
+
+.order-instructions svg {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.template-list-container {
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.template-list {
+    /* max-height: 260px;
+    overflow-y: auto; */
+    margin-bottom: 20px;
+}
+.form-wrapper{
+    overflow-y: auto;
+    max-height: 554px;
+    overflow-x: hidden;
 }
 
 /* フォーム要素のスタイル */
@@ -903,6 +1082,8 @@ textarea {
     border-radius: 8px;
     padding: 20px;
     background-color: var(--light-bg-color, #f9f9f9);
+    overflow-y: auto;
+    max-height: 405px;
 }
 
 .category-list-container h4 {
@@ -1115,9 +1296,6 @@ textarea {
 
 
 /* テンプレート一覧表示 */
-.template-list {
-    margin-top: 20px;
-}
 
 .template-item {
     border: 1px solid var(--border-color);
@@ -1154,7 +1332,7 @@ textarea {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 500px;
+    max-width: 440px;
 }
 
 .template-actions {
@@ -1196,8 +1374,11 @@ textarea {
 
 .category-buttons {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
+    max-height: 76px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    overflow-x: auto;
+    padding-bottom: 15px;
 }
 
 .category-btn {
@@ -1208,7 +1389,9 @@ textarea {
     font-size: 13px;
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2sease;
+    text-wrap: unset;
+    white-space: nowrap;
 }
 
 .category-btn:hover {
@@ -1481,7 +1664,15 @@ input:checked + .toggle-slider:before {
 /* 編集フォーム用のスタイル */
 .edit-template-form {
     width: 100%;
+    height: 525px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+/* .js_create_form {
+    max-height: 525px;
+    overflow-y: auto;
+    overflow-x: hidden;
+} */
 
 /* 編集モードの画像プレビュー */
 .image-preview {

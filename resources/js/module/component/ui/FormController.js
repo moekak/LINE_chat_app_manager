@@ -64,15 +64,6 @@ class FormController{
     }
 
 
-    static populateSelectOptions(id, category_name){
-        const option = document.createElement("option")
-        const selectParentElement = document.getElementById("category-select")
-        option.value = id
-        option.innerHTML = category_name
-        selectParentElement.appendChild(option)
-    }
-
-
     static templateImageStyle(fileInput, objectURL){
         const imageElement = fileInput.parentElement.querySelector(".image_element");
         const placeholderText = fileInput.parentElement.querySelector(".image-placeholder-txt");

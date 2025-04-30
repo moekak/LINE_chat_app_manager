@@ -1,11 +1,11 @@
 
-import { close_loader, close_modal, close_modal_by_click, open_loader, open_modal } from "./module/component/modalOperation.js";
+import { close_loader, close_loader_template, close_modal, close_modal_by_click, open_loader, open_loader_template, open_modal } from "./module/component/modalOperation.js";
 import { changeDisplayOrder, handleChatRedirect} from "./module/component/accountUIOperations.js";
 import socket, { registerUser } from "./module/util/socket.js";
 import InfiniteScroll from "./module/util/InfiniteScroll.js";
 import { initializeUserModals } from "./module/component/modalInitializers.js";
 import FormController from "./module/component/ui/FormController.js";
-import { createMessageRowForFetch } from "./module/component/elementTemplate.js";
+import { crateCategoryList, createMessageRowForFetch } from "./module/component/elementTemplate.js";
 import MessageTemplateOperator from "./module/component/messageTemplate/MessageTemplateOperator.js";
 import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHandler.js";
 import { fetchPostOperation } from "./module/util/fetch.js";
@@ -14,6 +14,7 @@ import InitializeInputService from "./module/component/messageTemplate/Initializ
 import { templateImageData } from "./module/component/messageTemplate/DataGenerator.js";
 import DataValidator from "./module/component/messageTemplate/DataValidator.js";
 import TabController from "./module/component/messageTemplate/TabController.js";
+import Uicontroller from "./module/component/messageTemplate/UiController.js";
 
 
 //ユーザー管理に関連するモーダルの初期化
@@ -149,27 +150,10 @@ submitForms.forEach((submitForm)=>{
             handleTemplateButtonClick();
       });
 
-      // 非同期処理を別関数に切り出す
-      async function handleTemplateButtonClick() {
-
+      function handleTemplateButtonClick() {
             InitializeInputService.intiaizeInputs();
             new MessageTemplateOperator();
-            open_loader();
-            
-            const adminId = {"admin_id": document.getElementById("js_account_id").value};
-            try {
-                  const response = await fetchPostOperation(adminId, API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY);
-                  
-                  response["categories"].forEach((res) => {
-                        FormController.populateSelectOptions(res["id"], res["category_name"]);
-                  });
-                  
-                  open_modal(templateModal);
-                  templateModal.style.zIndex = 999
-                  close_loader();
-            } catch(error) {
-                  console.log(error);
-            }
+            open_modal(templateModal);
       }
 }
 
@@ -189,36 +173,100 @@ submitForms.forEach((submitForm)=>{
 
 
 // カテゴリー編集
-{
-      const categoryEditBtns = document.querySelectorAll(".edit-category-btn")
-      categoryEditBtns.forEach((btn)=>{
-            btn.addEventListener("click", ()=>{
-                  const inputElement = btn.closest(".category-item-row").querySelector(".category-edit-input")
-                  const saveBtn = btn.closest(".category-actions").querySelector(".save-category-btn")
-
-                  inputElement.classList.remove("disabled")
-                  inputElement.readOnly = false;
-                  saveBtn.classList.remove("disabled")
-            })
-      })
-
-
-      const cancelBtns = document.querySelectorAll(".cancel-edit-btn")
-      cancelBtns.forEach((btn)=>{
-            btn.addEventListener("click", ()=>{
-                  const inputElement = btn.closest(".category-item-row").querySelector(".category-edit-input")
-                  const saveBtn = btn.closest(".category-actions").querySelector(".save-category-btn")
-
-                  inputElement.classList.add("disabled")
-                  inputElement.readOnly = true;
-                  saveBtn.classList.add("disabled")
-            })
-      })
-}
-
+Uicontroller.changeEditCategoryStyle()
+Uicontroller.editCategoryProcess()
 
 document.querySelector('.template-title').addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
             event.preventDefault();
       }
 });
+
+
+
+//テンプレート削除機能
+{
+      // 削除キャンセル
+      const cancelBtn = document.getElementById("js_cancel_template_btn")
+      cancelBtn.addEventListener("click", ()=>{
+            document.getElementById("js_template_confirm_modal").classList.add("hidden")
+            document.getElementById("js_template_modal").style.zIndex = 999
+      })
+
+
+      // 削除処理
+      const btn = document.querySelector(".js_delete_template_from")
+      btn.addEventListener("click", async(e)=>{
+            e.preventDefault()
+
+            document.getElementById("js_template_confirm_modal").classList.add("hidden")
+            open_loader()
+            const templateId = document.getElementById("js_delete_templete_id").value
+            const sendingData = {"template_id": templateId}
+            const data = await fetchPostOperation(sendingData, API_ENDPOINTS.FETCH_DELETE_TEMPLATE)
+
+            close_loader()
+            document.getElementById("js_template_modal").style.zIndex = 999
+
+            if(data["status"] === 201){
+                  const uiController = new Uicontroller()
+                  uiController.hideRemovedTemplate(data["template_id"])
+                  DataValidator.displayCategorySuccessMessage("テンプレートの削除に成功しました。")
+            }else{
+                  const dataValidator = new DataValidator()
+                  dataValidator.displayErrorList(["テンプレートの削除に失敗しました。お手数ですが、もう一度お試しください。"])
+            }
+      })
+}
+
+
+// カテゴリ作成
+{
+      const createCategoryForm = document.querySelector(".add-category")
+      const createCategoryBtn = document.getElementById("js_create_category")
+      const categoryList = document.getElementById("js_category_list")
+      createCategoryBtn.addEventListener("click", async(e)=>{
+            e.preventDefault()
+
+            if(document.getElementById("js_category_input").value.trim().length == 0){
+                  document.getElementById("js_error_list").innerHTML = ""
+                  const dataValidator = new DataValidator()
+                  dataValidator.displayErrorList(["カテゴリー名を入力してください。"])
+                  return
+            }else{
+                  InitializeInputService.initializeErrorList()
+            }
+
+
+
+            open_loader_template()
+            const formData = new FormData(createCategoryForm)
+            const response = await fetch(API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
+                  method: 'POST',
+                  body: formData,
+            });
+            
+            if (!response.ok) {
+                  throw new Error("メッセージテンプレート作成でエラーが発生しました");
+            }
+
+            const data = await response.json();
+            if(data["status"] === 201){
+                  DataValidator.displayCategorySuccessMessage("カテゴリーの追加に成功しました")
+                  categoryList.innerHTML += crateCategoryList(data["category"])
+                  Uicontroller.initializeCategoryInput()
+                  // カテゴリー編集
+                  Uicontroller.changeEditCategoryStyle()
+                  Uicontroller.editCategoryProcess()
+                  Uicontroller.addCategoryToOptionElement(data["category"])
+                  Uicontroller.addCategoryButtonToFilter(data["category"])
+            }else{
+                  const dataValidator = new DataValidator()
+                  dataValidator.displayErrorList(["カテゴリーの編集に失敗しました。お手数ですが、もう一度お試しください。"])
+            }
+            
+
+            
+            close_loader_template()
+      })
+}

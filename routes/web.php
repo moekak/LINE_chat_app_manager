@@ -42,9 +42,6 @@ Route::get("/account/edit/{id}", [LineAccountController::class, "edit"])->middle
 Route::get("/account/show/{id}", [LineAccountController::class, "show"])->name("account.show")->middleware("auth");
 Route::get("/account/block/user/{id}", [UserBlockController::class, "index"])->name("account.block.user")->middleware("auth");
 Route::get("/account/unblock/{id}", [UserBlockController::class, "update"])->name("account.unblock")->middleware("auth");
-// Route::get("/account/flag/update/invalid/{id}", [LineAccountController::class, "updateFlagForInvalid"])->name("flag.update")->middleware("auth");
-// Route::get("/account/flag/update/valid/{id}", [LineAccountController::class, "updateFlagForValid"])->middleware("auth");
-
 Route::post("/secondAccount/create", [SecondAccountController::class, "create"])->name("secondAccount.create")->middleware("auth");
 Route::post("/user/update/{id}", [ChatUserController::class, "update"])->name("user.update")->middleware("auth");
 
@@ -52,13 +49,6 @@ Route::post("/user/update/{id}", [ChatUserController::class, "update"])->name("u
 Route::get("/account/block/{id}", [ChatUserController::class, "block"])->name("account.block")->middleware("auth");
 Route::post("/line/message/update/{id}", [LineMessageController::class, "update"])->name("message.update")->middleware("auth");
 Route::post("/title/update", [CreateTitleController::class, "store"])->name("title.update")->middleware("auth");
-
-Route::post("/category/create", [MessageTemplate::class, "categoryStore"])->name("category.store")->middleware("auth");
-Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"])->name("category.edit")->middleware("auth");
-
-
-Route::delete("/template/delete", [MessageTemplate::class, "destroy"])->name("template.destory");
-
 
 Route::get("/broadcast/message/list/{id}", [BroadcastMessageController::class, "index"])->name("broadcast_message.list")->middleware("auth");
 Route::post("/search/broadcast/message", [BroadcastMessageController::class, "searchByMessage"])->name("search.message")->middleware("auth");

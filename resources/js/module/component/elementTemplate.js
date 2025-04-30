@@ -188,7 +188,7 @@ export const createImageBlock = (blockCounter) =>{
 
 export const createMessageTemplate = (templates) => {
 
-      return templates.map(template => {
+      return templates.map((template, index) => {
             let categoryName = ""
             if (template.category_name.length > 40) {
                   categoryName =  template.category_name.substring(0, 40) + '...';
@@ -202,51 +202,151 @@ export const createMessageTemplate = (templates) => {
                   templateName = template.template_name
             }
             return `
-            <div class="template-item" data-id=${template["category_id"]}>
-                  <div class="template-content">
-                        ${template.contents.map(content => `
-                              <div class="js_blockcontents" data-id="${content.id}" data-order="${content.display_order}" data-type="${content.content_type}"> 
+                  <div class="template-item" data-id=${template["category_id"]} data-order="${template["display_order"]}">
+                        <input type="hidden" value="${template.template_id}" name="template_order[]" class="template_order">
+                        <div class="template-order-controls">
+                              <button type="button" class="order-btn move-up-btn" title="上に移動">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                    </svg>
+                              </button>
+                              <button type="button" class="order-btn move-down-btn" title="下に移動">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                              </button>
+                        </div>
+                        <div class="template-content">
+                              ${template.contents.map(content => `
+                                    <div class="js_blockcontents" data-id="${content.id}" data-order="${content.display_order}" data-type="${content.content_type}"> 
                                     <input type="hidden" class="js_content_text" value="${content.content_text || ''}">
                                     <input type="hidden" class="js_image_path" value="${content.image_path || ''}" data-crop='${content.cropArea || ''}'>
-                              </div>
-                        `).join('')}
-                        <input type="hidden" value="${template.template_id}" class="template_id">
-                        <input type="hidden" value="${template.group_id}" class="group_id">
-                        <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
-                        <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
-                        <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
-                  </div>
-                  <div class="template-actions">
-                        <button class="action-btn edit-btn template_edit-btn" title="編集">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </div>
+                              `).join('')}
+                              <input type="hidden" value="${template.template_id}" class="template_id">
+                              <input type="hidden" value="${template.group_id}" class="group_id">
+                              <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
+                              <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
+                              <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
+                        </div>
+                        <div class="template-actions">
+                              <button type="button" class="action-btn edit-btn template_edit-btn" title="編集">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                              </svg>
-                        </button>
-                        <button class="action-btn delete-btn template_delete_btn" title="削除">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </svg>
+                              </button>
+                              <button type="button" class="action-btn delete-btn template_delete_btn" title="削除">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="3 6 5 6 21 6"></polyline>
                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                     <line x1="10" y1="11" x2="10" y2="17"></line>
                                     <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                        </button>
+                                    </svg>
+                              </button>
+                        </div>
                   </div>
-            </div>
             `;
       }).join('');
 };
 
 
-export const crateCategoryButtons =(category)=>{
-      let name = ""
-      if(category["category_name"].length > 15){
-            name =  category["category_name"].substring(0, 15) + '...';
-      }else{
-            name = category["category_name"]
-      }
-
+export const addCategoryButton =(category)=>{
+      const categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"]
       return `
-            <button class="category-btn" data-category=${category["id"]} title="${category["category_name"]}">${name}</button>
+            <button type="button" class="category-btn" data-id=${category["id"]} data-category=${category["name"]} title="${category["name"]}">${categoryName}</button>
+      `
+}
+
+
+
+export const crateCategoryButton =(category)=>{
+      return `
+            <option class="category-option" value=${category["id"]}>${category["name"]}</option>
+      `
+}
+export const editCategoryButton =(category)=>{
+      return `
+            <option class="edit-category" value=${category["id"]}>${category["name"]}</option>
+      `
+}
+
+
+
+export const createMessageTemplateForAll = (templates) => {
+
+      return templates.map((template, index) => {
+            let categoryName = ""
+            if (template.category_name.length > 40) {
+                  categoryName =  template.category_name.substring(0, 40) + '...';
+            }else{
+                  categoryName = template.category_name
+            }
+            let templateName = ""
+            if (template.template_name.length > 40) {
+                  templateName =  template.template_name.substring(0, 40) + '...';
+            }else{
+                  templateName = template.template_name
+            }
+            return `
+                  <div class="template-item" data-id=${template["category_id"]} data-order="${template["display_order"]}">
+                        <input type="hidden" value="${template.template_id}" name="template_order[]" class="template_order">
+                        <div class="template-content">
+                              ${template.contents.map(content => `
+                                    <div class="js_blockcontents" data-id="${content.id}" data-order="${content.display_order}" data-type="${content.content_type}"> 
+                                    <input type="hidden" class="js_content_text" value="${content.content_text || ''}">
+                                    <input type="hidden" class="js_image_path" value="${content.image_path || ''}" data-crop='${content.cropArea || ''}'>
+                                    </div>
+                              `).join('')}
+                              <input type="hidden" value="${template.template_id}" class="template_id">
+                              <input type="hidden" value="${template.group_id}" class="group_id">
+                              <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
+                              <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
+                              <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
+                        </div>
+                        <div class="template-actions">
+                              <button type="button" class="action-btn edit-btn template_edit-btn" title="編集">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                              </button>
+                              <button type="button" class="action-btn delete-btn template_delete_btn" title="削除">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                              </button>
+                        </div>
+                  </div>
+            `;
+      }).join('');
+};
+
+
+
+export const crateCategoryList =(category)=>{
+      return `
+            <tr class="category-item-row" data-id="${category["id"]}">
+                  <td>
+                        
+                        <input type="hidden" name="id" value="${category["id"]}" class="js_category_id">
+                        <input type="hidden" name="admin_id" value="${category["admin_id"]}" class="js_admin_id">
+                        <input type="text" name="category_name_edit" class="category-edit-input disabled" readonly="" value="${category["name"]}" maxlength="255">
+                  </td>
+                  <td class="category-actions">
+                        <button type="button" class="btn btn-edit edit-category-btn" title="編集">
+                              <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-save save-category-btn disabled" title="保存">
+                              <i class="fas fa-check"></i>
+                        </button>
+                        <button type="button" class="btn btn-cancel cancel-edit-btn" title="キャンセル">
+                              <i class="fas fa-times"></i>
+                        </button>
+                  </td>
+            </tr>
       `
 }

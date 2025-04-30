@@ -188,5 +188,4 @@ class BroadcastMessageController extends Controller
         return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
     }
 
-
 }

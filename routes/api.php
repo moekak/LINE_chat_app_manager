@@ -23,18 +23,21 @@ Route::post("/broadcast_message/store/{admin_id}", [BroadcastMessageController::
 Route::post("/greeting_message/store/{admin_id}", [GreetingMessageController::class, "store"]);
 Route::post("/decrypt", [DecryptDataController::class, "decryptData"]);
 
-
-
-
 Route::post("/user/lists/{admin_id}", [LineAccountController::class, "fetchScrollData"]);
 Route::post("/account/lists/{admin_id}/{status_id}", [LineAccountController::class, "fetchScrollAcocuntData"]);
 Route::post("/fetch/account", [LineAccountController::class, "fetchSpecificAccount"]);
 
 Route::get("/token/generate", [RedirectTokenController::class, "fetchToken"]);
 Route::post("/create/category", [MessageTemplate::class, "createCategory"]);
-Route::post("/get/categories", [MessageTemplate::class, "fetchCategories"]);
+// Route::post("/get/categories", [MessageTemplate::class, "fetchCategories"]);
 Route::post("/create/templates", [MessageTemplate::class, "store"]);
 Route::post("/update/templates", [MessageTemplate::class, "update"]);
 Route::get("/templates/get/{admin_id}", [MessageTemplate::class, "fetchTemplate"]);
+Route::get("/fetch/template/{category_id}", [MessageTemplate::class, "fetchTemplateByCategory"]);
 
 
+Route::post("/template/order", [MessageTemplate::class, "updateOrder"]);
+Route::post("/template/delete", [MessageTemplate::class, "destroy"]);
+Route::post("/category/create", [MessageTemplate::class, "categoryStore"]);
+
+Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"]);

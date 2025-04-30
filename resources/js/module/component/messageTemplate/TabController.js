@@ -1,14 +1,9 @@
-import { API_ENDPOINTS } from "../../../config/apiEndPoint.js";
-import { SUCCESS_TEXT } from "../../../config/config.js";
-import { fetchGetOperation, fetchPostOperation } from "../../util/fetch.js"
-import { crateCategoryButtons, createMessageTemplate } from "../elementTemplate.js";
-import ButtonController from "../ui/ButtonController.js";
-import FormController from "../ui/FormController.js";
-import {close_loader, close_loader_template, close_modal, hide_bg, open_loader} from "./../modalOperation.js"
-import DataValidator from "./DataValidator.js";
+
+import {close_loader, open_loader} from "./../modalOperation.js"
 import MessageTemplateFormController from "./edit/FormController.js";
 import InitializeInputService from "./InitializeInputService.js";
 import MessageTemplateOperator from "./MessageTemplateOperator.js";
+import FilterCategory from "./FilterCategory.js"
 
 // 4. TabController.js - タブ管理に特化
 class TabController {
@@ -32,62 +27,24 @@ class TabController {
                 }
                 if(index === 1){
                     try{
+                        document.getElementById("js_template_list").innerHTML = ""
+                        document.getElementById("js_loader-template").classList.remove("hidden")
+                        const categoryBtns = document.querySelectorAll(".category-btn")
+                        categoryBtns.forEach((btn)=>{
+                            btn.classList.remove("active")
+                            if(btn.dataset.category === "all"){
+                                btn.classList.add("active")
+                            }
+                        })
+                        
                         document.getElementById("template-edit-form").classList.add("hidden")
                         MessageTemplateFormController.initializeTemplateEditModal()
                         const modal = document.getElementById("js_template_modal")
-                        const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_GET}/${document.getElementById("js_account_id").value}`)
-
-                        const categories = await fetchPostOperation({"admin_id": document.getElementById("js_account_id").value}, `${API_ENDPOINTS.FETCH_TEMPLATE_CATEGORY}`)
-        
-                        const templateRaw = createMessageTemplate(response)
-                        const buttonAll = '<button class="category-btn active" data-category="all">すべて</button>'
-                        document.querySelector(".template-list").innerHTML += templateRaw
-                        document.querySelector(".category-buttons").innerHTML += buttonAll
-                        categories["categories"].forEach((category)=>{
-                            const categoriesRaw = crateCategoryButtons(category)
-                            document.querySelector(".category-buttons").innerHTML += categoriesRaw
-                        })
+                        FilterCategory.getAllTemplateData()
                         modal.style.zIndex = "999"
                         close_loader()
-                        MessageTemplateFormController.initializeEditModal()
-                        this.#filterCategory()
                         document.querySelector(".tab-edit").classList.remove("hidden")
 
-                        // テンプレート削除
-                        {
-                            const deleteBtns = document.querySelectorAll(".template_delete_btn")
-                            deleteBtns.forEach((btn)=>{
-                                btn.addEventListener("click", async ()=>{
-
-                                    //削除確認モーダル
-                                    document.getElementById("js_template_confirm_modal").classList.remove("hidden")
-                                    const template_id = btn.closest(".template-item").querySelector(".template_id").value
-                                    document.getElementById("js_delete_templete_id").value = template_id
-
-                                    document.getElementById("js_template_modal").style.zIndex = 1
-                                })
-                            })
-                        }
-
-                        {
-                            // 削除キャンセル
-                            const cancelBtn = document.getElementById("js_cancel_template_btn")
-                            cancelBtn.addEventListener("click", ()=>{
-                                document.getElementById("js_template_confirm_modal").classList.add("hidden")
-                                document.getElementById("js_template_modal").style.zIndex = 999
-                            })
-                        }
-
-                        // ローダー出す処理
-
-                        {
-                            const btn = document.querySelector(".js_delete_template_from")
-                            btn.addEventListener("click", ()=>{
-                                open_loader()
-                                document.getElementById("js_template_confirm_modal").classList.add("hidden")
-                            })
-
-                        }
                     }catch(error){
                         console.log(error);
                         
@@ -121,24 +78,13 @@ class TabController {
         this.tabContents[index].style.display = 'block';
     }
 
-    #filterCategory(){
+    static filterCategory(){
         const categoryBtns = document.querySelectorAll(".category-btn")
-        const templateItems = document.querySelectorAll(".template-item")
         categoryBtns.forEach((btn)=>{
-            btn.addEventListener("click",()=>{
-                categoryBtns.forEach(btn => btn.classList.remove("active"))
-                btn.classList.add("active")
-                const category = btn.dataset.category
-
-                if(category === "all"){
-                    templateItems.forEach(item => item.classList.remove("hidden"))
-                    return
-                }
-                const targetTemplateItems = Array.from(templateItems).filter(item => item.dataset.id === category)
-                const otherTemplateItems = Array.from(templateItems).filter(item => item.dataset.id !== category)
-                otherTemplateItems.forEach(item => item.classList.add("hidden"))
-                targetTemplateItems.forEach(item => item.classList.remove("hidden"))
-
+            const newButton = btn.cloneNode(true)
+            btn.replaceWith(newButton)
+            newButton.addEventListener("click",(e)=>{
+                FilterCategory.fetchFilteredData(e.target.dataset.category, newButton)
             })
         })
     }

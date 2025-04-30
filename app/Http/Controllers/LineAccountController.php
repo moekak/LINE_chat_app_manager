@@ -130,6 +130,7 @@ class LineAccountController extends Controller
         $account_name = LineAccount::where("id", $id)->value("account_name");
         $title = PageTitle::where("admin_id", $id)->first();
         $line_display_text = LineDisplayText::where("admin_id", $id)->select("id", "text", "is_show")->first();
+        $template_categories = MessageTemplatesCategory::select("id", "category_name")->where("admin_id", $id)->get();
         
         $users = ChatUser::whereNotIn('chat_users.id', function($query) {
             $query->select('chat_user_id')
@@ -185,7 +186,7 @@ class LineAccountController extends Controller
             $templates = MessageTemplateContent::getMessageTemplatesForAdmin($id);
             $categories = MessageTemplatesCategory::where("admin_id", $id)->select("id", "category_name")->get();
 
-        return view("admin.account_show", ["categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
+        return view("admin.account_show", ["template_categories" => $template_categories, "categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
     }
 
     /**

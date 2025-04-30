@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "../../../config/apiEndPoint.js";
 import { fetchPostOperation } from "../../util/fetch.js";
-import { close_loader, open_loader } from "../modalOperation.js";
+import { close_loader, close_loader_template, open_loader, open_loader_template } from "../modalOperation.js";
 
 // 3. TemplateApiService.js - API通信に特化
 class TemplateApiService {
@@ -12,8 +12,7 @@ class TemplateApiService {
     static async createTemplate(formData, isUpdate = false) {
         try {
             const url = isUpdate ? API_ENDPOINTS.FETCH_TEMPLATE_UPDATE: API_ENDPOINTS.FETCH_TEMPLATE_CREATE
-            open_loader();
-            document.getElementById("js_template_modal").classList.add("hidden")
+            open_loader_template()
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,
@@ -29,7 +28,7 @@ class TemplateApiService {
             console.error(error);
             throw error;
         } finally {
-            close_loader();
+            close_loader_template()
         }
     }
 
