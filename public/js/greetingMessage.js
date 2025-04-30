@@ -5991,19 +5991,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// export default {
-//     socketUrl: 'https://chat-socket.info:3000',
-
-// };
-
-// export const SYSTEM_URL = {
-//     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
-//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-//     CHAT_URL : "https://chat-system.info/admin/chat",
-//     CHAT_BASE_URL:"https://chat-system.info"
-// };
-
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://chat-socket.info:3000'
+});
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat-system.info/admin/chat",
+  CHAT_BASE_URL: "https://chat-system.info"
+};
 var ERROR_TEXT = {
   TEMPLATE_NAME_EMPTY_ERROR: "テンプレート名を入力してください",
   CATEGORY_EMPTY_ERROR: "カテゴリーを選択してください",
@@ -6019,19 +6016,20 @@ var SUCCESS_TEXT = {
   DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
-// // 開発用
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
-});
+// // // 開発用
+// export default {
+//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
 
-// // 開発用
-var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-  CHAT_URL: "https://chat.line-chat-system-dev.tokyo/admin/chat",
-  CHAT_BASE_URL: "https://chat.line-chat-system-dev.tokyo"
-};
+// };
+
+// // // 開発用
+// export const SYSTEM_URL = {
+//     IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
+//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/admin/chat",
+//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+// };
 
 /***/ }),
 
@@ -7001,7 +6999,7 @@ var createMessageTemplate = function createMessageTemplate(templates) {
 };
 var addCategoryButton = function addCategoryButton(category) {
   var categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"];
-  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(categoryName, "</button>\n      ");
+  return "\n            <button type=\"button\" class=\"category-btn\" data-id=\"".concat(category["id"], "\" data-category=\"").concat(category["name"], "\" title=\"").concat(category["name"], "\">").concat(categoryName, "</button>\n      ");
 };
 var crateCategoryButton = function crateCategoryButton(category) {
   return "\n            <option class=\"category-option\" value=".concat(category["id"], ">").concat(category["name"], "</option>\n      ");

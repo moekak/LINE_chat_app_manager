@@ -80,7 +80,6 @@ class BroadcastMessage extends Model
         
         $messages = BroadcastMessage::OfAdmin($admin_id)
             ->OfWithGroup()
-            ->OfSearch($search)
             ->whereIn('broadcast_message_group_id', $groupIdsArray)
             ->get()
             ->groupBy('broadcast_message_group_id');

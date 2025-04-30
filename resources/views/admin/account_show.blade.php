@@ -644,17 +644,17 @@
 	@endphp
 	
 	@if ($currentRoute === 'category')
-      	<script>
+		<script>
             // JavaScript で使用するためにグローバル変数として設定
             window.hasError = true;
             window.errorMessages = {!! json_encode($errors->all()) !!};
 
-        	</script>
-    	@endif
+		</script>
+	@endif
 @else
-    	<script>
-        	window.hasError = false;
-    	</script>
+	<script>
+		window.hasError = false;
+	</script>
 @endif
 
 
@@ -663,7 +663,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // テンプレート一覧の初期化とイベント登録
 	function initOrderButtons() {
-\
         	// 上矢印クリックイベントの登録
 		document.querySelectorAll('.move-up-btn').forEach(button => {
 			button.addEventListener('click', function(e) {

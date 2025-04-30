@@ -5991,19 +5991,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SYSTEM_URL: () => (/* binding */ SYSTEM_URL),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// export default {
-//     socketUrl: 'https://chat-socket.info:3000',
-
-// };
-
-// export const SYSTEM_URL = {
-//     IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
-//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-//     CHAT_URL : "https://chat-system.info/admin/chat",
-//     CHAT_BASE_URL:"https://chat-system.info"
-// };
-
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  socketUrl: 'https://chat-socket.info:3000'
+});
+var SYSTEM_URL = {
+  IMAGE_URL: "https://line-chat-app.s3.ap-northeast-1.amazonaws.com/images",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  CHAT_URL: "https://chat-system.info/admin/chat",
+  CHAT_BASE_URL: "https://chat-system.info"
+};
 var ERROR_TEXT = {
   TEMPLATE_NAME_EMPTY_ERROR: "テンプレート名を入力してください",
   CATEGORY_EMPTY_ERROR: "カテゴリーを選択してください",
@@ -6019,19 +6016,20 @@ var SUCCESS_TEXT = {
   DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
-// // 開発用
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
-});
+// // // 開発用
+// export default {
+//     socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000',
 
-// // 開発用
-var SYSTEM_URL = {
-  IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
-  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
-  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
-  CHAT_URL: "https://chat.line-chat-system-dev.tokyo/admin/chat",
-  CHAT_BASE_URL: "https://chat.line-chat-system-dev.tokyo"
-};
+// };
+
+// // // 開発用
+// export const SYSTEM_URL = {
+//     IMAGE_URL: "https://line-chat-app-dev.s3.ap-northeast-1.amazonaws.com/images",
+//     FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+//     FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+//     CHAT_URL : "https://chat.line-chat-system-dev.tokyo/admin/chat",
+//     CHAT_BASE_URL:"https://chat.line-chat-system-dev.tokyo"
+// };
 
 /***/ }),
 
@@ -7001,7 +6999,7 @@ var createMessageTemplate = function createMessageTemplate(templates) {
 };
 var addCategoryButton = function addCategoryButton(category) {
   var categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"];
-  return "\n            <button type=\"button\" class=\"category-btn\" data-id=".concat(category["id"], " data-category=").concat(category["name"], " title=\"").concat(category["name"], "\">").concat(categoryName, "</button>\n      ");
+  return "\n            <button type=\"button\" class=\"category-btn\" data-id=\"".concat(category["id"], "\" data-category=\"").concat(category["name"], "\" title=\"").concat(category["name"], "\">").concat(categoryName, "</button>\n      ");
 };
 var crateCategoryButton = function crateCategoryButton(category) {
   return "\n            <option class=\"category-option\" value=".concat(category["id"], ">").concat(category["name"], "</option>\n      ");
@@ -7895,7 +7893,6 @@ var MessageTemplateOperator = /*#__PURE__*/function () {
                   uiController = new _UiController_js__WEBPACK_IMPORTED_MODULE_10__["default"]();
                   uiController.showTemplateLists();
                   activeButton = uiController.getActiveFilterCategory();
-                  console.log(activeButton);
                   _FilterCategory_js__WEBPACK_IMPORTED_MODULE_11__["default"].fetchFilteredData(activeButton.dataset.category, activeButton);
                   _DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"].displayCategorySuccessMessage("テンプレートの編集に成功しました。");
                 } else {
@@ -8289,23 +8286,31 @@ var TemplateFormData = /*#__PURE__*/function () {
   }
 
   /**
-   * コンテンツブロックからFormDataを構築する
-   * @return {Object} - {formData: FormData, hasContent: boolean}
+   * エスケープ処理
+   * @param {string} - エスケープする前の文字列
+   * @return {string} - エスケープされた文字列
    */
   return _createClass(TemplateFormData, [{
+    key: "escapeHtml",
+    value: function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+    /**
+     * コンテンツブロックからFormDataを構築する
+     * @return {Object} - {formData: FormData, hasContent: boolean}
+     */
+  }, {
     key: "buildFormData",
     value: function buildFormData() {
       var _document$getElementB,
         _document$getElementB2,
         _this = this;
-      console.log(this.image_index);
-      console.log(this.text_index);
       var formData = new FormData();
       var parentElement = this.form.querySelector(".content-blocks");
       var content_blocks = parentElement.querySelectorAll(".content-block");
 
       // 基本データを追加
-      formData.append("template_name", this.templateName.value);
+      formData.append("template_name", this.escapeHtml(this.templateName.value));
       formData.append("category_id", this.categoryId.value);
       formData.append("admin_id", this.adminId.value);
       formData.append("template_id", (_document$getElementB = document.getElementById("js_template_id").value) !== null && _document$getElementB !== void 0 ? _document$getElementB : "");
@@ -8336,7 +8341,7 @@ var TemplateFormData = /*#__PURE__*/function () {
             return;
           }
         } else if (block.dataset.type === "text") {
-          var content = block.querySelector(".block-textarea").value.trim();
+          var content = _this.escapeHtml(block.querySelector(".block-textarea").value.trim());
           var order = block.querySelector(".block-textarea").closest(".content-block").dataset.id;
           var _numberPart = order.match(/\d+/)[0];
           if (content === "") return;
@@ -8488,7 +8493,6 @@ var Uicontroller = /*#__PURE__*/function () {
               case 14:
                 response = _context.sent;
                 if (response["status"] == "201") {
-                  console.log(response);
                   _DataValidator_js__WEBPACK_IMPORTED_MODULE_4__["default"].displayCategorySuccessMessage("カテゴリーの編集に成功しました");
                   Uicontroller.displayUpdateCategoryName(btn, inputElement, response["category"]["name"]);
                   Uicontroller.addUpdatedCategoryToOptionElement(response["category"]);
@@ -8548,10 +8552,6 @@ var Uicontroller = /*#__PURE__*/function () {
       var targetCategory = Array.from(categories).find(function (target) {
         return target.dataset.id == category["id"];
       });
-      categories.forEach(function (category) {
-        console.log(category);
-      });
-      console.log(category["id"]);
       if (targetCategory) {
         targetCategory.innerHTML = category["name"];
         targetCategory.dataset.category = category["name"];

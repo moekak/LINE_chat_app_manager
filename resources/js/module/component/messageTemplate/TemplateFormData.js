@@ -15,6 +15,19 @@ class TemplateFormData {
     }
 
     /**
+     * エスケープ処理
+     * @param {string} - エスケープする前の文字列
+     * @return {string} - エスケープされた文字列
+     */
+    escapeHtml(str) {
+        return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+    /**
      * コンテンツブロックからFormDataを構築する
      * @return {Object} - {formData: FormData, hasContent: boolean}
      */
@@ -26,7 +39,7 @@ class TemplateFormData {
 
 
         // 基本データを追加
-        formData.append("template_name", this.templateName.value);
+        formData.append("template_name", this.escapeHtml(this.templateName.value));
         formData.append("category_id", this.categoryId.value);
         formData.append("admin_id", this.adminId.value);
         formData.append("template_id", document.getElementById("js_template_id").value ?? "");
@@ -64,7 +77,7 @@ class TemplateFormData {
                 }
 
             } else if (block.dataset.type === "text") {
-                const content = block.querySelector(".block-textarea").value.trim();
+                const content = this.escapeHtml(block.querySelector(".block-textarea").value.trim());
                 const order = block.querySelector(".block-textarea").closest(".content-block").dataset.id
                 const numberPart = order.match(/\d+/)[0];
                 if (content === "") return;
