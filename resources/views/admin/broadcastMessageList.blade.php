@@ -39,6 +39,10 @@
         
         <div class="message-list-body">
             @foreach ($broadcastMessages as $messages)
+            @php
+                print_r($broadcastMessages->toArray());
+                exit;
+            @endphp
                 <div class="message-item">
                     <div class="message-header">
 

@@ -77,12 +77,19 @@ class BroadcastMessage extends Model
         
         // 取得したグループIDに基づいてメッセージを取得
         $groupIdsArray = collect($groupIds->items())->pluck('broadcast_message_group_id')->toArray();
+
+        // print_r($groupIdsArray);
+        // exit;
         
         $messages = BroadcastMessage::OfAdmin($admin_id)
             ->OfWithGroup()
             ->whereIn('broadcast_message_group_id', $groupIdsArray)
             ->get()
             ->groupBy('broadcast_message_group_id');
+
+
+        // print_r($messages->toArray());
+        // exit;
         
         return [
             'messages' => $messages,

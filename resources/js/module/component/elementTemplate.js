@@ -226,7 +226,7 @@ export const createMessageTemplate = (templates) => {
                               <input type="hidden" value="${template.template_id}" class="template_id">
                               <input type="hidden" value="${template.group_id}" class="group_id">
                               <div class="template-title" style="font-weight: 600;" data-name="${template.template_name}">${templateName}</div>
-                              <div class="template-category" data-id="${template.category_id}">${categoryName}</div>
+                              <div class="template-category" data-id="${template.category_id}">${escapeHtml(categoryName)}</div>
                               <div class="template-text">${template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像"}</div>
                         </div>
                         <div class="template-actions">
