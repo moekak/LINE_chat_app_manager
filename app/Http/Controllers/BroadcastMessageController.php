@@ -20,7 +20,7 @@ class BroadcastMessageController extends Controller
 
     public function index(string $id){
         $broadcastMessages = BroadcastMessage::getBroadcastMessage($id);
-        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $id]);
+        return view('admin.broadcastMessage.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $id]);
     }
 
     public function store(Request $request, $admin_id){
@@ -170,28 +170,18 @@ class BroadcastMessageController extends Controller
     }
 
 
-    public function searchByMessage(Request $request){
-        $search = $request->input("search");
-        $admin_id = $request->input("admin_id");
-
+    public function searchByMessage($admin_id, Request $request){
+        $search = $request->query('search');
         $broadcastMessages = BroadcastMessage::searchByMessage($search, $admin_id);
-        // return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
-
-        return redirect()
-        ->route('broadcast_message.list', ['id' => $admin_id])
-        ->with('searchWord', $search)
-        ->with('broadcastMessages', $broadcastMessages["messages"])
-        ->with('paginator', $broadcastMessages["paginator"]);
+        return view('admin.broadcastMessage.broadcastMessageSearchList', ["searchWord" => $search, "broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
     }
 
-    public function searchByDate(Request $request){
-        $start_date = $request->input("start_date");
+    public function searchByDate($admin_id, Request $request){
+        $start_date = $request->query('start_date');
         $end_date = $request->input("end_date");
-        $admin_id = $request->input("admin_id");
-
 
         $broadcastMessages = BroadcastMessage::searchByDate($start_date, $end_date, $admin_id);
-        return view('admin.broadcastMessageList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
+        return view('admin.broadcastMessage.broadcastMessageSearchList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
     }
 
 }

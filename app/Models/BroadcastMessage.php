@@ -77,20 +77,12 @@ class BroadcastMessage extends Model
         
         // 取得したグループIDに基づいてメッセージを取得
         $groupIdsArray = collect($groupIds->items())->pluck('broadcast_message_group_id')->toArray();
-
-        // print_r($groupIdsArray);
-        // exit;
-        
         $messages = BroadcastMessage::OfAdmin($admin_id)
             ->OfWithGroup()
             ->whereIn('broadcast_message_group_id', $groupIdsArray)
             ->get()
             ->groupBy('broadcast_message_group_id');
 
-
-        // print_r($messages->toArray());
-        // exit;
-        
         return [
             'messages' => $messages,
             'paginator' => $groupIds
@@ -99,7 +91,6 @@ class BroadcastMessage extends Model
     
     public static function searchByDate($start_date, $end_date, $admin_id)
     {
-        // タイプミスを修正：WithDtartDate → WithStartDate
         $groupIds = BroadcastMessage::OfAdmin($admin_id)
             ->withStartDate($start_date)
             ->withEndDate($end_date)
