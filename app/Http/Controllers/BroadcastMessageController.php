@@ -181,7 +181,7 @@ class BroadcastMessageController extends Controller
         $end_date = $request->input("end_date");
 
         $broadcastMessages = BroadcastMessage::searchByDate($start_date, $end_date, $admin_id);
-        return view('admin.broadcastMessage.broadcastMessageSearchList', ["broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
+        return view('admin.broadcastMessage.broadcastMessageSearchList', ["startDate" => $start_date, "endDate" => $end_date,"broadcastMessages" => $broadcastMessages["messages"], "paginator" => $broadcastMessages["paginator"], "adminId" => $admin_id]);
     }
 
 }

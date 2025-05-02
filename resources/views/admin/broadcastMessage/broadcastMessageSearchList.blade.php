@@ -36,7 +36,7 @@
             @endforeach
       </div>
       @if(isset($paginator))
-            {{ $paginator->links('pagination::custom') }}
+            {{ $paginator->links('pagination::custom-search') }}
       @endif
 </div>
 @endsection

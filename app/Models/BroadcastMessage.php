@@ -30,7 +30,7 @@ class BroadcastMessage extends Model
     }
 
     public function scopeOfSearch($query, $search){
-        return $query->where("resource", 'LIKE', "%{$search}%");
+        return $query->where("resource", 'LIKE', "%{$search}%")->where("resource_type", "broadcast_text");
     }
 
     public function scopeOfWithGroup($query){
