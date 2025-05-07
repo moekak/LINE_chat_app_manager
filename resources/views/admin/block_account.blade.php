@@ -65,7 +65,7 @@
 	</form>
 </section>
 {{-- ユーザーブロック確認モーダル --}}
-<section class="modal__container js_modal hidden" id="js_block_account_modal" style="width: 500px;">
+<section class="modal__container js_modal hidden confirm_modal" id="js_block_account_modal" style="width: 500px;">
 	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">本当にこのユーザーをブロック解除しますか？</h2>
 	<p>ユーザーのブロックを解除すると、以下の機能が利用可能になります：<br>
 		<li>メッセージの送受信</li>

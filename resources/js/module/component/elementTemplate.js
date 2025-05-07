@@ -54,7 +54,8 @@ export const createMessageRow = (res, admin_account_id) =>{
 
 export const createBroadcastMessageRow = (data, id) =>{
       // 改行を<br>タグに変換
-      const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img  src='${data.display}' class="displayImg js_img">`
+      // const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img  src='${data.display}' class="displayImg js_img">`
+      const displayedData = data.type == "text" ? escapeHtml(data.display).replace(/\n/g, '<br>') : `<img  src='${data.display}' class="displayImg js_img">`
 
       return `
             <div class="card js_card mb-2">
@@ -63,7 +64,7 @@ export const createBroadcastMessageRow = (data, id) =>{
                               <img src="/img/icons8-drag-25.png" class="drag-handle" style ="width: 20px;"/>
                               <h5 class="mb-0">
                                     <button class="btn collapsed" data-toggle="collapse" data-target="#collapse${data.elementLength}" aria-expanded="false" aria-controls="collapse${data.elementLength}">
-                                          ${data.heading}
+                                          ${escapeHtml(data.heading)}
                                     </button>
                               </h5>
                         </div>
@@ -261,8 +262,7 @@ return str
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+
 }
 
 

@@ -6952,8 +6952,9 @@ var createMessageRow = function createMessageRow(res, admin_account_id) {
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
-  var displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : "<img  src='".concat(data.display, "' class=\"displayImg js_img\">");
-  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header js_headings\" id=\"heading".concat(data.elementLength, "\" data-id=").concat(data.index, ">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(data.heading, "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\" data-id=\"").concat(data.elementLength, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
+  // const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img  src='${data.display}' class="displayImg js_img">`
+  var displayedData = data.type == "text" ? escapeHtml(data.display).replace(/\n/g, '<br>') : "<img  src='".concat(data.display, "' class=\"displayImg js_img\">");
+  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header js_headings\" id=\"heading".concat(data.elementLength, "\" data-id=").concat(data.index, ">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(escapeHtml(data.heading), "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\" data-id=\"").concat(data.elementLength, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
 };
 var createAccountDataRow = function createAccountDataRow(res, categories) {
   var _res$latest_message_d;
@@ -7006,7 +7007,7 @@ var createMessageTemplate = function createMessageTemplate(templates) {
  * @return {string} - エスケープされた文字列
  */
 var escapeHtml = function escapeHtml(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 };
 var addCategoryButton = function addCategoryButton(category) {
   var categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"];

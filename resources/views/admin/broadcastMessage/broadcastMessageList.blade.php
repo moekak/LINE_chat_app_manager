@@ -13,9 +13,11 @@
                         <div class="message-date">{{ $messages[0]->created_at->format("Y-m-d H:i") }}</div>
                         <div>
                             <span class="toggle-icon">▶</span>
-                            {{ $messages[0]->resource_type == "broadcast_text" ? 
-                            (mb_strlen($messages[0]->resource) > 100 ? mb_substr($messages[0]->resource, 0, 100) . '...' : $messages[0]->resource) 
-                            : "画像" }}
+                            @if($messages[0]->resource_type == "broadcast_text")
+                                {!! nl2br(e(mb_strlen($messages[0]->resource) > 100 ? mb_substr($messages[0]->resource, 0, 100) . '...' : $messages[0]->resource)) !!}
+                            @else
+                                {!! '<img src="' . Storage::disk('s3')->url('images/' . $messages[0]->resource) . '" alt="" class="broadcast_message_img">' !!}
+                            @endif
                         </div>
                     </div>
                     <div class="message-content">
@@ -23,7 +25,7 @@
                             @foreach ($messages as $message)
                                 <div class="chat-bubble message-sent">
                                     @if ($message->resource_type === "broadcast_text")
-                                            <p>{{$message->resource}}</p>
+                                            <p> {!! nl2br(e($message->resource)) !!}</p>
                                     @elseif($message->resource_type === "broadcast_img")
                                             <img src="{{ Storage::disk('s3')->url('images/' . $message->resource) }}" alt="" class="broadcast_message_img">
                                     @endif

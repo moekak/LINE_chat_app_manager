@@ -85,29 +85,36 @@
 
 {{-- 編集モーダル --}}
 <section class="modal__container js_modal hidden" id="js_edit_account_modal">
-	<h3 class="modal__container-ttl">編集</h3>
-	@if ($errors->any())
-	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
-		<ul>
-			@foreach ($errors->all() as $error)
-			<li class="alert_danger">{{$error}}</li>
-			@endforeach  
-		</ul>   
-	</div>  
-	@endif
-	<form action="{{route("user.update", ["id"=> "ID_PLACEHOLDER"])}}" method="post" class="js_edit_account_form">
-		@csrf
-		<div class="mb-3">
-			<label for="formGroupExampleInput" class="form-label ">ユーザー名 <span style="color: red; font-size: 13px;">※</span></label>
-			<input type="text" class="form-control js_edit_account_input" id="formGroupExampleInput" name="account_name" value="{{old("account_name")}}">
-		</div>
-
-		<input type="hidden" name="account_id" value="{{old("account_id")}}" class="js_account_id_input">
-		<button type="submit" class="modal__container-btn">保存</button>
-	</form>
+	<div class="modal-header">
+		<h2>ユーザー編集</h2>
+	</div>
+	<div class="modal-content">
+		@if ($errors->any())
+		<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li class="alert_danger">{{$error}}</li>
+				@endforeach  
+			</ul>   
+		</div>  
+		@endif
+		<form action="{{route("user.update", ["id"=> "ID_PLACEHOLDER"])}}" method="post" class="js_edit_account_form">
+			@csrf
+			<div class="mb-3">
+				<label for="formGroupExampleInput" class="form-label ">ユーザー名 <span style="color: red; font-size: 13px;">※</span></label>
+				<input type="text" class="form-control js_edit_account_input" id="formGroupExampleInput" name="account_name" value="{{old("account_name")}}">
+			</div>
+	
+			<input type="hidden" name="account_id" value="{{old("account_id")}}" class="js_account_id_input">
+			<div style="text-align: right;">
+				<button type="submit" class="modal__container-btn">保存</button>
+			</div>
+			
+		</form>
+	</div>
 </section>
 {{-- ユーザーブロック確認モーダル --}}
-<section class="modal__container js_modal hidden" id="js_block_account_modal" style="width: 500px;">
+<section class="modal__container js_modal hidden confirm_modal" id="js_block_account_modal" style="width: 500px;">
 	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">本当にこのユーザーをブロックしますか？</h2>
 	<p>ユーザーをブロックすると、以下の機能が制限されます：<br>
 		<li>メッセージの送受信</li>
@@ -131,39 +138,43 @@
 
 {{-- 初回あいさつモーダル --}}
 <section class="modal__container js_modal broadcasting_message_modal hidden" id="js_messageSetting_modal" style="width: 530px;">
-	<h3 class="modal__container-ttl">初回メッセージ設定</h3>
-	<div class="alert alert-secondary" style="font-size: 14px;" role="alert">
-		ユーザー名を挿入する際は、{名前}としてください。<br>
-		例). {名前}さん、初めまして！
+	<div class="modal-header">
+		<h2>初回メッセージ設定</h2>
 	</div>
-
-	<div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
-		<ul>
-			<li class="alert_danger js_error_txt">メッセージを入力して保存ボタンを押してください。<br> または画像を選択してください。</li> 
-		</ul>   
-	</div>  
-
-	<div class="broadcast_message_area">
-		<div class="broascast_message-list">
-			<div id="accordion" class="js_accordion_wrapper">
+	<div class="modal-content">
+		<div class="alert alert-secondary" style="font-size: 14px;" role="alert">
+			ユーザー名を挿入する際は、{名前}としてください。<br>
+			例). {名前}さん、初めまして！
 		</div>
-		<div class="mb-3 mt-3">
-			<label for="formGroupExampleInput" class="form-label">本文 <span style="color: red; font-size: 13px;">※</span></label>
-			<textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="6" name="body">{{ old('body') }}</textarea>
-			<div class="mt-3"></div>
-			<input type="file" class="js_upload" id="fileInput" accept="image/png, image/jpeg">
-		</div>
-		<input type="hidden" name="admin_account_id" value={{Route::current()->parameter('id');}} id="js_greeting_account_id">
-		<div class="broadcast_message_submit_btn-box">
-			<button type="submit" class="modal__container-btn js_message_display_btn disabled_btn">追加</button>  
-			<button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">保存</button>  
-		</div>
-	</div>      
+	
+		<div class="alert alert-danger alert_danger_container js_alert_danger hidden js_broadcast_error" role="alert">
+			<ul>
+				<li class="alert_danger js_error_txt">メッセージを入力して保存ボタンを押してください。<br> または画像を選択してください。</li> 
+			</ul>   
+		</div>  
+	
+		<div class="broadcast_message_area">
+			<div class="broascast_message-list">
+				<div id="accordion" class="js_accordion_wrapper">
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="formGroupExampleInput" class="form-label">本文 <span style="color: red; font-size: 13px;">※</span></label>
+				<textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="6" name="body">{{ old('body') }}</textarea>
+				<div class="mt-3"></div>
+				<input type="file" class="js_upload" id="fileInput" accept="image/png, image/jpeg">
+			</div>
+			<input type="hidden" name="admin_account_id" value={{Route::current()->parameter('id');}} id="js_greeting_account_id">
+			<div class="broadcast_message_submit_btn-box">
+				<button type="submit" class="modal__container-btn js_message_display_btn disabled_btn">追加</button>  
+				<button type="submit" class="modal__container-btn js_message_submit_btn disabled_btn">保存</button>  
+			</div>
+		</div> 
+	</div>
 </section>
 
 
 {{-- 一斉配信モーダル閉じる前の確認 --}}
-<section class="modal__container js_modal hidden" id="js_broadcast_confirm_modal" style="width: 500px;">
+<section class="modal__container js_modal hidden confirm_modal" id="js_broadcast_confirm_modal" style="width: 500px;">
 	<h2 class="modal__container-ttl" style="color: red; font-weight: bold;">設定画面を閉じてよろしいですか？</h2>
 	<p>一斉配信設定画面を閉じてよろしいですか？閉じると、設定した全てのデータが完全に消去され、元に戻すことはできません。</p>
 	<div style="margin-top: 15px"></div>
@@ -178,25 +189,33 @@
 </section>
 {{-- タイトル更新 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_title_modal">
-	<h3 class="modal__container-ttl">タイトル表示変更</h3>
-	@if ($errors->any())
-	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
-            <ul>
+	<div class="modal-header">
+		<h2>タイトル表示変更</h2>
+	</div>
+	<div class="modal-content">
+		@if ($errors->any())
+		<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+			<ul>
 				@foreach ($errors->all() as $error)
 				<li class="alert_danger">{{$error}}</li>
 				@endforeach  
 			</ul>   
-	</div>  
-	@endif
-	<form action="{{ route('title.update')}}" method="post">
-		@csrf
-		<div class="mb-3">
-			<label for="formGroupExampleInput" class="form-label">タイトル <span style="color: red; font-size: 13px;">※</span></label>
-			<input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="title" value="{{ isset($title) && isset($title['title']) ? $title['title'] : old('title') }}">
-			<input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
-		</div>
-		<button type="submit" class="modal__container-btn">保存</button>
-	</form>
+		</div>  
+		@endif
+		<form action="{{ route('title.update')}}" method="post">
+			@csrf
+			<div class="mb-3">
+				<label for="formGroupExampleInput" class="form-label">タイトル <span style="color: red; font-size: 13px;">※</span></label>
+				<input type="text" class="form-control js_line_message_input" id="formGroupExampleInput" name="title" value="{{ isset($title) && isset($title['title']) ? $title['title'] : old('title') }}">
+				<input type="hidden" class="form-control js_line_message_input" id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
+			</div>
+			<div style="text-align: right;">
+				<button type="submit" class="modal__container-btn">保存</button>
+			</div>
+			
+		</form>
+	</div>
+	
 </section>
 
 
@@ -255,37 +274,45 @@
 
 {{-- 保存時テキスト保存 --}}
 <section class="modal__container js_modal hidden js_loader" id="js_create_text_modal">
-	<h3 class="modal__container-ttl">固定テキスト設定</h3>
-	@if ($errors->any())
-	<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
-            <ul>
-			@foreach ($errors->all() as $error)
-			<li class="alert_danger">{{$error}}</li>
-			@endforeach  
-		</ul>   
-	</div>  
-	@endif
-	<form action="{{ route('lineDisplayText.store')}}" method="post">
-		@csrf
-		<div class="mb-3">
-			<div class="radio_btn">
-				<div class="form-check">
-					<input class="form-check-input js_display_radio radio_button-style" value="1" type="radio" name="is_show" id="flexRadioDefault3" {{ old('is_show', isset($line_display_text) ? $line_display_text["is_show"] : '') == '1' ? 'checked' : '' }}>
-					<label class="form-check-label radio_button-style" for="flexRadioDefault3">表示する</label>
+	<div class="modal-header">
+		<h2>固定テキスト設定</h2>
+	</div>
+	<div class="modal-content">
+		@if ($errors->any())
+		<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li class="alert_danger">{{$error}}</li>
+				@endforeach  
+			</ul>   
+		</div>  
+		@endif
+		<form action="{{ route('lineDisplayText.store')}}" method="post">
+			@csrf
+			<div class="mb-3">
+				<div class="radio_btn">
+					<div class="form-check">
+						<input class="form-check-input js_display_radio radio_button-style" value="1" type="radio" name="is_show" id="flexRadioDefault3" {{ old('is_show', isset($line_display_text) ? $line_display_text["is_show"] : '') == '1' ? 'checked' : '' }}>
+						<label class="form-check-label radio_button-style" for="flexRadioDefault3">表示する</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input js_display_radio radio_button-style" value="0" type="radio" name="is_show" id="flexRadioDefault4" {{ old('is_show', isset($line_display_text) ? $line_display_text["is_show"] : '') == '0' ? 'checked' : '' }}>
+						<label class="form-check-label radio_button-style" for="flexRadioDefault4">表示しない</label>
+					</div> 
 				</div>
-				<div class="form-check">
-					<input class="form-check-input js_display_radio radio_button-style" value="0" type="radio" name="is_show" id="flexRadioDefault4" {{ old('is_show', isset($line_display_text) ? $line_display_text["is_show"] : '') == '0' ? 'checked' : '' }}>
-					<label class="form-check-label radio_button-style" for="flexRadioDefault4">表示しない</label>
-				</div> 
+				<div class="text_input-area js_create_text {{ old('is_show') == '1' || (isset($line_display_text) && $line_display_text["is_show"] == '1') || (!isset($line_display_text) && old('is_show') === null) ? '' : 'hidden' }}">
+					<label for="formGroupExampleInput" class="form-label mt-3">テキスト <span style="color: red; font-size: 13px;">※</span></label>
+					<input type="text" class="form-control js_line_text_input" id="formGroupExampleInput" name="text" value="{{ old('text') ? old("text") :  (isset($line_display_text["text"])? $line_display_text['text'] : "" )}}">
+					<input type="hidden" class="form-control " id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
+				</div>
 			</div>
-			<div class="text_input-area js_create_text {{ old('is_show') == '1' || (isset($line_display_text) && $line_display_text["is_show"] == '1') || (!isset($line_display_text) && old('is_show') === null) ? '' : 'hidden' }}">
-				<label for="formGroupExampleInput" class="form-label mt-3">テキスト <span style="color: red; font-size: 13px;">※</span></label>
-				<input type="text" class="form-control js_line_text_input" id="formGroupExampleInput" name="text" value="{{ old('text') ? old("text") :  (isset($line_display_text["text"])? $line_display_text['text'] : "" )}}">
-				<input type="hidden" class="form-control " id="formGroupExampleInput"  name="admin_id" value={{ $title["admin_id"] ?? Route::current()->parameter('id')}}>
+			<div style="text-align: right;">
+				<button type="submit" class="modal__container-btn">保存</button>
 			</div>
-		</div>
-		<button type="submit" class="modal__container-btn">保存</button>
-	</form>
+			
+		</form>
+	</div>
+	
 </section>
 
 {{-- テンプレート作成モーダル --}}
