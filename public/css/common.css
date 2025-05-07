@@ -318,7 +318,6 @@ p, ul {
     background-color: #fff;
     min-width: 440px;
     z-index: 999;
-    padding: 30px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .modal__container_no_bg{
@@ -345,10 +344,11 @@ p, ul {
     border-radius: 5px;
     padding: 7px 25px;
     margin-top: 16px;
-    font-size: 14px;
+    font-size: 15px;
 }
-
-
+.confirm_modal{
+    padding: 30px;
+}
 
 /*  */
 .delete_account-btn-container{
@@ -529,6 +529,7 @@ p, ul {
     display: flex;
     align-items: center;
     gap: 10px;
+    justify-content: end;
 }
 .card-header-left{
     display: flex;
@@ -792,6 +793,7 @@ p, ul {
 .modal-header h2 {
     font-size: 1.5rem;
     font-weight: 600;
+    margin-bottom: 0px !important;
 }
 
 .close-btn {
@@ -1012,7 +1014,7 @@ input[type="text"],
 select,
 textarea {
     width: 100%;
-    padding: 10px 12px;
+    padding: 10px 12px !important;
     border: 1px solid var(--border-color);
     border-radius: 6px;
 }
@@ -1030,7 +1032,6 @@ textarea {
 
 .row {
     display: flex;
-    gap: 16px;
     margin-bottom: 20px;
 }
 

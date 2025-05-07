@@ -30,7 +30,7 @@ class BroadcastMessage extends Model
     }
 
     public function scopeOfSearch($query, $search){
-        return $query->where("resource", 'LIKE', "%{$search}%");
+        return $query->where("resource", 'LIKE', "%{$search}%")->where("resource_type", "broadcast_text");
     }
 
     public function scopeOfWithGroup($query){
@@ -77,13 +77,12 @@ class BroadcastMessage extends Model
         
         // 取得したグループIDに基づいてメッセージを取得
         $groupIdsArray = collect($groupIds->items())->pluck('broadcast_message_group_id')->toArray();
-        
         $messages = BroadcastMessage::OfAdmin($admin_id)
             ->OfWithGroup()
             ->whereIn('broadcast_message_group_id', $groupIdsArray)
             ->get()
             ->groupBy('broadcast_message_group_id');
-        
+
         return [
             'messages' => $messages,
             'paginator' => $groupIds
@@ -92,7 +91,6 @@ class BroadcastMessage extends Model
     
     public static function searchByDate($start_date, $end_date, $admin_id)
     {
-        // タイプミスを修正：WithDtartDate → WithStartDate
         $groupIds = BroadcastMessage::OfAdmin($admin_id)
             ->withStartDate($start_date)
             ->withEndDate($end_date)

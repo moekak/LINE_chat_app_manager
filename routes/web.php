@@ -51,5 +51,5 @@ Route::post("/line/message/update/{id}", [LineMessageController::class, "update"
 Route::post("/title/update", [CreateTitleController::class, "store"])->name("title.update")->middleware("auth");
 
 Route::get("/broadcast/message/list/{id}", [BroadcastMessageController::class, "index"])->name("broadcast_message.list")->middleware("auth");
-Route::post("/search/broadcast/message", [BroadcastMessageController::class, "searchByMessage"])->name("search.message")->middleware("auth");
-Route::post("/search/broadcast/date", [BroadcastMessageController::class, "searchByDate"])->name("search.date")->middleware("auth");
+Route::get("/search/broadcast/message/{id}", [BroadcastMessageController::class, "searchByMessage"])->name("search.message")->middleware("auth");
+Route::get("/search/broadcast/date/{id}", [BroadcastMessageController::class, "searchByDate"])->name("search.date")->middleware("auth");
