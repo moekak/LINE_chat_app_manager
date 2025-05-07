@@ -617,6 +617,8 @@
 	</form>
 </section>
 
+@include('modal.test_sender')
+
 @endsection
 
 @section('script')

@@ -8,6 +8,7 @@ use App\Models\AccountStatus;
 use App\Models\ChatUser;
 use App\Models\LineAccount;
 use App\Models\LineDisplayText;
+use App\Models\LineTestSender;
 use App\Models\MessageTemplate;
 use App\Models\MessageTemplateContent;
 use App\Models\MessageTemplatesCategory;
@@ -76,10 +77,12 @@ class LineAccountController extends Controller
         $second_accounts = LineAccount::where("user_id", $user->id)->whereIn("account_status", ["2", "3"])->get();
         // アカウントのステータスの種類をすべて取得(キャッシュ取得)
         $account_status =AccountStatus::all();
+        $test_sender = LineTestSender::all();
 
 
 
-        return view("admin.dashboard", [ "active_accounts" => $active_accounts, "inactive_accounts" => $inactive_accounts, "suspended_accounts" => $suspended_accounts, "banned_accounts" => $banned_accounts, "user" => $user, "account_status" => $account_status, "second_accounts" => $second_accounts]);
+
+        return view("admin.dashboard", [ "test_senders" => $test_sender, "active_accounts" => $active_accounts, "inactive_accounts" => $inactive_accounts, "suspended_accounts" => $suspended_accounts, "banned_accounts" => $banned_accounts, "user" => $user, "account_status" => $account_status, "second_accounts" => $second_accounts]);
     }
 
     public function create(CreateLineAccountRequest $request)
@@ -185,8 +188,9 @@ class LineAccountController extends Controller
             // メッセージテンプレートの取得
             $templates = MessageTemplateContent::getMessageTemplatesForAdmin($id);
             $categories = MessageTemplatesCategory::where("admin_id", $id)->select("id", "category_name")->get();
+            $test_sender = LineTestSender::all();
 
-        return view("admin.account_show", ["template_categories" => $template_categories, "categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
+        return view("admin.account_show", ["test_senders" => $test_sender, "template_categories" => $template_categories, "categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
     }
 
     /**

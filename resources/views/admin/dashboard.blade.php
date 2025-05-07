@@ -560,6 +560,57 @@
             </div>
       </div>
 </section>
+{{-- @include('modal.test_sender') --}}
+
+
+<section class="modal__container js_modal js_loader" id="js_test_sender">
+	<div class="modal-header">
+		<h2>テストユーザー</h2>
+	</div>
+	<div class="modal-content">
+		@if ($errors->any())
+		<div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li class="alert_danger">{{$error}}</li>
+				@endforeach  
+			</ul>   
+		</div>  
+		@endif
+            <div class="tabs">
+                  <div class="tab active" >一覧・選択</div>
+                  <div class="tab">追加</div>
+            </div>
+
+            {{-- テストユーザー一覧・選択 --}}
+            <div class="test_user_list">
+                  <table>
+                        <thead>
+                              <tr>
+                                    <th w40>カテゴリー名</th>
+                                    <th>操作</th>
+                              </tr>
+                        </thead>
+                        <tbody id="js_category_list">
+                              @foreach($test_senders as $sender)
+                                    <tr>
+                                          <td class="sender_user-box">
+                                                <img src="{{$sender->user_picture}}" alt="" class="sender_user-icon">
+                                                <p>{{$sender->account_name}}</p>
+                                          </td>
+                                          <td>
+                                                {{-- 操作用のボタンなどを入れる --}}
+                                                <p>aaa</p>
+                                          </td>
+                                    </tr>
+                              @endforeach
+                        </tbody>
+                  </table>
+            </div>
+
+	</div>
+	
+</section>
 
 @endsection
 @section('script')

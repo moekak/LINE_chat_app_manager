@@ -36,7 +36,7 @@
 </head>
 
 <body>
-      <div class="bg hidden"></div>
+      <div class="bg"></div>
       <div class="loader hidden"></div>
       <div class="fixed_bg hidden"></div>
       <main class="dashboard">

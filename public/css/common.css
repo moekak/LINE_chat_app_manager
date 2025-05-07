@@ -3,6 +3,7 @@
 :root {
     --bg-dark-blue: #384042;
     --bg-dark-blue2: #5d696c;
+    --dark-gray: rgba(128, 128, 128, 0.584);
     --bg-dark-blue-hover: #202526;
     --primary-color: #2088d7;
     --secondary-color: #6e8ef9;
@@ -12,6 +13,15 @@
     --modal-bg: #ffffff;
     --danger-color: #f44336;
     --success-color: #4CAF50;
+    --rad: 0.7rem;
+    --dur: 0.3s;
+    --color-dark: #2f2f2f;
+    --color-light: #fff;
+    --color-brand: #57bd84;
+    --font-fam: "Lato", sans-serif;
+    --height: 5rem;
+    --btn-width: 6rem;
+    --bez: cubic-bezier(0, 0, 0.43, 1.49);
 }
 
 body {
@@ -1776,4 +1786,123 @@ input:checked + .toggle-slider:before {
 .edit-notes ul {
     margin: 0;
     padding-left: 20px;
+}
+
+
+/* テスト送信 */
+.sender_user-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sender_user-icon{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.sender-item-row{
+    transition: background-color 0.2s;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+}
+.sender-item-td{
+    padding: 16px 10px;
+}
+.sender-operation-area{
+    display: flex;
+    gap: 10px;
+}
+.sender-user-button{
+    background: transparent;
+    border: 1px solid var(--dark-gray);
+    border-radius: 3px;
+    padding: 4px 7px;
+    color: var(--dark-gray);
+    transition: .5s ease;
+}
+.sender-user-button:hover{
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color:#2088d72a ;
+}
+.sender-list-table{
+    width: 700px;
+}
+.sender-info{
+    width: 445px;
+}
+.sender-th{
+    font-size: 15px;
+    font-weight: 500;
+}
+.sender-top{
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.sender-top p{
+    font-size: 20p;
+    font-weight: 600;
+}
+.sender-all-btn{
+    background: var(--primary-color);
+    border: 1px solid var(--dark-gray);
+    border-radius: 3px;
+    padding: 8px 15px;
+    color: #fff;
+}
+.sender-check{
+    width: 45px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+    -webkit-appearance: none;
+}
+.sender-search-form {
+    position: relative;
+    width: 100%;
+    background: var(--primary-color);
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+.sender-search-input,
+.sender-search-button {
+    height: 40px;
+    font-family: var(--font-fam);
+    border: 0;
+    color: var(--color-dark);
+    font-size: 14px;
+}
+.sender-search-input[type="search"] {
+    outline: 0; 
+    width: 100%;
+    background: var(--color-light);
+    padding: 0 1.6rem;
+    border-radius: 6px;
+    appearance: none; 
+    transition: all var(--dur) var(--bez);
+    transition-property: width, border-radius;
+    z-index: 1;
+    position: relative;
+    border: 1px solid var(--border-color);
+    }
+.sender-search-button {
+    display: none; 
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--btn-width);
+    font-weight: bold;
+    background: var(--primary-color);
+    border-radius: 0 var(--rad) var(--rad) 0;
+    color: #fff;
+}
+.sender-search-input:not(:placeholder-shown) {
+    border-radius: 6px 0 0 6px;
+    width: calc(100% - var(--btn-width));
+    + button {
+        display: block;
+    }
 }
