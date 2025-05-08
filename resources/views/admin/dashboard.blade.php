@@ -308,7 +308,6 @@
                   
                   <div class="row">
                         <div class="col-md-6">
-                              <label for="formGroupExampleInput" class="form-label js_url_input">友達保存用URL <span style="color: red; font-size: 13px;">※</span></label>
                               <input type="text" class="form-control js_" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
                         </div>
                         <div class="col-md-6">
@@ -362,7 +361,7 @@
                         <input type="text" class="form-control js_edit_account_input" id="formGroupExampleInput" name="account_name" value="{{old("account_name")}}">
                   </div>
                   <div class="mb-3">
-                        <label for="formGroupExampleInput" class="form-label">友達保存用URL　<span style="color: red; font-size: 13px;">※</span></label>
+                        <label for="formGroupExampleInput" class="form-label">友達追加用URL　<span style="color: red; font-size: 13px;">※</span></label>
                         <input type="text" class="form-control js_edit_url_input" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
                   </div>
                   <label for="formGroupExampleInput" class="form-label">BANされた時の予備アカウント（友だち保存URLを入力）</label>

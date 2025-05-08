@@ -37,8 +37,8 @@ class UpdateLineAccountRequest extends FormRequest
             "account_name.required" => "アカウント名は必須です。",
             "account_name.max" => "アカウント名は50文字以内で入力してください。",
             "account_url.url" => "URLの形式にしてください。" ,
-            "account_url.required" => "友達保存用URLは必須項目です。" ,
-            "account_url.max" => "友達保存用URLは255文字以内で入力してください。" ,
+            "account_url.required" => "友達追加用URLは必須項目です。" ,
+            "account_url.max" => "友達追加用URLは255文字以内で入力してください。" ,
             "second_account_id.exists" => "無効なアカウントです。"
         ];
     }
