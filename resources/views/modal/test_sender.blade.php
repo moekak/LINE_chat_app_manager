@@ -18,7 +18,7 @@
             </div>
 
             {{-- テストユーザー一覧・選択 --}}
-            <div class="test_user_list hidden">
+            <div class="test_user_list">
                   <div class="sender-top">
                         <p>テストユーザー</p>
                         <button class="sender-all-btn">一括テスト送信</button>
@@ -81,11 +81,11 @@
             </div>
 
             {{-- テストユーザー追加 --}}
-            <div class="test_user_add">
+            <div class="test_user_add hidden">
                   <div class="alert alert-success" role="alert">
                         下記のQRコードから友達登録してください
                   </div>
-                  <img src="https://qr-official.line.me/gs/M_161lxwjo_GW.png?oat_content=qr">   
+                  <img src="https://qr-official.line.me/gs/M_161lxwjo_GW.png?oat_content=qr" style="width: 50%;">   
             </div>
 	
 </section>
