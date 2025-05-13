@@ -306,10 +306,16 @@
                   </div>
       
                   
+<<<<<<< HEAD
                   <div class='row'>
                         <div class='col-md-6'>
                               <label for='formGroupExampleInput' class='form-label js_url_input'>友達保存用URL <span style='color: red; font-size: 13px;'>※</span></label>
                               <input type='text' class='form-control js_' id='formGroupExampleInput' name='account_url' value='{{old('account_url')}}'>
+=======
+                  <div class="row">
+                        <div class="col-md-6">
+                              <input type="text" class="form-control js_" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
+>>>>>>> 620f57431f7715bf74289dc2d2f498317b67344e
                         </div>
                         <div class='col-md-6'>
                               <label for='formGroupExampleInput' class='form-label '>ステータス <span style='color: red; font-size: 13px;'>※</span></label>
@@ -361,9 +367,15 @@
                         <label for='formGroupExampleInput' class='form-label '>アカウント名 <span style='color: red; font-size: 13px;'>※</span></label>
                         <input type='text' class='form-control js_edit_account_input' id='formGroupExampleInput' name='account_name' value='{{old('account_name')}}'>
                   </div>
+<<<<<<< HEAD
                   <div class='mb-3'>
                         <label for='formGroupExampleInput' class='form-label'>友達保存用URL　<span style='color: red; font-size: 13px;'>※</span></label>
                         <input type='text' class='form-control js_edit_url_input' id='formGroupExampleInput' name='account_url' value='{{old('account_url')}}'>
+=======
+                  <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">友達追加用URL　<span style="color: red; font-size: 13px;">※</span></label>
+                        <input type="text" class="form-control js_edit_url_input" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
+>>>>>>> 620f57431f7715bf74289dc2d2f498317b67344e
                   </div>
                   <label for='formGroupExampleInput' class='form-label'>BANされた時の予備アカウント（友だち保存URLを入力）</label>
                   <select class='form-select  js_select_element mb-3' aria-label='Default select example' name='second_account_id'>
