@@ -50,8 +50,6 @@ export default class SendingDataServiceInterface{
 
             const formDataArray = formDataStateManager.getState()
 
-            console.log(formDataArray);
-            
             // sendMessage のデータを FormData に保存
             if (userIds.length > 0) {
                   // 配列全体を一つのキーで追加する方法
@@ -143,8 +141,6 @@ export default class SendingDataServiceInterface{
             return
       }
       
-
-
 
 
 }

@@ -6,6 +6,7 @@ import { fetchSpecificUserInfo } from "./fetchUserData.js"
 import FormController from "./ui/FormController.js"
 import  indexStateManager from "../util/state/IndexStateManager.js"
 import formDataStateManager from "../util/state/FormDataStateManager.js"
+import BroadcastMessageGenerator from "./testSender/data/BroadcastMessageGenerator.js"
 
 
 
@@ -63,6 +64,9 @@ export const initializeBroadcastMessageModal = () =>{
 
                   // 画像ファイル選択を空にする
                   FormController.initializeFileUpload()
+
+                  // テスト送信機能モーダル処理
+                  new BroadcastMessageGenerator()
             })
       })
 }

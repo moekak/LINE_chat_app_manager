@@ -2,7 +2,7 @@
 import { getCurrentTimeFormatted } from "../../../util/formatDate.js";
 import DataGeneratorInterface from "./DataGeneratorInterface.js";
 
-export default class GreetingMessageGenerator extends DataGeneratorInterface{
+export default class BroadcastMessageGenerator extends DataGeneratorInterface{
       constructor(){
             super(); // 親クラスのコンストラクタを呼び出す
             this.openTestSenderModalButton = document.getElementById('js_sender_list') //テスト送信者モーダルを表示するボタン

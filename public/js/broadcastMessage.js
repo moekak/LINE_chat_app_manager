@@ -6799,13 +6799,13 @@ var createMessageRowForFetch = function createMessageRowForFetch(res, admin_acco
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['created_at']);
   var latestMessageDate = res['latest_message_date'] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['latest_message_date']) : '';
   var display = res['unread_count'] > 0 ? 'flex' : 'none';
-  return "\n            <tr data-id=".concat(res['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res['line_name'], "</td>\n                  <td data-id=").concat(res['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class='operation'>\n                  \t<a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res['id'], "/").concat(admin_account_id, "'>\n                              <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                    <img src='/img/icons8-message-24.png' alt=''>\n                              </button>\n                        </a>\n                        <button class='operation_icon js_edit_user_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                        <button class='operation_icon js_block_btn' data-uuid=").concat(res['entity_uuid'], " data-name=").concat(res['line_name'], " data-id=").concat(res['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res['line_name'], "</td>\n                  <td data-id=").concat(res['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res['id'], "/").concat(admin_account_id, "'>\n                                    <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                          <img src='/img/icons8-message-24.png' alt=''>\n                                    </button>\n                              </a>\n                              <button class='operation_icon js_edit_user_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button class='operation_icon js_block_btn' data-uuid=").concat(res['entity_uuid'], " data-name=").concat(res['line_name'], " data-id=").concat(res['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]['created_at']);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]['unread_count'] > 0 ? 'flex' : 'none';
-  return "\n            <tr data-id=".concat(res[0]['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res[0]['line_name'], "</td>\n                  <td data-id=").concat(res[0]['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res[0]['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class='operation'>\n                        <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]['id'], "/").concat(admin_account_id, "'>\n                              <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                    <img src='/img/icons8-message-24.png' alt=''>\n                              </button>\n                        </a>\n                        <button class='operation_icon js_edit_user_btn' data-id=").concat(res[0]['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                        <button class='operation_icon js_block_btn' data-uuid=").concat(res[0]['entity_uuid'], " data-name=").concat(res[0]['line_name'], " data-id=").concat(res[0]['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res[0]['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res[0]['line_name'], "</td>\n                  <td data-id=").concat(res[0]['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res[0]['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]['id'], "/").concat(admin_account_id, "'>\n                                    <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                          <img src='/img/icons8-message-24.png' alt=''>\n                                    </button>\n                              </a>\n                              <button class='operation_icon js_edit_user_btn' data-id=").concat(res[0]['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button class='operation_icon js_block_btn' data-uuid=").concat(res[0]['entity_uuid'], " data-name=").concat(res[0]['line_name'], " data-id=").concat(res[0]['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
@@ -6828,7 +6828,7 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
     return category.status !== status;
   }).map(function (category) {
     return "\n                                                <li class='dropdown-item js_status_choices' \n                                                      data-current-status='".concat(status, "'\n                                                      data-status-name='").concat(category.status, "'\n                                                      data-status-id='").concat(category.id, "'\n                                                      data-account-id='").concat(res['id'], "'>\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
-  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class='operation'>\n                        <a href='").concat(CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                        <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                        <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                        <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                  </td>\n            </tr>\n      ");
+  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                              <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                              <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -6961,8 +6961,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_socket_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/socket.js */ "./resources/js/module/util/socket.js");
 /* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
 /* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
-/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
-/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
+/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -6976,7 +6975,6 @@ function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-
 
 
 
@@ -7016,7 +7014,7 @@ var BroadcastSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
       success_el.style.display = "block";
       success_el.innerHTML = "一斉送信に成功しました";
       document.querySelector(".js_message_input").value = "";
-      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__["default"].initializeFileUpload();
+      FormController.initializeFileUpload();
       document.querySelector(".js_accordion_wrapper").innerHTML = "";
 
       // 成功メッセージを出して2秒後に非表示にする
@@ -7045,7 +7043,7 @@ var BroadcastSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
       });
     }
   }]);
-}(_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_4__["default"]);
+}(_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 
 /***/ }),
@@ -7339,6 +7337,83 @@ var SendingDataServiceInterface = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/module/component/message/TestSendingData.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/module/component/message/TestSendingData.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TestSendingData)
+/* harmony export */ });
+/* harmony import */ var _util_socket_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+
+var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
+  function TestSendingData(url) {
+    _classCallCheck(this, TestSendingData);
+    var baseUrl = url;
+    var operationType = "test";
+    var modal = document.getElementById("js_test_sender");
+    return _callSuper(this, TestSendingData, [baseUrl, operationType, modal]);
+  }
+
+  /**
+  * 非同期処理成功時処理
+  * @override
+  */
+  _inherits(TestSendingData, _SendingDataServiceIn);
+  return _createClass(TestSendingData, [{
+    key: "successOperator",
+    value: function successOperator() {
+      var success_el = document.getElementById("js_alert_success");
+      success_el.style.display = "block";
+      success_el.innerHTML = "メッセージのテスト送信に成功しました";
+
+      // 成功メッセージを出して2秒後に非表示にする
+      setTimeout(function () {
+        success_el.style.display = "none";
+      }, 2000);
+    }
+
+    /**
+     * socketサーバーにデータを送信する処理
+     * @override
+     */
+  }, {
+    key: "sendMessageToSocket",
+    value: function sendMessageToSocket(response) {
+      var created_at = response.created_at,
+        data = response.data,
+        userIds = response.userIds;
+      _util_socket_js__WEBPACK_IMPORTED_MODULE_0__["default"].emit("test message", {
+        sendingDatatoBackEnd: data,
+        userIds: userIds,
+        created_at: created_at
+      });
+    }
+  }]);
+}(_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+/***/ }),
+
 /***/ "./resources/js/module/component/modalInitializers.js":
 /*!************************************************************!*\
   !*** ./resources/js/module/component/modalInitializers.js ***!
@@ -7363,6 +7438,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
 /* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _testSender_data_BroadcastMessageGenerator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./testSender/data/BroadcastMessageGenerator.js */ "./resources/js/module/component/testSender/data/BroadcastMessageGenerator.js");
+
 
 
 
@@ -7420,6 +7497,9 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
 
       // 画像ファイル選択を空にする
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeFileUpload();
+
+      // テスト送信機能モーダル処理
+      new _testSender_data_BroadcastMessageGenerator_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
     });
   });
 };
@@ -7639,6 +7719,269 @@ var close_image_edit_modal = function close_image_edit_modal(inputElement) {
     modal.classList.remove("hidden");
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/data/BroadcastMessageGenerator.js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/data/BroadcastMessageGenerator.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BroadcastMessageGenerator)
+/* harmony export */ });
+/* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
+/* harmony import */ var _DataGeneratorInterface_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataGeneratorInterface.js */ "./resources/js/module/component/testSender/data/DataGeneratorInterface.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+
+var _BroadcastMessageGenerator_brand = /*#__PURE__*/new WeakSet();
+var BroadcastMessageGenerator = /*#__PURE__*/function (_DataGeneratorInterfa) {
+  function BroadcastMessageGenerator() {
+    var _this;
+    _classCallCheck(this, BroadcastMessageGenerator);
+    _this = _callSuper(this, BroadcastMessageGenerator); // 親クラスのコンストラクタを呼び出す
+    /**
+    * テスト送信する画像メッセージを取得し、データを成型
+    * @override
+    */
+    _classPrivateMethodInitSpec(_this, _BroadcastMessageGenerator_brand);
+    _this.openTestSenderModalButton = document.getElementById('js_sender_list'); //テスト送信者モーダルを表示するボタン
+    _this.testSenderButton = document.getElementById("js_sending_btn"); //テスト送信ボタン
+    _this.previosModal = document.getElementById("js_messageSetting_modal");
+    _this.testSenderModal = document.getElementById("js_test_sender");
+    _this.sendingDataToBackEnd = [];
+    _this.initialize();
+    return _this;
+  }
+  _inherits(BroadcastMessageGenerator, _DataGeneratorInterfa);
+  return _createClass(BroadcastMessageGenerator, [{
+    key: "initialize",
+    value: function initialize() {
+      var _this2 = this;
+      this.openTestSenderModalButton.addEventListener("click", function () {
+        _this2.dislpayTestSenderModal();
+        _this2.getSendingData();
+      });
+      this.testSenderButton.addEventListener("click", function () {
+        _this2.sendTestMessages();
+      });
+      this.userCheckListElement.forEach(function (element) {
+        element.addEventListener("change", _this2.getSenderUserIds.bind(_this2));
+      });
+    }
+
+    /**
+    * テスト送信するメッセージを取得し、sendingDataToBackEndオブジェクトに格納する
+    * @override
+    */
+  }, {
+    key: "getSendingData",
+    value: function getSendingData() {
+      var _this3 = this;
+      var allDataElements = document.querySelectorAll(".js_data");
+      this.sendingDataToBackEnd["admin_id"] = _assertClassBrand(_BroadcastMessageGenerator_brand, this, _getAdminID).call(this);
+      this.sendingDataToBackEnd["created_at"] = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentTimeFormatted)();
+      allDataElements.forEach(function (element, index) {
+        if (element.querySelector(".js_img")) {
+          _assertClassBrand(_BroadcastMessageGenerator_brand, _this3, _formatImageMessage).call(_this3, element, index);
+        } else {
+          _assertClassBrand(_BroadcastMessageGenerator_brand, _this3, _formatTextMessage).call(_this3, element, index);
+        }
+      });
+    }
+  }]);
+}(_DataGeneratorInterface_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+function _formatImageMessage(element, index) {
+  var imageUrl = element.querySelector(".js_img").src;
+  this.sendingDataToBackEnd[index] = {
+    cropArea: [],
+    resource: imageUrl,
+    type: "test_sending_img",
+    order: index
+  };
+}
+/**
+* テスト送信するテキストメッセージを取得し、データを成型
+* @override
+*/
+function _formatTextMessage(element, index) {
+  var text = element.innerHTML;
+  this.sendingDataToBackEnd[index] = {
+    resource: text,
+    type: "test_sending_txt",
+    order: index
+  };
+}
+/**
+* 管理者IDを取得を取得する
+*  @override
+*/
+function _getAdminID() {
+  return document.getElementById("js_account_id").value;
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/data/DataGeneratorInterface.js":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/data/DataGeneratorInterface.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DataGeneratorInterface)
+/* harmony export */ });
+/* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
+/* harmony import */ var _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../message/TestSendingData.js */ "./resources/js/module/component/message/TestSendingData.js");
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+
+
+
+
+/**
+ * 項目作成のインターフェース
+ * @interface
+ */
+var _DataGeneratorInterface_brand = /*#__PURE__*/new WeakSet();
+var DataGeneratorInterface = /*#__PURE__*/function () {
+  function DataGeneratorInterface() {
+    _classCallCheck(this, DataGeneratorInterface);
+    /**
+    * テスト送信する画像メッセージを取得し、データを成型
+    *  @returns {void}
+    */
+    _classPrivateMethodInitSpec(this, _DataGeneratorInterface_brand);
+    if ((this instanceof DataGeneratorInterface ? this.constructor : void 0) === DataGeneratorInterface) {
+      throw new Error('インターフェースのインスタンスは作成できません');
+    }
+    this.testSenderModal;
+    this.previosModal;
+    this.userCheckListElement = document.querySelectorAll(".user-select");
+    this.userCheckList = [];
+    this.sendingData = new _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_1__["default"](_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE);
+  }
+
+  // ############################################################################
+  // ############################## 共通メソッド #################################
+  // ############################################################################
+
+  /**
+   * テスト送信ユーザーを選択するモーダルを表示する
+   * @returns {void}
+   */
+  return _createClass(DataGeneratorInterface, [{
+    key: "dislpayTestSenderModal",
+    value: function dislpayTestSenderModal() {
+      (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_modal)(this.testSenderModal);
+      this.previosModal.classList.add("hidden");
+    }
+
+    /**
+     * テスト送信を行う。DBに一時保存とsocketサーバーにデータを送信する
+     * @returns {void}
+     */
+  }, {
+    key: "sendTestMessages",
+    value: function sendTestMessages() {
+      this.sendingData.emitBroadcastMessageToSocket(this.userCheckList);
+    }
+
+    /**
+     * テスト送信を行うユーザーIDを配列に格納する
+     * @returns {void}
+     * @param {Event} event - チェックボックスの変更イベント
+     */
+  }, {
+    key: "getSenderUserIds",
+    value: function getSenderUserIds(event) {
+      var checkbox = event.target;
+      var userId = checkbox.dataset.userId;
+      var isChecked = checkbox.checked;
+
+      // チェッボックスにチェックついていたら配列に格納
+      if (isChecked) {
+        this.userCheckList.push(userId);
+        // 配列から削除
+      } else {
+        this.userCheckList = this.userCheckList.filter(function (list) {
+          return String(list) != String(userId);
+        });
+      }
+    }
+
+    // ############################################################################
+    // ############################## 抽象メソッド #################################
+    // ############################################################################
+
+    /**
+     * 初期化処理
+     * @returns {void}
+     */
+  }, {
+    key: "initialize",
+    value: function initialize() {
+      throw new Error('Method not implemented');
+    }
+
+    /**
+     * テスト送信で送信するメッセージを取得する
+     * @returns {void}
+     */
+  }, {
+    key: "getSendingData",
+    value: function getSendingData() {
+      throw new Error('Method not implemented');
+    }
+  }]);
+}();
+function _formatImageMessage() {
+  throw new Error('Method not implemented');
+}
+/**
+* テスト送信するテキストメッセージを取得し、データを成型
+*  @returns {void}
+*/
+function _formatTextMessage() {
+  throw new Error('Method not implemented');
+}
+/**
+* 管理者IDを取得する
+*  @returns {string} 管理者ID 例: 4
+*/
+function _getAdminID() {
+  throw new Error('Method not implemented');
+}
+
 
 /***/ }),
 

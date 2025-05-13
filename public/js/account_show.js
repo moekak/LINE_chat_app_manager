@@ -6799,13 +6799,13 @@ var createMessageRowForFetch = function createMessageRowForFetch(res, admin_acco
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['created_at']);
   var latestMessageDate = res['latest_message_date'] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['latest_message_date']) : '';
   var display = res['unread_count'] > 0 ? 'flex' : 'none';
-  return "\n            <tr data-id=".concat(res['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res['line_name'], "</td>\n                  <td data-id=").concat(res['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class='operation'>\n                  \t<a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res['id'], "/").concat(admin_account_id, "'>\n                              <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                    <img src='/img/icons8-message-24.png' alt=''>\n                              </button>\n                        </a>\n                        <button class='operation_icon js_edit_user_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                        <button class='operation_icon js_block_btn' data-uuid=").concat(res['entity_uuid'], " data-name=").concat(res['line_name'], " data-id=").concat(res['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res['line_name'], "</td>\n                  <td data-id=").concat(res['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res['id'], "/").concat(admin_account_id, "'>\n                                    <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                          <img src='/img/icons8-message-24.png' alt=''>\n                                    </button>\n                              </a>\n                              <button class='operation_icon js_edit_user_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button class='operation_icon js_block_btn' data-uuid=").concat(res['entity_uuid'], " data-name=").concat(res['line_name'], " data-id=").concat(res['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
   var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]['created_at']);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
   var display = res[0]['unread_count'] > 0 ? 'flex' : 'none';
-  return "\n            <tr data-id=".concat(res[0]['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res[0]['line_name'], "</td>\n                  <td data-id=").concat(res[0]['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res[0]['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class='operation'>\n                        <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]['id'], "/").concat(admin_account_id, "'>\n                              <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                    <img src='/img/icons8-message-24.png' alt=''>\n                              </button>\n                        </a>\n                        <button class='operation_icon js_edit_user_btn' data-id=").concat(res[0]['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                        <button class='operation_icon js_block_btn' data-uuid=").concat(res[0]['entity_uuid'], " data-name=").concat(res[0]['line_name'], " data-id=").concat(res[0]['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr data-id=".concat(res[0]['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res[0]['line_name'], "</td>\n                  <td data-id=").concat(res[0]['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res[0]['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]['id'], "/").concat(admin_account_id, "'>\n                                    <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                          <img src='/img/icons8-message-24.png' alt=''>\n                                    </button>\n                              </a>\n                              <button class='operation_icon js_edit_user_btn' data-id=").concat(res[0]['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button class='operation_icon js_block_btn' data-uuid=").concat(res[0]['entity_uuid'], " data-name=").concat(res[0]['line_name'], " data-id=").concat(res[0]['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
@@ -6828,7 +6828,7 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
     return category.status !== status;
   }).map(function (category) {
     return "\n                                                <li class='dropdown-item js_status_choices' \n                                                      data-current-status='".concat(status, "'\n                                                      data-status-name='").concat(category.status, "'\n                                                      data-status-id='").concat(category.id, "'\n                                                      data-account-id='").concat(res['id'], "'>\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
-  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class='operation'>\n                        <a href='").concat(CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                        <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                        <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                        <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                  </td>\n            </tr>\n      ");
+  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                              <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                              <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -8444,13 +8444,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../config/config.js */ "./resources/js/config/config.js");
-/* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
-/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
-/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
-/* harmony import */ var _DataGenerator_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../DataGenerator.js */ "./resources/js/module/component/messageTemplate/DataGenerator.js");
-/* harmony import */ var _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ImageUploadHandler.js */ "./resources/js/module/component/messageTemplate/ImageUploadHandler.js");
-/* harmony import */ var _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../MessageTemplateOperator.js */ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js");
-/* harmony import */ var _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../TemplateBlockManager.js */ "./resources/js/module/component/messageTemplate/TemplateBlockManager.js");
+/* harmony import */ var _modalOperation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../modalOperation.js */ "./resources/js/module/component/modalOperation.js");
+/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
+/* harmony import */ var _DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../DataGenerator.js */ "./resources/js/module/component/messageTemplate/DataGenerator.js");
+/* harmony import */ var _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ImageUploadHandler.js */ "./resources/js/module/component/messageTemplate/ImageUploadHandler.js");
+/* harmony import */ var _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../MessageTemplateOperator.js */ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js");
+/* harmony import */ var _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../TemplateBlockManager.js */ "./resources/js/module/component/messageTemplate/TemplateBlockManager.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -8460,7 +8459,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
 function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
 function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
-
 
 
 
@@ -8500,7 +8498,7 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
           category.selected = true;
         }
       });
-      var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
+      var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
       this.contentsBlock.forEach(function (content) {
         _assertClassBrand(_MessageTemplateFormController_brand, _this, _initializeContentBlock).call(_this, content, templateBlockManager);
       });
@@ -8512,10 +8510,10 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
       var tabEdit = document.querySelector(".tab-edit");
       var contentBlocks = document.getElementById("edit-content-blocks");
       var form = document.querySelector(".js_edit_form");
-      var messageTemplateOperator = new _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
+      var messageTemplateOperator = new _MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
       editBtns.forEach(function (btn) {
         btn.addEventListener("click", function (e) {
-          _DataGenerator_js__WEBPACK_IMPORTED_MODULE_4__.templateImageData.length = 0;
+          _DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__.templateImageData.length = 0;
           messageTemplateOperator.resetBlockCounter();
           contentBlocks.innerHTML = "";
           messageTemplateOperator.changeElements(contentBlocks, form);
@@ -8524,14 +8522,14 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
           var targetElement = e.currentTarget;
           var formController = new MessageTemplateFormController(targetElement);
           formController.setDataToEditInputs();
-          var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
+          var templateBlockManager = new _TemplateBlockManager_js__WEBPACK_IMPORTED_MODULE_6__["default"]();
           form.querySelectorAll('.content-block').forEach(function (block) {
             templateBlockManager.setupBlockListeners(block);
           });
 
           // テンプレート作成画像アップロード
           MessageTemplateFormController.initializeCropManagement(true);
-          (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.close_loader)();
+          (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__.close_loader)();
         });
       });
     }
@@ -8541,7 +8539,7 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
       document.querySelector(".template-list").innerHTML = "";
       var modal = document.getElementById("js_template_modal");
       modal.style.zIndex = "985";
-      (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_2__.open_loader)();
+      (0,_modalOperation_js__WEBPACK_IMPORTED_MODULE_1__.open_loader)();
     }
   }, {
     key: "initializeCropManagement",
@@ -8549,7 +8547,7 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
       var isEdit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       // テンプレート作成画像アップロード
       var errorTxt = document.querySelector(".js_error_txt");
-      var imageUploadHandler = new _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
+      var imageUploadHandler = new _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_4__["default"]();
       imageUploadHandler.setupFileInputs(isEdit, errorTxt);
     }
   }]);
@@ -8568,16 +8566,16 @@ function _initializeContentBlock(content, templateBlockManager) {
     this.fileInput = this.contentBlocksWrapper.querySelector(".file-input");
     this.imageElement = this.contentBlocksWrapper.querySelector(".image_element");
     this.imageElement.src = "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value);
-    _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__["default"].templateImageStyle(this.imageElement, "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value));
+    _ui_FormController_js__WEBPACK_IMPORTED_MODULE_2__["default"].templateImageStyle(this.imageElement, "".concat(_config_config_js__WEBPACK_IMPORTED_MODULE_0__.SYSTEM_URL.IMAGE_URL, "/").concat(content.querySelector(".js_image_path").value));
     var errorTxt = document.querySelector(".js_error_txt");
-    var imageUploadHandler = new _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
+    var imageUploadHandler = new _ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_4__["default"]();
     imageUploadHandler.setupFileInputs(true, errorTxt);
 
     // // 画像データ作成
 
     var fileInputElementId = this.fileInput.closest(".content-block").dataset.id;
     var numberPart = fileInputElementId.match(/\d+/)[0];
-    _DataGenerator_js__WEBPACK_IMPORTED_MODULE_4__.templateImageData.push({
+    _DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__.templateImageData.push({
       "contentUrl": content.querySelector(".js_image_path").value,
       "cropData": (_content$querySelecto = content.querySelector(".js_image_path").dataset.crop) !== null && _content$querySelecto !== void 0 ? _content$querySelecto : [],
       "order": numberPart
@@ -8603,8 +8601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_socket_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/socket.js */ "./resources/js/module/util/socket.js");
 /* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
 /* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
-/* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
-/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
+/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -8618,7 +8615,6 @@ function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-
 
 
 
@@ -8658,7 +8654,7 @@ var BroadcastSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
       success_el.style.display = "block";
       success_el.innerHTML = "一斉送信に成功しました";
       document.querySelector(".js_message_input").value = "";
-      _ui_FormController_js__WEBPACK_IMPORTED_MODULE_3__["default"].initializeFileUpload();
+      FormController.initializeFileUpload();
       document.querySelector(".js_accordion_wrapper").innerHTML = "";
 
       // 成功メッセージを出して2秒後に非表示にする
@@ -8687,7 +8683,7 @@ var BroadcastSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
       });
     }
   }]);
-}(_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_4__["default"]);
+}(_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 
 /***/ }),
@@ -9082,6 +9078,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
 /* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _testSender_data_BroadcastMessageGenerator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./testSender/data/BroadcastMessageGenerator.js */ "./resources/js/module/component/testSender/data/BroadcastMessageGenerator.js");
+
 
 
 
@@ -9139,6 +9137,9 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
 
       // 画像ファイル選択を空にする
       _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__["default"].initializeFileUpload();
+
+      // テスト送信機能モーダル処理
+      new _testSender_data_BroadcastMessageGenerator_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
     });
   });
 };
@@ -9361,6 +9362,126 @@ var close_image_edit_modal = function close_image_edit_modal(inputElement) {
 
 /***/ }),
 
+/***/ "./resources/js/module/component/testSender/data/BroadcastMessageGenerator.js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/data/BroadcastMessageGenerator.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BroadcastMessageGenerator)
+/* harmony export */ });
+/* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
+/* harmony import */ var _DataGeneratorInterface_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataGeneratorInterface.js */ "./resources/js/module/component/testSender/data/DataGeneratorInterface.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+
+var _BroadcastMessageGenerator_brand = /*#__PURE__*/new WeakSet();
+var BroadcastMessageGenerator = /*#__PURE__*/function (_DataGeneratorInterfa) {
+  function BroadcastMessageGenerator() {
+    var _this;
+    _classCallCheck(this, BroadcastMessageGenerator);
+    _this = _callSuper(this, BroadcastMessageGenerator); // 親クラスのコンストラクタを呼び出す
+    /**
+    * テスト送信する画像メッセージを取得し、データを成型
+    * @override
+    */
+    _classPrivateMethodInitSpec(_this, _BroadcastMessageGenerator_brand);
+    _this.openTestSenderModalButton = document.getElementById('js_sender_list'); //テスト送信者モーダルを表示するボタン
+    _this.testSenderButton = document.getElementById("js_sending_btn"); //テスト送信ボタン
+    _this.previosModal = document.getElementById("js_messageSetting_modal");
+    _this.testSenderModal = document.getElementById("js_test_sender");
+    _this.sendingDataToBackEnd = [];
+    _this.initialize();
+    return _this;
+  }
+  _inherits(BroadcastMessageGenerator, _DataGeneratorInterfa);
+  return _createClass(BroadcastMessageGenerator, [{
+    key: "initialize",
+    value: function initialize() {
+      var _this2 = this;
+      this.openTestSenderModalButton.addEventListener("click", function () {
+        _this2.dislpayTestSenderModal();
+        _this2.getSendingData();
+      });
+      this.testSenderButton.addEventListener("click", function () {
+        _this2.sendTestMessages();
+      });
+      this.userCheckListElement.forEach(function (element) {
+        element.addEventListener("change", _this2.getSenderUserIds.bind(_this2));
+      });
+    }
+
+    /**
+    * テスト送信するメッセージを取得し、sendingDataToBackEndオブジェクトに格納する
+    * @override
+    */
+  }, {
+    key: "getSendingData",
+    value: function getSendingData() {
+      var _this3 = this;
+      var allDataElements = document.querySelectorAll(".js_data");
+      this.sendingDataToBackEnd["admin_id"] = _assertClassBrand(_BroadcastMessageGenerator_brand, this, _getAdminID).call(this);
+      this.sendingDataToBackEnd["created_at"] = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentTimeFormatted)();
+      allDataElements.forEach(function (element, index) {
+        if (element.querySelector(".js_img")) {
+          _assertClassBrand(_BroadcastMessageGenerator_brand, _this3, _formatImageMessage).call(_this3, element, index);
+        } else {
+          _assertClassBrand(_BroadcastMessageGenerator_brand, _this3, _formatTextMessage).call(_this3, element, index);
+        }
+      });
+    }
+  }]);
+}(_DataGeneratorInterface_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+function _formatImageMessage(element, index) {
+  var imageUrl = element.querySelector(".js_img").src;
+  this.sendingDataToBackEnd[index] = {
+    cropArea: [],
+    resource: imageUrl,
+    type: "test_sending_img",
+    order: index
+  };
+}
+/**
+* テスト送信するテキストメッセージを取得し、データを成型
+* @override
+*/
+function _formatTextMessage(element, index) {
+  var text = element.innerHTML;
+  this.sendingDataToBackEnd[index] = {
+    resource: text,
+    type: "test_sending_txt",
+    order: index
+  };
+}
+/**
+* 管理者IDを取得を取得する
+*  @override
+*/
+function _getAdminID() {
+  return document.getElementById("js_account_id").value;
+}
+
+
+/***/ }),
+
 /***/ "./resources/js/module/component/testSender/data/DataGeneratorInterface.js":
 /*!*********************************************************************************!*\
   !*** ./resources/js/module/component/testSender/data/DataGeneratorInterface.js ***!
@@ -9499,131 +9620,6 @@ function _formatTextMessage() {
 */
 function _getAdminID() {
   throw new Error('Method not implemented');
-}
-
-
-/***/ }),
-
-/***/ "./resources/js/module/component/testSender/data/GreetingMessageGenerator.js":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/module/component/testSender/data/GreetingMessageGenerator.js ***!
-  \***********************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ GreetingMessageGenerator)
-/* harmony export */ });
-/* harmony import */ var _util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/formatDate.js */ "./resources/js/module/util/formatDate.js");
-/* harmony import */ var _DataGeneratorInterface_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataGeneratorInterface.js */ "./resources/js/module/component/testSender/data/DataGeneratorInterface.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
-function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
-function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
-function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
-function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
-function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
-
-
-var _GreetingMessageGenerator_brand = /*#__PURE__*/new WeakSet();
-var GreetingMessageGenerator = /*#__PURE__*/function (_DataGeneratorInterfa) {
-  function GreetingMessageGenerator() {
-    var _this;
-    _classCallCheck(this, GreetingMessageGenerator);
-    _this = _callSuper(this, GreetingMessageGenerator); // 親クラスのコンストラクタを呼び出す
-    /**
-    * テスト送信する画像メッセージを取得し、データを成型
-    * @override
-    */
-    _classPrivateMethodInitSpec(_this, _GreetingMessageGenerator_brand);
-    _this.openTestSenderModalButton = document.getElementById('js_sender_list'); //テスト送信者モーダルを表示するボタン
-    _this.testSenderButton = document.getElementById("js_sending_btn"); //テスト送信ボタン
-    _this.previosModal = document.getElementById("js_messageSetting_modal");
-    _this.testSenderModal = document.getElementById("js_test_sender");
-    _this.sendingDataToBackEnd = [];
-    _this.initialize();
-    return _this;
-  }
-  _inherits(GreetingMessageGenerator, _DataGeneratorInterfa);
-  return _createClass(GreetingMessageGenerator, [{
-    key: "initialize",
-    value: function initialize() {
-      var _this2 = this;
-      this.openTestSenderModalButton.addEventListener("click", function () {
-        _this2.dislpayTestSenderModal();
-        _this2.getSendingData();
-      });
-      this.testSenderButton.addEventListener("click", function () {
-        _this2.sendTestMessages();
-      });
-      this.userCheckListElement.forEach(function (element) {
-        element.addEventListener("change", _this2.getSenderUserIds.bind(_this2));
-      });
-    }
-
-    /**
-    * テスト送信するメッセージを取得し、sendingDataToBackEndオブジェクトに格納する
-    * @override
-    */
-  }, {
-    key: "getSendingData",
-    value:
-    /**
-    * テスト送信するメッセージを取得し、sendingDataToBackEndオブジェクトに格納する
-    * @override
-    */
-    function getSendingData() {
-      var _this3 = this;
-      var allDataElements = document.querySelectorAll(".js_data");
-      this.sendingDataToBackEnd["admin_id"] = _assertClassBrand(_GreetingMessageGenerator_brand, this, _getAdminID).call(this);
-      this.sendingDataToBackEnd["created_at"] = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentTimeFormatted)();
-      allDataElements.forEach(function (element, index) {
-        if (element.querySelector(".js_img")) {
-          _assertClassBrand(_GreetingMessageGenerator_brand, _this3, _formatImageMessage).call(_this3, element, index);
-        } else {
-          _assertClassBrand(_GreetingMessageGenerator_brand, _this3, _formatTextMessage).call(_this3, element, index);
-        }
-      });
-    }
-  }]);
-}(_DataGeneratorInterface_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
-function _formatImageMessage(element, index) {
-  var imageUrl = element.querySelector(".js_img").src;
-  this.sendingDataToBackEnd[index] = {
-    cropArea: [],
-    resource: imageUrl,
-    type: "test_sending_img",
-    order: index
-  };
-}
-/**
-* テスト送信するテキストメッセージを取得し、データを成型
-* @override
-*/
-function _formatTextMessage(element, index) {
-  var text = element.innerHTML;
-  this.sendingDataToBackEnd[index] = {
-    resource: text,
-    type: "test_sending_txt",
-    order: index
-  };
-}
-/**
-* 管理者IDを取得を取得する
-*  @override
-*/
-function _getAdminID() {
-  return document.getElementById("js_account_id").value;
 }
 
 
@@ -15887,21 +15883,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_component_ui_FormController_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/component/ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _module_component_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/component/elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
 /* harmony import */ var _module_component_messageTemplate_MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/component/messageTemplate/MessageTemplateOperator.js */ "./resources/js/module/component/messageTemplate/MessageTemplateOperator.js");
-/* harmony import */ var _module_component_messageTemplate_ImageUploadHandler_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/component/messageTemplate/ImageUploadHandler.js */ "./resources/js/module/component/messageTemplate/ImageUploadHandler.js");
-/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
-/* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
-/* harmony import */ var _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./module/component/messageTemplate/InitializeInputService.js */ "./resources/js/module/component/messageTemplate/InitializeInputService.js");
-/* harmony import */ var _module_component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/component/messageTemplate/DataGenerator.js */ "./resources/js/module/component/messageTemplate/DataGenerator.js");
-/* harmony import */ var _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./module/component/messageTemplate/DataValidator.js */ "./resources/js/module/component/messageTemplate/DataValidator.js");
-/* harmony import */ var _module_component_messageTemplate_TabController_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./module/component/messageTemplate/TabController.js */ "./resources/js/module/component/messageTemplate/TabController.js");
-/* harmony import */ var _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./module/component/messageTemplate/UiController.js */ "./resources/js/module/component/messageTemplate/UiController.js");
-/* harmony import */ var _module_component_testSender_data_GreetingMessageGenerator_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./module/component/testSender/data/GreetingMessageGenerator.js */ "./resources/js/module/component/testSender/data/GreetingMessageGenerator.js");
+/* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
+/* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
+/* harmony import */ var _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./module/component/messageTemplate/InitializeInputService.js */ "./resources/js/module/component/messageTemplate/InitializeInputService.js");
+/* harmony import */ var _module_component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./module/component/messageTemplate/DataGenerator.js */ "./resources/js/module/component/messageTemplate/DataGenerator.js");
+/* harmony import */ var _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/component/messageTemplate/DataValidator.js */ "./resources/js/module/component/messageTemplate/DataValidator.js");
+/* harmony import */ var _module_component_messageTemplate_TabController_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./module/component/messageTemplate/TabController.js */ "./resources/js/module/component/messageTemplate/TabController.js");
+/* harmony import */ var _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./module/component/messageTemplate/UiController.js */ "./resources/js/module/component/messageTemplate/UiController.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
-
 
 
 
@@ -15991,7 +15983,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // カテゴリーでのエラーメッセージの表示
   if (typeof window.hasError !== 'undefined' && window.hasError) {
-    var dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__["default"]();
+    var dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__["default"]();
     dataValidator.displayErrorList(window.errorMessages);
     document.getElementById("js_template_modal").classList.remove("hidden");
     document.querySelector(".bg").classList.remove("hidden");
@@ -15999,7 +15991,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".js_category_form ").classList.remove("hidden");
     document.getElementById("js_tab_new").classList.remove("active");
     document.getElementById("js_tab_category").classList.add("active");
-    new _module_component_messageTemplate_TabController_js__WEBPACK_IMPORTED_MODULE_14__["default"](document.querySelectorAll('.tab'), document.querySelectorAll('.tab-content'));
+    new _module_component_messageTemplate_TabController_js__WEBPACK_IMPORTED_MODULE_13__["default"](document.querySelectorAll('.tab'), document.querySelectorAll('.tab-content'));
   }
 });
 (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_modal)();
@@ -16063,7 +16055,7 @@ submitForms.forEach(function (submitForm) {
 // テンプレート作成モーダル
 {
   var handleTemplateButtonClick = function handleTemplateButtonClick() {
-    _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_11__["default"].intiaizeInputs();
+    _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_10__["default"].intiaizeInputs();
     new _module_component_messageTemplate_MessageTemplateOperator_js__WEBPACK_IMPORTED_MODULE_7__["default"]();
     (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(templateModal);
   };
@@ -16072,7 +16064,7 @@ submitForms.forEach(function (submitForm) {
   createTemplateBtn.removeEventListener("click", handleTemplateButtonClick);
   var templateModal = document.getElementById("js_template_modal");
   createTemplateBtn.addEventListener("click", function () {
-    _module_component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_12__.templateImageData.length = 0;
+    _module_component_messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_11__.templateImageData.length = 0;
     handleTemplateButtonClick();
   });
 }
@@ -16088,8 +16080,8 @@ submitForms.forEach(function (submitForm) {
 }
 
 // カテゴリー編集
-_module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].changeEditCategoryStyle();
-_module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].editCategoryProcess();
+_module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].changeEditCategoryStyle();
+_module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].editCategoryProcess();
 document.querySelector('.template-title').addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
     event.preventDefault();
@@ -16121,17 +16113,17 @@ document.querySelector('.template-title').addEventListener('keydown', function (
               "template_id": templateId
             };
             _context4.next = 7;
-            return (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_9__.fetchPostOperation)(sendingData, _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_10__.API_ENDPOINTS.FETCH_DELETE_TEMPLATE);
+            return (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_8__.fetchPostOperation)(sendingData, _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_9__.API_ENDPOINTS.FETCH_DELETE_TEMPLATE);
           case 7:
             data = _context4.sent;
             (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_loader)();
             document.getElementById("js_template_modal").style.zIndex = 999;
             if (data["status"] === 201) {
-              uiController = new _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"]();
+              uiController = new _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"]();
               uiController.hideRemovedTemplate(data["template_id"]);
-              _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__["default"].displayCategorySuccessMessage("テンプレートの削除に成功しました。");
+              _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__["default"].displayCategorySuccessMessage("テンプレートの削除に成功しました。");
             } else {
-              dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__["default"]();
+              dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__["default"]();
               dataValidator.displayErrorList(["テンプレートの削除に失敗しました。お手数ですが、もう一度お試しください。"]);
             }
           case 11:
@@ -16163,16 +16155,16 @@ document.querySelector('.template-title').addEventListener('keydown', function (
               break;
             }
             document.getElementById("js_error_list").innerHTML = "";
-            dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__["default"]();
+            dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__["default"]();
             dataValidator.displayErrorList(["カテゴリー名を入力してください。"]);
             return _context5.abrupt("return");
           case 8:
-            _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_11__["default"].initializeErrorList();
+            _module_component_messageTemplate_InitializeInputService_js__WEBPACK_IMPORTED_MODULE_10__["default"].initializeErrorList();
           case 9:
             (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_loader_template)();
             formData = new FormData(createCategoryForm);
             _context5.next = 13;
-            return fetch(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_10__.API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
+            return fetch(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_9__.API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
               method: 'POST',
               body: formData
             });
@@ -16189,16 +16181,16 @@ document.querySelector('.template-title').addEventListener('keydown', function (
           case 18:
             data = _context5.sent;
             if (data["status"] === 201) {
-              _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__["default"].displayCategorySuccessMessage("カテゴリーの追加に成功しました");
+              _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__["default"].displayCategorySuccessMessage("カテゴリーの追加に成功しました");
               categoryList.innerHTML += (0,_module_component_elementTemplate_js__WEBPACK_IMPORTED_MODULE_6__.crateCategoryList)(data["category"]);
-              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].initializeCategoryInput();
+              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].initializeCategoryInput();
               // カテゴリー編集
-              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].changeEditCategoryStyle();
-              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].editCategoryProcess();
-              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].addCategoryToOptionElement(data["category"]);
-              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_15__["default"].addCategoryButtonToFilter(data["category"]);
+              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].changeEditCategoryStyle();
+              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].editCategoryProcess();
+              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].addCategoryToOptionElement(data["category"]);
+              _module_component_messageTemplate_UiController_js__WEBPACK_IMPORTED_MODULE_14__["default"].addCategoryButtonToFilter(data["category"]);
             } else {
-              _dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_13__["default"]();
+              _dataValidator = new _module_component_messageTemplate_DataValidator_js__WEBPACK_IMPORTED_MODULE_12__["default"]();
               _dataValidator.displayErrorList(["カテゴリーの編集に失敗しました。お手数ですが、もう一度お試しください。"]);
             }
             (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_loader_template)();

@@ -1,8 +1,8 @@
 import socket from "../../util/socket.js"
 import formDataStateManager from "../../util/state/FormDataStateManager.js"
 import indexStateManager from "../../util/state/IndexStateManager.js"
-import FormController from "../ui/FormController.js"
 import SendingDataServiceInterface from "./SendingDataServiceInterface.js"
+
 
 export default class BroadcastSendingData extends SendingDataServiceInterface{
       constructor(url){

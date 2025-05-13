@@ -65,11 +65,14 @@
                                           </td>
                                           <td class='js_latest_message_date'>{{$account['latest_message_date'] ?? ''}}</td>
                                           <td>{{$account['created_at']->format('Y-m-d H:i')}}</td>
-                                          <td class='operation'>
-                                                <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
-                                                <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                          <td>
+                                                <div class="operation">
+                                                      <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
+                                                      <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                                </div>
+                                                
                                           </td>
                                     </tr>
                               @endforeach
@@ -127,11 +130,13 @@
                                           </td>
                                           <td class='js_latest_message_date'>{{$account['latest_message_date'] ?? ''}}</td>
                                           <td>{{$account['created_at']->format('Y-m-d H:i')}}</td>
-                                          <td class='operation'>
-                                                <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
-                                                <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                          <td>
+                                                <div class="operation">
+                                                      <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
+                                                      <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                                </div>
                                           </td>
                                     </tr>
                               @endforeach
@@ -190,11 +195,13 @@
                                           </td>
                                           <td class='js_latest_message_date'>{{$account['latest_message_date'] ?? ''}}</td>
                                           <td>{{$account['created_at']->format('Y-m-d H:i')}}</td>
-                                          <td class='operation'>
-                                                <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
-                                                <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                          <td>
+                                                <div class="operation">
+                                                      <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
+                                                      <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                                </div>
                                           </td>
                                     </tr>
                               @endforeach
@@ -252,11 +259,13 @@
                                           </td>
                                           <td class='js_latest_message_date'>{{$account['latest_message_date'] ?? ''}}</td>
                                           <td>{{$account['created_at']->format('Y-m-d H:i')}}</td>
-                                          <td class='operation'>
-                                                <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
-                                                <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
-                                                <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                          <td>
+                                                <div class="operation">
+                                                      <a href='{{route('account.show', ['id' => $account['id']])}}'><button class='operation_icon user-list_icon' title='リスト'><img src='{{asset('img/icons8-user-24.png')}}' alt=''></button></a>
+                                                      <button class='operation_icon js_send_message_btn relative' data-id=<?= $account['id']?> title='一斉送信'><img src='{{asset('img/icons8-send-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_edit_account_btn relative' data-id=<?= $account['id']?> title='情報'><img src='{{asset('img/icons8-edit-24.png')}}' alt=''></button>
+                                                      <button class='operation_icon js_delete_account_btn relative' type='submit' data-id=<?= $account['id']?> data-name={{$account['account_name']}} title='削除'><img src='{{asset('img/icons8-delete-24.png')}}' alt=''></button>
+                                                </div>
                                           </td>
                                     </tr>
                               @endforeach
@@ -306,16 +315,10 @@
                   </div>
       
                   
-<<<<<<< HEAD
                   <div class='row'>
                         <div class='col-md-6'>
-                              <label for='formGroupExampleInput' class='form-label js_url_input'>友達保存用URL <span style='color: red; font-size: 13px;'>※</span></label>
+                              <label for='formGroupExampleInput' class='form-label js_url_input'>友達追加用URL <span style='color: red; font-size: 13px;'>※</span></label>
                               <input type='text' class='form-control js_' id='formGroupExampleInput' name='account_url' value='{{old('account_url')}}'>
-=======
-                  <div class="row">
-                        <div class="col-md-6">
-                              <input type="text" class="form-control js_" id="formGroupExampleInput" name="account_url" value="{{old("account_url")}}">
->>>>>>> 620f57431f7715bf74289dc2d2f498317b67344e
                         </div>
                         <div class='col-md-6'>
                               <label for='formGroupExampleInput' class='form-label '>ステータス <span style='color: red; font-size: 13px;'>※</span></label>
@@ -369,7 +372,7 @@
                   </div>
 <<<<<<< HEAD
                   <div class='mb-3'>
-                        <label for='formGroupExampleInput' class='form-label'>友達保存用URL　<span style='color: red; font-size: 13px;'>※</span></label>
+                        <label for='formGroupExampleInput' class='form-label'>友達追加用URL　<span style='color: red; font-size: 13px;'>※</span></label>
                         <input type='text' class='form-control js_edit_url_input' id='formGroupExampleInput' name='account_url' value='{{old('account_url')}}'>
 =======
                   <div class="mb-3">
@@ -418,9 +421,15 @@
                   </div>
                   <input type='hidden' name='admin_account_id' id='js_account_id'>
                   <div class='broadcast_message_submit_btn-box'>
-                        <button type='submit' class='modal__container-btn js_message_display_btn disabled_btn'>追加</button>  
-                        <button type='submit' class='modal__container-btn js_message_submit_btn disabled_btn'>保存</button>  
-                  </div>
+				<button class="modal__container-btn" id="js_sender_list">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+					テスト送信
+				</button>
+				<div style="display: flex; gap: 10px;">
+                              <button type='submit' class='modal__container-btn js_message_display_btn disabled_btn'>追加</button>  
+                              <button type='submit' class='modal__container-btn js_message_submit_btn disabled_btn'>保存</button>  
+				</div>
+			</div>
             </div>      
       </div>
       
