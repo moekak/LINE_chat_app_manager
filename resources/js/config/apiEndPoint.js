@@ -12,5 +12,6 @@ export const API_ENDPOINTS = {
     FETCH_UPDATE_TEMPLATE_ORDER: "/api/template/order",
     FETCH_DELETE_TEMPLATE : "/api/template/delete",
     FETCH_CREATE_CATEGORY: "/api/category/create",
-    FETCH_CATEGORY_EDIT: "/api/category/edit"
+    FETCH_CATEGORY_EDIT: "/api/category/edit",
+    FETCH_TEST_MESSAGE_STORE: "/api/test/message/store",
 };

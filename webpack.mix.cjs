@@ -9,6 +9,7 @@ mix.js('resources/js/app.js', 'public/js')
    .js("resources/js/account_show.js", "public/js")
    .js("resources/js/account_block.js", "public/js")
    .js("resources/js/greetingMessage.js", "public/js")
+   .js("resources/js/test_sender_add.js", "public/js")
 
    .setPublicPath('public')
 //    .webpackConfig({

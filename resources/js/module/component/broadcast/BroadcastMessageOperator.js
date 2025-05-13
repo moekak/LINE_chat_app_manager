@@ -1,9 +1,10 @@
-import socket from "../../util/socket.js";
+
 import formDataStateManager from "../../util/state/FormDataStateManager.js"
 import indexStateManager from "../../util/state/IndexStateManager.js"
 import { toggleDisplayButtonState } from "../accountUIOperations.js";
 import { createBroadcastMessageRow } from "../elementTemplate.js";
-import { open_modal } from "../modalOperation.js";
+import BroadcastSendingData from "../message/BroadcastSendingData.js";
+import GreetingSendingData from "../message/GreetingSendingData.js";
 import FormController from "../ui/FormController.js";
 
 const MAX_LENGTH = 20
@@ -43,6 +44,7 @@ class BroadcastMessageOperator{
         this.newBtn = null
         this.baseUrl = baseUrl
         this.isGreeting = isGreeting
+        this.sendingData = this.isGreeting ? new GreetingSendingData(baseUrl) : new BroadcastSendingData(baseUrl)
 
         
         // 必要な要素を取得
@@ -62,7 +64,9 @@ class BroadcastMessageOperator{
         this.newBtn = this.displayBtn.cloneNode(true)
         this.displayBtn.parentNode.replaceChild(this.newBtn, this.displayBtn)
         this.newBtn.addEventListener("click", this.handleDisplayClick.bind(this));
-        this.submitBtn.addEventListener("click",this.emitBroadcastMessageToSocket.bind(this))
+        this.submitBtn.addEventListener("click", () => {
+            this.sendingData.emitBroadcastMessageToSocket();
+        });
     }
     
     /**
@@ -79,6 +83,9 @@ class BroadcastMessageOperator{
         if(messageObj.hasOwnProperty("message")){
             const data = {"type" : "text", "data" : messageObj["message"]}
             formDataStateManager.setItem(messageObj["message_order"], data)
+
+            console.log(formDataStateManager.getItem());
+            
         }
 
         const elementLength = parentElement.querySelectorAll(".js_card").length;
@@ -274,124 +281,6 @@ class BroadcastMessageOperator{
     }
 
 
-    prepareBroadcastFormData(){
-        if(!BroadcastMessageOperator.hasValue("accordion")){
-            const error_el = document.querySelector(".js_broadcast_error")
-            const errorTxt = document.querySelector(".js_error_txt")
-
-            errorTxt.innerHTML = `メッセージを入力して保存ボタンを押してください。<br> または画像を選択してください。`
-            error_el.classList.remove("hidden")
-            return
-        }
-
-        const data = document.querySelectorAll(".js_data")
-        // 順番通りに並べ替え
-        const formDataArray = formDataStateManager.getState()
-        const formData = new FormData();
-
-
-        // sendMessage のデータを FormData に保存
-        formDataArray.forEach((item, index) => {
-
-            if(item !== undefined && item.type !== undefined){
-                if (item.type === 'image') {
-                    // FormDataから画像を取得
-                    const imageFile = item.formData.get('image');
-                    if (imageFile) {
-                        formData.append(`images[${index}]`, imageFile, item.fileName);
-                    }
-                    if(item.url && item.cropArea){
-                        formData.append(`images[${index}][meta]`, JSON.stringify({ url: item.url, cropArea: item.cropArea }));
-                    }
-                } else if (item.type === 'text') {
-                    // テキストデータを保存
-                    formData.append(`messages[${index}]`, item.data);
-                }
-            }
-            
-        });
-
-        return formData
-    }
-
-    async submitBroadcastMessageToServer(){
-        try{
-            const admin_id = document.getElementById("js_account_id").value
-            const loader = document.querySelector(".loader")
-            const modal = document.querySelector(".broadcasting_message_modal")
-            modal.classList.add("hidden")
-            open_modal(loader)
-
-            const formData = this.prepareBroadcastFormData()
-
-            const response = await fetch(`${this.baseUrl}/${admin_id}`, {
-                method: 'POST',
-                body: formData,
-            })
-
-            if (!response.ok) {
-                alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
-            }
-
-            const data = await response.json(); // レスポンスをJSONに変換
-            return data; // JSONデータを返す
-        }catch(error){
-            console.log(error);
-            
-        }
-
-    }
-
-    async emitBroadcastMessageToSocket(){
-        try{
-            const response = await this.submitBroadcastMessageToServer()
-
-            // モーダルをloaderを閉じる処理
-            document.getElementById("js_messageSetting_modal").classList.add("hidden")
-            document.querySelector(".bg").classList.add("hidden")
-            const admin_id = document.getElementById("js_account_id").value
-            const loader = document.querySelector(".loader")
-            loader.classList.add("hidden")
-            
-            // 成功メッセージを出す処理
-            const success_el = document.getElementById("js_alert_success")
-            success_el.style.display = "block";
-            success_el.innerHTML = this.isGreeting ? "初回挨拶メッセージの設定に成功しました。" : "一斉送信に成功しました"
-            document.querySelector(".js_message_input").value = ""
-            FormController.initializeFileUpload()
-            document.querySelector(".js_accordion_wrapper").innerHTML = ""
-    
-            // 成功メッセージを出して2秒後に批評にする
-            setTimeout(() => {
-                success_el.style.display = "none"
-            }, 2000);
-    
-    
-            if(this.isGreeting){
-                return
-            }
-            const {created_at, data} = response
-    
-            // formDataをリセットする
-            formDataStateManager.resetItem()
-    
-            indexStateManager.resetState()
-
-
-            socket.emit("broadcast message", {
-                sendingDatatoBackEnd: data,
-                admin_id: admin_id,
-                created_at: created_at,
-            });
-    
-            
-        }catch(error){
-            console.log(error);
-            
-        }
-
-
-    }
 
 }
 

@@ -15,6 +15,7 @@ import { templateImageData } from "./module/component/messageTemplate/DataGenera
 import DataValidator from "./module/component/messageTemplate/DataValidator.js";
 import TabController from "./module/component/messageTemplate/TabController.js";
 import Uicontroller from "./module/component/messageTemplate/UiController.js";
+import GreetingMessageGenerator from "./module/component/testSender/data/GreetingMessageGenerator.js";
 
 
 //ユーザー管理に関連するモーダルの初期化
@@ -270,3 +271,6 @@ document.querySelector('.template-title').addEventListener('keydown', function(e
             close_loader_template()
       })
 }
+
+
+

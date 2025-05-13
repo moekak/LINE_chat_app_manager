@@ -36,7 +36,7 @@
 </head>
 
 <body>
-      <div class="bg"></div>
+      <div class="bg hidden"></div>
       <div class="loader hidden"></div>
       <div class="fixed_bg hidden"></div>
       <main class="dashboard">
@@ -72,6 +72,9 @@
                               </div>
                               <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_update_line_btn" data-id="{{$user->id}}">LINE送信文言変更</p>
+                              </div>
+                              <div class="nav__item-option">
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_test_sender_btn" data-id="{{$user->id}}">テスト送信アカウント追加</p>
                               </div>
                         @endif
                         @if (Route::currentRouteName() == "account.block.user")

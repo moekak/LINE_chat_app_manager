@@ -20,3 +20,11 @@ export const formateDateToAsia = (createdAt = null) =>{
 
     return dateTokyo
 }
+
+// 例：12:32　の形に現在時刻を成型する
+export const getCurrentTimeFormatted = () =>{
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+}
