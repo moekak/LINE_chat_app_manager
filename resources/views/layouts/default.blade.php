@@ -110,6 +110,7 @@
                   @endif
                   @yield('main')
             </section>
+            @yield('modal')
       </main>
 
       @yield('script')

@@ -266,6 +266,9 @@ const submitRedirectForm = async (adminId, userId) => {
 };
 
 
-export const toggleDisplayButtonState = (btn, message) =>{
-      btn.classList.toggle("disabled_btn", message.length === 0);
+export const toggleDisplayButtonState = (btns, message) =>{
+      btns.forEach((btn)=>{
+            btn.classList.toggle("disabled_btn", message.length === 0); 
+      })
+      
 }

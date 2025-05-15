@@ -5,6 +5,8 @@ import { toggleDisplayButtonState } from "../accountUIOperations.js";
 import { createBroadcastMessageRow } from "../elementTemplate.js";
 import BroadcastSendingData from "../message/BroadcastSendingData.js";
 import GreetingSendingData from "../message/GreetingSendingData.js";
+import BroadcastMessageGenerator from "../testSender/data/BroadcastMessageGenerator.js";
+import GreetingMessageGenerator from "../testSender/data/GreetingMessageGenerator.js";
 import FormController from "../ui/FormController.js";
 
 const MAX_LENGTH = 20
@@ -83,9 +85,6 @@ class BroadcastMessageOperator{
         if(messageObj.hasOwnProperty("message")){
             const data = {"type" : "text", "data" : messageObj["message"]}
             formDataStateManager.setItem(messageObj["message_order"], data)
-
-            console.log(formDataStateManager.getItem());
-            
         }
 
         const elementLength = parentElement.querySelectorAll(".js_card").length;
@@ -225,16 +224,6 @@ class BroadcastMessageOperator{
         headings.forEach((el, index) => el.setAttribute("data-id", index));
     }
 
-    /**
-     *  送信ボタンを押す前の値があるかのチェック
-     * @param {String} id - データを表示させてる要素のID
-     * @return {boolean} -リストが一つでもあればtrue,それ以外はfalse
-    */
-    static hasValue(id){
-        const accordion = document.getElementById(id)
-        const lists = accordion.querySelectorAll(".js_card")
-        return lists.length > 0
-    }
 
     static hideErrorMsg = () =>{
         const error_el = document.querySelector(".js_broadcast_error")
@@ -244,11 +233,12 @@ class BroadcastMessageOperator{
     // 送信ボタンの状態を切り替える
     static #toggleSubmitButtonState() {
         toggleDisplayButtonState(
-            document.querySelector(".js_message_submit_btn"),
+            [document.querySelector(".js_message_submit_btn"),
+            document.getElementById("js_sender_list")],
             document.querySelectorAll(".js_headings")
         );
         toggleDisplayButtonState(
-            document.querySelector(".js_message_display_btn"),
+            [document.querySelector(".js_message_display_btn")],
             document.querySelectorAll(".js_headings")
         );
     }
@@ -265,7 +255,7 @@ class BroadcastMessageOperator{
 
         this.displayMessageToList()
         BroadcastMessageOperator.deleteList("accordion")
-        toggleDisplayButtonState(document.querySelector(".js_message_submit_btn"),document.querySelectorAll(".js_headings"));
+        toggleDisplayButtonState([document.querySelector(".js_message_submit_btn"), document.getElementById("js_sender_list")],document.querySelectorAll(".js_headings"));
 
         this.message = ""
         FormController.initializeInput()
@@ -277,7 +267,7 @@ class BroadcastMessageOperator{
 
         BroadcastMessageOperator.hideErrorMsg()
         this.message = e.currentTarget.value
-        toggleDisplayButtonState(this.newBtn, this.message)
+        toggleDisplayButtonState([this.newBtn], this.message)
     }
 
 

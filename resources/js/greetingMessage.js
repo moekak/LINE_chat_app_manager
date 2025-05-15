@@ -71,7 +71,7 @@ greeting_btn.addEventListener("click", async()=>{
 
     
     open_modal(modal)
-    // テスト送信機能モーダル処理
+    // // テスト送信機能モーダル処理
     new GreetingMessageGenerator()
 })
 

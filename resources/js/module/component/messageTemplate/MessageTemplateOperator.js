@@ -10,6 +10,7 @@ import { close_loader, close_loader_template, hide_bg, open_modal } from "../mod
 import InitializeInputService from "./InitializeInputService.js";
 import Uicontroller from "./UiController.js";
 import FilterCategory from "./FilterCategory.js";
+import MessageTemplateGenerator from "../testSender/data/MessageTemplateGenerator.js";
 
 
 class MessageTemplateOperator {
@@ -31,6 +32,8 @@ class MessageTemplateOperator {
         this.blockManager = new TemplateBlockManager();
         this.tabController = new TabController(this.tabs, this.tabContents);
         this.imageUploadHandler = new ImageUploadHandler()
+
+        new MessageTemplateGenerator()
         this.initialize();
     }
 

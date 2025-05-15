@@ -1,23 +1,31 @@
 import { API_ENDPOINTS } from "../../../../config/apiEndPoint.js";
 import TestSendingData from "../../message/TestSendingData.js";
 import { open_modal } from "../../modalOperation.js";
+import UserSelectionManager from "../uiController/UserSelectionManager .js";
 
 /**
  * 項目作成のインターフェース
  * @interface
  */
 export default class DataGeneratorInterface {
-      constructor() {
+      constructor(type) {
             if (new.target === DataGeneratorInterface) {
                   throw new Error('インターフェースのインスタンスは作成できません');
             }
 
-            this.testSenderModal
+            this.testSenderModal = document.getElementById("js_test_sender")
+            this.testSenderButtons = document.querySelectorAll(".js_sending_btn") //テスト送信ボタン
             this.previosModal
             this.userCheckListElement = document.querySelectorAll(".user-select")
+            this.selectAllUsers = document.getElementById("select-all-users") //「すべて選択」チェックボックス
+            this.individualSendBtns = document.querySelectorAll(".js_send_individual_btn")
+            this.returnBtn = document.getElementById("js_return_btn")
             this.userCheckList = []
             
-            this.sendingData = new TestSendingData(API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE)
+
+            this.sendingData = new TestSendingData(API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type)
+
+            this.userSelectionManager = new UserSelectionManager()
       }
 
       // ############################################################################
@@ -29,10 +37,29 @@ export default class DataGeneratorInterface {
        * @returns {void}
        */
       dislpayTestSenderModal(){
-            open_modal(this.testSenderModal)
+            this.testSenderModal.classList.remove("hidden")
             this.previosModal.classList.add("hidden")
             
       }
+
+
+      resetData(){
+            this.userCheckList = []   
+            this.userSelectionManager.resetUi()
+      }
+
+
+      /**
+       * テスト送信ユーザーを選択するモーダルを表示する
+       * @returns {void}
+       */
+      cancelTestSendingProcess(){
+            this.previosModal.classList.remove("hidden")
+            this.testSenderModal.classList.add("hidden")
+            
+      }
+
+
 
       /**
        * テスト送信を行う。DBに一時保存とsocketサーバーにデータを送信する
@@ -62,6 +89,17 @@ export default class DataGeneratorInterface {
             } 
       }
 
+
+      /**
+       * テスト送信ボタンをuserIdsがあるかないかで無効化、有効化の切り替えをおこなう
+       * @returns {void}
+       */
+      toggleSendingBtn(){
+            this.testSenderButtons.forEach((btn)=>{
+                  btn.classList.toggle("disabled_btn", this.userCheckList.length == 0) 
+            })
+            
+      }
 
 
       // ############################################################################

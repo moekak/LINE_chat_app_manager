@@ -1,4 +1,5 @@
 
+import { close_loader, hide_bg } from "../modalOperation.js"
 import FormController from "../ui/FormController.js"
 import SendingDataServiceInterface from "./SendingDataServiceInterface.js"
 
@@ -23,6 +24,29 @@ export default class GreetingSendingData extends SendingDataServiceInterface{
             return
       }
 
+
+      modalOperator(){
+            this.modal.classList.add("hidden")
+            this.loader.classList.remove("hidden")
+      }
+
+
+      
+      async emitBroadcastMessageToSocket(userIds = []){
+            try{
+                  const response = await this.submitBroadcastMessageToServer(userIds)
+                  close_loader()
+                  hide_bg()
+                  
+                  // 成功メッセージを出す処理
+                  this.successOperator()
+                  this.sendMessageToSocket(response)
+            }catch(error){
+                  console.log(error);
+                  
+            }
+      }
+
       /**
       * 非同期処理成功時処理
       * @override
@@ -39,6 +63,30 @@ export default class GreetingSendingData extends SendingDataServiceInterface{
             setTimeout(() => {
                   success_el.style.display = "none"
             }, 2000);
+      }
+
+
+      prepareBroadcastFormData(userIds){
+            if(!SendingDataServiceInterface.hasValue("accordion")){
+                  this.errorHandle()
+            }
+
+            const formDataArray = formDataStateManager.getState()
+            // sendMessage のデータを FormData に保存
+            if (userIds.length > 0) {
+                  // 配列全体を一つのキーで追加する方法
+                  this.formData.append('userIds', JSON.stringify(userIds)); 
+            }
+
+            formDataArray.forEach((item, index) => {
+                  if(item !== undefined && item.type !== undefined){
+                        if (item.type === 'image') {
+                              this.operateImageData(item, index)
+                        } else if (item.type === 'text') {
+                              this.operateTextData(item, index)
+                        }
+                  }
+            });
       }
 
 

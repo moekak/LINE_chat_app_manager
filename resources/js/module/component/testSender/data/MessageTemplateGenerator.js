@@ -1,13 +1,15 @@
 
 import { getCurrentTimeFormatted } from "../../../util/formatDate.js";
+import TemplateFormData from "../../messageTemplate/TemplateFormData.js";
 import UserSelectionManager from "../uiController/UserSelectionManager .js";
 import DataGeneratorInterface from "./DataGeneratorInterface.js";
 
-export default class BroadcastMessageGenerator extends DataGeneratorInterface{
+export default class MessageTemplateGenerator extends DataGeneratorInterface{
       constructor(){
-            super("broadcast"); // 親クラスのコンストラクタを呼び出す
-            this.previosModal = document.getElementById("js_messageSetting_modal")
-            this.openTestSenderModalButton = document.getElementById('js_sender_list') //テスト送信者モーダルを表示するボタン
+            super("template"); // 親クラスのコンストラクタを呼び出す
+            this.previosModal = document.getElementById("js_template_modal")
+            this.openTestSenderModalButton = document.getElementById('js_sender_list_template') //テスト送信者モーダルを表示するボタン
+            this.form = document.querySelector(".js_create_form")
             this.sendingDataToBackEnd = []
             this.initialize()
       }
@@ -19,6 +21,7 @@ export default class BroadcastMessageGenerator extends DataGeneratorInterface{
                   this.getSendingData();
             })
 
+            // 送信アイコンを押してのテスト送信処理
             this.individualSendBtns.forEach((btn)=>{
                   btn.addEventListener("click", (e)=>{
                         this.userCheckList = [e.currentTarget.dataset.userId]
@@ -27,14 +30,13 @@ export default class BroadcastMessageGenerator extends DataGeneratorInterface{
                   })
             })
 
+            // 
             this.testSenderButtons.forEach((btn)=>{
                   btn.addEventListener("click", ()=>{
                         this.sendTestMessages()
                   }) 
             })
             
-            
-
             this.userCheckListElement.forEach((element)=>{
                   element.addEventListener("change", (event)=>{
                         this.getSenderUserIds(event)
@@ -61,17 +63,23 @@ export default class BroadcastMessageGenerator extends DataGeneratorInterface{
       * @override
       */
       getSendingData(){
-            const allDataElements = document.querySelectorAll(".js_data")
-            this.sendingDataToBackEnd["admin_id"] = this.#getAdminID()
-            this.sendingDataToBackEnd["created_at"] = getCurrentTimeFormatted()
+            // formData = new TemplateFormData(this.form);
+            // // フォームデータ構築とバリデーション
+            // const { formData, hasContent } = this.formData.buildFormData();
 
-            allDataElements.forEach((element, index)=>{
-                  if(element.querySelector(".js_img")){
-                        this.#formatImageMessage(element, index)
-                  }else{
-                        this.#formatTextMessage(element, index)
-                  }
-            })
+
+            
+            // const allDataElements = document.querySelectorAll(".js_data")
+            // this.sendingDataToBackEnd["admin_id"] = this.#getAdminID()
+            // this.sendingDataToBackEnd["created_at"] = getCurrentTimeFormatted()
+
+            // allDataElements.forEach((element, index)=>{
+            //       if(element.querySelector(".js_img")){
+            //             this.#formatImageMessage(element, index)
+            //       }else{
+            //             this.#formatTextMessage(element, index)
+            //       }
+            // })
       }
 
 

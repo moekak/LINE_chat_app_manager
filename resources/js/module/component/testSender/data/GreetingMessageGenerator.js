@@ -1,14 +1,13 @@
 
 import { getCurrentTimeFormatted } from "../../../util/formatDate.js";
+import UserSelectionManager from "../uiController/UserSelectionManager .js";
 import DataGeneratorInterface from "./DataGeneratorInterface.js";
 
 export default class GreetingMessageGenerator extends DataGeneratorInterface{
       constructor(){
-            super(); // 親クラスのコンストラクタを呼び出す
-            this.openTestSenderModalButton = document.getElementById('js_sender_list') //テスト送信者モーダルを表示するボタン
-            this.testSenderButton = document.getElementById("js_sending_btn") //テスト送信ボタン
+            super("greeting"); // 親クラスのコンストラクタを呼び出す
             this.previosModal = document.getElementById("js_messageSetting_modal")
-            this.testSenderModal = document.getElementById("js_test_sender")
+            this.openTestSenderModalButton = document.getElementById('js_sender_list') //テスト送信者モーダルを表示するボタン
 
             this.sendingDataToBackEnd = []
             this.initialize()
@@ -16,17 +15,45 @@ export default class GreetingMessageGenerator extends DataGeneratorInterface{
 
       initialize(){
             this.openTestSenderModalButton.addEventListener("click", ()=>{
+                  this.resetData()
                   this.dislpayTestSenderModal();
                   this.getSendingData();
             })
 
-            this.testSenderButton.addEventListener("click", ()=>{
-                  this.sendTestMessages()
+            // 送信アイコンを押してのテスト送信処理
+            this.individualSendBtns.forEach((btn)=>{
+                  btn.addEventListener("click", (e)=>{
+                        this.userCheckList = [e.currentTarget.dataset.userId]
+                        UserSelectionManager.checkStyle(btn.closest(".user-item"))
+                        this.sendTestMessages()
+                  })
+            })
+
+            // 
+            this.testSenderButtons.forEach((btn)=>{
+                  btn.addEventListener("click", ()=>{
+                        this.sendTestMessages()
+                  }) 
             })
             
-
             this.userCheckListElement.forEach((element)=>{
-                  element.addEventListener("change", this.getSenderUserIds.bind(this))
+                  element.addEventListener("change", (event)=>{
+                        this.getSenderUserIds(event)
+                        this.toggleSendingBtn()
+                  })
+            })
+
+            this.returnBtn.addEventListener("click", ()=>{
+                  this.cancelTestSendingProcess()
+            })
+
+            this.selectAllUsers.addEventListener("change", (e)=>{
+                  if(e.target.checked == true){
+                        this.userCheckList = Array.from(this.userCheckListElement).map(element => element.dataset.userId) 
+                  }else{
+                        this.userCheckList = []
+                  }
+                  this.toggleSendingBtn()
             })
       }
 

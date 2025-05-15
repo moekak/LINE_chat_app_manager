@@ -1,8 +1,5 @@
 
 import formDataStateManager from "../../util/state/FormDataStateManager.js"
-import BroadcastMessageOperator from "../broadcast/BroadcastMessageOperator.js";
-import { close_loader, hide_bg} from "../modalOperation.js"
-
 
 export default class SendingDataServiceInterface{
       constructor(baseUrl, operationType, modal){
@@ -18,12 +15,6 @@ export default class SendingDataServiceInterface{
             this.modal = modal
             this.bg = document.querySelector(".bg")
             this.loader = document.querySelector(".loader")
-      }
-
-
-      modalOperator(){
-            this.modal.classList.add("hidden")
-            this.loader.classList.remove("hidden")
       }
 
 
@@ -43,36 +34,19 @@ export default class SendingDataServiceInterface{
       }
 
 
-      prepareBroadcastFormData(userIds){
-            if(!BroadcastMessageOperator.hasValue("accordion")){
-                  this.errorHandle()
-            }
 
-            const formDataArray = formDataStateManager.getState()
-
-            // sendMessage のデータを FormData に保存
-            if (userIds.length > 0) {
-                  // 配列全体を一つのキーで追加する方法
-                  this.formData.append('userIds', JSON.stringify(userIds)); 
-            }
-
-            formDataArray.forEach((item, index) => {
-                  if(item !== undefined && item.type !== undefined){
-                        if (item.type === 'image') {
-                              this.operateImageData(item, index)
-                        } else if (item.type === 'text') {
-                              this.operateTextData(item, index)
-                        }
-                  }
-            });
-      }
 
       async submitBroadcastMessageToServer(userIds){
             try{
                   const admin_id = document.getElementById("js_account_id").value
                   this.modalOperator()
-
                   this.prepareBroadcastFormData(userIds)
+
+                  console.log('FormDataの内容:');
+                  for (let [key, value] of this.formData.entries()) {
+                        console.log(`${key}: ${value}`);
+                  }
+
                   const response = await fetch(`${this.baseUrl}/${admin_id}`, {
                         method: 'POST',
                         body: this.formData,
@@ -83,11 +57,6 @@ export default class SendingDataServiceInterface{
                   }
 
                   const data = await response.json(); // レスポンスをJSONに変換
-
-                  console.log(data);
-                  console.log(this.baseUrl);
-                  
-                  
                   return data; // JSONデータを返す
             }catch(error){
                   console.log(error);
@@ -95,21 +64,17 @@ export default class SendingDataServiceInterface{
 
       }
 
-      async emitBroadcastMessageToSocket(userIds = []){
-            try{
-                  const response = await this.submitBroadcastMessageToServer(userIds)
-                  close_loader()
-                  hide_bg()
-                  
-                  // 成功メッセージを出す処理
-                  this.successOperator()
-                  this.sendMessageToSocket(response)
-            }catch(error){
-                  console.log(error);
-                  
-            }
-      }
 
+      /**
+     *  送信ボタンを押す前の値があるかのチェック
+     * @param {String} id - データを表示させてる要素のID
+     * @return {boolean} -リストが一つでもあればtrue,それ以外はfalse
+      */
+      static hasValue(id){
+            const accordion = document.getElementById(id)
+            const lists = accordion.querySelectorAll(".js_card")
+            return lists.length > 0
+      }
 
       // ############################################################################
       // ############################## 抽象メソッド #################################
@@ -124,6 +89,32 @@ export default class SendingDataServiceInterface{
             throw new Error('Method not implemented');
       }
 
+
+      /**
+       * socketサーバーにデータを送信する処理
+       * @returns {void}
+       */
+      async emitBroadcastMessageToSocket(userIds = []){
+            throw new Error('Method not implemented');
+      }
+
+      /**
+       * モーダル処理
+       * @returns {void}
+       */
+      modalOperator(){
+            throw new Error('Method not implemented');
+      }
+
+      /**
+       * データを生成する
+       * @returns {void}
+       */
+      prepareBroadcastFormData(userIds){
+            throw new Error('Method not implemented');
+      }
+
+      
       /**
        * socketサーバーにデータを送信する処理
        * @returns {void}
@@ -140,7 +131,6 @@ export default class SendingDataServiceInterface{
       errorHandle(){
             return
       }
-      
 
 
 }

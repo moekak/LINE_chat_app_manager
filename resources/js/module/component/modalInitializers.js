@@ -52,6 +52,8 @@ export const initializeBroadcastMessageModal = () =>{
       sending_btns.forEach((btn)=>{
             btn.addEventListener("click", (e)=>{
                   document.querySelector(".js_message_submit_btn").classList.add("disabled_btn")
+                  document.getElementById("js_sender_list").classList.add("disabled_btn")
+
                   indexStateManager.resetState()
                   formDataStateManager.resetItem()
                   e.preventDefault()
@@ -64,9 +66,6 @@ export const initializeBroadcastMessageModal = () =>{
 
                   // 画像ファイル選択を空にする
                   FormController.initializeFileUpload()
-
-                  // テスト送信機能モーダル処理
-                  new BroadcastMessageGenerator()
             })
       })
 }

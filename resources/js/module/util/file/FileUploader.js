@@ -201,7 +201,7 @@ class FileUploader{
                     // 不要なリストを削除
                     BroadcastMessageOperator.deleteList("accordion")
                     // // ボタン状態を更新
-                    toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
+                    toggleDisplayButtonState([document.querySelector(".js_message_submit_btn"), document.getElementById("js_sender_list")], document.querySelectorAll(".js_headings"))
                     reader.readAsDataURL(compressedFile);
                     // 新しいファイル名を生成し、FormDataArrayに保存
                     const newFileName = this.generateOriginalFileName()
