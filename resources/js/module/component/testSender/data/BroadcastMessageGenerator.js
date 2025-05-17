@@ -27,6 +27,13 @@ export default class BroadcastMessageGenerator extends DataGeneratorInterface{
                   })
             })
 
+            // テストユーザー削除処理
+            this.deleteUserBtns.forEach((btn)=>{
+                  btn.addEventListener("click", ()=>{
+                        this.displayConfirmationModal()
+                  })
+            })
+
             this.testSenderButtons.forEach((btn)=>{
                   btn.addEventListener("click", ()=>{
                         this.sendTestMessages()

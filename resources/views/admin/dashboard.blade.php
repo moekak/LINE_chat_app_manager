@@ -290,6 +290,7 @@
       @include('modal.lineText.line_text_update')
       @include('modal.crop.crop')
       @include('modal.test.test_sender')
+      @include('modal.test.test_delete_confirmation')
       @include('modal.test.test_sender_add')
 
 @endsection

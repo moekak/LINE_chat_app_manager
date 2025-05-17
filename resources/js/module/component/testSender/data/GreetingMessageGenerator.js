@@ -7,7 +7,7 @@ export default class GreetingMessageGenerator extends DataGeneratorInterface{
       constructor(){
             super("greeting"); // 親クラスのコンストラクタを呼び出す
             this.previosModal = document.getElementById("js_messageSetting_modal")
-            this.openTestSenderModalButton = document.getElementById('js_sender_list') //テスト送信者モーダルを表示するボタン
+            this.openTestSenderModalButton = document.getElementById('js_sender_list') //テスト送信者モーダルを表示するボタ
 
             this.sendingDataToBackEnd = []
             this.initialize()
@@ -26,6 +26,13 @@ export default class GreetingMessageGenerator extends DataGeneratorInterface{
                         this.userCheckList = [e.currentTarget.dataset.userId]
                         UserSelectionManager.checkStyle(btn.closest(".user-item"))
                         this.sendTestMessages()
+                  })
+            })
+
+            // テストユーザー削除処理
+            this.deleteUserBtns.forEach((btn)=>{
+                  btn.addEventListener("click", ()=>{
+                        this.displayConfirmationModal()
                   })
             })
 

@@ -1953,6 +1953,7 @@ input[type="search"]::-webkit-search-cancel-button {
     box-shadow: var(--shadow);
     animation: slideIn2 0.3s ease-out;
     z-index: 999;
+    max-height: 665px;
 }
 .sender_list-wrapper{
     width: 100%;
@@ -2280,6 +2281,10 @@ input[type="text"] {
     padding-left: 25px;
     margin-right: 12px;
     cursor: pointer;
+}
+.user-item-wrapper{
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .user-item {

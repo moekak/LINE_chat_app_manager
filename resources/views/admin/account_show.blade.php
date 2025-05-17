@@ -424,16 +424,6 @@
 								<button class='btn btn-primary js_submit_template_btn' id='template_submit_btn' type='submit'>保存</button>
 							</div>
 						</div>
-						{{-- <!-- ボタン -->
-						<div class='btn-container'>
-							<button class="modal__container-btn" id="js_sender_list">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-								テスト送信
-							</button>
-							<div style="display: flex; gap: 10px;">
-								<button class='btn btn-primary js_submit_template_btn' id='template_submit_btn' type='submit'>保存</button>
-							</div>
-						</div> --}}
 					</form>
 
 					<!-- 一覧・編集タブ (初期状態では非表示) -->
@@ -564,6 +554,17 @@
 							<button class='btn btn-cancel' id='js_cancel_edit_btn' type='button'>キャンセル</button>
 							<button class='btn btn-primary js_submit_template_btn' id='js_update_template_btn' type='submit'>更新</button>
 						</div>
+{{-- 
+						<div class='broadcast_message_submit_btn-box'>
+							<button class="modal__container-btn" id="js_sender_list">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+								テスト送信
+							</button>
+							<div style="display: flex; gap: 10px;">
+								<button class='btn btn-cancel' id='js_cancel_edit_btn' type='button'>キャンセル</button>
+								<button class='btn btn-primary js_submit_template_btn' id='js_update_template_btn' type='submit'>更新</button>
+							</div>
+						</div> --}}
 					</form>
 
 					{{-- カテゴリー追加、編集フォーム --}}
@@ -644,6 +645,7 @@
 	
 @section('modal')
 	@include('modal.test.test_sender')
+	@include('modal.test.test_delete_confirmation')
 @endsection
 
 @section('script')

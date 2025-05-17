@@ -19,6 +19,8 @@ export default class DataGeneratorInterface {
             this.userCheckListElement = document.querySelectorAll(".user-select")
             this.selectAllUsers = document.getElementById("select-all-users") //「すべて選択」チェックボックス
             this.individualSendBtns = document.querySelectorAll(".js_send_individual_btn")
+            this.deleteUserBtns = document.querySelectorAll(".js_delete_user-item")
+            this.deleteConfirmationModal = document.getElementById("js_delete_test_user")
             this.returnBtn = document.getElementById("js_return_btn")
             this.userCheckList = []
             
@@ -39,7 +41,15 @@ export default class DataGeneratorInterface {
       dislpayTestSenderModal(){
             this.testSenderModal.classList.remove("hidden")
             this.previosModal.classList.add("hidden")
-            
+      }
+
+      /**
+       * テストユーザー削除する際の確認モーダルを表示する
+       * @returns {void}
+       */
+      displayConfirmationModal(){
+            this.deleteConfirmationModal.classList.remove("hidden")
+            this.testSenderModal.classList.add("hidden")
       }
 
 

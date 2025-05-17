@@ -6555,9 +6555,6 @@ var BroadcastMessageOperator = /*#__PURE__*/function () {
       this.submitBtn.addEventListener("click", function () {
         _this.sendingData.emitBroadcastMessageToSocket();
       });
-
-      // // テスト送信機能モーダル処理
-      // this.isGreeting ? new GreetingMessageGenerator() : new BroadcastMessageGenerator()
     }
 
     /**
@@ -8229,6 +8226,11 @@ var BroadcastMessageGenerator = /*#__PURE__*/function (_DataGeneratorInterfa) {
           _this2.sendTestMessages();
         });
       });
+
+      // テストユーザー削除処理
+      this.deleteUserBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {});
+      });
       this.testSenderButtons.forEach(function (btn) {
         btn.addEventListener("click", function () {
           _this2.sendTestMessages();
@@ -8349,8 +8351,6 @@ var DataGeneratorInterface = /*#__PURE__*/function () {
     *  @returns {void}
     */
     _classPrivateMethodInitSpec(this, _DataGeneratorInterface_brand);
-    console.log(type);
-    console.log("typeだよだよ");
     if ((this instanceof DataGeneratorInterface ? this.constructor : void 0) === DataGeneratorInterface) {
       throw new Error('インターフェースのインスタンスは作成できません');
     }
@@ -8360,6 +8360,8 @@ var DataGeneratorInterface = /*#__PURE__*/function () {
     this.userCheckListElement = document.querySelectorAll(".user-select");
     this.selectAllUsers = document.getElementById("select-all-users"); //「すべて選択」チェックボックス
     this.individualSendBtns = document.querySelectorAll(".js_send_individual_btn");
+    this.deleteUserBtns = document.querySelectorAll(".js_delete_user-item");
+    this.deleteConfirmationModal = document.getElementById("js_delete_test_user");
     this.returnBtn = document.getElementById("js_return_btn");
     this.userCheckList = [];
     this.sendingData = new _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_1__["default"](_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type);
@@ -8379,6 +8381,17 @@ var DataGeneratorInterface = /*#__PURE__*/function () {
     value: function dislpayTestSenderModal() {
       this.testSenderModal.classList.remove("hidden");
       this.previosModal.classList.add("hidden");
+    }
+
+    /**
+     * テストユーザー削除する際の確認モーダルを表示する
+     * @returns {void}
+     */
+  }, {
+    key: "displayConfirmationModal",
+    value: function displayConfirmationModal() {
+      this.deleteConfirmationModal.classList.remove("hidden");
+      this.testSenderModal.classList.add("hidden");
     }
   }, {
     key: "resetData",
@@ -8535,7 +8548,7 @@ var GreetingMessageGenerator = /*#__PURE__*/function (_DataGeneratorInterfa) {
     */
     _classPrivateMethodInitSpec(_this, _GreetingMessageGenerator_brand);
     _this.previosModal = document.getElementById("js_messageSetting_modal");
-    _this.openTestSenderModalButton = document.getElementById('js_sender_list'); //テスト送信者モーダルを表示するボタン
+    _this.openTestSenderModalButton = document.getElementById('js_sender_list'); //テスト送信者モーダルを表示するボタ
 
     _this.sendingDataToBackEnd = [];
     _this.initialize();
@@ -8558,6 +8571,13 @@ var GreetingMessageGenerator = /*#__PURE__*/function (_DataGeneratorInterfa) {
           _this2.userCheckList = [e.currentTarget.dataset.userId];
           _uiController_UserSelectionManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].checkStyle(btn.closest(".user-item"));
           _this2.sendTestMessages();
+        });
+      });
+
+      // テストユーザー削除処理
+      this.deleteUserBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          _this2.displayConfirmationModal();
         });
       });
 
