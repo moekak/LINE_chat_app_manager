@@ -9455,6 +9455,8 @@ var TemplateHandler = /*#__PURE__*/function () {
       contentBlocks.forEach(function (block, index) {
         if (block.dataset.type === "text") {
           var text = block.querySelector(".block-textarea").value;
+          console.log(text);
+          debugger;
           _this.sendingDataService.formData.append("messages[".concat(index, "]"), text);
         } else if (block.dataset.type === "image") {
           var fileData = _messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_0__.templateImageData.find(function (item) {

@@ -1,8 +1,8 @@
 
 <section class="sender_modal js_modal js_loader hidden" id="js_test_sender_add">
       <div class="modal-header">
-            <h2 class="modal-title">LINEテスト送信ユーザー設定</h2>
-            <button class="close-btn">&times;</button>
+            <h2 class="modal-title">テスト送信アカウント追加</h2>
+            {{-- <button class="close-btn">&times;</button> --}}
       </div>
       <div class="modal-body">
             <div class="tab-container">
@@ -35,10 +35,10 @@
                   </div>
             </div>
       </div>
-            <div class="modal-footer">
-                  <button class="btn btn-primary">保存</button>
-            </div>
-      </div>
+      {{-- <div class="modal-footer">
+            <button class="btn btn-primary">保存</button>
+      </div> --}}
+
       
       <div class="notification-container">
             <div class="notification">
@@ -93,23 +93,9 @@
             }
       });
 
-      function openLineApp() {
-            // デバイスの種類を判定
-            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            
-            // Android向け
-            if (/android/i.test(userAgent)) {
-                  window.location.href = "intent://line.me/#Intent;scheme=line;package=jp.naver.line.android;end";
-            }
-            // iOS向け
-            else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                  window.location.href = "line://home";
-            }
-            // その他のデバイス
-            else {
-                  window.location.href = "https://line.me/";
-            }
-}     
+      function openLineApp() {      
+            window.location.href = "https://lin.ee/y6mXCbb";
+      }     
 
 
 

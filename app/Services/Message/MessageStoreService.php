@@ -135,9 +135,8 @@ abstract class MessageStoreService{
 
       protected function saveImageContent($item, $groupId){
             $imageService = new ImageService();
-            Log::debug($item["content"] );
             $fileName = $item["isUpdateImage"] ? $item["content"]["content"] :  $imageService->saveImage($item['content']);
-            if($item["isUpdateImage"]){
+            if($item["isUpdateImage"] &&  isset($item["content"]["meta"])){
                   $item["cropArea"] = $item["content"]["meta"];
             }
 
@@ -183,6 +182,7 @@ abstract class MessageStoreService{
                   "width_percent" => $cropArea->widthPercent ?? $cropArea["width_percent"] ?? $cropArea["widthPercent"],
                   "height_percent" => $cropArea->heightPercent ?? $cropArea["height_percent"] ?? $cropArea["heightPercent"],
             ];
+
             $cropModelClass = $this->cropAreaModel;
             $cropModelClass::create($cropData);
             
