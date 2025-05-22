@@ -2,7 +2,7 @@ import FileUploader from "../../util/file/FileUploader.js";
 import BroadcastMessageOperator from "../broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "../DragAndDrop.js";
 import { close_image_edit_modal, open_loader } from "../modalOperation.js";
-import BroadcastMessageGenerator from "../testSender/data/BroadcastMessageGenerator.js";
+import BroadcastTestMessageSender from "../testSender/data/BroadcastTestMessageSender.js";
 import FormController from "../ui/FormController.js";
 import { API_ENDPOINTS } from "./../../../config/apiEndPoint.js";
 import DataValidator from "./DataValidator.js";
@@ -83,7 +83,7 @@ class ImageUploadHandler{
                   BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
 
                   // // テスト送信機能モーダル処理
-                  // new BroadcastMessageGenerator()
+                  // new BroadcastTestMessageSender()
                   e.target.value = '';
             };
       }

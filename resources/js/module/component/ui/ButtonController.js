@@ -7,7 +7,7 @@ class ButtonController{
      * @param {string} buttonId - 置き換えるボタンのID
      * @returns {HTMLElement} - 新しく置き換えられたボタン要素
      */
-      static replaceButton(buttonId){
+      static replaceButtonById(buttonId){
             const oldSelectBtn = document.getElementById(buttonId)
 
             if (!oldSelectBtn || !oldSelectBtn.parentNode) {
@@ -16,6 +16,21 @@ class ButtonController{
             }
             const newSelectBtn = oldSelectBtn.cloneNode(true)
             oldSelectBtn.parentNode.replaceChild(newSelectBtn, oldSelectBtn);
+
+            return newSelectBtn
+      }
+
+      /**
+     * ボタンを新しいボタンに置き換える処理
+     * イベントリスナーの重複をさけるため
+     * 
+     * @param {HTMLElement} buttonId - 置き換えるボタン要素
+     * @returns {HTMLElement} - 新しく置き換えられたボタン要素
+     */
+      static replaceButton(oldSelectBtn){
+
+            const newSelectBtn = oldSelectBtn.cloneNode(true)
+            oldSelectBtn.replaceWith(newSelectBtn);
 
             return newSelectBtn
       }

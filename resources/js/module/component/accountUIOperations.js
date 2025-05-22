@@ -141,6 +141,7 @@ export const setActionUrl = (id, className) =>{
             action = action.replace(isPatternBlock, `/block/${id}`);
       } 
 
+
       action = action.replace("ID_PLACEHOLDER", id);
       form.setAttribute("action", action);
 

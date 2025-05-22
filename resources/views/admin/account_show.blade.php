@@ -415,7 +415,7 @@
 						</div>
 						
 						<div class='broadcast_message_submit_btn-box'>
-							<button class="modal__container-btn" id="js_sender_list_template" type="button">
+							<button class="modal__container-btn" type="button" id="js_sender_list_template">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
 								テスト送信
 							</button>
@@ -548,15 +548,9 @@
 						</div>
 						<input type='hidden' name='template_id' value='' id='js_template_id'>
 						<input type='hidden' name='group_id' value='' id='js_group_id'>
-						
-						<!-- ボタン -->
-						<div class='btn-container'>
-							<button class='btn btn-cancel' id='js_cancel_edit_btn' type='button'>キャンセル</button>
-							<button class='btn btn-primary js_submit_template_btn' id='js_update_template_btn' type='submit'>更新</button>
-						</div>
-{{-- 
+
 						<div class='broadcast_message_submit_btn-box'>
-							<button class="modal__container-btn" id="js_sender_list">
+							<button class="modal__container-btn" type="button" id="js_sender_list_edit_template">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
 								テスト送信
 							</button>
@@ -564,7 +558,7 @@
 								<button class='btn btn-cancel' id='js_cancel_edit_btn' type='button'>キャンセル</button>
 								<button class='btn btn-primary js_submit_template_btn' id='js_update_template_btn' type='submit'>更新</button>
 							</div>
-						</div> --}}
+						</div>
 					</form>
 
 					{{-- カテゴリー追加、編集フォーム --}}

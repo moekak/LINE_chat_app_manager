@@ -37,7 +37,7 @@ class TemplateBlockManager {
         textBlock.dataset.type = 'text';
         textBlock.dataset.id = blockId;
         textBlock.innerHTML = createTextBlock();
-    
+
         contentBlocksContainer.appendChild(textBlock);
         return textBlock; // 新しく作成したブロックを返す
     }

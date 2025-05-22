@@ -1,5 +1,5 @@
 import { formateDateToAsia } from '../util/formatDate.js'
-import { SYSTEM_URL } from '../../config/config.js';
+import config, { SYSTEM_URL } from '../../config/config.js';
 
 export const createMessageRowForFetch = (res, admin_account_id, sender_uuid) =>{
       const createdAtTokyo = formateDateToAsia(res['created_at'])
@@ -369,5 +369,30 @@ export const crateCategoryList =(category)=>{
                         </button>
                   </td>
             </tr>
+      `
+}
+
+export const createTestSenderList = (testSender) =>{
+      const src = `${testSender["user_picture"]}` ?? '/img/user (1).png'
+      return `
+            <div class="user-item" data-user-id="${testSender["user_id"]}">
+                  <label class="user-checkbox">
+                        <input type="checkbox" class="user-select" data-user-id="${testSender["user_id"]}">
+                        <span class="checkmark"></span>
+                  </label>
+                  <img src="${src}" alt="" class="user-avatar">
+                  <div class="user-info">
+                        <h4 class="user-name">${testSender["account_name"]}</h4>
+                        <p class="user-id">ID: ${testSender["user_id"]}</p>
+                  </div>
+                  <div class="user-actions">
+                        <button type="button" class="action-btn single-send js_send_individual_btn" title="このユーザーにテスト送信" data-user-id="${testSender["user_id"]}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                        <button type="button" class="action-btn js_delete_user-item" title="削除" data-user-id="${testSender["id"]}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                  </div>
+            </div>
       `
 }

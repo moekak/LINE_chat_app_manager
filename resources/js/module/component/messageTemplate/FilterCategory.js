@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from "../../../config/apiEndPoint.js"
-import { fetchGetOperation, fetchPostOperation } from "../../util/fetch.js"
-import { crateCategoryButtons, createMessageTemplate, createMessageTemplateForAll } from "../elementTemplate.js"
-import { close_loader_template, open_loader, open_loader_template } from "../modalOperation.js"
+import { fetchGetOperation } from "../../util/fetch.js"
+import {  createMessageTemplate, createMessageTemplateForAll } from "../elementTemplate.js"
+import { close_loader_template, open_loader_template } from "../modalOperation.js"
 import DataValidator from "./DataValidator.js"
 import MessageTemplateFormController from "./edit/FormController.js"
 import TabController from "./TabController.js"
@@ -116,12 +116,19 @@ class FilterCategory{
 
 
             document.querySelector(".order-instructions").classList.add("hidden")
-            const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_GET}/${document.getElementById("js_account_id").value}`)
-            const templateRaw = createMessageTemplateForAll(response)
-            document.querySelector(".template-list").innerHTML += templateRaw
-            TabController.filterCategory()
-            MessageTemplateFormController.initializeEditModal()
-            document.getElementById("js_loader-template").classList.add("hidden")
+            try{
+                  const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_GET}/${document.getElementById("js_account_id").value}`)
+
+                  const templateRaw = createMessageTemplateForAll(response)
+                  document.querySelector(".template-list").innerHTML += templateRaw
+                  TabController.filterCategory()
+                  MessageTemplateFormController.initializeEditModal()
+                  document.getElementById("js_loader-template").classList.add("hidden")
+            }catch(error){
+                  console.log(error);
+                  
+            }
+
 
             
             // テンプレート削除

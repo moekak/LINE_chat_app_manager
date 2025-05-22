@@ -1,5 +1,4 @@
 
-import formDataStateManager from "../../util/state/FormDataStateManager.js"
 
 export default class SendingDataServiceInterface{
       constructor(baseUrl, operationType, modal){
@@ -11,6 +10,7 @@ export default class SendingDataServiceInterface{
             this.baseUrl = baseUrl
             this.operationType = operationType
             this.formData = new FormData();
+
 
             this.modal = modal
             this.bg = document.querySelector(".bg")
@@ -42,10 +42,8 @@ export default class SendingDataServiceInterface{
                   this.modalOperator()
                   this.prepareBroadcastFormData(userIds)
 
-                  console.log('FormDataの内容:');
-                  for (let [key, value] of this.formData.entries()) {
-                        console.log(`${key}: ${value}`);
-                  }
+                  const formDataObj = Object.fromEntries(this.formData.entries());
+                  console.log("FormData contents:", formDataObj);
 
                   const response = await fetch(`${this.baseUrl}/${admin_id}`, {
                         method: 'POST',

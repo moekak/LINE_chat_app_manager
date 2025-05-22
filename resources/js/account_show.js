@@ -153,6 +153,7 @@ submitForms.forEach((submitForm)=>{
             InitializeInputService.intiaizeInputs();
             new MessageTemplateOperator();
             open_modal(templateModal);
+            // messageTemplateOperator.initialize()
       }
 }
 
@@ -238,35 +239,39 @@ document.querySelector('.template-title').addEventListener('keydown', function(e
 
 
 
-            open_loader_template()
-            const formData = new FormData(createCategoryForm)
-            const response = await fetch(API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
-                  method: 'POST',
-                  body: formData,
-            });
-            
-            if (!response.ok) {
-                  throw new Error("メッセージテンプレート作成でエラーが発生しました");
+            try{
+                  open_loader_template()
+                  const formData = new FormData(createCategoryForm)
+                  const response = await fetch(API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
+                        method: 'POST',
+                        body: formData,
+                  });
+                  
+                  if (!response.ok) {
+                        throw new Error("メッセージテンプレート作成でエラーが発生しました");
+                  }
+
+                  const data = await response.json();
+                  if(data["status"] === 201){
+                        DataValidator.displayCategorySuccessMessage("カテゴリーの追加に成功しました")
+                        categoryList.innerHTML += crateCategoryList(data["category"])
+                        Uicontroller.initializeCategoryInput()
+                        // カテゴリー編集
+                        Uicontroller.changeEditCategoryStyle()
+                        Uicontroller.editCategoryProcess()
+                        Uicontroller.addCategoryToOptionElement(data["category"])
+                        Uicontroller.addCategoryButtonToFilter(data["category"])
+                  }else{
+                        const dataValidator = new DataValidator()
+                        dataValidator.displayErrorList(["カテゴリーの編集に失敗しました。お手数ですが、もう一度お試しください。"])
+                  }
+                  
+                  close_loader_template()
+            }catch(error){
+                  console.log(error);
+                  
             }
 
-            const data = await response.json();
-            if(data["status"] === 201){
-                  DataValidator.displayCategorySuccessMessage("カテゴリーの追加に成功しました")
-                  categoryList.innerHTML += crateCategoryList(data["category"])
-                  Uicontroller.initializeCategoryInput()
-                  // カテゴリー編集
-                  Uicontroller.changeEditCategoryStyle()
-                  Uicontroller.editCategoryProcess()
-                  Uicontroller.addCategoryToOptionElement(data["category"])
-                  Uicontroller.addCategoryButtonToFilter(data["category"])
-            }else{
-                  const dataValidator = new DataValidator()
-                  dataValidator.displayErrorList(["カテゴリーの編集に失敗しました。お手数ですが、もう一度お試しください。"])
-            }
-            
-
-            
-            close_loader_template()
       })
 }
 

@@ -91,19 +91,21 @@ class MessageTemplateFormController{
             const tabEdit = document.querySelector(".tab-edit")
             const contentBlocks = document.getElementById("edit-content-blocks")
             const form = document.querySelector(".js_edit_form")
-            const messageTemplateOperator = new MessageTemplateOperator()
+
+            // const messageTemplateOperator = new MessageTemplateOperator(true)
 
 
 
             editBtns.forEach((btn)=>{
                   btn.addEventListener("click", (e)=>{
                         templateImageData.length = 0
-                        messageTemplateOperator.resetBlockCounter()
+                        // messageTemplateOperator.initialize()
+                        // messageTemplateOperator.resetBlockCounter()
 
 
                         contentBlocks.innerHTML = ""
-                        messageTemplateOperator.changeElements(contentBlocks, form)
-                        messageTemplateOperator.changeIsUpdate()
+                        // messageTemplateOperator.changeElements(contentBlocks, form)
+                        // messageTemplateOperator.changeIsUpdate()
                         tabEdit.style.display = "none"
                         const targetElement = e.currentTarget
                         

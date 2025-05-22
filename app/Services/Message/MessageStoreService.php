@@ -28,14 +28,11 @@ abstract class MessageStoreService{
             try{
                   DB::beginTransaction();
 
-                  Log::debug($this->request->all());
-
                   // メッセージグループ作成
                   $messageGroup = $this->createMessageGroup();
                    // コンテンツを処理して保存
                   $responseData = $this->processAndSaveContent($messageGroup->id);
 
-                  Log::debug($responseData);
                   DB::commit();
                   
                   return $this->prepareResponse($responseData, $this->userId);
@@ -62,15 +59,28 @@ abstract class MessageStoreService{
                   foreach ($this->request->file('images') as $key => $image) {
                         $meta = $this->request->input("images.{$key}.meta");
                         $metaDecoded = $meta ? json_decode($meta, true) : null;
-      
+
                         $allContent[] = [
                               'type' => 'image',
                               'content' => $image,
                               'order' => $key,
                               "cropArea" => $metaDecoded["cropArea"] ?? [],
-                              "url" => $metaDecoded["url"] ?? ""
+                              "url" => $metaDecoded["url"] ?? "",
+                              "isUpdateImage" => false
                         ];
                   }
+            }else if($this->request->input("images")){
+                  foreach ($this->request->input('images') as $key => $image){
+                        $allContent[] = [
+                              'type' => 'image',
+                              'content' => $image,
+                              'order' => $key,
+                              "cropArea" => $metaDecoded["cropArea"] ?? [],
+                              "url" => $metaDecoded["url"] ?? "",
+                              "isUpdateImage" => true
+                        ];
+                  }
+                  
             }
 
             // テキスト処理
@@ -125,7 +135,11 @@ abstract class MessageStoreService{
 
       protected function saveImageContent($item, $groupId){
             $imageService = new ImageService();
-            $fileName = $imageService->saveImage($item['content']);
+            Log::debug($item["content"] );
+            $fileName = $item["isUpdateImage"] ? $item["content"]["content"] :  $imageService->saveImage($item['content']);
+            if($item["isUpdateImage"]){
+                  $item["cropArea"] = $item["content"]["meta"];
+            }
 
             $groupIdField = $this->getGroupIdFieldName();
 
@@ -137,6 +151,8 @@ abstract class MessageStoreService{
                   "message_order" => $item['order'],
             ];
 
+
+            Log::debug($savingData);
             $messageModelClass = $this->messageModel;
             $message = $messageModelClass::create($savingData);
 
@@ -157,29 +173,25 @@ abstract class MessageStoreService{
       }
 
       protected function saveCropData($item, $messageId){
-            $cropArea = json_decode($item["cropArea"]);
+            $cropArea = json_decode($item["cropArea"], true); // 第2引数をtrueにして連想配列としてデコード\
             $messageIdField = $this->getMessageIdFieldName();
-            
             $cropData = [
                   $messageIdField => $messageId,
-                  "url" => $item["url"],
-                  "x_percent" => $cropArea->xPercent,
-                  "y_percent" => $cropArea->yPercent,
-                  "width_percent" => $cropArea->widthPercent,
-                  "height_percent" => $cropArea->heightPercent,
+                  "url" => isset($item["url"]) && $item["url"] !== "" ? $item["url"] : $cropArea["url"],
+                  "x_percent" => $cropArea->xPercent ?? $cropArea["x_percent"] ?? $cropArea["xPercent"],
+                  "y_percent" => $cropArea->yPercent ?? $cropArea["y_percent"] ?? $cropArea["yPercent"],
+                  "width_percent" => $cropArea->widthPercent ?? $cropArea["width_percent"] ?? $cropArea["widthPercent"],
+                  "height_percent" => $cropArea->heightPercent ?? $cropArea["height_percent"] ?? $cropArea["heightPercent"],
             ];
-
-            Log::debug($cropData);
-            
             $cropModelClass = $this->cropAreaModel;
             $cropModelClass::create($cropData);
             
             return [
-                  "x_percent" => $cropArea->xPercent,
-                  "y_percent" => $cropArea->yPercent,
-                  "width_percent" => $cropArea->widthPercent,
-                  "height_percent" => $cropArea->heightPercent,
-                  "url" => $item["url"]
+                  "x_percent" => $cropArea->xPercent ?? $cropArea["x_percent"] ?? $cropArea["xPercent"],
+                  "y_percent" => $cropArea->yPercent ?? $cropArea["y_percent"] ?? $cropArea["yPercent"],
+                  "width_percent" => $cropArea->widthPercent ?? $cropArea["width_percent"] ?? $cropArea["widthPercent"],
+                  "height_percent" => $cropArea->heightPercent ?? $cropArea["height_percent"] ?? $cropArea["heightPercent"],
+                  "url" => isset($item["url"]) && $item["url"] !== ""? $item["url"] : $cropArea["url"]
             ];
       }
 

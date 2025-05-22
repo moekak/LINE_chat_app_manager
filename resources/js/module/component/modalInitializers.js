@@ -6,7 +6,7 @@ import { fetchSpecificUserInfo } from "./fetchUserData.js"
 import FormController from "./ui/FormController.js"
 import  indexStateManager from "../util/state/IndexStateManager.js"
 import formDataStateManager from "../util/state/FormDataStateManager.js"
-import BroadcastMessageGenerator from "./testSender/data/BroadcastMessageGenerator.js"
+import BroadcastTestMessageSender from "./testSender/data/BroadcastTestMessageSender.js"
 
 
 

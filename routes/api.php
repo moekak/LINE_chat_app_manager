@@ -43,3 +43,5 @@ Route::post("/category/create", [MessageTemplate::class, "categoryStore"]);
 
 Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"]);
 Route::post("/test/message/store/{admin_id}", [LineTestSenderController::class, "store"]);
+Route::get("/test/sender/destroy/{id}", [LineTestSenderController::class, "destroy"]);
+Route::get("/test/senders", [LineTestSenderController::class, "getAll"]);

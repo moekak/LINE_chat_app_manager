@@ -1,15 +1,18 @@
 import socket from "../../util/socket.js"
+import ProcessingManager from "../testSender/uiController/ProcessingManager.js"
 import MessageHandlerFactory from "./handler/MessageHandlerFactory.js"
 import SendingDataServiceInterface from "./SendingDataServiceInterface.js"
 
 export default class TestSendingData extends SendingDataServiceInterface{
-      constructor(url, type){
+      constructor(parent, url, type, isUpdate){
             const baseUrl = url
             const operationType = "test"
             const modal = document.getElementById("js_test_sender")
             super(baseUrl, operationType, modal)
             this.testSenderLoader = document.querySelector(".loader-wrapper")
             this.classType = type
+            this.parent = parent
+            this.isUpdate = isUpdate
       }
 
       
@@ -28,7 +31,8 @@ export default class TestSendingData extends SendingDataServiceInterface{
 
 
       modalOperator(){
-            this.testSenderLoader.classList.remove("hidden")
+            const processingManager = ProcessingManager.getInstance();
+            processingManager.onProcess()
       }
 
 
@@ -37,8 +41,9 @@ export default class TestSendingData extends SendingDataServiceInterface{
       * @override
       */
       successOperator(){
-
-            this.testSenderLoader.classList.add("hidden")
+            const processingManager = ProcessingManager.getInstance();
+            processingManager.onDone()
+            this.parent.resetData()
             const success_el = document.getElementById("js_alert_success")
             success_el.style.display = "block";
             success_el.innerHTML = "メッセージのテスト送信に成功しました"
@@ -65,10 +70,7 @@ export default class TestSendingData extends SendingDataServiceInterface{
 
 
       prepareBroadcastFormData(userIds){
-
-            console.log(this.classType);
-            
-            const handler = MessageHandlerFactory.getHandler(this.classType, this)
+            const handler = MessageHandlerFactory.getHandler(this.classType, this, this.isUpdate)
             handler.handle(userIds)
 
       }

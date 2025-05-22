@@ -2,7 +2,7 @@ import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 import BroadcastMessageOperator from "./module/component/broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "./module/component/DragAndDrop.js";
 import { open_modal } from "./module/component/modalOperation.js";
-import BroadcastMessageGenerator from "./module/component/testSender/data/BroadcastMessageGenerator.js";
+import BroadcastTestMessageSender from "./module/component/testSender/data/BroadcastTestMessageSender.js";
 import FormController from "./module/component/ui/FormController.js";
 import FileUploader from "./module/util/file/FileUploader.js";
 
@@ -41,4 +41,4 @@ uploads.forEach((upload) => {
 });
 
 // // テスト送信機能モーダル処理
-new BroadcastMessageGenerator()
+new BroadcastTestMessageSender()

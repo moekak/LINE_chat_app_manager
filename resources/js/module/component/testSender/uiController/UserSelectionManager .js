@@ -1,18 +1,19 @@
 export default class UserSelectionManager {
-      constructor(){
+      constructor(parent){
             this.selectAllCheckbox = document.getElementById("select-all-users")
             this.userCheckboxes = document.querySelectorAll('.user-select');
             this.selectedCountEl = document.getElementById('selected-count');
             this.sendToSelectedBtn = document.getElementById('send-to-selected');
-            this.testSenderButtons = document.querySelectorAll(".js_sending_btn")
-
-            this.initialize()
+            this.parent = parent
       }
 
       initialize(){
-            this.selectAllCheckbox.addEventListener("change", this.handleInput.bind(this)) //　すべて選択
+            const selectAllCheckbox = document.getElementById("select-all-users")
+            const newCheckbox = selectAllCheckbox.cloneNode(true)
+            selectAllCheckbox.replaceWith(newCheckbox)
+            newCheckbox.addEventListener("change", this.handleInput.bind(this)) //　すべて選択
             this.userCheckboxes.forEach((checkbox)=>{
-                  checkbox.addEventListener('change', this.#updateSelectedCount.bind(this)); // 個々の選択
+                  checkbox.addEventListener('change', this.updateSelectedCount.bind(this)); // 個々の選択
             })
       }
 
@@ -21,10 +22,14 @@ export default class UserSelectionManager {
       * @returns {void}
       */
       handleInput(){
-            this.userCheckboxes.forEach(checkbox => {
-                  checkbox.checked = this.selectAllCheckbox.checked;
+            const userCheckboxes =document.querySelectorAll('.user-select')
+            const selectAllCheckbox =  document.getElementById("select-all-users")
+            userCheckboxes.forEach(checkbox => {
+                  checkbox.checked = selectAllCheckbox.checked;
             });
-            this.#updateSelectedCount();
+
+
+            this.updateSelectedCount();
       }
 
 
@@ -32,10 +37,10 @@ export default class UserSelectionManager {
       * ユーザー選択UIの切り替えをおこなう処理
       * @returns {void}
       */
-      #updateSelectedCount(){
+      updateSelectedCount(){
+
             const selectedCount = document.querySelectorAll('.user-select:checked').length;
             this.selectedCountEl.textContent = `${selectedCount}人選択中`;
-
             this.sendToSelectedBtn.disabled = selectedCount <= 0 // 「選択したユーザーに送信」ぼたんの無効化、有効化の切り替え
             
             // 「全て選択」のチェックボックスの切り替えをおこなう。全てのユーザーが選択されてたらチェック入れる。それ以外がチェックはずす
@@ -46,7 +51,8 @@ export default class UserSelectionManager {
             } 
 
             // 個々のユーザー選択チェックボックスのスタイルの切り替えを、チェックされたかどうかで切り替える
-            this.userCheckboxes.forEach(checkbox => {
+            const userCheckboxes = document.querySelectorAll('.user-select');
+            userCheckboxes.forEach(checkbox => {
                   const userItem = checkbox.closest('.user-item');
                   if (checkbox.checked) {
                         userItem.classList.add('selected');
@@ -62,17 +68,20 @@ export default class UserSelectionManager {
       * @returns {void}
       */
       resetUi(){
+            const userCheckboxes = document.querySelectorAll('.user-select');
             this.selectedCountEl.textContent = `0人選択中`;
             this.sendToSelectedBtn.disabled = true
 
-            this.userCheckboxes.forEach((checkbox)=>{
+            userCheckboxes.forEach((checkbox)=>{
                   checkbox.closest(".user-item").classList.remove("selected")
                   checkbox.checked = false
             })
 
-            this.selectAllCheckbox.checked = false
+            const selectAllCheckbox = document.getElementById("select-all-users")
+            selectAllCheckbox.checked = false
 
-            this.testSenderButtons.forEach((btn)=>{
+            const testSenderButtons = document.querySelectorAll(".js_sending_btn")
+            testSenderButtons.forEach((btn)=>{
                   btn.classList.add("disabled_btn")  
             })
             

@@ -5,8 +5,8 @@ import { toggleDisplayButtonState } from "../accountUIOperations.js";
 import { createBroadcastMessageRow } from "../elementTemplate.js";
 import BroadcastSendingData from "../message/BroadcastSendingData.js";
 import GreetingSendingData from "../message/GreetingSendingData.js";
-import BroadcastMessageGenerator from "../testSender/data/BroadcastMessageGenerator.js";
-import GreetingMessageGenerator from "../testSender/data/GreetingMessageGenerator.js";
+import BroadcastTestMessageSender from "../testSender/data/BroadcastTestMessageSender.js";
+import GreetingTestMessageSender from "../testSender/data/GreetingTestMessageSender.js";
 import FormController from "../ui/FormController.js";
 
 const MAX_LENGTH = 20

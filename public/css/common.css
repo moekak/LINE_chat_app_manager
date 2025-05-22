@@ -23,6 +23,8 @@
     --color-dark: #2f2f2f;
     --color-light: #fff;
     --color-brand: #57bd84;
+    --success-color: #38b2ac;
+    --warning-color: #ed8936;
 }
 
 body {
@@ -389,6 +391,7 @@ p, ul {
     background-color: red;
     color: #fff;
     border: none;
+    text-align: center;
 }
 
 .message_count {
@@ -455,8 +458,8 @@ p, ul {
     animation: rotation 1s linear infinite;
 }
 .loader-wrapper{
-    width: 580px;
-    height: 501px;
+    width: 550px;
+    height: 509px;
     background-color: #0000005e;
     position: absolute;
     display: flex;
@@ -1813,124 +1816,6 @@ input:checked + .toggle-slider:before {
 }
 
 
-/* テスト送信 */
-/* .sender_user-box{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.sender_user-icon{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-}
-.sender-item-row{
-    transition: background-color 0.2s;
-    border-bottom: 1px solid var(--border-color);
-    padding: 10px 0;
-}
-.sender-item-td{
-    padding: 16px 10px;
-}
-.sender-operation-area{
-    display: flex;
-    gap: 10px;
-}
-.sender-user-button{
-    background: transparent;
-    border: 1px solid var(--dark-gray);
-    border-radius: 3px;
-    padding: 4px 7px;
-    color: var(--dark-gray);
-    transition: .5s ease;
-}
-.sender-user-button:hover{
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-    background-color:#2088d72a ;
-}
-.sender-list-table{
-    width: 700px;
-}
-.sender-info{
-    width: 445px;
-}
-.sender-th{
-    font-size: 15px;
-    font-weight: 500;
-}
-.sender-top{
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-.sender-top p{
-    font-size: 20p;
-    font-weight: 600;
-}
-.sender-all-btn{
-    background: var(--primary-color);
-    border: 1px solid var(--dark-gray);
-    border-radius: 3px;
-    padding: 8px 15px;
-    color: #fff;
-}
-.sender-check{
-    width: 45px;
-}
-
-input[type="search"]::-webkit-search-cancel-button {
-    display: none;
-    -webkit-appearance: none;
-}
-.sender-search-form {
-    position: relative;
-    width: 100%;
-    background: var(--primary-color);
-    border-radius: 6px;
-    margin-bottom: 30px;
-}
-.sender-search-input,
-.sender-search-button {
-    height: 40px;
-    font-family: var(--font-fam);
-    border: 0;
-    color: var(--color-dark);
-    font-size: 14px;
-}
-.sender-search-input[type="search"] {
-    outline: 0; 
-    width: 100%;
-    background: var(--color-light);
-    padding: 0 1.6rem;
-    border-radius: 6px;
-    appearance: none; 
-    transition: all var(--dur) var(--bez);
-    transition-property: width, border-radius;
-    z-index: 1;
-    position: relative;
-    border: 1px solid var(--border-color);
-    }
-.sender-search-button {
-    display: none; 
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: var(--btn-width);
-    font-weight: bold;
-    background: var(--primary-color);
-    border-radius: 0 var(--rad) var(--rad) 0;
-    color: #fff;
-}
-.sender-search-input:not(:placeholder-shown) {
-    border-radius: 6px 0 0 6px;
-    width: calc(100% - var(--btn-width));
-    + button {
-        display: block;
-    }
-} */
-
 
 .sender_modal {
     background: white;
@@ -1988,15 +1873,7 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 }
 
-.modal-header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 16px 24px;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+
 
 .modal-title {
     font-size: 18px;
@@ -2363,9 +2240,18 @@ input[type="text"] {
     border-radius: 6px;
     margin-top: 8px;
     box-shadow: var(--shadow);
-    animation: slideInRight 0.3s, fadeOut 0.5s 2.5s forwards;
     display: flex;
     align-items: center;
+    opacity: 0;
+}
+
+.notification-ani{
+    animation: slideInRight 0.3s, fadeOut 1s 4s forwards;
+    animation-name: slideInRight, fadeOut;
+    animation-duration: 0.3s, 1s;
+    animation-delay: 0s, 2s; /* 5秒後にフェードアウト開始 */
+    animation-fill-mode: forwards, forwards;
+    animation-timing-function: ease, ease;
 }
 
 @keyframes slideInRight {
@@ -2455,4 +2341,17 @@ input[type="text"] {
         width: 100%;
         justify-content: center;
     }
+}
+
+.js_process{
+    font-weight:200 ;
+    font-size: 14px;
+    cursor: pointer;
+}
+.js_process.processing {
+    color: var(--warning-color);
+}
+
+.js_process.done {
+    color: var(--primary-color);
 }

@@ -4,7 +4,7 @@ import { SYSTEM_URL } from "./config/config.js";
 import BroadcastMessageOperator from "./module/component/broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "./module/component/DragAndDrop.js";
 import { open_modal } from "./module/component/modalOperation.js"
-import GreetingMessageGenerator from "./module/component/testSender/data/GreetingMessageGenerator.js";
+import GreetingTestMessageSender from "./module/component/testSender/data/GreetingTestMessageSender.js";
 import FormController from "./module/component/ui/FormController.js";
 import { fetchGetOperation } from "./module/util/fetch.js";
 import FileUploader from "./module/util/file/FileUploader.js";
@@ -72,7 +72,7 @@ greeting_btn.addEventListener("click", async()=>{
     
     open_modal(modal)
     // // テスト送信機能モーダル処理
-    new GreetingMessageGenerator()
+    new GreetingTestMessageSender()
 })
 
 
