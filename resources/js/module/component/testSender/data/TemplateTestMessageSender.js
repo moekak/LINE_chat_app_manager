@@ -1,6 +1,5 @@
 
 import AbstractTestMessageSender from "./AbstractTestMessageSender.js";
-
 export default class TemplateTestMessageSender extends AbstractTestMessageSender{
       constructor(isUpdate){
             super("template", isUpdate); // 親クラスのコンストラクタを呼び出す

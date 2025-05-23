@@ -19,6 +19,11 @@ export default class ProcessingManager {
             // このインスタンスを保持
             ProcessingManager.#instance = this;
       }
+
+      // DOM要素を再取得するメソッド
+      updateProcessWrapper() {
+            this.processWrapper = document.querySelector(".js_process");
+      }
       
       /**
      * シングルトンインスタンスを取得するための静的メソッド
@@ -35,21 +40,30 @@ export default class ProcessingManager {
 
       /**
        * 処理中の状態に設定
-       */
+      */
       onProcess() {
-            this.processWrapper.classList.remove("done");
-            this.processWrapper.classList.add("processing");
-            this.spinning.classList.add("fa-spin");
-            this.processText.textContent = "処理中..."; // innerHTMLではなくtextContentを使用
+            // 念のため最新のDOM要素を取得
+            this.updateProcessWrapper();
+            
+            if (this.processWrapper) {
+                  this.processWrapper.classList.remove("done");
+                  this.processWrapper.classList.add("processing");
+                  this.spinning.classList.add("fa-spin");
+                  this.processText.textContent = "処理中..."; // innerHTMLではなくtextContentを使用
+            }
       }
       
       /**
        * 処理完了の状態に設定
        */
       onDone() {
-            this.processWrapper.classList.add("done");
-            this.processWrapper.classList.remove("processing");
-            this.spinning.classList.remove("fa-spin");
-            this.processText.textContent = "更新"; // innerHTMLではなくtextContentを使用
+            this.updateProcessWrapper();
+            
+            if (this.processWrapper) {
+                  this.processWrapper.classList.remove("processing");
+                  this.processWrapper.classList.add("done");
+                  this.spinning.classList.remove("fa-spin");
+                  this.processText.textContent = "更新"; // innerHTMLではなくtextContentを使用
+            }
       }
 }

@@ -1,9 +1,8 @@
 import { templateImageData } from "../../messageTemplate/DataGenerator.js";
 
 export default class TemplateHandler{
-      constructor(sendingDataService, isUpdate){
+      constructor(sendingDataService){
             this.sendingDataService = sendingDataService;
-            this.isUpdate = isUpdate
       }
       handle(userIds){
 
@@ -12,16 +11,17 @@ export default class TemplateHandler{
                   this.sendingDataService.formData.append('userIds', JSON.stringify(userIds)); 
             }
 
-            const blockWrapper = this.isUpdate ? document.getElementById("edit-content-blocks") : document.getElementById("create-content-blocks")
+            const blockWrapper = this.sendingDataService.parent.isUpdate ? document.getElementById("edit-content-blocks") : document.getElementById("create-content-blocks")
             const contentBlocks = blockWrapper.querySelectorAll(".content-block")
+
+
             contentBlocks.forEach((block, index)=>{
                   if(block.dataset.type === "text"){
                         const text = block.querySelector(".block-textarea").value
                         this.sendingDataService.formData.append(`messages[${index}]`, text);
+
                   } else if(block.dataset.type === "image"){
                         const fileData = templateImageData.find(item => item.order == index);
-                        console.log(fileData.cropData);
-                        
                         // テンプレート新規
                         if(fileData.content){
                               this.sendingDataService.formData.append(`images[${index}]`, fileData.content);
@@ -36,7 +36,6 @@ export default class TemplateHandler{
                                     this.sendingDataService.formData.append(`images[${index}][meta]`, fileData.cropData);
                               }  
                         }
-                        
                   }  
             })
       }

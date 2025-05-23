@@ -73,13 +73,10 @@
             try {
                   const urlInput = document.querySelector('.js_line_url');
 
-                  console.log(urlInput);
-                  
-                  
+
                   // 新しいClipboard APIを使用
                   navigator.clipboard.writeText(urlInput.value)
                         .then(() => {
-                              console.log('コピー成功！（新APIを使用）');
                               document.querySelector(".notification").classList.add("notification-ani");
                               setTimeout(() => {
                                     document.querySelector(".notification").classList.remove("notification-ani");

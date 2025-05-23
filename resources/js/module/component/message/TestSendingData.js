@@ -4,7 +4,7 @@ import MessageHandlerFactory from "./handler/MessageHandlerFactory.js"
 import SendingDataServiceInterface from "./SendingDataServiceInterface.js"
 
 export default class TestSendingData extends SendingDataServiceInterface{
-      constructor(parent, url, type, isUpdate){
+      constructor(parent, url, type){
             const baseUrl = url
             const operationType = "test"
             const modal = document.getElementById("js_test_sender")
@@ -12,7 +12,6 @@ export default class TestSendingData extends SendingDataServiceInterface{
             this.testSenderLoader = document.querySelector(".loader-wrapper")
             this.classType = type
             this.parent = parent
-            this.isUpdate = isUpdate
       }
 
       
@@ -70,7 +69,7 @@ export default class TestSendingData extends SendingDataServiceInterface{
 
 
       prepareBroadcastFormData(userIds){
-            const handler = MessageHandlerFactory.getHandler(this.classType, this, this.isUpdate)
+            const handler = MessageHandlerFactory.getHandler(this)
             handler.handle(userIds)
 
       }

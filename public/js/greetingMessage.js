@@ -7505,7 +7505,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
 
 
 var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
-  function TestSendingData(parent, url, type, isUpdate) {
+  function TestSendingData(parent, url, type) {
     var _this;
     _classCallCheck(this, TestSendingData);
     var baseUrl = url;
@@ -7515,7 +7515,6 @@ var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
     _this.testSenderLoader = document.querySelector(".loader-wrapper");
     _this.classType = type;
     _this.parent = parent;
-    _this.isUpdate = isUpdate;
     return _this;
   }
   _inherits(TestSendingData, _SendingDataServiceIn);
@@ -7602,7 +7601,7 @@ var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
   }, {
     key: "prepareBroadcastFormData",
     value: function prepareBroadcastFormData(userIds) {
-      var handler = _handler_MessageHandlerFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].getHandler(this.classType, this, this.isUpdate);
+      var handler = _handler_MessageHandlerFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].getHandler(this);
       handler.handle(userIds);
     }
   }]);
@@ -7750,16 +7749,17 @@ var MessageHandlerFactory = /*#__PURE__*/function () {
   }
   return _createClass(MessageHandlerFactory, null, [{
     key: "getHandler",
-    value: function getHandler(type, sendingService, isUpdate) {
-      switch (type) {
+    value: function getHandler(sendingService) {
+      console.log(sendingService.classType);
+      switch (sendingService.classType) {
         case "broadcast":
           return new _BroadacstHandler_js__WEBPACK_IMPORTED_MODULE_0__["default"](sendingService);
         case "greeting":
           return new _GreetingHandler_js__WEBPACK_IMPORTED_MODULE_1__["default"](sendingService);
         case "template":
-          return new _TemplateHandler_js__WEBPACK_IMPORTED_MODULE_2__["default"](sendingService, isUpdate);
+          return new _TemplateHandler_js__WEBPACK_IMPORTED_MODULE_2__["default"](sendingService);
         default:
-          throw new Error("Unknown message type: ".concat(type));
+          throw new Error("Unknown message type: ".concat(sendingService.classType));
       }
     }
   }]);
@@ -7788,10 +7788,9 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 var TemplateHandler = /*#__PURE__*/function () {
-  function TemplateHandler(sendingDataService, isUpdate) {
+  function TemplateHandler(sendingDataService) {
     _classCallCheck(this, TemplateHandler);
     this.sendingDataService = sendingDataService;
-    this.isUpdate = isUpdate;
   }
   return _createClass(TemplateHandler, [{
     key: "handle",
@@ -7801,20 +7800,16 @@ var TemplateHandler = /*#__PURE__*/function () {
       if (userIds.length > 0) {
         this.sendingDataService.formData.append('userIds', JSON.stringify(userIds));
       }
-      var blockWrapper = this.isUpdate ? document.getElementById("edit-content-blocks") : document.getElementById("create-content-blocks");
+      var blockWrapper = this.sendingDataService.parent.isUpdate ? document.getElementById("edit-content-blocks") : document.getElementById("create-content-blocks");
       var contentBlocks = blockWrapper.querySelectorAll(".content-block");
       contentBlocks.forEach(function (block, index) {
         if (block.dataset.type === "text") {
           var text = block.querySelector(".block-textarea").value;
-          console.log(text);
-          debugger;
           _this.sendingDataService.formData.append("messages[".concat(index, "]"), text);
         } else if (block.dataset.type === "image") {
           var fileData = _messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_0__.templateImageData.find(function (item) {
             return item.order == index;
           });
-          console.log(fileData.cropData);
-
           // テンプレート新規
           if (fileData.content) {
             _this.sendingDataService.formData.append("images[".concat(index, "]"), fileData.content);
@@ -8220,11 +8215,27 @@ var AbstractTestMessageSender = /*#__PURE__*/function () {
     this.userCheckList = [];
     this.previosModal = null;
     this.openTestSenderModalButton = null;
-    this.sendingData = new _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_2__["default"](this, _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type, isUpdate);
+    this.isUpdate = isUpdate;
+    this.sendingData = new _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_2__["default"](this, _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type);
     this.userSelectionManager = new _uiController_UserSelectionManager_js__WEBPACK_IMPORTED_MODULE_7__["default"](this);
     this.testUserDeleteManager = new _uiController_TestUserDeleteManager_js__WEBPACK_IMPORTED_MODULE_6__.TestUserDeleteManager();
     this.fetchData = new _fetch_FetchData_js__WEBPACK_IMPORTED_MODULE_4__["default"](this);
-    this.updateButton.addEventListener("click", _assertClassBrand(_AbstractTestMessageSender_brand, this, _handleUpdateProcess).bind(this));
+
+    // グローバルなリスナーマップ
+    if (!window.__updateButtonListeners) {
+      window.__updateButtonListeners = new Map();
+    }
+
+    // 古いリスナーを削除
+    var oldListener = window.__updateButtonListeners.get(this.updateButton);
+    if (oldListener) {
+      this.updateButton.removeEventListener("click", oldListener);
+    }
+
+    // 新しいリスナーを作成・登録
+    this.boundHandleUpdateProcess = _assertClassBrand(_AbstractTestMessageSender_brand, this, _handleUpdateProcess).bind(this);
+    this.updateButton.addEventListener("click", this.boundHandleUpdateProcess);
+    window.__updateButtonListeners.set(this.updateButton, this.boundHandleUpdateProcess);
   }
   return _createClass(AbstractTestMessageSender, [{
     key: "initialize",
@@ -8350,7 +8361,6 @@ var AbstractTestMessageSender = /*#__PURE__*/function () {
       var _this6 = this;
       var newReturnBtn = _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_3__["default"].replaceButton(this.returnBtn);
       newReturnBtn.addEventListener("click", function () {
-        console.log("clickされましたん");
         _this6.fixedBg.classList.add("hidden");
         _this6.cancelTestSendingProcess();
       });
@@ -8439,8 +8449,6 @@ var AbstractTestMessageSender = /*#__PURE__*/function () {
   }, {
     key: "cancelTestSendingProcess",
     value: function cancelTestSendingProcess() {
-      console.log(this.previosModal);
-      console.log(this.testSenderModal);
       this.previosModal.classList.remove("hidden");
       this.testSenderModal.classList.add("hidden");
     }
@@ -8495,11 +8503,31 @@ var AbstractTestMessageSender = /*#__PURE__*/function () {
   }]);
 }();
 function _handleUpdateProcess() {
-  if (this.updateButton.classList.contains("done")) {
-    var processingManager = _uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].getInstance();
-    processingManager.onProcess();
-    this.fetchData.fetchTestUsers(processingManager);
-  }
+  return _handleUpdateProcess2.apply(this, arguments);
+}
+function _handleUpdateProcess2() {
+  _handleUpdateProcess2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var processingManager;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          if (!this.updateButton.classList.contains("done")) {
+            _context.next = 6;
+            break;
+          }
+          processingManager = _uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].getInstance();
+          processingManager.onProcess();
+          _context.next = 5;
+          return this.fetchData.fetchTestUsers(processingManager);
+        case 5:
+          console.log(this.isUpdate + "update in handleUpdateProcess");
+        case 6:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, this);
+  }));
+  return _handleUpdateProcess2.apply(this, arguments);
 }
 /**
  * 該当するテスト送信ユーザーを削除する処理
@@ -8510,15 +8538,15 @@ function _handleDeleteTestUser(_x) {
   return _handleDeleteTestUser2.apply(this, arguments);
 }
 function _handleDeleteTestUser2() {
-  _handleDeleteTestUser2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(id) {
+  _handleDeleteTestUser2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(id) {
     var response;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          _context.next = 2;
+          _context2.next = 2;
           return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_DELETE_TEST_USER, "/").concat(id));
         case 2:
-          response = _context.sent;
+          response = _context2.sent;
           console.log(response);
           if (response["status"] === 201) {
             this.testUserDeleteManager.deleteTestUserFromDom(response["userId"]); //DOMから該当するテスト送信ユーザーを取り除く
@@ -8527,9 +8555,9 @@ function _handleDeleteTestUser2() {
           }
         case 5:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
-    }, _callee, this);
+    }, _callee2, this);
   }));
   return _handleDeleteTestUser2.apply(this, arguments);
 }
@@ -8744,21 +8772,32 @@ var ProcessingManager = /*#__PURE__*/function () {
     _instance._ = this;
   }
 
-  /**
-  * シングルトンインスタンスを取得するための静的メソッド
-  * @returns {ProcessingManager} シングルトンインスタンス
-  */
+  // DOM要素を再取得するメソッド
   return _createClass(ProcessingManager, [{
+    key: "updateProcessWrapper",
+    value: function updateProcessWrapper() {
+      this.processWrapper = document.querySelector(".js_process");
+    }
+
+    /**
+    * シングルトンインスタンスを取得するための静的メソッド
+    * @returns {ProcessingManager} シングルトンインスタンス
+    */
+  }, {
     key: "onProcess",
     value:
     /**
      * 処理中の状態に設定
-     */
+    */
     function onProcess() {
-      this.processWrapper.classList.remove("done");
-      this.processWrapper.classList.add("processing");
-      this.spinning.classList.add("fa-spin");
-      this.processText.textContent = "処理中..."; // innerHTMLではなくtextContentを使用
+      // 念のため最新のDOM要素を取得
+      this.updateProcessWrapper();
+      if (this.processWrapper) {
+        this.processWrapper.classList.remove("done");
+        this.processWrapper.classList.add("processing");
+        this.spinning.classList.add("fa-spin");
+        this.processText.textContent = "処理中..."; // innerHTMLではなくtextContentを使用
+      }
     }
 
     /**
@@ -8767,10 +8806,13 @@ var ProcessingManager = /*#__PURE__*/function () {
   }, {
     key: "onDone",
     value: function onDone() {
-      this.processWrapper.classList.add("done");
-      this.processWrapper.classList.remove("processing");
-      this.spinning.classList.remove("fa-spin");
-      this.processText.textContent = "更新"; // innerHTMLではなくtextContentを使用
+      this.updateProcessWrapper();
+      if (this.processWrapper) {
+        this.processWrapper.classList.remove("processing");
+        this.processWrapper.classList.add("done");
+        this.spinning.classList.remove("fa-spin");
+        this.processText.textContent = "更新"; // innerHTMLではなくtextContentを使用
+      }
     }
   }], [{
     key: "getInstance",

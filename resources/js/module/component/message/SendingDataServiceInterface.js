@@ -38,12 +38,14 @@ export default class SendingDataServiceInterface{
 
       async submitBroadcastMessageToServer(userIds){
             try{
+
                   const admin_id = document.getElementById("js_account_id").value
                   this.modalOperator()
                   this.prepareBroadcastFormData(userIds)
 
                   const formDataObj = Object.fromEntries(this.formData.entries());
                   console.log("FormData contents:", formDataObj);
+
 
                   const response = await fetch(`${this.baseUrl}/${admin_id}`, {
                         method: 'POST',

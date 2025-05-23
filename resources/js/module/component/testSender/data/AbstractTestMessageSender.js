@@ -35,13 +35,27 @@ export default class AbstractTestMessageSender {
             this.userCheckList = []
             this.previosModal = null;
             this.openTestSenderModalButton = null;
-
-            this.sendingData = new TestSendingData(this, API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type, isUpdate)
+            this.isUpdate = isUpdate
+            this.sendingData = new TestSendingData(this, API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type)
             this.userSelectionManager = new UserSelectionManager(this)
             this.testUserDeleteManager = new TestUserDeleteManager()
             this.fetchData = new FetchData(this)
 
-            this.updateButton.addEventListener("click", this.#handleUpdateProcess.bind(this))
+            // グローバルなリスナーマップ
+            if (!window.__updateButtonListeners) {
+                  window.__updateButtonListeners = new Map();
+            }
+            
+            // 古いリスナーを削除
+            const oldListener = window.__updateButtonListeners.get(this.updateButton);
+            if (oldListener) {
+                  this.updateButton.removeEventListener("click", oldListener);
+            }
+            
+            // 新しいリスナーを作成・登録
+            this.boundHandleUpdateProcess = this.#handleUpdateProcess.bind(this);
+            this.updateButton.addEventListener("click", this.boundHandleUpdateProcess);
+            window.__updateButtonListeners.set(this.updateButton, this.boundHandleUpdateProcess);
 
       }
 
@@ -153,8 +167,6 @@ export default class AbstractTestMessageSender {
       setupReturnButton(){
             const newReturnBtn = ButtonController.replaceButton(this.returnBtn)
             newReturnBtn.addEventListener("click", ()=>{
-                  console.log("clickされましたん");
-                  
                   this.fixedBg.classList.add("hidden")
                   this.cancelTestSendingProcess()
             })
@@ -194,11 +206,14 @@ export default class AbstractTestMessageSender {
        * 更新ボタンを押すと非同期で新しく作成したテスト送信ユーザーを取得し表示する
        * @returns {void}
        */
-      #handleUpdateProcess(){
+      async #handleUpdateProcess(){
             if(this.updateButton.classList.contains("done")){
                   const processingManager = ProcessingManager.getInstance();
                   processingManager.onProcess()
-                  this.fetchData.fetchTestUsers(processingManager)
+   
+                  await this.fetchData.fetchTestUsers(processingManager)
+                  console.log(this.isUpdate + "update in handleUpdateProcess");
+                  
             }
       }
 
@@ -259,10 +274,6 @@ export default class AbstractTestMessageSender {
        * @returns {void}
        */
       cancelTestSendingProcess(){
-            console.log(this.previosModal);
-            console.log(this.testSenderModal);
-            
-            
             this.previosModal.classList.remove("hidden")
             this.testSenderModal.classList.add("hidden")
             

@@ -31,6 +31,9 @@ class TemplateBlockManager {
     
 
     addTextBlock(contentBlocksContainer) {
+
+        console.log(this.blockCounter + "blockCounter");
+        
         const blockId = `block-${this.blockCounter++}`;
         const textBlock = document.createElement('div');
         textBlock.className = 'content-block text-block';
