@@ -167,7 +167,7 @@
 				</div>
 				<input type='hidden' name='admin_account_id' value={{Route::current()->parameter('id');}} id='js_greeting_account_id'>
 				<div class='broadcast_message_submit_btn-box'>
-					<button class="modal__container-btn" id="js_sender_list">
+					<button class="modal__container-btn disabled_btn" id="js_sender_list">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
 						テスト送信
 					</button>

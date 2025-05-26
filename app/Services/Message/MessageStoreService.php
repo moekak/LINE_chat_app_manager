@@ -149,6 +149,10 @@ abstract class MessageStoreService{
                   "resource_type" => $this->resourceImageType,
                   "message_order" => $item['order'],
             ];
+            // $typeがある場合のみ追加
+            if ($this->request->input("type")) {
+                  $savingData["type"] = $this->request->input("type");
+            }
 
 
             Log::debug($savingData);
@@ -206,6 +210,10 @@ abstract class MessageStoreService{
                   "resource_type" => $this->resourceTextType,
                   "message_order" => $item['order']
             ];
+            // $typeがある場合のみ追加
+            if ($this->request->input("type")) {
+                  $savingData["type"] = $this->request->input("type");
+            }
 
 
             $messageModelClass = $this->messageModel;

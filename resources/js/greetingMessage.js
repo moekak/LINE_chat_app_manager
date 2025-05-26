@@ -16,7 +16,6 @@ const modal                 = document.querySelector(".broadcasting_message_moda
 
 
 greeting_btn.addEventListener("click", async()=>{
-
     // fileアップロードcrop
     const greetingText = document.querySelector(".js_broadcast_error")
     const errorTxt = document.querySelector(".js_error_txt")
@@ -69,7 +68,9 @@ greeting_btn.addEventListener("click", async()=>{
 
     });
 
-    
+        
+    document.querySelectorAll(".js_card").length > 0 ? document.getElementById("js_sender_list").classList.remove("disabled_btn") : ""
+
     open_modal(modal)
     // // テスト送信機能モーダル処理
     new GreetingTestMessageSender()

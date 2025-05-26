@@ -12,6 +12,7 @@ class LineTestMessage extends Model
     protected $fillable = [
         "user_id",
         "test_message_group_id",
+        "type",
         "resource",
         "resource_type",
         "message_order"

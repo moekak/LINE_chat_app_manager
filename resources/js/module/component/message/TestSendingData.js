@@ -17,7 +17,7 @@ export default class TestSendingData extends SendingDataServiceInterface{
       
       async emitBroadcastMessageToSocket(userIds = []){
             try{
-                  const response = await this.submitBroadcastMessageToServer(userIds)
+                  const response = await this.submitBroadcastMessageToServer(userIds, this.classType)
                   this.formData = new FormData()
                   // 成功メッセージを出す処理
                   this.successOperator()
@@ -60,10 +60,12 @@ export default class TestSendingData extends SendingDataServiceInterface{
        */
       sendMessageToSocket(response){
             const {created_at, data, userIds} = response
+
             socket.emit("test message", {
                   sendingDatatoBackEnd: data,
                   userIds: userIds,
                   created_at: created_at,
+                  type: this.classType
             });
       }
 

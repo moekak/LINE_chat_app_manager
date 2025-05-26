@@ -15,11 +15,6 @@ import TemplateTestMessageSender from "../testSender/data/TemplateTestMessageSen
 
 class MessageTemplateOperator {
     constructor(isUpdate = false) {
-
-        console.log("インスタンス化されました");
-        console.log(isUpdate);
-        
-        
         // DOM要素
         this.contentBlocks = isUpdate ? document.getElementById('edit-content-blocks') : document.getElementById('create-content-blocks');
         

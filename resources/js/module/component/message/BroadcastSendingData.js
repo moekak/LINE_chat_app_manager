@@ -74,7 +74,7 @@ export default class BroadcastSendingData extends SendingDataServiceInterface{
        * socketサーバーにデータを送信する処理
        * @override
        */
-      sendMessageToSocket(response){
+      sendMessageToSocket(response, type = null){
             const admin_id = document.getElementById("js_account_id").value
             const {created_at, data} = response
              // formDataをリセットする

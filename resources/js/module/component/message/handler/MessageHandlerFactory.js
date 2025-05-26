@@ -4,8 +4,6 @@ import TemplateHandler from "./TemplateHandler.js";
 
 export default class MessageHandlerFactory{
       static getHandler(sendingService){
-            console.log(sendingService.classType);
-            
             switch(sendingService.classType){
                   case "broadcast" : return new BroadacstHandler(sendingService)
                   case "greeting" : return new GreetingHandler(sendingService)

@@ -210,10 +210,7 @@ export default class AbstractTestMessageSender {
             if(this.updateButton.classList.contains("done")){
                   const processingManager = ProcessingManager.getInstance();
                   processingManager.onProcess()
-   
                   await this.fetchData.fetchTestUsers(processingManager)
-                  console.log(this.isUpdate + "update in handleUpdateProcess");
-                  
             }
       }
 
@@ -224,8 +221,6 @@ export default class AbstractTestMessageSender {
        */
       async #handleDeleteTestUser(id){
             const response = await fetchGetOperation(`${API_ENDPOINTS.FETCH_DELETE_TEST_USER}/${id}`)
-            console.log(response);
-            
 
             if(response["status"] === 201){
                   this.testUserDeleteManager.deleteTestUserFromDom(response["userId"]) //DOMから該当するテスト送信ユーザーを取り除く

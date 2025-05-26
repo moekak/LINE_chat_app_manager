@@ -7081,6 +7081,7 @@ var BroadcastSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
   }, {
     key: "sendMessageToSocket",
     value: function sendMessageToSocket(response) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var admin_id = document.getElementById("js_account_id").value;
       var created_at = response.created_at,
         data = response.data;
@@ -7330,40 +7331,49 @@ var SendingDataServiceInterface = /*#__PURE__*/function () {
     key: "submitBroadcastMessageToServer",
     value: function () {
       var _submitBroadcastMessageToServer = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(userIds) {
-        var admin_id, formDataObj, response, data;
+        var type,
+          admin_id,
+          formDataObj,
+          response,
+          data,
+          _args = arguments;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
+              type = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
+              _context.prev = 1;
               admin_id = document.getElementById("js_account_id").value;
               this.modalOperator();
               this.prepareBroadcastFormData(userIds);
+              if (type) {
+                this.formData.append("type", type);
+              }
               formDataObj = Object.fromEntries(this.formData.entries());
               console.log("FormData contents:", formDataObj);
-              _context.next = 8;
+              _context.next = 10;
               return fetch("".concat(this.baseUrl, "/").concat(admin_id), {
                 method: 'POST',
                 body: this.formData
               });
-            case 8:
+            case 10:
               response = _context.sent;
               if (!response.ok) {
                 alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
               }
-              _context.next = 12;
+              _context.next = 14;
               return response.json();
-            case 12:
+            case 14:
               data = _context.sent;
               return _context.abrupt("return", data);
-            case 16:
-              _context.prev = 16;
-              _context.t0 = _context["catch"](0);
+            case 18:
+              _context.prev = 18;
+              _context.t0 = _context["catch"](1);
               console.log(_context.t0);
-            case 19:
+            case 21:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[0, 16]]);
+        }, _callee, this, [[1, 18]]);
       }));
       function submitBroadcastMessageToServer(_x) {
         return _submitBroadcastMessageToServer.apply(this, arguments);
@@ -7444,6 +7454,7 @@ var SendingDataServiceInterface = /*#__PURE__*/function () {
   }, {
     key: "sendMessageToSocket",
     value: function sendMessageToSocket() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       return;
     }
 
@@ -7515,6 +7526,7 @@ var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
     _this.testSenderLoader = document.querySelector(".loader-wrapper");
     _this.classType = type;
     _this.parent = parent;
+    console.log(type);
     return _this;
   }
   _inherits(TestSendingData, _SendingDataServiceIn);
@@ -7531,7 +7543,7 @@ var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
               userIds = _args.length > 0 && _args[0] !== undefined ? _args[0] : [];
               _context.prev = 1;
               _context.next = 4;
-              return this.submitBroadcastMessageToServer(userIds);
+              return this.submitBroadcastMessageToServer(userIds, this.classType);
             case 4:
               response = _context.sent;
               this.formData = new FormData();
@@ -7595,7 +7607,8 @@ var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
       _util_socket_js__WEBPACK_IMPORTED_MODULE_0__["default"].emit("test message", {
         sendingDatatoBackEnd: data,
         userIds: userIds,
-        created_at: created_at
+        created_at: created_at,
+        type: this.classType
       });
     }
   }, {
@@ -7750,7 +7763,6 @@ var MessageHandlerFactory = /*#__PURE__*/function () {
   return _createClass(MessageHandlerFactory, null, [{
     key: "getHandler",
     value: function getHandler(sendingService) {
-      console.log(sendingService.classType);
       switch (sendingService.classType) {
         case "broadcast":
           return new _BroadacstHandler_js__WEBPACK_IMPORTED_MODULE_0__["default"](sendingService);
@@ -15236,10 +15248,11 @@ greeting_btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE_
           }
           _module_component_broadcast_BroadcastMessageOperator_js__WEBPACK_IMPORTED_MODULE_2__["default"].deleteList("accordion");
         });
+        document.querySelectorAll(".js_card").length > 0 ? document.getElementById("js_sender_list").classList.remove("disabled_btn") : "";
         (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_4__.open_modal)(modal);
         // // テスト送信機能モーダル処理
         new _module_component_testSender_data_GreetingTestMessageSender_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
-      case 13:
+      case 14:
       case "end":
         return _context2.stop();
     }
