@@ -90,16 +90,29 @@ close_modal_by_click(modal, btn)
 }
 
 
-// ローダーを表示する
+// LINE送信文言変更処理(ローダーを表示する)
 {
       const submit_btn = document.querySelector(".modal__container-btn")
+      const form = document.querySelector(".js_update_sendingMsg")
       const modal = document.getElementById("js_edit_account_modal")
       const loader = document.querySelector(".loader")
-      submit_btn.addEventListener("click", ()=>{
+      const handleSubmit = () =>{
             modal.classList.add("hidden")
             document.querySelector(".bg").classList.add("hidden")
             open_modal(loader)
+      }
+      submit_btn.addEventListener("click", (event)=>{
+            event.preventDefault(); // テキストエリアでの改行を防ぐ
+            form.submit(); // フォームを送信
+            handleSubmit()
       })
+      // document.addEventListener("keydown", (event) => {
+      //       if (event.shiftKey && event.key === 'Enter') {
+      //             event.preventDefault(); // テキストエリアでの改行を防ぐ
+      //             form.submit(); // フォームを送信
+      //             handleSubmit()
+      //       }
+      // });
 }
 
 // タイトル表示変更モーダル

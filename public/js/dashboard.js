@@ -2331,7 +2331,7 @@ var SUCCESS_TEXT = {
   DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
-// // // 開発用
+//  開発用
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
 });
@@ -2957,7 +2957,6 @@ var SendingDataServiceInterface = /*#__PURE__*/function () {
       var _submitBroadcastMessageToServer = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(userIds) {
         var type,
           admin_id,
-          formDataObj,
           response,
           data,
           _args = arguments;
@@ -2972,32 +2971,33 @@ var SendingDataServiceInterface = /*#__PURE__*/function () {
               if (type) {
                 this.formData.append("type", type);
               }
-              formDataObj = Object.fromEntries(this.formData.entries());
-              console.log("FormData contents:", formDataObj);
-              _context.next = 10;
+
+              // const formDataObj = Object.fromEntries(this.formData.entries());
+              // console.log("FormData contents:", formDataObj);
+              _context.next = 8;
               return fetch("".concat(this.baseUrl, "/").concat(admin_id), {
                 method: 'POST',
                 body: this.formData
               });
-            case 10:
+            case 8:
               response = _context.sent;
               if (!response.ok) {
                 alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
               }
-              _context.next = 14;
+              _context.next = 12;
               return response.json();
-            case 14:
+            case 12:
               data = _context.sent;
               return _context.abrupt("return", data);
-            case 18:
-              _context.prev = 18;
+            case 16:
+              _context.prev = 16;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
-            case 21:
+            case 19:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[1, 18]]);
+        }, _callee, this, [[1, 16]]);
       }));
       function submitBroadcastMessageToServer(_x) {
         return _submitBroadcastMessageToServer.apply(this, arguments);
@@ -3150,7 +3150,6 @@ var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
     _this.testSenderLoader = document.querySelector(".loader-wrapper");
     _this.classType = type;
     _this.parent = parent;
-    console.log(type);
     return _this;
   }
   _inherits(TestSendingData, _SendingDataServiceIn);
@@ -4148,7 +4147,7 @@ function _handleUpdateProcess2() {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           if (!this.updateButton.classList.contains("done")) {
-            _context.next = 6;
+            _context.next = 5;
             break;
           }
           processingManager = _uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].getInstance();
@@ -4156,8 +4155,6 @@ function _handleUpdateProcess2() {
           _context.next = 5;
           return this.fetchData.fetchTestUsers(processingManager);
         case 5:
-          console.log(this.isUpdate + "update in handleUpdateProcess");
-        case 6:
         case "end":
           return _context.stop();
       }
@@ -4183,13 +4180,12 @@ function _handleDeleteTestUser2() {
           return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_DELETE_TEST_USER, "/").concat(id));
         case 2:
           response = _context2.sent;
-          console.log(response);
           if (response["status"] === 201) {
             this.testUserDeleteManager.deleteTestUserFromDom(response["userId"]); //DOMから該当するテスト送信ユーザーを取り除く
             this.count.innerHTML = Number(this.count.innerHTML) - 1;
             this.resetData();
           }
-        case 5:
+        case 4:
         case "end":
           return _context2.stop();
       }

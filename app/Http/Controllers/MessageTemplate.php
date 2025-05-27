@@ -59,6 +59,7 @@ class MessageTemplate extends Controller
 
 
     public function store(Request $request){
+
         try{
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
@@ -180,6 +181,7 @@ class MessageTemplate extends Controller
 
     public function update(Request $request){
         try{
+            Log::debug($request->all());
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
                     "category_id" => ["required", "string", "exists:message_templates_categories,id"],
