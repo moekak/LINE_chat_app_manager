@@ -102,7 +102,7 @@ class MessageTemplateFormController{
                         const formController = new MessageTemplateFormController(targetElement)
                         formController.setDataToEditInputs()
                         const templateBlockManager = new TemplateBlockManager()
-                        templateBlockManager.resetBlockCounter()
+                        // templateBlockManager.resetBlockCounter()
       
                         form.querySelectorAll('.content-block').forEach(block => {
                               templateBlockManager.setupBlockListeners(block)

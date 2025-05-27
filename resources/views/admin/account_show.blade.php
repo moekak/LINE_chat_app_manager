@@ -619,7 +619,7 @@
 
 
 	{{-- テンプレート削除モーダル閉じる前の確認 --}}
-	<section class='modal__container js_modal hidden' id='js_template_confirm_modal' style='width: 500px;'>
+	<section class='modal__container js_modal hidden' id='js_template_confirm_modal' style='width: 500px; padding: 30px;'>
 		<h2 class='modal__container-ttl' style='color: red; font-weight: bold;'>テンプレートを削除しますか？</h2>
 		<p>テンプレートを削除してよろしいですか？削除すると、設定した全てのデータが完全に消去され、元に戻すことはできません。</p>
 		<div style='margin-top: 15px'></div>

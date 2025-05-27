@@ -3440,29 +3440,40 @@ var TemplateHandler = /*#__PURE__*/function () {
       contentBlocks.forEach(function (block, index) {
         if (block.dataset.type === "text") {
           var text = block.querySelector(".block-textarea").value;
+          console.log(text);
+          if (text == 0 || !text) {
+            return;
+          }
           _this.sendingDataService.formData.append("messages[".concat(index, "]"), text);
         } else if (block.dataset.type === "image") {
+          var fileInputElementId = block.dataset.id;
+          var numberPart = fileInputElementId.match(/\d+/)[0];
           var fileData = _messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_0__.templateImageData.find(function (item) {
-            return item.order == index;
+            return item.order == numberPart;
           });
-          // テンプレート新規
-          if (fileData.content) {
-            _this.sendingDataService.formData.append("images[".concat(index, "]"), fileData.content);
-            if (block.querySelector(".image-upload").dataset.url) {
-              _this.sendingDataService.formData.append("images[".concat(index, "][meta]"), JSON.stringify({
-                url: fileData.cropUrl,
-                cropArea: fileData.cropData
-              }));
-            }
-            // テンプレート更新
-          } else {
-            _this.sendingDataService.formData.append("images[".concat(index, "][content]"), fileData.contentUrl);
-            if (fileData.cropData) {
-              _this.sendingDataService.formData.append("images[".concat(index, "][meta]"), fileData.cropData);
+          if (fileData) {
+            // テンプレート新規
+            if (fileData.content) {
+              _this.sendingDataService.formData.append("images[".concat(index, "]"), fileData.content);
+              if (block.querySelector(".image-upload").dataset.url) {
+                _this.sendingDataService.formData.append("images[".concat(index, "][meta]"), JSON.stringify({
+                  url: fileData.cropUrl,
+                  cropArea: fileData.cropData
+                }));
+              }
+              // テンプレート更新
+            } else {
+              _this.sendingDataService.formData.append("images[".concat(index, "][content]"), fileData.contentUrl);
+              if (fileData.cropData) {
+                _this.sendingDataService.formData.append("images[".concat(index, "][meta]"), fileData.cropData);
+              }
             }
           }
         }
       });
+      var formDataObj = Object.fromEntries(this.sendingDataService.formData.entries());
+      console.log("FormData contents:", formDataObj);
+      debugger;
     }
   }]);
 }();

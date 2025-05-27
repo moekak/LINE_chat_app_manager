@@ -120,7 +120,7 @@ export const createAccountDataRow = (res, categories) =>{
                   <td>${createdAtTokyo}</td>
                   <td>
                         <div class="operation">
-                              <a href='${CHAT_BASE_URL}/account/show/${res['id']}'><button  title='リスト' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>
+                              <a href='${SYSTEM_URL.CHAT_BASE_URL}/account/show/${res['id']}'><button  title='リスト' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>
                               <button  title='一斉送信' class='operation_icon js_send_message_btn' data-id=${res['id']}><img src='/img/icons8-send-24.png' alt=''></button>
                               <button  title='情報' class='operation_icon js_edit_account_btn' data-id=${res['id']}><img src='/img/icons8-edit-24.png' alt=''></button>
                               <button   title='削除'class='operation_icon js_delete_account_btn' type='submit' data-id=${res['id']} data-name=${res['account_name']}><img src='/img/icons8-delete-24.png' alt=''></button>

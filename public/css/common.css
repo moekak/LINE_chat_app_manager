@@ -1034,6 +1034,9 @@ p, ul {
     max-height: 554px;
     overflow-x: hidden;
 }
+.form-wrapper::-webkit-scrollbar{
+    width: 0;
+}
 
 /* フォーム要素のスタイル */
 .form-group {

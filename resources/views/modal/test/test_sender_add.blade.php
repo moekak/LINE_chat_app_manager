@@ -13,7 +13,7 @@
                   
                   <div id="qr-tab" class="tab-content active">
                         <div class="qr-container">
-                              <img src="https://qr-official.line.me/gs/M_658yskir_GW.png?oat_content=qr"  alt="LINE友達追加QRコード" class="qr-code">
+                              <img src="https://qr-official.line.me/gs/M_971jevsy_GW.png?oat_content=qr"  alt="LINE友達追加QRコード" class="qr-code">
                               <p class="info-text">このQRコードをスキャンして友達追加してください</p>
                               <p class="info-text">追加後、自動的にテスト送信ユーザーとして登録されます</p>
                         </div>
@@ -22,7 +22,7 @@
                   <div id="url-tab" class="tab-content">
                         <p class="info-text">以下のURLを共有して友達追加することもできます</p>
                         <div class="url-input-group">
-                              <input type="text" value="https://lin.ee/y6mXCbb" class="js_line_url" readonly>
+                              <input type="text" value="https://lin.ee/QGEWK71" class="js_line_url" readonly>
                               <button class="copy-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                               </button>
@@ -91,7 +91,7 @@
       });
 
       function openLineApp() {      
-            window.location.href = "https://lin.ee/y6mXCbb";
+            window.location.href = "https://lin.ee/QGEWK71";
       }     
 
 

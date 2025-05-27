@@ -35,7 +35,6 @@ class TestSenderService extends MessageStoreService{
 
       protected function prepareResponse($data, $userIds)
       {
-
             return response()->json([
                   "created_at" => now()->format('H:i'),
                   "data" => $data['responseData'],

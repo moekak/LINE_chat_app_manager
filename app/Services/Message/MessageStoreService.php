@@ -69,16 +69,21 @@ abstract class MessageStoreService{
                               "isUpdateImage" => false
                         ];
                   }
-            }else if($this->request->input("images")){
-                  foreach ($this->request->input('images') as $key => $image){
-                        $allContent[] = [
-                              'type' => 'image',
-                              'content' => $image,
-                              'order' => $key,
-                              "cropArea" => $metaDecoded["cropArea"] ?? [],
-                              "url" => $metaDecoded["url"] ?? "",
-                              "isUpdateImage" => true
-                        ];
+            }
+            
+            if(isset($validated["images"])){
+                  foreach ($validated["images"] as $key => $image){
+                        if(is_array($image) && isset($image["content"])){
+                              $allContent[] = [
+                                    'type' => 'image',
+                                    'content' => $image,
+                                    'order' => $key,
+                                    "cropArea" => $metaDecoded["cropArea"] ?? [],
+                                    "url" => $metaDecoded["url"] ?? "",
+                                    "isUpdateImage" => true
+                              ];
+                        }
+
                   }
                   
             }
@@ -154,8 +159,6 @@ abstract class MessageStoreService{
                   $savingData["type"] = $this->request->input("type");
             }
 
-
-            Log::debug($savingData);
             $messageModelClass = $this->messageModel;
             $message = $messageModelClass::create($savingData);
 

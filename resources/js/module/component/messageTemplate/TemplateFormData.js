@@ -51,15 +51,7 @@ class TemplateFormData {
                 const fileInput = block.querySelector(".file-input")
                 const fileInputElementId = fileInput.closest(".content-block").dataset.id
                 const numberPart = fileInputElementId.match(/\d+/)[0];
-
                 const fileData = templateImageData.find(item => item.order === numberPart);
-
-                console.log(numberPart);
-                console.log(fileData);
-                console.log(`index: ${index}`);
-                
-                
-                
 
                 if(fileData){
                     if (fileData["content"]){

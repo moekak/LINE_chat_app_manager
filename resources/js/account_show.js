@@ -14,6 +14,7 @@ import { templateImageData } from "./module/component/messageTemplate/DataGenera
 import DataValidator from "./module/component/messageTemplate/DataValidator.js";
 import TabController from "./module/component/messageTemplate/TabController.js";
 import Uicontroller from "./module/component/messageTemplate/UiController.js";
+import TemplateBlockManager from "./module/component/messageTemplate/TemplateBlockManager.js";
 
 
 //ユーザー管理に関連するモーダルの初期化
@@ -179,6 +180,8 @@ submitForms.forEach((submitForm)=>{
       const cancelBtn = document.getElementById("js_cancel_edit_btn")
 
       cancelBtn.addEventListener("click", ()=>{
+            const templateBlockManager = new TemplateBlockManager()
+            templateBlockManager.resetBlockCounter()
             document.querySelector(".tab-edit").style.display = "block"
             document.getElementById("template-edit-form").classList.add("hidden")
       })

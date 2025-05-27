@@ -9,7 +9,7 @@ use App\Services\MessageSummaryService;
 use App\Services\UnreadMessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 class BroadcastMessageService extends MessageStoreService{
       public function __construct($admin_id, Request $request)
@@ -47,12 +47,13 @@ class BroadcastMessageService extends MessageStoreService{
       protected function prepareResponse($data, $admin_id)
       {
             $lastMessage = $data['lastMessage'] ?? null;
+            $created_at_store = isset($lastMessage["created_at"]) ? $lastMessage["created_at"] : now();
             $created_at = isset($lastMessage["created_at"]) 
                   ? $lastMessage["created_at"]->format('H:i') 
                   : now()->format('H:i');
                   
             //既読未読の管理
-            $this->performAdditionalOperations($data, $admin_id, $created_at);
+            $this->performAdditionalOperations($data, $admin_id, $created_at_store);
             return response()->json([
                   "created_at" => $created_at,
                   "data" => $data['responseData']
