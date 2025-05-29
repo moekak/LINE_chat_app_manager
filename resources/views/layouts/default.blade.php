@@ -73,6 +73,9 @@
                               <div class="nav__item-option">
                                     <p class="nav__item-option__txt txt-gray" id="js_update_line_btn" data-id="{{$user->id}}">LINE送信文言変更</p>
                               </div>
+                              <div class="nav__item-option">
+                                    <p class="nav__item-option__txt txt-gray" id="js_create_test_sender_btn" data-id="{{$user->id}}">テスト送信アカウント追加</p>
+                              </div>
                         @endif
                         @if (Route::currentRouteName() == "account.block.user")
                               <div class="nav__item-option">
@@ -107,6 +110,7 @@
                   @endif
                   @yield('main')
             </section>
+            @yield('modal')
       </main>
 
       @yield('script')

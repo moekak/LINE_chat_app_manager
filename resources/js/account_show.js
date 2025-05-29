@@ -7,7 +7,6 @@ import { initializeUserModals } from "./module/component/modalInitializers.js";
 import FormController from "./module/component/ui/FormController.js";
 import { crateCategoryList, createMessageRowForFetch } from "./module/component/elementTemplate.js";
 import MessageTemplateOperator from "./module/component/messageTemplate/MessageTemplateOperator.js";
-import ImageUploadHandler from "./module/component/messageTemplate/ImageUploadHandler.js";
 import { fetchPostOperation } from "./module/util/fetch.js";
 import { API_ENDPOINTS } from "./config/apiEndPoint.js";
 import InitializeInputService from "./module/component/messageTemplate/InitializeInputService.js";
@@ -15,6 +14,7 @@ import { templateImageData } from "./module/component/messageTemplate/DataGenera
 import DataValidator from "./module/component/messageTemplate/DataValidator.js";
 import TabController from "./module/component/messageTemplate/TabController.js";
 import Uicontroller from "./module/component/messageTemplate/UiController.js";
+import TemplateBlockManager from "./module/component/messageTemplate/TemplateBlockManager.js";
 
 
 //ユーザー管理に関連するモーダルの初期化
@@ -91,16 +91,29 @@ close_modal_by_click(modal, btn)
 }
 
 
-// ローダーを表示する
+// LINE送信文言変更処理(ローダーを表示する)
 {
       const submit_btn = document.querySelector(".modal__container-btn")
+      const form = document.querySelector(".js_update_sendingMsg")
       const modal = document.getElementById("js_edit_account_modal")
       const loader = document.querySelector(".loader")
-      submit_btn.addEventListener("click", ()=>{
+      const handleSubmit = () =>{
             modal.classList.add("hidden")
             document.querySelector(".bg").classList.add("hidden")
             open_modal(loader)
+      }
+      submit_btn.addEventListener("click", (event)=>{
+            event.preventDefault(); // テキストエリアでの改行を防ぐ
+            form.submit(); // フォームを送信
+            handleSubmit()
       })
+      // document.addEventListener("keydown", (event) => {
+      //       if (event.shiftKey && event.key === 'Enter') {
+      //             event.preventDefault(); // テキストエリアでの改行を防ぐ
+      //             form.submit(); // フォームを送信
+      //             handleSubmit()
+      //       }
+      // });
 }
 
 // タイトル表示変更モーダル
@@ -154,6 +167,7 @@ submitForms.forEach((submitForm)=>{
             InitializeInputService.intiaizeInputs();
             new MessageTemplateOperator();
             open_modal(templateModal);
+            // messageTemplateOperator.initialize()
       }
 }
 
@@ -166,6 +180,8 @@ submitForms.forEach((submitForm)=>{
       const cancelBtn = document.getElementById("js_cancel_edit_btn")
 
       cancelBtn.addEventListener("click", ()=>{
+            const templateBlockManager = new TemplateBlockManager()
+            templateBlockManager.resetBlockCounter()
             document.querySelector(".tab-edit").style.display = "block"
             document.getElementById("template-edit-form").classList.add("hidden")
       })
@@ -239,34 +255,41 @@ document.querySelector('.template-title').addEventListener('keydown', function(e
 
 
 
-            open_loader_template()
-            const formData = new FormData(createCategoryForm)
-            const response = await fetch(API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
-                  method: 'POST',
-                  body: formData,
-            });
-            
-            if (!response.ok) {
-                  throw new Error("メッセージテンプレート作成でエラーが発生しました");
+            try{
+                  open_loader_template()
+                  const formData = new FormData(createCategoryForm)
+                  const response = await fetch(API_ENDPOINTS.FETCH_CREATE_CATEGORY, {
+                        method: 'POST',
+                        body: formData,
+                  });
+                  
+                  if (!response.ok) {
+                        throw new Error("メッセージテンプレート作成でエラーが発生しました");
+                  }
+
+                  const data = await response.json();
+                  if(data["status"] === 201){
+                        DataValidator.displayCategorySuccessMessage("カテゴリーの追加に成功しました")
+                        categoryList.innerHTML += crateCategoryList(data["category"])
+                        Uicontroller.initializeCategoryInput()
+                        // カテゴリー編集
+                        Uicontroller.changeEditCategoryStyle()
+                        Uicontroller.editCategoryProcess()
+                        Uicontroller.addCategoryToOptionElement(data["category"])
+                        Uicontroller.addCategoryButtonToFilter(data["category"])
+                  }else{
+                        const dataValidator = new DataValidator()
+                        dataValidator.displayErrorList(["カテゴリーの編集に失敗しました。お手数ですが、もう一度お試しください。"])
+                  }
+                  
+                  close_loader_template()
+            }catch(error){
+                  console.log(error);
+                  
             }
 
-            const data = await response.json();
-            if(data["status"] === 201){
-                  DataValidator.displayCategorySuccessMessage("カテゴリーの追加に成功しました")
-                  categoryList.innerHTML += crateCategoryList(data["category"])
-                  Uicontroller.initializeCategoryInput()
-                  // カテゴリー編集
-                  Uicontroller.changeEditCategoryStyle()
-                  Uicontroller.editCategoryProcess()
-                  Uicontroller.addCategoryToOptionElement(data["category"])
-                  Uicontroller.addCategoryButtonToFilter(data["category"])
-            }else{
-                  const dataValidator = new DataValidator()
-                  dataValidator.displayErrorList(["カテゴリーの編集に失敗しました。お手数ですが、もう一度お試しください。"])
-            }
-            
-
-            
-            close_loader_template()
       })
 }
+
+
+

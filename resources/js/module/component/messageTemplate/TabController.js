@@ -4,6 +4,7 @@ import MessageTemplateFormController from "./edit/FormController.js";
 import InitializeInputService from "./InitializeInputService.js";
 import MessageTemplateOperator from "./MessageTemplateOperator.js";
 import FilterCategory from "./FilterCategory.js"
+import ButtonController from "../ui/ButtonController.js";
 
 // 4. TabController.js - タブ管理に特化
 class TabController {
@@ -21,12 +22,14 @@ class TabController {
                 tabElement.addEventListener('click', async() => {
                     InitializeInputService.initializeErrorList()
                 if(index === 0){
-                    const messageTemplateOperator = new MessageTemplateOperator()
-                    messageTemplateOperator.changeElements(document.getElementById("create-content-blocks"), document.querySelector(".js_create_form"))
+                    new MessageTemplateOperator()
+                    // messageTemplateOperator.changeElements(document.getElementById("create-content-blocks"), document.querySelector(".js_create_form"))
                     document.getElementById("template-edit-form").classList.add("hidden")
                 }
                 if(index === 1){
                     try{
+                        new MessageTemplateOperator(true)
+                        
                         document.getElementById("js_template_list").innerHTML = ""
                         document.getElementById("js_loader-template").classList.remove("hidden")
                         const categoryBtns = document.querySelectorAll(".category-btn")
@@ -81,8 +84,7 @@ class TabController {
     static filterCategory(){
         const categoryBtns = document.querySelectorAll(".category-btn")
         categoryBtns.forEach((btn)=>{
-            const newButton = btn.cloneNode(true)
-            btn.replaceWith(newButton)
+            const newButton = ButtonController.replaceButton(btn)
             newButton.addEventListener("click",(e)=>{
                 FilterCategory.fetchFilteredData(e.target.dataset.category, newButton)
             })

@@ -6,6 +6,7 @@ import { fetchSpecificUserInfo } from "./fetchUserData.js"
 import FormController from "./ui/FormController.js"
 import  indexStateManager from "../util/state/IndexStateManager.js"
 import formDataStateManager from "../util/state/FormDataStateManager.js"
+import BroadcastTestMessageSender from "./testSender/data/BroadcastTestMessageSender.js"
 
 
 
@@ -51,6 +52,8 @@ export const initializeBroadcastMessageModal = () =>{
       sending_btns.forEach((btn)=>{
             btn.addEventListener("click", (e)=>{
                   document.querySelector(".js_message_submit_btn").classList.add("disabled_btn")
+                  document.getElementById("js_sender_list").classList.add("disabled_btn")
+
                   indexStateManager.resetState()
                   formDataStateManager.resetItem()
                   e.preventDefault()

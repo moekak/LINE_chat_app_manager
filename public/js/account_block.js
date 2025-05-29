@@ -2256,6 +2256,39 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
+/***/ "./resources/js/config/apiEndPoint.js":
+/*!********************************************!*\
+  !*** ./resources/js/config/apiEndPoint.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   API_ENDPOINTS: () => (/* binding */ API_ENDPOINTS)
+/* harmony export */ });
+var API_ENDPOINTS = {
+  FETCH_BROADCASTMESSAGE: "/api/broadcast_message/store",
+  FETCH_GREETINGMESSAGE: "/api/greeting_message/store",
+  FETCH_GREETINGMESSAE_GET: "/api/greetingMessage/adminId",
+  // FETCH_TEMPLATE_CATEGORY : "/api/get/categories",
+  FETCH_TEMPLATE_CREATE: "/api/create/templates",
+  FETCH_TEMPLATE_UPDATE: "/api/update/templates",
+  FETCH_TEMPLATE_GET: "/api/templates/get",
+  FETCH_CATEGORIES_GET: "/api/categories/get",
+  FETCH_TEMPLATE_DELETE: "/api/template/delete",
+  FETCH_TEMPLATE_DATA: "/api/fetch/template",
+  FETCH_UPDATE_TEMPLATE_ORDER: "/api/template/order",
+  FETCH_DELETE_TEMPLATE: "/api/template/delete",
+  FETCH_CREATE_CATEGORY: "/api/category/create",
+  FETCH_CATEGORY_EDIT: "/api/category/edit",
+  FETCH_TEST_MESSAGE_STORE: "/api/test/message/store",
+  FETCH_DELETE_TEST_USER: "/api/test/sender/destroy",
+  FETCH_TEST_SENDERS: "/api/test/senders"
+};
+
+/***/ }),
+
 /***/ "./resources/js/config/config.js":
 /*!***************************************!*\
   !*** ./resources/js/config/config.js ***!
@@ -2298,7 +2331,7 @@ var SUCCESS_TEXT = {
   DELETE_TEMPLATE: "テンプレートの削除に成功しました。"
 };
 
-// // // 開発用
+//  開発用
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   socketUrl: 'https://socket.line-chat-system-dev.tokyo:3000'
 });
@@ -2673,8 +2706,10 @@ var submitRedirectForm = /*#__PURE__*/function () {
     return _ref4.apply(this, arguments);
   };
 }();
-var toggleDisplayButtonState = function toggleDisplayButtonState(btn, message) {
-  btn.classList.toggle("disabled_btn", message.length === 0);
+var toggleDisplayButtonState = function toggleDisplayButtonState(btns, message) {
+  btns.forEach(function (btn) {
+    btn.classList.toggle("disabled_btn", message.length === 0);
+  });
 };
 
 /***/ }),
@@ -2698,6 +2733,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createMessageRowForFetch: () => (/* binding */ createMessageRowForFetch),
 /* harmony export */   createMessageTemplate: () => (/* binding */ createMessageTemplate),
 /* harmony export */   createMessageTemplateForAll: () => (/* binding */ createMessageTemplateForAll),
+/* harmony export */   createTestSenderList: () => (/* binding */ createTestSenderList),
 /* harmony export */   createTextBlock: () => (/* binding */ createTextBlock),
 /* harmony export */   editCategoryButton: () => (/* binding */ editCategoryButton)
 /* harmony export */ });
@@ -2706,65 +2742,65 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var createMessageRowForFetch = function createMessageRowForFetch(res, admin_account_id, sender_uuid) {
-  var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
-  var latestMessageDate = res["latest_message_date"] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["latest_message_date"]) : "";
-  var display = res["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res["line_name"], "</td>\n                  <td data-id=").concat(res["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                  \t<a href=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res["id"], "/").concat(admin_account_id, "\">\n                              <button type=\"submit\" title=\"\u30C8\u30FC\u30AF\" class=\"operation_icon redirect_btn\">\n                                    <img src=\"/img/icons8-message-24.png\" alt=\"\">\n                              </button>\n                        </a>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res["entity_uuid"], " data-name=").concat(res["line_name"], " data-id=").concat(res["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['created_at']);
+  var latestMessageDate = res['latest_message_date'] ? (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['latest_message_date']) : '';
+  var display = res['unread_count'] > 0 ? 'flex' : 'none';
+  return "\n            <tr data-id=".concat(res['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res['line_name'], "</td>\n                  <td data-id=").concat(res['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res['id'], "/").concat(admin_account_id, "'>\n                                    <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                          <img src='/img/icons8-message-24.png' alt=''>\n                                    </button>\n                              </a>\n                              <button class='operation_icon js_edit_user_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button class='operation_icon js_block_btn' data-uuid=").concat(res['entity_uuid'], " data-name=").concat(res['line_name'], " data-id=").concat(res['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createMessageRow = function createMessageRow(res, admin_account_id) {
-  var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]["created_at"]);
+  var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res[0]['created_at']);
   var latestMessageDate = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)();
-  var display = res[0]["unread_count"] > 0 ? "flex" : "none";
-  return "\n            <tr data-id=".concat(res[0]["entity_uuid"], " class=\"js_chatUser_id\">\n                  <td w20 class=\"chat_user_name\" data-simplebar>").concat(res[0]["line_name"], "</td>\n                  <td data-id=").concat(res[0]["id"], ">\n                        <div class=\"message_count js_message_count\" style=\"display:").concat(display, "; font-weight: bold;\">").concat(res[0]["unread_count"], "</div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]["id"], "/").concat(admin_account_id, "\">\n                              <button type=\"submit\" title=\"\u30C8\u30FC\u30AF\" class=\"operation_icon redirect_btn\">\n                                    <img src=\"/img/icons8-message-24.png\" alt=\"\">\n                              </button>\n                        </a>\n                        <button class=\"operation_icon js_edit_user_btn\" data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button class=\"operation_icon js_block_btn\" data-uuid=").concat(res[0]["entity_uuid"], " data-name=").concat(res[0]["line_name"], " data-id=").concat(res[0]["id"], "><img src=\"/img/icons8-no-entry-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+  var display = res[0]['unread_count'] > 0 ? 'flex' : 'none';
+  return "\n            <tr data-id=".concat(res[0]['entity_uuid'], " class='js_chatUser_id'>\n                  <td w20 class='chat_user_name' data-simplebar>").concat(res[0]['line_name'], "</td>\n                  <td data-id=").concat(res[0]['id'], ">\n                        <div class='message_count js_message_count' style='display:").concat(display, "; font-weight: bold;'>").concat(res[0]['unread_count'], "</div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat(latestMessageDate, "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_URL, "/").concat(res[0]['id'], "/").concat(admin_account_id, "'>\n                                    <button type='submit' title='\u30C8\u30FC\u30AF' class='operation_icon redirect_btn'>\n                                          <img src='/img/icons8-message-24.png' alt=''>\n                                    </button>\n                              </a>\n                              <button class='operation_icon js_edit_user_btn' data-id=").concat(res[0]['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button class='operation_icon js_block_btn' data-uuid=").concat(res[0]['entity_uuid'], " data-name=").concat(res[0]['line_name'], " data-id=").concat(res[0]['id'], "><img src='/img/icons8-no-entry-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createBroadcastMessageRow = function createBroadcastMessageRow(data, id) {
   // 改行を<br>タグに変換
-  // const displayedData = data.type == "text" ? data.display.replace(/\n/g, '<br>') : `<img  src='${data.display}' class="displayImg js_img">`
-  var displayedData = data.type == "text" ? escapeHtml(data.display).replace(/\n/g, '<br>') : "<img  src='".concat(data.display, "' class=\"displayImg js_img\">");
-  return "\n            <div class=\"card js_card mb-2\">\n                  <div class=\"card-header js_headings\" id=\"heading".concat(data.elementLength, "\" data-id=").concat(data.index, ">\n                        <div class=\"card-header-left\">\n                              <img src=\"/img/icons8-drag-25.png\" class=\"drag-handle\" style =\"width: 20px;\"/>\n                              <h5 class=\"mb-0\">\n                                    <button class=\"btn collapsed\" data-toggle=\"collapse\" data-target=\"#collapse").concat(data.elementLength, "\" aria-expanded=\"false\" aria-controls=\"collapse").concat(data.elementLength, "\">\n                                          ").concat(escapeHtml(data.heading), "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class=\"js_deleteList\">\xD7</p>\n                  </div>\n            \n                  <div id=\"collapse").concat(data.elementLength, "\" class=\"collapse\" aria-labelledby=\"heading").concat(data.elementLength, "\" data-parent=\"#").concat(id, "\">\n                        <div class=\"card-body js_data\" data-id=\"").concat(data.elementLength, "\">").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
+  // const displayedData = data.type == 'text' ? data.display.replace(/\n/g, '<br>') : `<img  src='${data.display}' class='displayImg js_img'>`
+  var displayedData = data.type == 'text' ? escapeHtml(data.display).replace(/\n/g, '<br>') : "<img  src='".concat(data.display, "' class='displayImg js_img'>");
+  return "\n            <div class='card js_card mb-2'>\n                  <div class='card-header js_headings' id='heading".concat(data.elementLength, "' data-id=").concat(data.index, ">\n                        <div class='card-header-left'>\n                              <img src='/img/icons8-drag-25.png' class='drag-handle' style ='width: 20px;'/>\n                              <h5 class='mb-0'>\n                                    <button class='btn collapsed' data-toggle='collapse' data-target='#collapse").concat(data.elementLength, "' aria-expanded='false' aria-controls='collapse").concat(data.elementLength, "'>\n                                          ").concat(escapeHtml(data.heading), "\n                                    </button>\n                              </h5>\n                        </div>\n                        <p class='js_deleteList'>\xD7</p>\n                  </div>\n            \n                  <div id='collapse").concat(data.elementLength, "' class='collapse' aria-labelledby='heading").concat(data.elementLength, "' data-parent='#").concat(id, "'>\n                        <div class='card-body js_data' data-id='").concat(data.elementLength, "'>").concat(displayedData, "</div>\n                  </div>\n            </div>\n      ");
 };
 var createAccountDataRow = function createAccountDataRow(res, categories) {
   var _res$latest_message_d;
-  var style = res["unread_count"] > 0 ? "flex" : "none";
+  var style = res['unread_count'] > 0 ? 'flex' : 'none';
   var statusMap = {
-    "1": "使用中",
-    "2": "未使用",
-    "3": "停止",
-    "4": "バン"
+    '1': '使用中',
+    '2': '未使用',
+    '3': '停止',
+    '4': 'バン'
   };
-  var status = statusMap[res["account_status"]];
-  var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res["created_at"]);
-  return "\n            <tr class=\"js_account_id\" data-id=\"".concat(res["entity_uuid"], "\">\n                  <td w20 class=\"account_name\" data-simplebar>").concat(res["account_name"], "</td>\n                  <td class=\" text-center total_message-count\">\n                        <div class=\"message_count js_mesage_count js_total_count\" style=\"display: ").concat(style, "; font-weight: bold;\">").concat(res["unread_count"], "</div>\n                  </td>\n                  <td data-id=").concat(res["id"], " class=\"js_status\" style=\"color: #008000; cursor: pointer;\">\n                        <div class=\"btn-group\">\n                              <button class=\"btn btn-secondary btn-sm dropdown-toggle js_status_btn\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">\n                                    ").concat(status, "\n                              </button>\n                              <ul class=\"dropdown-menu\">\n                                    ").concat(categories.filter(function (category) {
+  var status = statusMap[res['account_status']];
+  var createdAtTokyo = (0,_util_formatDate_js__WEBPACK_IMPORTED_MODULE_0__.formateDateToAsia)(res['created_at']);
+  return "\n            <tr class='js_account_id' data-id='".concat(res['entity_uuid'], "'>\n                  <td w20 class='account_name' data-simplebar>").concat(res['account_name'], "</td>\n                  <td class=' text-center total_message-count'>\n                        <div class='message_count js_mesage_count js_total_count' style='display: ").concat(style, "; font-weight: bold;'>").concat(res['unread_count'], "</div>\n                  </td>\n                  <td data-id=").concat(res['id'], " class='js_status' style='color: #008000; cursor: pointer;'>\n                        <div class='btn-group'>\n                              <button class='btn btn-secondary btn-sm dropdown-toggle js_status_btn' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n                                    ").concat(status, "\n                              </button>\n                              <ul class='dropdown-menu'>\n                                    ").concat(categories.filter(function (category) {
     return category.status !== status;
   }).map(function (category) {
-    return "\n                                                <li class=\"dropdown-item js_status_choices\" \n                                                      data-current-status=\"".concat(status, "\"\n                                                      data-status-name=\"").concat(category.status, "\"\n                                                      data-status-id=\"").concat(category.id, "\"\n                                                      data-account-id=\"").concat(res["id"], "\">\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
-  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class=\"js_latest_message_date\">").concat((_res$latest_message_d = res["latest_message_date"]) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : "", "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td class=\"operation\">\n                        <a href=\"").concat(CHAT_BASE_URL, "/account/show/").concat(res["id"], "\"><button  title=\"\u30EA\u30B9\u30C8\" class=\"operation_icon\"><img src=\"/img/icons8-user-24.png\" alt=\"\"></button></a>\n                        <button  title=\"\u4E00\u6589\u9001\u4FE1\" class=\"operation_icon js_send_message_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-send-24.png\" alt=\"\"></button>\n                        <button  title=\"\u60C5\u5831\" class=\"operation_icon js_edit_account_btn\" data-id=").concat(res["id"], "><img src=\"/img/icons8-edit-24.png\" alt=\"\"></button>\n                        <button   title=\"\u524A\u9664\"class=\"operation_icon js_delete_account_btn\" type=\"submit\" data-id=").concat(res["id"], " data-name=").concat(res["account_name"], "><img src=\"/img/icons8-delete-24.png\" alt=\"\"></button>\n                  </td>\n            </tr>\n      ");
+    return "\n                                                <li class='dropdown-item js_status_choices' \n                                                      data-current-status='".concat(status, "'\n                                                      data-status-name='").concat(category.status, "'\n                                                      data-status-id='").concat(category.id, "'\n                                                      data-account-id='").concat(res['id'], "'>\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
+  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                              <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                              <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                  <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                        <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                        <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class=\"block-actions\">\n                  <button class=\"btn btn-icon btn-light delete-block\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <polyline points=\"3 6 5 6 21 6\"></polyline>\n                              <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                              <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                              <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <textarea class=\"block-textarea\" placeholder=\"\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\" name=\"content_text\" maxLength=\"1000\" data-id=".concat(id !== null && id !== void 0 ? id : "", ">").concat(value !== null && value !== void 0 ? value : "", "</textarea>\n            </div>\n      ");
+  return "\n            <div class='block-header'>\n                  <div class='block-title'>\n                  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                        <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'></path>\n                        <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'></path>\n                  </svg>\n                  \u30C6\u30AD\u30B9\u30C8\n                  </div>\n                  <div class='block-actions'>\n                  <button class='btn btn-icon btn-light delete-block'>\n                        <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                              <polyline points='3 6 5 6 21 6'></polyline>\n                              <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>\n                              <line x1='10' y1='11' x2='10' y2='17'></line>\n                              <line x1='14' y1='11' x2='14' y2='17'></line>\n                        </svg>\n                  </button>\n                  </div>\n            </div>\n            <div class='block-content'>\n                  <textarea class='block-textarea' placeholder='\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044' name='content_text' maxLength='1000' data-id=".concat(id !== null && id !== void 0 ? id : '', ">").concat(value !== null && value !== void 0 ? value : '', "</textarea>\n            </div>\n      ");
 };
 var createImageBlock = function createImageBlock(blockCounter) {
-  return "\n            <div class=\"block-header\">\n                  <div class=\"block-title\">\n                        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                              <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect>\n                              <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle>\n                              <polyline points=\"21 15 16 10 5 21\"></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class=\"block-actions\">\n                        <button class=\"btn btn-icon btn-light delete-block\">\n                              <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class=\"block-content\">\n                  <div class=\"image-upload\">\n                        <input type=\"file\" class=\"file-input\" id=\"fileInput".concat(blockCounter, "\" accept=\"image/*\" name=\"image_path\">\n                        <label for=\"fileInput").concat(blockCounter, "\">\n                              <div class=\"image-placeholder\">\n                                    <img src=\"/img/icons8-plus-50.png\" alt=\"\" class=\"image_element\">\n                                    <p class=\"image-placeholder-txt\">\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
+  return "\n            <div class='block-header'>\n                  <div class='block-title'>\n                        <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                              <rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect>\n                              <circle cx='8.5' cy='8.5' r='1.5'></circle>\n                              <polyline points='21 15 16 10 5 21'></polyline>\n                        </svg>\n                        \u753B\u50CF\n                  </div>\n                  <div class='block-actions'>\n                        <button class='btn btn-icon btn-light delete-block'>\n                              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <polyline points='3 6 5 6 21 6'></polyline>\n                                    <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>\n                                    <line x1='10' y1='11' x2='10' y2='17'></line>\n                                    <line x1='14' y1='11' x2='14' y2='17'></line>\n                              </svg>\n                        </button>\n                  </div>\n            </div>\n            <div class='block-content'>\n                  <div class='image-upload'>\n                        <input type='file' class='file-input' id='fileInput".concat(blockCounter, "' accept='image/*' name='image_path'>\n                        <label for='fileInput").concat(blockCounter, "'>\n                              <div class='image-placeholder'>\n                                    <img src='/img/icons8-plus-50.png' alt='' class='image_element'>\n                                    <p class='image-placeholder-txt'>\u30D5\u30A1\u30A4\u30EB\u306E\u9078\u629E</p>\n                              </div>\n                        </label>\n                  </div>\n            </div>\n      ");
 };
 var createMessageTemplate = function createMessageTemplate(templates) {
   return templates.map(function (template, index) {
-    var categoryName = "";
+    var categoryName = '';
     if (template.category_name.length > 40) {
       categoryName = template.category_name.substring(0, 40) + '...';
     } else {
       categoryName = template.category_name;
     }
-    var templateName = "";
+    var templateName = '';
     if (template.template_name.length > 40) {
       templateName = template.template_name.substring(0, 40) + '...';
     } else {
       templateName = template.template_name;
     }
-    return "\n                  <div class=\"template-item\" data-id=".concat(template["category_id"], " data-order=\"").concat(template["display_order"], "\">\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" name=\"template_order[]\" class=\"template_order\">\n                        <div class=\"template-order-controls\">\n                              <button type=\"button\" class=\"order-btn move-up-btn\" title=\"\u4E0A\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"18 15 12 9 6 15\"></polyline>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"order-btn move-down-btn\" title=\"\u4E0B\u306B\u79FB\u52D5\">\n                                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"6 9 12 15 18 9\"></polyline>\n                                    </svg>\n                              </button>\n                        </div>\n                        <div class=\"template-content\">\n                              ").concat(template.contents.map(function (content) {
-      return "\n                                    <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
-    }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(escapeHtml(categoryName), "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
+    return "\n                  <div class='template-item' data-id=".concat(template['category_id'], " data-order='").concat(template['display_order'], "'>\n                        <input type='hidden' value='").concat(template.template_id, "' name='template_order[]' class='template_order'>\n                        <div class='template-order-controls'>\n                              <button type='button' class='order-btn move-up-btn' title='\u4E0A\u306B\u79FB\u52D5'>\n                                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <polyline points='18 15 12 9 6 15'></polyline>\n                                    </svg>\n                              </button>\n                              <button type='button' class='order-btn move-down-btn' title='\u4E0B\u306B\u79FB\u52D5'>\n                                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <polyline points='6 9 12 15 18 9'></polyline>\n                                    </svg>\n                              </button>\n                        </div>\n                        <div class='template-content'>\n                              ").concat(template.contents.map(function (content) {
+      return "\n                                    <div class='js_blockcontents' data-id='".concat(content.id, "' data-order='").concat(content.display_order, "' data-type='").concat(content.content_type, "'> \n                                    <input type='hidden' class='js_content_text' value='").concat(content.content_text || '', "'>\n                                    <input type='hidden' class='js_image_path' value='").concat(content.image_path || '', "' data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
+    }).join(''), "\n                              <input type='hidden' value='").concat(template.template_id, "' class='template_id'>\n                              <input type='hidden' value='").concat(template.group_id, "' class='group_id'>\n                              <div class='template-title' style='font-weight: 600;' data-name='").concat(template.template_name, "'>").concat(templateName, "</div>\n                              <div class='template-category' data-id='").concat(template.category_id, "'>").concat(escapeHtml(categoryName), "</div>\n                              <div class='template-text'>").concat(template.contents[0].content_type === 'text' ? template.contents[0].content_text : '画像', "</div>\n                        </div>\n                        <div class='template-actions'>\n                              <button type='button' class='action-btn edit-btn template_edit-btn' title='\u7DE8\u96C6'>\n                                    <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'></path>\n                                    <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'></path>\n                                    </svg>\n                              </button>\n                              <button type='button' class='action-btn delete-btn template_delete_btn' title='\u524A\u9664'>\n                                    <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <polyline points='3 6 5 6 21 6'></polyline>\n                                    <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>\n                                    <line x1='10' y1='11' x2='10' y2='17'></line>\n                                    <line x1='14' y1='11' x2='14' y2='17'></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
   }).join('');
 };
 
@@ -2774,39 +2810,44 @@ var createMessageTemplate = function createMessageTemplate(templates) {
  * @return {string} - エスケープされた文字列
  */
 var escapeHtml = function escapeHtml(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 };
 var addCategoryButton = function addCategoryButton(category) {
-  var categoryName = category["name"].length > 20 ? category["name"].substring(0, 20) + "..." : category["name"];
-  return "\n            <button type=\"button\" class=\"category-btn\" data-id=\"".concat(category["id"], "\" data-category=\"").concat(category["name"], "\" title=\"").concat(category["name"], "\">").concat(escapeHtml(categoryName), "</button>\n      ");
+  var categoryName = category['name'].length > 20 ? category['name'].substring(0, 20) + '...' : category['name'];
+  return "\n            <button type='button' class='category-btn' data-id='".concat(category['id'], "' data-category='").concat(category['name'], "' title='").concat(category['name'], "'>").concat(escapeHtml(categoryName), "</button>\n      ");
 };
 var crateCategoryButton = function crateCategoryButton(category) {
-  return "\n            <option class=\"category-option\" value=".concat(category["id"], ">").concat(escapeHtml(category["name"]), "</option>\n      ");
+  return "\n            <option class='category-option' value=".concat(category['id'], ">").concat(escapeHtml(category['name']), "</option>\n      ");
 };
 var editCategoryButton = function editCategoryButton(category) {
-  return "\n            <option class=\"edit-category\" value=".concat(category["id"], ">").concat(escapeHtml(category["name"]), "</option>\n      ");
+  return "\n            <option class='edit-category' value=".concat(category['id'], ">").concat(escapeHtml(category['name']), "</option>\n      ");
 };
 var createMessageTemplateForAll = function createMessageTemplateForAll(templates) {
   return templates.map(function (template, index) {
-    var categoryName = "";
+    var categoryName = '';
     if (template.category_name.length > 40) {
       categoryName = template.category_name.substring(0, 40) + '...';
     } else {
       categoryName = template.category_name;
     }
-    var templateName = "";
+    var templateName = '';
     if (template.template_name.length > 40) {
       templateName = template.template_name.substring(0, 40) + '...';
     } else {
       templateName = template.template_name;
     }
-    return "\n                  <div class=\"template-item\" data-id=".concat(template["category_id"], " data-order=\"").concat(template["display_order"], "\">\n                        <input type=\"hidden\" value=\"").concat(template.template_id, "\" name=\"template_order[]\" class=\"template_order\">\n                        <div class=\"template-content\">\n                              ").concat(template.contents.map(function (content) {
-      return "\n                                    <div class=\"js_blockcontents\" data-id=\"".concat(content.id, "\" data-order=\"").concat(content.display_order, "\" data-type=\"").concat(content.content_type, "\"> \n                                    <input type=\"hidden\" class=\"js_content_text\" value=\"").concat(content.content_text || '', "\">\n                                    <input type=\"hidden\" class=\"js_image_path\" value=\"").concat(content.image_path || '', "\" data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
-    }).join(''), "\n                              <input type=\"hidden\" value=\"").concat(template.template_id, "\" class=\"template_id\">\n                              <input type=\"hidden\" value=\"").concat(template.group_id, "\" class=\"group_id\">\n                              <div class=\"template-title\" style=\"font-weight: 600;\" data-name=\"").concat(template.template_name, "\">").concat(templateName, "</div>\n                              <div class=\"template-category\" data-id=\"").concat(template.category_id, "\">").concat(escapeHtml(categoryName), "</div>\n                              <div class=\"template-text\">").concat(template.contents[0].content_type === "text" ? template.contents[0].content_text : "画像", "</div>\n                        </div>\n                        <div class=\"template-actions\">\n                              <button type=\"button\" class=\"action-btn edit-btn template_edit-btn\" title=\"\u7DE8\u96C6\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path>\n                                    <path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>\n                                    </svg>\n                              </button>\n                              <button type=\"button\" class=\"action-btn delete-btn template_delete_btn\" title=\"\u524A\u9664\">\n                                    <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n                                    <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
+    return "\n                  <div class='template-item' data-id=".concat(template['category_id'], " data-order='").concat(template['display_order'], "'>\n                        <input type='hidden' value='").concat(template.template_id, "' name='template_order[]' class='template_order'>\n                        <div class='template-content'>\n                              ").concat(template.contents.map(function (content) {
+      return "\n                                    <div class='js_blockcontents' data-id='".concat(content.id, "' data-order='").concat(content.display_order, "' data-type='").concat(content.content_type, "'> \n                                    <input type='hidden' class='js_content_text' value='").concat(content.content_text || '', "'>\n                                    <input type='hidden' class='js_image_path' value='").concat(content.image_path || '', "' data-crop='").concat(content.cropArea || '', "'>\n                                    </div>\n                              ");
+    }).join(''), "\n                              <input type='hidden' value='").concat(template.template_id, "' class='template_id'>\n                              <input type='hidden' value='").concat(template.group_id, "' class='group_id'>\n                              <div class='template-title' style='font-weight: 600;' data-name='").concat(template.template_name, "'>").concat(templateName, "</div>\n                              <div class='template-category' data-id='").concat(template.category_id, "'>").concat(escapeHtml(categoryName), "</div>\n                              <div class='template-text'>").concat(template.contents[0].content_type === 'text' ? template.contents[0].content_text : '画像', "</div>\n                        </div>\n                        <div class='template-actions'>\n                              <button type='button' class='action-btn edit-btn template_edit-btn' title='\u7DE8\u96C6'>\n                                    <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'></path>\n                                    <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'></path>\n                                    </svg>\n                              </button>\n                              <button type='button' class='action-btn delete-btn template_delete_btn' title='\u524A\u9664'>\n                                    <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\n                                    <polyline points='3 6 5 6 21 6'></polyline>\n                                    <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>\n                                    <line x1='10' y1='11' x2='10' y2='17'></line>\n                                    <line x1='14' y1='11' x2='14' y2='17'></line>\n                                    </svg>\n                              </button>\n                        </div>\n                  </div>\n            ");
   }).join('');
 };
 var crateCategoryList = function crateCategoryList(category) {
-  return "\n            <tr class=\"category-item-row\" data-id=\"".concat(category["id"], "\">\n                  <td>\n                        \n                        <input type=\"hidden\" name=\"id\" value=\"").concat(category["id"], "\" class=\"js_category_id\">\n                        <input type=\"hidden\" name=\"admin_id\" value=\"").concat(category["admin_id"], "\" class=\"js_admin_id\">\n                        <input type=\"text\" name=\"category_name_edit\" class=\"category-edit-input disabled\" readonly=\"\" value=\"").concat(category["name"], "\" maxlength=\"255\">\n                  </td>\n                  <td class=\"category-actions\">\n                        <button type=\"button\" class=\"btn btn-edit edit-category-btn\" title=\"\u7DE8\u96C6\">\n                              <i class=\"fas fa-edit\"></i>\n                        </button>\n                        <button type=\"button\" class=\"btn btn-save save-category-btn disabled\" title=\"\u4FDD\u5B58\">\n                              <i class=\"fas fa-check\"></i>\n                        </button>\n                        <button type=\"button\" class=\"btn btn-cancel cancel-edit-btn\" title=\"\u30AD\u30E3\u30F3\u30BB\u30EB\">\n                              <i class=\"fas fa-times\"></i>\n                        </button>\n                  </td>\n            </tr>\n      ");
+  return "\n            <tr class='category-item-row' data-id='".concat(category['id'], "'>\n                  <td>\n                        \n                        <input type='hidden' name='id' value='").concat(category['id'], "' class='js_category_id'>\n                        <input type='hidden' name='admin_id' value='").concat(category['admin_id'], "' class='js_admin_id'>\n                        <input type='text' name='category_name_edit' class='category-edit-input disabled' readonly='' value='").concat(category['name'], "' maxlength='255'>\n                  </td>\n                  <td class='category-actions'>\n                        <button type='button' class='btn btn-edit edit-category-btn' title='\u7DE8\u96C6'>\n                              <i class='fas fa-edit'></i>\n                        </button>\n                        <button type='button' class='btn btn-save save-category-btn disabled' title='\u4FDD\u5B58'>\n                              <i class='fas fa-check'></i>\n                        </button>\n                        <button type='button' class='btn btn-cancel cancel-edit-btn' title='\u30AD\u30E3\u30F3\u30BB\u30EB'>\n                              <i class='fas fa-times'></i>\n                        </button>\n                  </td>\n            </tr>\n      ");
+};
+var createTestSenderList = function createTestSenderList(testSender) {
+  var _ref;
+  var src = (_ref = "".concat(testSender["user_picture"])) !== null && _ref !== void 0 ? _ref : '/img/user (1).png';
+  return "\n            <div class=\"user-item\" data-user-id=\"".concat(testSender["user_id"], "\">\n                  <label class=\"user-checkbox\">\n                        <input type=\"checkbox\" class=\"user-select\" data-user-id=\"").concat(testSender["user_id"], "\">\n                        <span class=\"checkmark\"></span>\n                  </label>\n                  <img src=\"").concat(src, "\" alt=\"\" class=\"user-avatar\">\n                  <div class=\"user-info\">\n                        <h4 class=\"user-name\">").concat(testSender["account_name"], "</h4>\n                        <p class=\"user-id\">ID: ").concat(testSender["user_id"], "</p>\n                  </div>\n                  <div class=\"user-actions\">\n                        <button type=\"button\" class=\"action-btn single-send js_send_individual_btn\" title=\"\u3053\u306E\u30E6\u30FC\u30B6\u30FC\u306B\u30C6\u30B9\u30C8\u9001\u4FE1\" data-user-id=\"").concat(testSender["user_id"], "\">\n                              <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"22\" y1=\"2\" x2=\"11\" y2=\"13\"></line><polygon points=\"22 2 15 22 11 13 2 9 22 2\"></polygon></svg>\n                        </button>\n                        <button type=\"button\" class=\"action-btn js_delete_user-item\" title=\"\u524A\u9664\" data-user-id=\"").concat(testSender["id"], "\">\n                              <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3 6 5 6 21 6\"></polyline><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path></svg>\n                        </button>\n                  </div>\n            </div>\n      ");
 };
 
 /***/ }),
@@ -2842,6 +2883,604 @@ var fetchSpecificUserInfo = function fetchSpecificUserInfo(e, modal) {
 
 /***/ }),
 
+/***/ "./resources/js/module/component/messageTemplate/DataGenerator.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/module/component/messageTemplate/DataGenerator.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   templateImageData: () => (/* binding */ templateImageData)
+/* harmony export */ });
+var templateImageData = [];
+
+/***/ }),
+
+/***/ "./resources/js/module/component/message/SendingDataServiceInterface.js":
+/*!******************************************************************************!*\
+  !*** ./resources/js/module/component/message/SendingDataServiceInterface.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SendingDataServiceInterface)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var SendingDataServiceInterface = /*#__PURE__*/function () {
+  function SendingDataServiceInterface(baseUrl, operationType, modal) {
+    _classCallCheck(this, SendingDataServiceInterface);
+    if ((this instanceof SendingDataServiceInterface ? this.constructor : void 0) === SendingDataServiceInterface) {
+      throw new Error('インターフェースのインスタンスは作成できません');
+    }
+    this.baseUrl = baseUrl;
+    this.operationType = operationType;
+    this.formData = new FormData();
+    this.modal = modal;
+    this.bg = document.querySelector(".bg");
+    this.loader = document.querySelector(".loader");
+  }
+  return _createClass(SendingDataServiceInterface, [{
+    key: "operateImageData",
+    value: function operateImageData(item, index) {
+      // FormDataから画像を取得
+      var imageFile = item.formData.get('image');
+      if (imageFile) {
+        this.formData.append("images[".concat(index, "]"), imageFile, item.fileName);
+      }
+      if (item.url && item.cropArea) {
+        this.formData.append("images[".concat(index, "][meta]"), JSON.stringify({
+          url: item.url,
+          cropArea: item.cropArea
+        }));
+      }
+    }
+  }, {
+    key: "operateTextData",
+    value: function operateTextData(item, index) {
+      this.formData.append("messages[".concat(index, "]"), item.data);
+    }
+  }, {
+    key: "submitBroadcastMessageToServer",
+    value: function () {
+      var _submitBroadcastMessageToServer = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(userIds) {
+        var type,
+          admin_id,
+          response,
+          data,
+          _args = arguments;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              type = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
+              _context.prev = 1;
+              admin_id = document.getElementById("js_account_id").value;
+              this.modalOperator();
+              this.prepareBroadcastFormData(userIds);
+              if (type) {
+                this.formData.append("type", type);
+              }
+
+              // const formDataObj = Object.fromEntries(this.formData.entries());
+              // console.log("FormData contents:", formDataObj);
+              _context.next = 8;
+              return fetch("".concat(this.baseUrl, "/").concat(admin_id), {
+                method: 'POST',
+                body: this.formData
+              });
+            case 8:
+              response = _context.sent;
+              if (!response.ok) {
+                alert("一斉送信の作成でエラーが発生しました。もう一度お試しください");
+              }
+              _context.next = 12;
+              return response.json();
+            case 12:
+              data = _context.sent;
+              return _context.abrupt("return", data);
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](1);
+              console.log(_context.t0);
+            case 19:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this, [[1, 16]]);
+      }));
+      function submitBroadcastMessageToServer(_x) {
+        return _submitBroadcastMessageToServer.apply(this, arguments);
+      }
+      return submitBroadcastMessageToServer;
+    }()
+    /**
+    *  送信ボタンを押す前の値があるかのチェック
+    * @param {String} id - データを表示させてる要素のID
+    * @return {boolean} -リストが一つでもあればtrue,それ以外はfalse
+    */
+  }, {
+    key: "successOperator",
+    value:
+    // ############################################################################
+    // ############################## 抽象メソッド #################################
+    // ############################################################################
+
+    /**
+     * 非同期処理成功時処理
+     * @returns {void}
+     */
+    function successOperator() {
+      throw new Error('Method not implemented');
+    }
+
+    /**
+     * socketサーバーにデータを送信する処理
+     * @returns {void}
+     */
+  }, {
+    key: "emitBroadcastMessageToSocket",
+    value: (function () {
+      var _emitBroadcastMessageToSocket = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var userIds,
+          _args2 = arguments;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              userIds = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : [];
+              throw new Error('Method not implemented');
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }));
+      function emitBroadcastMessageToSocket() {
+        return _emitBroadcastMessageToSocket.apply(this, arguments);
+      }
+      return emitBroadcastMessageToSocket;
+    }()
+    /**
+     * モーダル処理
+     * @returns {void}
+     */
+    )
+  }, {
+    key: "modalOperator",
+    value: function modalOperator() {
+      throw new Error('Method not implemented');
+    }
+
+    /**
+     * データを生成する
+     * @returns {void}
+     */
+  }, {
+    key: "prepareBroadcastFormData",
+    value: function prepareBroadcastFormData(userIds) {
+      throw new Error('Method not implemented');
+    }
+
+    /**
+     * socketサーバーにデータを送信する処理
+     * @returns {void}
+     */
+  }, {
+    key: "sendMessageToSocket",
+    value: function sendMessageToSocket() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      return;
+    }
+
+    /**
+     * エラーハンドリング処理
+     * @returns {void}
+     */
+  }, {
+    key: "errorHandle",
+    value: function errorHandle() {
+      return;
+    }
+  }], [{
+    key: "hasValue",
+    value: function hasValue(id) {
+      var accordion = document.getElementById(id);
+      var lists = accordion.querySelectorAll(".js_card");
+      return lists.length > 0;
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/message/TestSendingData.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/module/component/message/TestSendingData.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TestSendingData)
+/* harmony export */ });
+/* harmony import */ var _util_socket_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/socket.js */ "./resources/js/module/util/socket.js");
+/* harmony import */ var _testSender_uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../testSender/uiController/ProcessingManager.js */ "./resources/js/module/component/testSender/uiController/ProcessingManager.js");
+/* harmony import */ var _handler_MessageHandlerFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./handler/MessageHandlerFactory.js */ "./resources/js/module/component/message/handler/MessageHandlerFactory.js");
+/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+
+
+
+var TestSendingData = /*#__PURE__*/function (_SendingDataServiceIn) {
+  function TestSendingData(parent, url, type) {
+    var _this;
+    _classCallCheck(this, TestSendingData);
+    var baseUrl = url;
+    var operationType = "test";
+    var modal = document.getElementById("js_test_sender");
+    _this = _callSuper(this, TestSendingData, [baseUrl, operationType, modal]);
+    _this.testSenderLoader = document.querySelector(".loader-wrapper");
+    _this.classType = type;
+    _this.parent = parent;
+    return _this;
+  }
+  _inherits(TestSendingData, _SendingDataServiceIn);
+  return _createClass(TestSendingData, [{
+    key: "emitBroadcastMessageToSocket",
+    value: function () {
+      var _emitBroadcastMessageToSocket = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var userIds,
+          response,
+          _args = arguments;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              userIds = _args.length > 0 && _args[0] !== undefined ? _args[0] : [];
+              _context.prev = 1;
+              _context.next = 4;
+              return this.submitBroadcastMessageToServer(userIds, this.classType);
+            case 4:
+              response = _context.sent;
+              this.formData = new FormData();
+              // 成功メッセージを出す処理
+              this.successOperator();
+              this.sendMessageToSocket(response);
+              _context.next = 13;
+              break;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](1);
+              console.log(_context.t0);
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this, [[1, 10]]);
+      }));
+      function emitBroadcastMessageToSocket() {
+        return _emitBroadcastMessageToSocket.apply(this, arguments);
+      }
+      return emitBroadcastMessageToSocket;
+    }()
+  }, {
+    key: "modalOperator",
+    value: function modalOperator() {
+      var processingManager = _testSender_uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance();
+      processingManager.onProcess();
+    }
+
+    /**
+    * 非同期処理成功時処理
+    * @override
+    */
+  }, {
+    key: "successOperator",
+    value: function successOperator() {
+      var processingManager = _testSender_uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance();
+      processingManager.onDone();
+      this.parent.resetData();
+      var success_el = document.getElementById("js_alert_success");
+      success_el.style.display = "block";
+      success_el.innerHTML = "メッセージのテスト送信に成功しました";
+
+      // 成功メッセージを出して2秒後に非表示にする
+      setTimeout(function () {
+        success_el.style.display = "none";
+      }, 2000);
+    }
+
+    /**
+     * socketサーバーにデータを送信する処理
+     * @override
+     */
+  }, {
+    key: "sendMessageToSocket",
+    value: function sendMessageToSocket(response) {
+      var created_at = response.created_at,
+        data = response.data,
+        userIds = response.userIds;
+      _util_socket_js__WEBPACK_IMPORTED_MODULE_0__["default"].emit("test message", {
+        sendingDatatoBackEnd: data,
+        userIds: userIds,
+        created_at: created_at,
+        type: this.classType
+      });
+    }
+  }, {
+    key: "prepareBroadcastFormData",
+    value: function prepareBroadcastFormData(userIds) {
+      var handler = _handler_MessageHandlerFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].getHandler(this);
+      handler.handle(userIds);
+    }
+  }]);
+}(_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/message/handler/BroadacstHandler.js":
+/*!***************************************************************************!*\
+  !*** ./resources/js/module/component/message/handler/BroadacstHandler.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BroadacstHandler)
+/* harmony export */ });
+/* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var BroadacstHandler = /*#__PURE__*/function () {
+  function BroadacstHandler(sendingDataService) {
+    _classCallCheck(this, BroadacstHandler);
+    this.sendingDataService = sendingDataService;
+  }
+  return _createClass(BroadacstHandler, [{
+    key: "handle",
+    value: function handle(userIds) {
+      var _this = this;
+      if (!_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_1__["default"].hasValue("accordion")) {
+        this.errorHandle();
+      }
+      var formDataArray = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getState();
+
+      // sendMessage のデータを FormData に保存
+      if (userIds.length > 0) {
+        this.sendingDataService.formData.append('userIds', JSON.stringify(userIds));
+      }
+      formDataArray.forEach(function (item, index) {
+        if (item !== undefined && item.type !== undefined) {
+          if (item.type === 'image') {
+            _this.sendingDataService.operateImageData(item, index);
+          } else if (item.type === 'text') {
+            _this.sendingDataService.operateTextData(item, index);
+          }
+        }
+      });
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/message/handler/GreetingHandler.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/module/component/message/handler/GreetingHandler.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ GreetingHandler)
+/* harmony export */ });
+/* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../SendingDataServiceInterface.js */ "./resources/js/module/component/message/SendingDataServiceInterface.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var GreetingHandler = /*#__PURE__*/function () {
+  function GreetingHandler(sendingDataService) {
+    _classCallCheck(this, GreetingHandler);
+    this.sendingDataService = sendingDataService;
+  }
+  return _createClass(GreetingHandler, [{
+    key: "handle",
+    value: function handle(userIds) {
+      var _this = this;
+      if (!_SendingDataServiceInterface_js__WEBPACK_IMPORTED_MODULE_1__["default"].hasValue("accordion")) {
+        this.errorHandle();
+      }
+      var formDataArray = _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getState();
+      // sendMessage のデータを FormData に保存
+      if (userIds.length > 0) {
+        // 配列全体を一つのキーで追加する方法
+        this.sendingDataService.formData.append('userIds', JSON.stringify(userIds));
+      }
+      formDataArray.forEach(function (item, index) {
+        if (item !== undefined && item.type !== undefined) {
+          if (item.type === 'image') {
+            _this.sendingDataService.operateImageData(item, index);
+          } else if (item.type === 'text') {
+            _this.sendingDataService.operateTextData(item, index);
+          }
+        }
+      });
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/message/handler/MessageHandlerFactory.js":
+/*!********************************************************************************!*\
+  !*** ./resources/js/module/component/message/handler/MessageHandlerFactory.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MessageHandlerFactory)
+/* harmony export */ });
+/* harmony import */ var _BroadacstHandler_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BroadacstHandler.js */ "./resources/js/module/component/message/handler/BroadacstHandler.js");
+/* harmony import */ var _GreetingHandler_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GreetingHandler.js */ "./resources/js/module/component/message/handler/GreetingHandler.js");
+/* harmony import */ var _TemplateHandler_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TemplateHandler.js */ "./resources/js/module/component/message/handler/TemplateHandler.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var MessageHandlerFactory = /*#__PURE__*/function () {
+  function MessageHandlerFactory() {
+    _classCallCheck(this, MessageHandlerFactory);
+  }
+  return _createClass(MessageHandlerFactory, null, [{
+    key: "getHandler",
+    value: function getHandler(sendingService) {
+      switch (sendingService.classType) {
+        case "broadcast":
+          return new _BroadacstHandler_js__WEBPACK_IMPORTED_MODULE_0__["default"](sendingService);
+        case "greeting":
+          return new _GreetingHandler_js__WEBPACK_IMPORTED_MODULE_1__["default"](sendingService);
+        case "template":
+          return new _TemplateHandler_js__WEBPACK_IMPORTED_MODULE_2__["default"](sendingService);
+        default:
+          throw new Error("Unknown message type: ".concat(sendingService.classType));
+      }
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/message/handler/TemplateHandler.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/module/component/message/handler/TemplateHandler.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TemplateHandler)
+/* harmony export */ });
+/* harmony import */ var _messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../messageTemplate/DataGenerator.js */ "./resources/js/module/component/messageTemplate/DataGenerator.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var TemplateHandler = /*#__PURE__*/function () {
+  function TemplateHandler(sendingDataService) {
+    _classCallCheck(this, TemplateHandler);
+    this.sendingDataService = sendingDataService;
+  }
+  return _createClass(TemplateHandler, [{
+    key: "handle",
+    value: function handle(userIds) {
+      var _this = this;
+      // sendMessage のデータを FormData に保存
+      if (userIds.length > 0) {
+        this.sendingDataService.formData.append('userIds', JSON.stringify(userIds));
+      }
+      var blockWrapper = this.sendingDataService.parent.isUpdate ? document.getElementById("edit-content-blocks") : document.getElementById("create-content-blocks");
+      var contentBlocks = blockWrapper.querySelectorAll(".content-block");
+      contentBlocks.forEach(function (block, index) {
+        if (block.dataset.type === "text") {
+          var text = block.querySelector(".block-textarea").value;
+          console.log(text);
+          if (text == 0 || !text) {
+            return;
+          }
+          _this.sendingDataService.formData.append("messages[".concat(index, "]"), text);
+        } else if (block.dataset.type === "image") {
+          var fileInputElementId = block.dataset.id;
+          var numberPart = fileInputElementId.match(/\d+/)[0];
+          var fileData = _messageTemplate_DataGenerator_js__WEBPACK_IMPORTED_MODULE_0__.templateImageData.find(function (item) {
+            return item.order == numberPart;
+          });
+          if (fileData) {
+            // テンプレート新規
+            if (fileData.content) {
+              _this.sendingDataService.formData.append("images[".concat(index, "]"), fileData.content);
+              if (block.querySelector(".image-upload").dataset.url) {
+                _this.sendingDataService.formData.append("images[".concat(index, "][meta]"), JSON.stringify({
+                  url: fileData.cropUrl,
+                  cropArea: fileData.cropData
+                }));
+              }
+              // テンプレート更新
+            } else {
+              _this.sendingDataService.formData.append("images[".concat(index, "][content]"), fileData.contentUrl);
+              if (fileData.cropData) {
+                _this.sendingDataService.formData.append("images[".concat(index, "][meta]"), fileData.cropData);
+              }
+            }
+          }
+        }
+      });
+      var formDataObj = Object.fromEntries(this.sendingDataService.formData.entries());
+      console.log("FormData contents:", formDataObj);
+      debugger;
+    }
+  }]);
+}();
+
+
+/***/ }),
+
 /***/ "./resources/js/module/component/modalInitializers.js":
 /*!************************************************************!*\
   !*** ./resources/js/module/component/modalInitializers.js ***!
@@ -2866,6 +3505,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_FormController_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/FormController.js */ "./resources/js/module/component/ui/FormController.js");
 /* harmony import */ var _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/state/IndexStateManager.js */ "./resources/js/module/util/state/IndexStateManager.js");
 /* harmony import */ var _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/state/FormDataStateManager.js */ "./resources/js/module/util/state/FormDataStateManager.js");
+/* harmony import */ var _testSender_data_BroadcastTestMessageSender_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./testSender/data/BroadcastTestMessageSender.js */ "./resources/js/module/component/testSender/data/BroadcastTestMessageSender.js");
+
 
 
 
@@ -2911,6 +3552,7 @@ var initializeBroadcastMessageModal = function initializeBroadcastMessageModal()
   sending_btns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       document.querySelector(".js_message_submit_btn").classList.add("disabled_btn");
+      document.getElementById("js_sender_list").classList.add("disabled_btn");
       _util_state_IndexStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].resetState();
       _util_state_FormDataStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].resetItem();
       e.preventDefault();
@@ -3142,6 +3784,887 @@ var close_image_edit_modal = function close_image_edit_modal(inputElement) {
     modal.classList.remove("hidden");
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/data/AbstractTestMessageSender.js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/data/AbstractTestMessageSender.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AbstractTestMessageSender)
+/* harmony export */ });
+/* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
+/* harmony import */ var _util_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/fetch.js */ "./resources/js/module/util/fetch.js");
+/* harmony import */ var _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../message/TestSendingData.js */ "./resources/js/module/component/message/TestSendingData.js");
+/* harmony import */ var _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../ui/ButtonController.js */ "./resources/js/module/component/ui/ButtonController.js");
+/* harmony import */ var _fetch_FetchData_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../fetch/FetchData.js */ "./resources/js/module/component/testSender/fetch/FetchData.js");
+/* harmony import */ var _uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../uiController/ProcessingManager.js */ "./resources/js/module/component/testSender/uiController/ProcessingManager.js");
+/* harmony import */ var _uiController_TestUserDeleteManager_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../uiController/TestUserDeleteManager.js */ "./resources/js/module/component/testSender/uiController/TestUserDeleteManager.js");
+/* harmony import */ var _uiController_UserSelectionManager_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../uiController/UserSelectionManager .js */ "./resources/js/module/component/testSender/uiController/UserSelectionManager .js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateMethodInitSpec(e, a) { _checkPrivateRedeclaration(e, a), a.add(e); }
+function _checkPrivateRedeclaration(e, t) { if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object"); }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
+
+
+
+
+
+
+
+
+
+/**
+ * 項目作成のインターフェース
+ * @interface
+ */
+var _AbstractTestMessageSender_brand = /*#__PURE__*/new WeakSet();
+var AbstractTestMessageSender = /*#__PURE__*/function () {
+  function AbstractTestMessageSender(type) {
+    var isUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    _classCallCheck(this, AbstractTestMessageSender);
+    /**
+     * すべてのテストユーザーを一覧に表示する
+     * 更新ボタンを押すと非同期で新しく作成したテスト送信ユーザーを取得し表示する
+     * @returns {void}
+     */
+    _classPrivateMethodInitSpec(this, _AbstractTestMessageSender_brand);
+    if ((this instanceof AbstractTestMessageSender ? this.constructor : void 0) === AbstractTestMessageSender) {
+      throw new Error('インターフェースのインスタンスは作成できません');
+    }
+    this.testSenderModal = document.getElementById("js_test_sender");
+    this.testSenderButtons = document.querySelectorAll(".js_sending_btn"); //テスト送信ボタン
+    this.userCheckListElement = document.querySelectorAll(".user-select");
+    this.selectAllUsers = document.getElementById("select-all-users"); //「すべて選択」チェックボックス
+    this.individualSendBtns = document.querySelectorAll(".js_send_individual_btn");
+    this.deleteUserBtns = document.querySelectorAll(".js_delete_user-item");
+    this.deleteConfirmationModal = document.getElementById("js_delete_test_user");
+    this.returnBtn = document.getElementById("js_return_btn");
+    this.deleteTestUserBtn = document.querySelector(".delete_test-account-btn");
+    this.updateButton = document.querySelector(".js_process");
+    this.fixedBg = document.querySelector(".fixed_bg");
+    this.cancelButton = document.querySelector(".js_cancel_test_user_delete");
+    this.count = document.querySelector(".js_count");
+    this.userCheckList = [];
+    this.previosModal = null;
+    this.openTestSenderModalButton = null;
+    this.isUpdate = isUpdate;
+    this.sendingData = new _message_TestSendingData_js__WEBPACK_IMPORTED_MODULE_2__["default"](this, _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEST_MESSAGE_STORE, type);
+    this.userSelectionManager = new _uiController_UserSelectionManager_js__WEBPACK_IMPORTED_MODULE_7__["default"](this);
+    this.testUserDeleteManager = new _uiController_TestUserDeleteManager_js__WEBPACK_IMPORTED_MODULE_6__.TestUserDeleteManager();
+    this.fetchData = new _fetch_FetchData_js__WEBPACK_IMPORTED_MODULE_4__["default"](this);
+
+    // グローバルなリスナーマップ
+    if (!window.__updateButtonListeners) {
+      window.__updateButtonListeners = new Map();
+    }
+
+    // 古いリスナーを削除
+    var oldListener = window.__updateButtonListeners.get(this.updateButton);
+    if (oldListener) {
+      this.updateButton.removeEventListener("click", oldListener);
+    }
+
+    // 新しいリスナーを作成・登録
+    this.boundHandleUpdateProcess = _assertClassBrand(_AbstractTestMessageSender_brand, this, _handleUpdateProcess).bind(this);
+    this.updateButton.addEventListener("click", this.boundHandleUpdateProcess);
+    window.__updateButtonListeners.set(this.updateButton, this.boundHandleUpdateProcess);
+  }
+  return _createClass(AbstractTestMessageSender, [{
+    key: "initialize",
+    value: function initialize() {
+      // this.userSelectionManager.initialize()
+      this.setupModalButtons(); //モーダル表示ボタンの設定
+      this.setupIndividualSendButtons(); // 個別送信ボタンの設定
+      this.setupDeleteUserButtons(); //ユーザー削除ボタンの設定
+      this.setupTestSendButtons(); //テスト送信ボタンの設定
+      this.setupCheckboxListeners(); //チェックボックスリスナーの設定
+      this.setupReturnButton(); //戻るボタンの設定
+      this.setupSelectAllCheckbox(); // 全選択チェックボックスの設定
+      this.setupCancelDelete();
+    }
+
+    // ############################################################################
+    // ############################## 共通メソッド #################################
+    // ############################################################################
+  }, {
+    key: "setupEventListenersAfterFetch",
+    value: function setupEventListenersAfterFetch() {
+      // DOM要素の再取得
+      this.testSenderButtons = document.querySelectorAll(".js_sending_btn");
+      this.userCheckListElement = document.querySelectorAll(".user-select");
+      this.individualSendBtns = document.querySelectorAll(".js_send_individual_btn");
+      this.deleteUserBtns = document.querySelectorAll(".js_delete_user-item");
+      this.selectAllUsers = document.getElementById("select-all-users");
+      this.setupIndividualSendButtons(); // 個別送信ボタンの設定
+      this.setupDeleteUserButtons(); //ユーザー削除ボタンの設定
+      this.setupTestSendButtons(); //テスト送信ボタンの設定
+      this.setupCheckboxListeners(); //チェックボックスリスナーの設定
+      this.setupSelectAllCheckbox();
+    }
+
+    /**
+     * モーダル表示ボタンの設定
+     * @returns {void}
+     * @param {HTMLElement} button 
+     */
+  }, {
+    key: "setupModalButtons",
+    value: function setupModalButtons() {
+      var _this = this;
+      this.openTestSenderModalButton.addEventListener("click", function () {
+        _this.resetData();
+        _this.dislpayTestSenderModal();
+      });
+    }
+    /**
+     * 個別送信ボタンの設定
+     * @returns {void}
+     */
+  }, {
+    key: "setupIndividualSendButtons",
+    value: function setupIndividualSendButtons() {
+      var _this2 = this;
+      this.individualSendBtns.forEach(function (btn) {
+        var newButton = _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_3__["default"].replaceButton(btn);
+        newButton.addEventListener("click", function (e) {
+          _this2.userCheckList = [e.currentTarget.dataset.userId];
+          _uiController_UserSelectionManager_js__WEBPACK_IMPORTED_MODULE_7__["default"].checkStyle(newButton.closest(".user-item"));
+          _this2.sendTestMessages();
+        });
+      });
+    }
+
+    /**
+     * テスト送信ユーザー削除ボタンの設定
+     * @returns {void}
+     */
+  }, {
+    key: "setupDeleteUserButtons",
+    value: function setupDeleteUserButtons() {
+      var _this3 = this;
+      this.deleteUserBtns.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          var id = e.currentTarget.dataset.userId;
+          _this3.displayConfirmationModal(id);
+        });
+      });
+    }
+
+    /**
+     * テスト送信ボタンの設定
+     * @returns {void}
+     */
+  }, {
+    key: "setupTestSendButtons",
+    value: function setupTestSendButtons() {
+      var _this4 = this;
+      this.testSenderButtons.forEach(function (btn) {
+        var newButton = _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_3__["default"].replaceButton(btn);
+        newButton.addEventListener("click", function () {
+          _this4.sendTestMessages();
+        });
+      });
+    }
+
+    /**
+     * チェックボックスリスナーの設定
+     * @returns {void}
+     */
+  }, {
+    key: "setupCheckboxListeners",
+    value: function setupCheckboxListeners() {
+      var _this5 = this;
+      this.userCheckListElement.forEach(function (element) {
+        element.addEventListener("change", function (event) {
+          _this5.getSenderUserIds(event);
+          _this5.toggleSendingBtn();
+          _this5.userSelectionManager.updateSelectedCount();
+        });
+      });
+    }
+
+    /**
+     * 戻るボタンの設定
+     * @returns {void}
+     */
+  }, {
+    key: "setupReturnButton",
+    value: function setupReturnButton() {
+      var _this6 = this;
+      var newReturnBtn = _ui_ButtonController_js__WEBPACK_IMPORTED_MODULE_3__["default"].replaceButton(this.returnBtn);
+      newReturnBtn.addEventListener("click", function () {
+        _this6.fixedBg.classList.add("hidden");
+        _this6.cancelTestSendingProcess();
+      });
+    }
+
+    /**
+     * 全選択チェックボックスの設定
+     * @returns {void}
+     */
+  }, {
+    key: "setupSelectAllCheckbox",
+    value: function setupSelectAllCheckbox() {
+      var _this7 = this;
+      var userCheckListElement = document.querySelectorAll(".user-select");
+      this.selectAllUsers.addEventListener("change", function (e) {
+        if (e.target.checked == true) {
+          _this7.userCheckList = Array.from(userCheckListElement).map(function (element) {
+            return element.dataset.userId;
+          });
+        } else {
+          _this7.userCheckList = [];
+        }
+        _this7.toggleSendingBtn();
+        _this7.userSelectionManager.handleInput();
+      });
+    }
+
+    /**
+     * テスト送信ユーザー削除キャンセル処理
+     * @returns {void}
+     */
+  }, {
+    key: "setupCancelDelete",
+    value: function setupCancelDelete() {
+      var _this8 = this;
+      this.cancelButton.addEventListener("click", function () {
+        _this8.fixedBg.classList.add("hidden");
+        _this8.deleteConfirmationModal.classList.add("hidden");
+        _this8.testSenderModal.classList.remove("hidden");
+      });
+    }
+  }, {
+    key: "dislpayTestSenderModal",
+    value:
+    /**
+     * テスト送信ユーザーを選択するモーダルを表示する
+     * @returns {void}
+     */
+    function dislpayTestSenderModal() {
+      this.testSenderModal.classList.remove("hidden");
+      this.previosModal.classList.add("hidden");
+    }
+
+    /**
+     * テストユーザー削除する際の確認モーダルを表示する
+     * @returns {void}
+     */
+  }, {
+    key: "displayConfirmationModal",
+    value: function displayConfirmationModal(id) {
+      var _this9 = this;
+      this.deleteConfirmationModal.classList.remove("hidden");
+      this.testSenderModal.classList.add("hidden");
+      this.fixedBg.classList.remove("hidden");
+      this.deleteTestUserBtn.addEventListener("click", function () {
+        _this9.testUserDeleteManager.modalOperation();
+        _assertClassBrand(_AbstractTestMessageSender_brand, _this9, _handleDeleteTestUser).call(_this9, id);
+      });
+    }
+
+    /**
+     * テスト送信モーダルをキャンセルをして閉じた際に、テスト送信で使用されてるデータをリセットする
+     * @returns {void}
+     */
+  }, {
+    key: "resetData",
+    value: function resetData() {
+      this.userCheckList = [];
+      this.userSelectionManager.resetUi();
+    }
+
+    /**
+     * テスト送信ユーザーを選択するモーダルを表示する
+     * @returns {void}
+     */
+  }, {
+    key: "cancelTestSendingProcess",
+    value: function cancelTestSendingProcess() {
+      this.previosModal.classList.remove("hidden");
+      this.testSenderModal.classList.add("hidden");
+    }
+
+    /**
+     * テスト送信を行う。DBに一時保存とsocketサーバーにデータを送信する
+     * @returns {void}
+     */
+  }, {
+    key: "sendTestMessages",
+    value: function sendTestMessages() {
+      this.sendingData.emitBroadcastMessageToSocket(this.userCheckList);
+      this.sendingDataToBackEnd = [];
+    }
+
+    /**
+     * テスト送信を行うユーザーIDを配列に格納する
+     * @returns {void}
+     * @param {Event} event - チェックボックスの変更イベント
+     */
+  }, {
+    key: "getSenderUserIds",
+    value: function getSenderUserIds(event) {
+      var checkbox = event.target;
+      var userId = checkbox.dataset.userId;
+      var isChecked = checkbox.checked;
+
+      // チェッボックスにチェックついていたら配列に格納
+      if (isChecked) {
+        this.userCheckList.push(userId);
+        // 配列から削除
+      } else {
+        this.userCheckList = this.userCheckList.filter(function (list) {
+          return String(list) != String(userId);
+        });
+      }
+    }
+
+    /**
+     * テスト送信ボタンをuserIdsがあるかないかで無効化、有効化の切り替えをおこなう
+     * @returns {void}
+     */
+  }, {
+    key: "toggleSendingBtn",
+    value: function toggleSendingBtn() {
+      var _this10 = this;
+      var testSenderButtons = document.querySelectorAll(".js_sending_btn"); //テスト送信ボタン
+      testSenderButtons.forEach(function (btn) {
+        btn.classList.toggle("disabled_btn", _this10.userCheckList.length == 0);
+      });
+    }
+  }]);
+}();
+function _handleUpdateProcess() {
+  return _handleUpdateProcess2.apply(this, arguments);
+}
+function _handleUpdateProcess2() {
+  _handleUpdateProcess2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var processingManager;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          if (!this.updateButton.classList.contains("done")) {
+            _context.next = 5;
+            break;
+          }
+          processingManager = _uiController_ProcessingManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].getInstance();
+          processingManager.onProcess();
+          _context.next = 5;
+          return this.fetchData.fetchTestUsers(processingManager);
+        case 5:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, this);
+  }));
+  return _handleUpdateProcess2.apply(this, arguments);
+}
+/**
+ * 該当するテスト送信ユーザーを削除する処理
+ * @returns {void}
+ * @param {string} id //テスト送信ユーザーID
+ */
+function _handleDeleteTestUser(_x) {
+  return _handleDeleteTestUser2.apply(this, arguments);
+}
+function _handleDeleteTestUser2() {
+  _handleDeleteTestUser2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(id) {
+    var response;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_DELETE_TEST_USER, "/").concat(id));
+        case 2:
+          response = _context2.sent;
+          if (response["status"] === 201) {
+            this.testUserDeleteManager.deleteTestUserFromDom(response["userId"]); //DOMから該当するテスト送信ユーザーを取り除く
+            this.count.innerHTML = Number(this.count.innerHTML) - 1;
+            this.resetData();
+          }
+        case 4:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2, this);
+  }));
+  return _handleDeleteTestUser2.apply(this, arguments);
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/data/BroadcastTestMessageSender.js":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/data/BroadcastTestMessageSender.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BroadcastTestMessageSender)
+/* harmony export */ });
+/* harmony import */ var _AbstractTestMessageSender_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AbstractTestMessageSender.js */ "./resources/js/module/component/testSender/data/AbstractTestMessageSender.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var BroadcastTestMessageSender = /*#__PURE__*/function (_AbstractTestMessageS) {
+  function BroadcastTestMessageSender() {
+    var _this;
+    _classCallCheck(this, BroadcastTestMessageSender);
+    _this = _callSuper(this, BroadcastTestMessageSender, ["broadcast"]); // 親クラスのコンストラクタを呼び出す
+    _this.previosModal = document.getElementById("js_messageSetting_modal");
+    _this.openTestSenderModalButton = document.getElementById('js_sender_list'); //テスト送信者モーダルを表示するボタン
+
+    _this.initialize();
+    return _this;
+  }
+  _inherits(BroadcastTestMessageSender, _AbstractTestMessageS);
+  return _createClass(BroadcastTestMessageSender);
+}(_AbstractTestMessageSender_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/fetch/FetchData.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/module/component/testSender/fetch/FetchData.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FetchData)
+/* harmony export */ });
+/* harmony import */ var _config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../config/apiEndPoint.js */ "./resources/js/config/apiEndPoint.js");
+/* harmony import */ var _util_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/fetch.js */ "./resources/js/module/util/fetch.js");
+/* harmony import */ var _elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../elementTemplate.js */ "./resources/js/module/component/elementTemplate.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var FetchData = /*#__PURE__*/function () {
+  function FetchData(parent) {
+    _classCallCheck(this, FetchData);
+    this.parent = parent;
+    this.userItemWrapper = document.querySelector(".user-item-wrapper");
+  }
+  return _createClass(FetchData, [{
+    key: "fetchTestUsers",
+    value: function () {
+      var _fetchTestUsers = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(processingManager) {
+        var _this = this;
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEST_SENDERS);
+            case 2:
+              response = _context.sent;
+              processingManager.onDone();
+              if (response["status"] === 201) {
+                response["testSenders"].forEach(function (sender) {
+                  if (!_this.hasTestUser(sender["user_id"])) {
+                    _this.userItemWrapper.insertAdjacentHTML("afterbegin", (0,_elementTemplate_js__WEBPACK_IMPORTED_MODULE_2__.createTestSenderList)(sender));
+                  }
+                });
+                this.parent.count.innerHTML = response["testSenders"].length;
+                this.parent.resetData();
+                this.parent.setupEventListenersAfterFetch();
+              } else {
+                alert("テスト送信ユーザーの取得に失敗しました。再度お試しください。");
+              }
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function fetchTestUsers(_x) {
+        return _fetchTestUsers.apply(this, arguments);
+      }
+      return fetchTestUsers;
+    }()
+  }, {
+    key: "hasTestUser",
+    value: function hasTestUser(userId) {
+      var userItems = document.querySelectorAll(".user-item");
+      return Array.from(userItems).some(function (item) {
+        return item.dataset.userId === userId;
+      });
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/uiController/ProcessingManager.js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/uiController/ProcessingManager.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ProcessingManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var ProcessingManager = /*#__PURE__*/function () {
+  /**
+  * コンストラクタ - 直接のインスタンス化を防ぐため、プライベートにする
+  * @private
+  */
+  function ProcessingManager() {
+    _classCallCheck(this, ProcessingManager);
+    // すでにインスタンスが存在する場合はエラーをスロー
+    if (_instance._) {
+      throw new Error("ProcessingManagerは直接インスタンス化できません。getInstance()を使用してください。");
+    }
+    this.processWrapper = document.querySelector(".js_process");
+    this.spinning = document.querySelector(".js_spinning");
+    this.processText = this.processWrapper.querySelector("span"); // getElementsByTagNameではなくquerySelectorを使用
+
+    // このインスタンスを保持
+    _instance._ = this;
+  }
+
+  // DOM要素を再取得するメソッド
+  return _createClass(ProcessingManager, [{
+    key: "updateProcessWrapper",
+    value: function updateProcessWrapper() {
+      this.processWrapper = document.querySelector(".js_process");
+    }
+
+    /**
+    * シングルトンインスタンスを取得するための静的メソッド
+    * @returns {ProcessingManager} シングルトンインスタンス
+    */
+  }, {
+    key: "onProcess",
+    value:
+    /**
+     * 処理中の状態に設定
+    */
+    function onProcess() {
+      // 念のため最新のDOM要素を取得
+      this.updateProcessWrapper();
+      if (this.processWrapper) {
+        this.processWrapper.classList.remove("done");
+        this.processWrapper.classList.add("processing");
+        this.spinning.classList.add("fa-spin");
+        this.processText.textContent = "処理中..."; // innerHTMLではなくtextContentを使用
+      }
+    }
+
+    /**
+     * 処理完了の状態に設定
+     */
+  }, {
+    key: "onDone",
+    value: function onDone() {
+      this.updateProcessWrapper();
+      if (this.processWrapper) {
+        this.processWrapper.classList.remove("processing");
+        this.processWrapper.classList.add("done");
+        this.spinning.classList.remove("fa-spin");
+        this.processText.textContent = "更新"; // innerHTMLではなくtextContentを使用
+      }
+    }
+  }], [{
+    key: "getInstance",
+    value: function getInstance() {
+      // インスタンスが存在しない場合は新しく作成
+      if (!_instance._) {
+        _instance._ = new ProcessingManager();
+      }
+      return _instance._;
+    }
+  }]);
+}();
+// プライベート静的変数でインスタンスを保持
+var _instance = {
+  _: null
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/uiController/TestUserDeleteManager.js":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/uiController/TestUserDeleteManager.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TestUserDeleteManager: () => (/* binding */ TestUserDeleteManager)
+/* harmony export */ });
+/* harmony import */ var _ProcessingManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProcessingManager.js */ "./resources/js/module/component/testSender/uiController/ProcessingManager.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var TestUserDeleteManager = /*#__PURE__*/function () {
+  function TestUserDeleteManager() {
+    _classCallCheck(this, TestUserDeleteManager);
+    this.testUserDeleteConfirmationModal = document.getElementById("js_delete_test_user");
+    this.testSenderModal = document.getElementById("js_test_sender");
+    this.userItemWrapper = document.querySelector(".user-item-wrapper");
+    this.processManager = _ProcessingManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance();
+  }
+  return _createClass(TestUserDeleteManager, [{
+    key: "modalOperation",
+    value: function modalOperation() {
+      this.testUserDeleteConfirmationModal.classList.add("hidden");
+      this.testSenderModal.classList.remove("hidden");
+      this.processManager.onProcess();
+    }
+  }, {
+    key: "deleteTestUserFromDom",
+    value: function deleteTestUserFromDom(user_id) {
+      var userItems = document.querySelectorAll(".user-item");
+      var targetItem = Array.from(userItems).find(function (item) {
+        return item.dataset.userId === user_id;
+      });
+      if (targetItem) {
+        this.userItemWrapper.removeChild(targetItem);
+      }
+      this.processManager.onDone();
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./resources/js/module/component/testSender/uiController/UserSelectionManager .js":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/module/component/testSender/uiController/UserSelectionManager .js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ UserSelectionManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var UserSelectionManager = /*#__PURE__*/function () {
+  function UserSelectionManager(parent) {
+    _classCallCheck(this, UserSelectionManager);
+    this.selectAllCheckbox = document.getElementById("select-all-users");
+    this.userCheckboxes = document.querySelectorAll('.user-select');
+    this.selectedCountEl = document.getElementById('selected-count');
+    this.sendToSelectedBtn = document.getElementById('send-to-selected');
+    this.parent = parent;
+  }
+  return _createClass(UserSelectionManager, [{
+    key: "initialize",
+    value: function initialize() {
+      var _this = this;
+      var selectAllCheckbox = document.getElementById("select-all-users");
+      var newCheckbox = selectAllCheckbox.cloneNode(true);
+      selectAllCheckbox.replaceWith(newCheckbox);
+      newCheckbox.addEventListener("change", this.handleInput.bind(this)); //　すべて選択
+      this.userCheckboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', _this.updateSelectedCount.bind(_this)); // 個々の選択
+      });
+    }
+
+    /**
+    * 「すべて選択」にチェックを入れた時、個々のユーザーチェックボックスにすべてチェックを入れる
+    * @returns {void}
+    */
+  }, {
+    key: "handleInput",
+    value: function handleInput() {
+      var userCheckboxes = document.querySelectorAll('.user-select');
+      var selectAllCheckbox = document.getElementById("select-all-users");
+      userCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = selectAllCheckbox.checked;
+      });
+      this.updateSelectedCount();
+    }
+
+    /**
+    * ユーザー選択UIの切り替えをおこなう処理
+    * @returns {void}
+    */
+  }, {
+    key: "updateSelectedCount",
+    value: function updateSelectedCount() {
+      var selectedCount = document.querySelectorAll('.user-select:checked').length;
+      this.selectedCountEl.textContent = "".concat(selectedCount, "\u4EBA\u9078\u629E\u4E2D");
+      this.sendToSelectedBtn.disabled = selectedCount <= 0; // 「選択したユーザーに送信」ぼたんの無効化、有効化の切り替え
+
+      // 「全て選択」のチェックボックスの切り替えをおこなう。全てのユーザーが選択されてたらチェック入れる。それ以外がチェックはずす
+      if (selectedCount === this.userCheckboxes.length) {
+        this.selectAllCheckbox.checked = true;
+      } else if (selectedCount === 0) {
+        this.selectAllCheckbox.checked = false;
+      }
+
+      // 個々のユーザー選択チェックボックスのスタイルの切り替えを、チェックされたかどうかで切り替える
+      var userCheckboxes = document.querySelectorAll('.user-select');
+      userCheckboxes.forEach(function (checkbox) {
+        var userItem = checkbox.closest('.user-item');
+        if (checkbox.checked) {
+          userItem.classList.add('selected');
+        } else {
+          userItem.classList.remove('selected');
+        }
+      });
+    }
+
+    /**
+    * UIのスタイルの変更処理
+    * @returns {void}
+    */
+  }, {
+    key: "resetUi",
+    value: function resetUi() {
+      var userCheckboxes = document.querySelectorAll('.user-select');
+      this.selectedCountEl.textContent = "0\u4EBA\u9078\u629E\u4E2D";
+      this.sendToSelectedBtn.disabled = true;
+      userCheckboxes.forEach(function (checkbox) {
+        checkbox.closest(".user-item").classList.remove("selected");
+        checkbox.checked = false;
+      });
+      var selectAllCheckbox = document.getElementById("select-all-users");
+      selectAllCheckbox.checked = false;
+      var testSenderButtons = document.querySelectorAll(".js_sending_btn");
+      testSenderButtons.forEach(function (btn) {
+        btn.classList.add("disabled_btn");
+      });
+    }
+
+    /**
+    * ユーザーチェックボックスにチェックを入れた際のスタイル処理
+    * @returns {void}
+    * @param {HTMLElement} userItem 
+    */
+  }], [{
+    key: "checkStyle",
+    value: function checkStyle(userItem) {
+      userItem.querySelector(".user-select").checked = true;
+      userItem.classList.add("selected");
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/module/component/ui/ButtonController.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/module/component/ui/ButtonController.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var ButtonController = /*#__PURE__*/function () {
+  function ButtonController() {
+    _classCallCheck(this, ButtonController);
+  }
+  return _createClass(ButtonController, null, [{
+    key: "replaceButtonById",
+    value:
+    /**
+    * ボタンを新しいボタンに置き換える処理
+    * イベントリスナーの重複をさけるため
+    * 
+    * @param {string} buttonId - 置き換えるボタンのID
+    * @returns {HTMLElement} - 新しく置き換えられたボタン要素
+    */
+    function replaceButtonById(buttonId) {
+      var oldSelectBtn = document.getElementById(buttonId);
+      if (!oldSelectBtn || !oldSelectBtn.parentNode) {
+        console.error("親要素が見つかりません: js_change_area");
+        return;
+      }
+      var newSelectBtn = oldSelectBtn.cloneNode(true);
+      oldSelectBtn.parentNode.replaceChild(newSelectBtn, oldSelectBtn);
+      return newSelectBtn;
+    }
+
+    /**
+    * ボタンを新しいボタンに置き換える処理
+    * イベントリスナーの重複をさけるため
+    * 
+    * @param {HTMLElement} buttonId - 置き換えるボタン要素
+    * @returns {HTMLElement} - 新しく置き換えられたボタン要素
+    */
+  }, {
+    key: "replaceButton",
+    value: function replaceButton(oldSelectBtn) {
+      var newSelectBtn = oldSelectBtn.cloneNode(true);
+      oldSelectBtn.replaceWith(newSelectBtn);
+      return newSelectBtn;
+    }
+  }]);
+}();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ButtonController);
 
 /***/ }),
 
@@ -3393,10 +4916,12 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
 };
 var fetchGetOperation = function fetchGetOperation(url) {
   return fetch("".concat(url), {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json"
-    }
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    redentials: 'same-origin' // セッションクッキーを送信
   }).then(/*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(response) {
       var errorMessage;
@@ -3410,16 +4935,17 @@ var fetchGetOperation = function fetchGetOperation(url) {
             return _context2.abrupt("return");
           case 2:
             if (response.ok) {
-              _context2.next = 6;
+              _context2.next = 7;
               break;
             }
             _context2.next = 5;
             return response.text();
           case 5:
             errorMessage = _context2.sent;
-          case 6:
-            return _context2.abrupt("return", response.json());
+            throw new Error("\u30B5\u30FC\u30D0\u30FC\u30A8\u30E9\u30FC: ".concat(response.status, " - ").concat(errorMessage));
           case 7:
+            return _context2.abrupt("return", response.json());
+          case 8:
           case "end":
             return _context2.stop();
         }
@@ -3446,7 +4972,8 @@ var fetchGetOperation = function fetchGetOperation(url) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   formateDateToAsia: () => (/* binding */ formateDateToAsia)
+/* harmony export */   formateDateToAsia: () => (/* binding */ formateDateToAsia),
+/* harmony export */   getCurrentTimeFormatted: () => (/* binding */ getCurrentTimeFormatted)
 /* harmony export */ });
 var formateDateToAsia = function formateDateToAsia() {
   var createdAt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -3468,6 +4995,14 @@ var formateDateToAsia = function formateDateToAsia() {
   // toLocaleStringで整形しながら表示
   var dateTokyo = date.toLocaleString('ja-JP', options).replace(/\//g, '-').replace(',', '');
   return dateTokyo;
+};
+
+// 例：12:32　の形に現在時刻を成型する
+var getCurrentTimeFormatted = function getCurrentTimeFormatted() {
+  var now = new Date();
+  var hours = now.getHours().toString().padStart(2, '0');
+  var minutes = now.getMinutes().toString().padStart(2, '0');
+  return "".concat(hours, ":").concat(minutes);
 };
 
 /***/ }),

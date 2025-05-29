@@ -49,7 +49,7 @@ class FileUploader{
 
     initializeEvents() {
         // 画像切り取りモーダルの画像変更ボタン
-        const button = ButtonController.replaceButton("js_changeImg_btn")
+        const button = ButtonController.replaceButtonById("js_changeImg_btn")
         button.addEventListener("click", ()=>{
             FormController.initializeFileUpload() //ファイルアップロードの初期化
         })
@@ -98,7 +98,7 @@ class FileUploader{
         newImage.onload = e =>{
 
     
-            const newImageButton = ButtonController.replaceButton("js_change_area")
+            const newImageButton = ButtonController.replaceButtonById("js_change_area")
             this.cropper = new Cropper(this.imageElement, newImageButton)
 
             const cropperHandler = new CropperEventHandler(newImageButton,this.cropper)
@@ -140,7 +140,7 @@ class FileUploader{
 
 
             // 画像切り取りが完了して送信ボタンを押した後の処理
-            this.newconfirmBtn = ButtonController.replaceButton("js_preview_submit_btn")
+            this.newconfirmBtn = ButtonController.replaceButtonById("js_preview_submit_btn")
             this.newconfirmBtn.addEventListener("click", ()=>{
                 
                 // URL形式チェック
@@ -201,7 +201,7 @@ class FileUploader{
                     // 不要なリストを削除
                     BroadcastMessageOperator.deleteList("accordion")
                     // // ボタン状態を更新
-                    toggleDisplayButtonState(document.querySelector(".js_message_submit_btn "), document.querySelectorAll(".js_headings"))
+                    toggleDisplayButtonState([document.querySelector(".js_message_submit_btn"), document.getElementById("js_sender_list")], document.querySelectorAll(".js_headings"))
                     reader.readAsDataURL(compressedFile);
                     // 新しいファイル名を生成し、FormDataArrayに保存
                     const newFileName = this.generateOriginalFileName()

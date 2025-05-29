@@ -31,13 +31,14 @@ class TemplateBlockManager {
     
 
     addTextBlock(contentBlocksContainer) {
+
         const blockId = `block-${this.blockCounter++}`;
         const textBlock = document.createElement('div');
         textBlock.className = 'content-block text-block';
         textBlock.dataset.type = 'text';
         textBlock.dataset.id = blockId;
         textBlock.innerHTML = createTextBlock();
-    
+
         contentBlocksContainer.appendChild(textBlock);
         return textBlock; // 新しく作成したブロックを返す
     }

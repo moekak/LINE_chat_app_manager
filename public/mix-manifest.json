@@ -4,5 +4,6 @@
     "/js/broadcastMessage.js": "/js/broadcastMessage.js",
     "/js/account_show.js": "/js/account_show.js",
     "/js/account_block.js": "/js/account_block.js",
-    "/js/greetingMessage.js": "/js/greetingMessage.js"
+    "/js/greetingMessage.js": "/js/greetingMessage.js",
+    "/js/test_sender_add.js": "/js/test_sender_add.js"
 }

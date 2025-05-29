@@ -4,6 +4,7 @@ import { SYSTEM_URL } from "./config/config.js";
 import BroadcastMessageOperator from "./module/component/broadcast/BroadcastMessageOperator.js";
 import DragAndDrop from "./module/component/DragAndDrop.js";
 import { open_modal } from "./module/component/modalOperation.js"
+import GreetingTestMessageSender from "./module/component/testSender/data/GreetingTestMessageSender.js";
 import FormController from "./module/component/ui/FormController.js";
 import { fetchGetOperation } from "./module/util/fetch.js";
 import FileUploader from "./module/util/file/FileUploader.js";
@@ -15,7 +16,6 @@ const modal                 = document.querySelector(".broadcasting_message_moda
 
 
 greeting_btn.addEventListener("click", async()=>{
-
     // fileアップロードcrop
     const greetingText = document.querySelector(".js_broadcast_error")
     const errorTxt = document.querySelector(".js_error_txt")
@@ -68,36 +68,12 @@ greeting_btn.addEventListener("click", async()=>{
 
     });
 
-    
-    open_modal(modal)
-})
-
-
-
-// const greetingText = document.querySelector(".js_broadcast_error")
-// const errorTxt = document.querySelector(".js_error_txt")
-// const uploads = document.querySelectorAll(".js_upload");
-
-// uploads.forEach((upload) => {
-//     upload.addEventListener("change", async (e) => {
-//         FormController.initializeImageCropInput()
-
-//         greetingText.classList.add("hidden")
-
-//         const file = e.target.files[0];
-//         if (!file) return;
-
         
-//         const errorElement = document.querySelector(".js_broadcast_error")
-//         const imageErrorElement = document.querySelector(".js_image_error")
-//         const fileUploader = new FileUploader(file, errorTxt, errorElement, imageErrorElement, false, null)
-//         await fileUploader.fileOperation()
+    document.querySelectorAll(".js_card").length > 0 ? document.getElementById("js_sender_list").classList.remove("disabled_btn") : ""
 
-//         // // ドラッグ＆ドロップの初期化
-//         DragAndDrop.dragAndDrop("accordion", true);
-//         BroadcastMessageOperator.getInstance("js_accordion_wrapper", "accordion", API_ENDPOINTS.FETCH_GREETINGMESSAGE, true);
-
-//     });
-// });
+    open_modal(modal)
+    // // テスト送信機能モーダル処理
+    new GreetingTestMessageSender()
+})
 
 

@@ -1,5 +1,5 @@
 import { SYSTEM_URL } from "../../../../config/config.js";
-import { createTextBlock } from "../../elementTemplate.js";
+
 import { close_loader, open_loader } from "../../modalOperation.js";
 import FormController from "../../ui/FormController.js";
 import { templateImageData } from "../DataGenerator.js";
@@ -91,25 +91,18 @@ class MessageTemplateFormController{
             const tabEdit = document.querySelector(".tab-edit")
             const contentBlocks = document.getElementById("edit-content-blocks")
             const form = document.querySelector(".js_edit_form")
-            const messageTemplateOperator = new MessageTemplateOperator()
-
-
 
             editBtns.forEach((btn)=>{
                   btn.addEventListener("click", (e)=>{
                         templateImageData.length = 0
-                        messageTemplateOperator.resetBlockCounter()
-
-
                         contentBlocks.innerHTML = ""
-                        messageTemplateOperator.changeElements(contentBlocks, form)
-                        messageTemplateOperator.changeIsUpdate()
                         tabEdit.style.display = "none"
                         const targetElement = e.currentTarget
                         
                         const formController = new MessageTemplateFormController(targetElement)
                         formController.setDataToEditInputs()
                         const templateBlockManager = new TemplateBlockManager()
+                        // templateBlockManager.resetBlockCounter()
       
                         form.querySelectorAll('.content-block').forEach(block => {
                               templateBlockManager.setupBlockListeners(block)

@@ -5,17 +5,19 @@ import ImageUploadHandler from "./ImageUploadHandler.js";
 import DataValidator from "./DataValidator.js";
 import TemplateApiService from "./TemplateApiService.js";
 import ButtonController from "../ui/ButtonController.js";
-import { ERROR_TEXT, SUCCESS_TEXT } from "../../../config/config.js";
-import { close_loader, close_loader_template, hide_bg, open_modal } from "../modalOperation.js";
+import { ERROR_TEXT } from "../../../config/config.js";
+import { close_loader_template} from "../modalOperation.js";
 import InitializeInputService from "./InitializeInputService.js";
 import Uicontroller from "./UiController.js";
 import FilterCategory from "./FilterCategory.js";
+import TemplateTestMessageSender from "../testSender/data/TemplateTestMessageSender.js";
 
 
 class MessageTemplateOperator {
     constructor(isUpdate = false) {
         // DOM要素
-        this.contentBlocks = document.getElementById('create-content-blocks');
+        this.contentBlocks = isUpdate ? document.getElementById('edit-content-blocks') : document.getElementById('create-content-blocks');
+        
         this.addTextBtns = document.querySelectorAll('.add-text');
         this.addImageBtns = document.querySelectorAll('.add-image');
         this.previewContainer = document.getElementById('preview-container');
@@ -24,46 +26,40 @@ class MessageTemplateOperator {
         this.tabContents = document.querySelectorAll('.tab-content');
         this.templateModal = document.getElementById("js_template_modal")
         this.categoryAddBtn = null;
-        this.form = document.querySelector(".js_create_form")
+        this.form = isUpdate ? document.querySelector(".js_edit_form") : document.querySelector(".js_create_form")
         this.isUpdate = isUpdate
         // コンポーネント
         this.formData;
         this.blockManager = new TemplateBlockManager();
         this.tabController = new TabController(this.tabs, this.tabContents);
         this.imageUploadHandler = new ImageUploadHandler()
+
+        new TemplateTestMessageSender(isUpdate)
         this.initialize();
+        this.resetBlockCounter()
+        this.contentBlocks.innerHTML = ""
     }
-
-    changeElements(contentBlock, form){
-        this.contentBlocks = contentBlock
-        this.form = form
-    }
-    changeIsUpdate(){
-        this.isUpdate = true
-    }
-
+    
     resetBlockCounter(){
         this.blockManager.resetBlockCounter()
-        
     }
     initialize() {
         // ボタンイベントのセットアップ
         this.addTextBtns.forEach((btn)=>{
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
+            const newBtn = ButtonController.replaceButton(btn)
             newBtn.addEventListener('click', this.handleAddTextBlock.bind(this));
         })
         this.addImageBtns.forEach((btn)=>{
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
+            const newBtn = ButtonController.replaceButton(btn)
             newBtn.addEventListener('click', this.handleAddImageBlock.bind(this));
         })
         
         this.submitTemplateBtns.forEach((btn)=>{
-            const newBtn = ButtonController.replaceButton(btn.id)
+            const newBtn = ButtonController.replaceButtonById(btn.id)
             newBtn.addEventListener("click", this.handleSubmit.bind(this));
         })
 
+    
 
         // 初期ブロックのリスナーをセットアップ
         document.querySelectorAll('.content-block').forEach(block => {
@@ -74,7 +70,6 @@ class MessageTemplateOperator {
 
     handleAddTextBlock(e) {
         e.preventDefault();
-
         const newBlock = this.blockManager.addTextBlock(this.contentBlocks);
         this.blockManager.setupBlockListeners(newBlock);
     }

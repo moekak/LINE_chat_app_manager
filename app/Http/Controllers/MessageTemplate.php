@@ -59,6 +59,7 @@ class MessageTemplate extends Controller
 
 
     public function store(Request $request){
+
         try{
             return DB::transaction(function() use ($request){
                 $validator = Validator::make($request->all(), [
@@ -359,7 +360,7 @@ class MessageTemplate extends Controller
             $validated = $request->validated();
             $category = MessageTemplatesCategory::create($validated);
             return response()->json(["status" => 201, "category" => ["id" => $category->id, "name" => $category->category_name, "admin_id" => $category->admin_id]]);
-            return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの追加に成功しました。");  
+            // return redirect()->route("account.show", ["id" => $validated["admin_id"]])->with("success", "カテゴリーの追加に成功しました。");  
         }catch(\Exception $e){
             Log::debug($e);
             return response()->json(["status" => 500]);

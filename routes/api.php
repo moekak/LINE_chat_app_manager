@@ -6,6 +6,7 @@ use App\Http\Controllers\DecryptDataController;
 use App\Http\Controllers\GreetingMessageController;
 use App\Http\Controllers\LineAccountController;
 use App\Http\Controllers\LineMessageController;
+use App\Http\Controllers\LineTestSenderController;
 use App\Http\Controllers\MessageTemplate;
 use App\Http\Controllers\RedirectTokenController;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +42,6 @@ Route::post("/template/delete", [MessageTemplate::class, "destroy"]);
 Route::post("/category/create", [MessageTemplate::class, "categoryStore"]);
 
 Route::post("/category/edit", [MessageTemplate::class, "categoryEdit"]);
+Route::post("/test/message/store/{admin_id}", [LineTestSenderController::class, "store"]);
+Route::get("/test/sender/destroy/{id}", [LineTestSenderController::class, "destroy"]);
+Route::get("/test/senders", [LineTestSenderController::class, "getAll"]);

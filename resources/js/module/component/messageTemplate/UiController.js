@@ -4,6 +4,7 @@ import { addCategoryButton, crateCategoryButton, editCategoryButton } from "../e
 import { close_loader_template, open_loader_template } from "../modalOperation.js"
 import DataValidator from "./DataValidator.js"
 import InitializeInputService from "./InitializeInputService.js"
+import TemplateFormData from "./TemplateFormData.js"
 
 export default class Uicontroller{
       constructor(){
@@ -124,12 +125,12 @@ export default class Uicontroller{
       static addUpdatedCategoryToOptionElement(category){
             const options = document.querySelectorAll(".category-option")
             const targetoption = Array.from(options).find((option)=> option.value == category["id"])
-            targetoption.innerHTML = category["name"]
+            targetoption.innerHTML = TemplateFormData.escapeHtml(category["name"]) 
 
 
             const editOptions = document.querySelectorAll(".edit-category")
             const targetEditOption = Array.from(editOptions).find((option)=> option.value == category["id"])
-            targetEditOption.innerHTML = category["name"]
+            targetEditOption.innerHTML = TemplateFormData.escapeHtml(category["name"])
 
 
       }
@@ -143,8 +144,8 @@ export default class Uicontroller{
             const targetCategory = Array.from(categories).find((target)=> target.dataset.id == category["id"])
 
             if(targetCategory){
-                  targetCategory.innerHTML = category["name"]
-                  targetCategory.dataset.category = category["name"]
+                  targetCategory.innerHTML = TemplateFormData.escapeHtml(category["name"])
+                  targetCategory.dataset.category = TemplateFormData.escapeHtml(category["name"])
             }
       }
 
