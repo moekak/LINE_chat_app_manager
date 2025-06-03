@@ -6823,7 +6823,7 @@ var createAccountDataRow = function createAccountDataRow(res, categories) {
     return category.status !== status;
   }).map(function (category) {
     return "\n                                                <li class='dropdown-item js_status_choices' \n                                                      data-current-status='".concat(status, "'\n                                                      data-status-name='").concat(category.status, "'\n                                                      data-status-id='").concat(category.id, "'\n                                                      data-account-id='").concat(res['id'], "'>\n                                                      ").concat(category.status, "\n                                                </li>\n                                    ");
-  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                              <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                              <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
+  }).join(''), "\n                              </ul>\n                        </div>\n                  </td>\n                  <td class='js_latest_message_date'>").concat((_res$latest_message_d = res['latest_message_date']) !== null && _res$latest_message_d !== void 0 ? _res$latest_message_d : '', "</td>\n                  <td>").concat(createdAtTokyo, "</td>\n                  <td>\n                        <div class=\"operation\">\n                              <a href='").concat(_config_config_js__WEBPACK_IMPORTED_MODULE_1__.SYSTEM_URL.CHAT_BASE_URL, "/account/show/").concat(res['id'], "'><button  title='\u30EA\u30B9\u30C8' class='operation_icon'><img src='/img/icons8-user-24.png' alt=''></button></a>\n                              <button  title='\u4E00\u6589\u9001\u4FE1' class='operation_icon js_send_message_btn' data-id=").concat(res['id'], "><img src='/img/icons8-send-24.png' alt=''></button>\n                              <button  title='\u60C5\u5831' class='operation_icon js_edit_account_btn' data-id=").concat(res['id'], "><img src='/img/icons8-edit-24.png' alt=''></button>\n                              <button   title='\u524A\u9664'class='operation_icon js_delete_account_btn' type='submit' data-id=").concat(res['id'], " data-name=").concat(res['account_name'], "><img src='/img/icons8-delete-24.png' alt=''></button>\n                        </div>\n                  </td>\n            </tr>\n      ");
 };
 var createTextBlock = function createTextBlock() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -8193,9 +8193,6 @@ var TemplateFormData = /*#__PURE__*/function () {
           var fileData = _DataGenerator_js__WEBPACK_IMPORTED_MODULE_0__.templateImageData.find(function (item) {
             return item.order === numberPart;
           });
-          console.log(numberPart);
-          console.log(fileData);
-          console.log("index: ".concat(index));
           if (fileData) {
             if (fileData["content"]) {
               _this.hasContent = true;
@@ -8523,7 +8520,6 @@ var MessageTemplateFormController = /*#__PURE__*/function () {
       var form = document.querySelector(".js_edit_form");
       editBtns.forEach(function (btn) {
         btn.addEventListener("click", function (e) {
-          console.log("click!");
           _DataGenerator_js__WEBPACK_IMPORTED_MODULE_3__.templateImageData.length = 0;
           contentBlocks.innerHTML = "";
           tabEdit.style.display = "none";
@@ -9466,8 +9462,7 @@ var TemplateHandler = /*#__PURE__*/function () {
       contentBlocks.forEach(function (block, index) {
         if (block.dataset.type === "text") {
           var text = block.querySelector(".block-textarea").value;
-          console.log(text);
-          if (text == 0 || !text) {
+          if (text == 0 || text == "") {
             return;
           }
           _this.sendingDataService.formData.append("messages[".concat(index, "]"), text);
@@ -9497,9 +9492,11 @@ var TemplateHandler = /*#__PURE__*/function () {
           }
         }
       });
-      var formDataObj = Object.fromEntries(this.sendingDataService.formData.entries());
-      console.log("FormData contents:", formDataObj);
-      debugger;
+
+      // const formDataObj = Object.fromEntries(this.sendingDataService.formData.entries());
+      // console.log("FormData contents:", formDataObj);
+
+      // debugger
     }
   }]);
 }();
@@ -17132,23 +17129,11 @@ var modal = document.getElementById("js_block_account_modal");
   var form = document.querySelector(".js_update_sendingMsg");
   var _modal = document.getElementById("js_edit_account_modal");
   var _loader = document.querySelector(".loader");
-  var handleSubmit = function handleSubmit() {
+  submit_btn.addEventListener("click", function (event) {
     _modal.classList.add("hidden");
     document.querySelector(".bg").classList.add("hidden");
     (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(_loader);
-  };
-  submit_btn.addEventListener("click", function (event) {
-    event.preventDefault(); // テキストエリアでの改行を防ぐ
-    form.submit(); // フォームを送信
-    handleSubmit();
   });
-  // document.addEventListener("keydown", (event) => {
-  //       if (event.shiftKey && event.key === 'Enter') {
-  //             event.preventDefault(); // テキストエリアでの改行を防ぐ
-  //             form.submit(); // フォームを送信
-  //             handleSubmit()
-  //       }
-  // });
 }
 
 // タイトル表示変更モーダル

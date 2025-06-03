@@ -52,7 +52,7 @@
 					<tbody class='js_table'>
 						@foreach ($chat_users as $chat_user)
 							<tr data-id={{$chat_user['entity_uuid']}} class='js_chatUser_id'>
-								<td w20 class='chat_user_name' data-simplebar><?= $chat_user['line_name']?></td>
+								<td w20 class='chat_user_name' data-simplebar>{{ $chat_user['line_name']}}</td>
 								
 								<td  data-id={{$chat_user->id}}>
 									<div class='message_count js_message_count' style='display: {{ $chat_user['unread_count'] > 0 ? 'flex' : 'none' }}; font-weight: bold;'>
