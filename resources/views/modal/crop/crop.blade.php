@@ -37,7 +37,7 @@
                   <small class='hidden js_image_error' style='color: red; font-size: 12px; padding-top: 14px;'></small>
                   <div class='btn_area'>
                         <button id='js_changeImg_btn'><label for='fileInput' class='change_img'>画像変更</label></button>
-                        <button id='js_change_area' class='disabled_btn'>選択範囲確定</button>
+                        <button id='js_change_area' class=''>選択範囲確定</button>
                   </div>
                   <small style='color: gray;font-size: 12px;'>※画像を変更する際は、タップ時アクションが設定されている場合設定が解除されます。</small><br>
                   <div style='margin-top: 10px;'></div>

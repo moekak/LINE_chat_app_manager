@@ -9135,7 +9135,8 @@ var FormController = /*#__PURE__*/function () {
       });
       var url_wrapper = document.getElementById("js_url_setting");
       url_wrapper.classList.add("hidden");
-      button.classList.add("disabled_btn");
+
+      // button.classList.add("disabled_btn")
       if (button.innerHTML === "選択範囲変更") {
         button.style.backgroundColor = "#fff";
         button.innerHTML = "選択範囲確定";
@@ -9362,11 +9363,11 @@ var Cropper = /*#__PURE__*/function () {
       var _this2 = this;
       // Cropper.js インスタンスを作成
       this.cropperInstance = new cropperjs__WEBPACK_IMPORTED_MODULE_3__(this.image, {
-        viewMode: 0.5,
+        viewMode: 1,
         // 画像の範囲内にクロップボックスと画像を制限
         dragMode: "crop",
         // クロップ操作を有効にする
-        autoCropArea: 0.5,
+        autoCropArea: 1.0,
         // 初期のクロップエリアを最大化
         responsive: true,
         // 画面サイズに応じてリサイズ対応
@@ -9378,6 +9379,11 @@ var Cropper = /*#__PURE__*/function () {
         // クロップボックスのハイライトを有効
         cropBoxResizable: true,
         // クロップボックスのリサイズを許可
+        ready: function ready() {
+          // Cropper の初期化が完了したら crop 領域の取得
+          var cropperArea = _this2.getCropperArea();
+          console.log("✅ cropperArea:", cropperArea);
+        },
         cropend: function cropend() {
           _this2.changeBtn.classList.remove("disabled_btn");
         }
@@ -9406,11 +9412,11 @@ var Cropper = /*#__PURE__*/function () {
     key: "enableCropper",
     value: function enableCropper() {
       this.cropperInstance = new cropperjs__WEBPACK_IMPORTED_MODULE_3__(this.image, {
-        viewMode: 0.5,
+        viewMode: 1,
         // 画像の範囲内にクロップボックスと画像を制限
         dragMode: "crop",
         // クロップ操作を有効にする
-        autoCropArea: 0.5,
+        autoCropArea: 1.0,
         // 初期のクロップエリアを最大化
         responsive: true,
         // 画面サイズに応じてリサイズ対応
