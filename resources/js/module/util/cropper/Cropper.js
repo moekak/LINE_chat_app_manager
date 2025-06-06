@@ -68,7 +68,6 @@ class Cropper {
                   ready: () => {
                         // Cropper の初期化が完了したら crop 領域の取得
                         const cropperArea = this.getCropperArea();
-                        console.log("✅ cropperArea:", cropperArea);
                   },
                   cropend: () => {
                         this.changeBtn.classList.remove("disabled_btn")
