@@ -181,7 +181,8 @@ var FormController = /*#__PURE__*/function () {
       });
       var url_wrapper = document.getElementById("js_url_setting");
       url_wrapper.classList.add("hidden");
-      button.classList.add("disabled_btn");
+
+      // button.classList.add("disabled_btn")
       if (button.innerHTML === "選択範囲変更") {
         button.style.backgroundColor = "#fff";
         button.innerHTML = "選択範囲確定";

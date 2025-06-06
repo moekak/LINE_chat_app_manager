@@ -57,14 +57,19 @@ class Cropper {
       resizeImage() {
             // Cropper.js インスタンスを作成
             this.cropperInstance = new CropperJS(this.image, {
-                  viewMode: 0.5, // 画像の範囲内にクロップボックスと画像を制限
+                  viewMode: 1, // 画像の範囲内にクロップボックスと画像を制限
                   dragMode: "crop", // クロップ操作を有効にする
-                  autoCropArea: 0.5, // 初期のクロップエリアを最大化
+                  autoCropArea: 1.0, // 初期のクロップエリアを最大化
                   responsive: true, // 画面サイズに応じてリサイズ対応
                   restore: true, // 元の状態を保持
                   guides: true, // ガイド線を非表示
                   highlight: true, // クロップボックスのハイライトを有効
                   cropBoxResizable: true, // クロップボックスのリサイズを許可
+                  ready: () => {
+                        // Cropper の初期化が完了したら crop 領域の取得
+                        const cropperArea = this.getCropperArea();
+                        console.log("✅ cropperArea:", cropperArea);
+                  },
                   cropend: () => {
                         this.changeBtn.classList.remove("disabled_btn")
                   },
@@ -94,9 +99,9 @@ class Cropper {
 
       enableCropper(){
             this.cropperInstance = new CropperJS(this.image, {
-                  viewMode: 0.5, // 画像の範囲内にクロップボックスと画像を制限
+                  viewMode: 1, // 画像の範囲内にクロップボックスと画像を制限
                   dragMode: "crop", // クロップ操作を有効にする
-                  autoCropArea: 0.5, // 初期のクロップエリアを最大化
+                  autoCropArea: 1.0, // 初期のクロップエリアを最大化
                   responsive: true, // 画面サイズに応じてリサイズ対応
                   restore: true, // 元の状態を保持
                   guides: true, // ガイド線を非表示
