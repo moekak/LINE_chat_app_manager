@@ -63,7 +63,7 @@
 								<td><?= $chat_user['created_at']->format('Y-m-d H:i') ?></td>
 								<td>
 									<div class="operation">
-										<a href='{{config('services.chat_url')}}/{{$chat_user['id']}}/{{$id}}'>
+										<a href='{{config('services.chat_url')}}/{{$chat_user['id']}}/{{$id}}?tab={{uniqid(true)}}'>
 											<button type='submit' title='トーク' class='operation_icon redirect_btn'>
 												<img src='{{ asset('img/icons8-message-24.png') }}' alt='メッセージ'>
 											</button>
