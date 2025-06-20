@@ -7310,7 +7310,7 @@ function _fetchTemplateData2() {
           this.orderSubmitBtn.classList.add("disabled");
           _assertClassBrand(_FilterCategory_brand, this, _changeFilterBtnStyle).call(this);
           _context5.next = 4;
-          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_DATA, "/").concat(this.categoryId));
+          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_DATA, "/").concat(this.categoryId, "/").concat(document.getElementById("js_account_id").value));
         case 4:
           this.data = _context5.sent;
           if (this.data.length > 0) {
@@ -11216,7 +11216,6 @@ var Cropper = /*#__PURE__*/function () {
         ready: function ready() {
           // Cropper の初期化が完了したら crop 領域の取得
           var cropperArea = _this2.getCropperArea();
-          console.log("✅ cropperArea:", cropperArea);
         },
         cropend: function cropend() {
           _this2.changeBtn.classList.remove("disabled_btn");
@@ -11587,6 +11586,7 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
   });
 };
 var fetchGetOperation = function fetchGetOperation(url) {
+  console.log(url);
   return fetch("".concat(url), {
     method: 'GET',
     headers: {

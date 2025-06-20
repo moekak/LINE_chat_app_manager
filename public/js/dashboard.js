@@ -5061,6 +5061,7 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
   });
 };
 var fetchGetOperation = function fetchGetOperation(url) {
+  console.log(url);
   return fetch("".concat(url), {
     method: 'GET',
     headers: {

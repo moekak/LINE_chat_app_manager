@@ -9382,7 +9382,6 @@ var Cropper = /*#__PURE__*/function () {
         ready: function ready() {
           // Cropper の初期化が完了したら crop 領域の取得
           var cropperArea = _this2.getCropperArea();
-          console.log("✅ cropperArea:", cropperArea);
         },
         cropend: function cropend() {
           _this2.changeBtn.classList.remove("disabled_btn");
@@ -9753,6 +9752,7 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
   });
 };
 var fetchGetOperation = function fetchGetOperation(url) {
+  console.log(url);
   return fetch("".concat(url), {
     method: 'GET',
     headers: {

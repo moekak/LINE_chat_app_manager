@@ -24,6 +24,10 @@ class MessageTemplateContent extends Model
         return $this->hasOne(MessageTemplateCropData::class, 'message_template_contents_id', 'id');
     }
 
+    public function scopeWithTemplateLink($query){
+        return $query->with(['messageTemplate', 'messageTemplate.messageTemplatesLinks']);
+    }
+
 
     public function scopeWithContentsForAdmin($query, $admin_id)
     {
@@ -43,14 +47,30 @@ class MessageTemplateContent extends Model
         });
     }
 
+
     public static function getMessageTemplatesForAdmin($admin_id)
-    {
-        return MessageTemplateContent::WithContentsForAdmin($admin_id)
+{
+    return MessageTemplateContent::with([
+            'messageTemplate',
+            'messageTemplate.messageTemplatesCategory',
+            'messageTemplate.messageTemplatesGroup',
+            'messageTemplate.messageTemplatesLinks',
+            'cropData'
+        ])
+        ->where(function ($query) use ($admin_id) {
+            $query->whereHas('messageTemplate.messageTemplatesLinks', function ($q) use ($admin_id) {
+                $q->where('admin_id', $admin_id);
+            })
+            ->orWhereHas('messageTemplate', function ($q) use ($admin_id) {
+                $q->where('admin_id', $admin_id)
+                  ->whereDoesntHave('messageTemplatesLinks'); // ← links が存在しない場合
+            });
+        })
         ->get()
         ->groupBy("template_id")
         ->map(function ($group) {
             $firstItem = $group->first();
-            
+
             return [
                 "category_id" => $firstItem->messageTemplate->messageTemplatesCategory->id,
                 "group_id" => $firstItem->messageTemplate->messageTemplatesGroup->id,
@@ -58,7 +78,7 @@ class MessageTemplateContent extends Model
                 'template_name' => $firstItem->messageTemplate->template_name,
                 'category_name' => $firstItem->messageTemplate->messageTemplatesCategory->category_name,
                 'admin_id' => $firstItem->admin_id,
-                'created_at' => $firstItem->created_at, // created_at を追加
+                'created_at' => $firstItem->created_at,
                 'contents' => $group->map(function ($item) {
                     return [
                         "id" => $item->id,
@@ -77,14 +97,26 @@ class MessageTemplateContent extends Model
                 })->sortBy('display_order')->values()->all()
             ];
         })
-        ->sortByDesc('created_at') // created_at の降順で並べ替え
+        ->sortByDesc('created_at')
         ->values()
         ->all();
     }
 
-    public static function getMessageTemplatesByFilter($category_id)
+
+
+    
+    public static function getMessageTemplatesByFilter($category_id, $admin_id)
     {
         return MessageTemplateContent::WithFilter($category_id)
+        ->where(function ($query) use ($admin_id) {
+            $query->whereHas('messageTemplate.messageTemplatesLinks', function ($q) use ($admin_id) {
+                $q->where('admin_id', $admin_id);
+            })
+            ->orWhereHas('messageTemplate', function ($q) use ($admin_id) {
+                $q->where('admin_id', $admin_id)
+                  ->whereDoesntHave('messageTemplatesLinks'); // ← links が存在しない場合
+            });
+        })
         ->get()
         ->groupBy("template_id")
         ->map(function ($group) {

@@ -383,7 +383,7 @@
 								<label for='category-select'>カテゴリーを選択</label>
 								<select class='category-select' id='category-select' name='category_id'>
 									<option value='' disabled selected class='category-option'>カテゴリーを選択</option>
-									@foreach ($categories as $category)
+									@foreach ($template_categories as $category)
 										<option class='category-option'  value={{$category->id}} >{{$category->category_name}}</option>
 									@endforeach
 								</select>
@@ -514,7 +514,7 @@
 								<div class='form-group'>
 								<label for='edit-category-select'>カテゴリーを選択</label>
 								<select id='edit-category-select' name='category_id' class='category-select'>
-									@foreach ($categories as $category)
+									@foreach ($template_categories as $category)
 										<option class='edit-category' value={{$category->id}} >{{$category->category_name}}</option>
 									@endforeach
 									
@@ -583,7 +583,7 @@
 											</tr>
 										</thead>
 										<tbody id='js_category_list'>
-											@foreach($categories as $category)
+											@foreach($template_categories as $category)
 												<tr class='category-item-row' data-id='{{ $category->id }}'>
 													<td>
 														{{-- <span class='category-name'>{{ $category->category_name }}</span> --}}

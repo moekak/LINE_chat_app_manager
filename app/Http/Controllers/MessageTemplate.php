@@ -9,6 +9,7 @@ use App\Models\MessageTemplate as ModelsMessageTemplate;
 use App\Models\MessageTemplateContent;
 use App\Models\MessageTemplatesCategory;
 use App\Models\MessageTemplatesGroup;
+use App\Models\MessageTemplatesLink;
 use App\Services\ImageService;
 use AWS\CRT\HTTP\Message;
 use Exception;
@@ -93,6 +94,8 @@ class MessageTemplate extends Controller
                 $messageTemplateGroup = MessageTemplatesGroup::create(['admin_id' => $admin_id, "display_order" => intval($last_display_order) + 1]);
                 // メッセージテンプレート作成
                 $messageTemplate = ModelsMessageTemplate::create(["category_id" => $category_id, "admin_id" => $admin_id, "group_id" => $messageTemplateGroup->id, "template_name" => $template_name]);
+                // メッセージテンプレートリンクにアカウントIDとテンプレートIDを保存
+                MessageTemplatesLink::create(["admin_id" => $admin_id, "template_id" => $messageTemplate->id]);
                 $messageContents = $request->input("content_texts");
                 $imageContents = $request->input("image_path");
                 if(isset($messageContents)){
@@ -402,9 +405,9 @@ class MessageTemplate extends Controller
 
     }
 
-    public function fetchTemplateByCategory(string $category_id){
+    public function fetchTemplateByCategory(string $category_id, string $admin_id){
         try{
-            $templates = MessageTemplateContent::getMessageTemplatesByFilter($category_id);
+            $templates = MessageTemplateContent::getMessageTemplatesByFilter($category_id, $admin_id);
             return response()->json($templates);
         }catch(\Exception $e){
             Log::debug($e);
