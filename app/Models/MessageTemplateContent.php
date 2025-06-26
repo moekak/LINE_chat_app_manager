@@ -48,9 +48,8 @@ class MessageTemplateContent extends Model
     }
 
 
-    public static function getMessageTemplatesForAdmin($admin_id)
-{
-    return MessageTemplateContent::with([
+    public static function getMessageTemplatesForAdmin($admin_id){
+        return MessageTemplateContent::with([
             'messageTemplate',
             'messageTemplate.messageTemplatesCategory',
             'messageTemplate.messageTemplatesGroup',

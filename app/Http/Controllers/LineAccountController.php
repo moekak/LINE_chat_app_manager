@@ -6,6 +6,7 @@ use App\Http\Requests\CreateLineAccountRequest;
 use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
 use App\Models\ChatUser;
+use App\Models\GreetingMessagesLink;
 use App\Models\LineAccount;
 use App\Models\LineDisplayText;
 use App\Models\LineTestSender;
@@ -274,11 +275,13 @@ class LineAccountController extends Controller
                     $second_line_account    = LineAccount::where("id", $second_account_id)->first();
                     $second_line_account->update(["account_status" => "1"]);
 
-                    // メッセージテンプレートの引継ぎ
-                    $templateIds = MessageTemplatesLink::where("admin_id", $account_id)->pluck("template_id");
+                    $templateIds = MessageTemplatesLink::where("admin_id", $account_id)->pluck("template_id"); // メッセージテンプレートの引継ぎ
+                    $greetingGroupId = GreetingMessagesLink::where("admin_id", $account_id)
+                        ->orderBy('id', 'desc')
+                        ->limit(1)
+                        ->value("greeting_group_id"); // 初回メッセージの引継ぎ
+                        
                     $insertingData = [];
-
-                    Log::debug($templateIds);
 
                     foreach($templateIds as $id){
 
@@ -289,6 +292,7 @@ class LineAccountController extends Controller
                     };
 
                     DB::table("message_templates_links")->insert($insertingData);
+                    GreetingMessagesLink::create(["admin_id"=> $second_line_account->id, "greeting_group_id"=> $greetingGroupId]);
                 }
                 $is_success = true;
             // アカウントがない場合は、フロントにfalseを返す

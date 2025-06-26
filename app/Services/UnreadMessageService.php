@@ -50,7 +50,7 @@ class UnreadMessageService{
                   AdminMessageRead::insert($inserts);
             }
 
-            // 一括更新（より効率的なバルク更新）
+            // 一括更新
             if (!empty($updates)) {
                   $cases = [];
                   $ids = [];
