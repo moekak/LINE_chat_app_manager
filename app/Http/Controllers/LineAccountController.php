@@ -275,24 +275,10 @@ class LineAccountController extends Controller
                     $second_line_account    = LineAccount::where("id", $second_account_id)->first();
                     $second_line_account->update(["account_status" => "1"]);
 
-                    $templateIds = MessageTemplatesLink::where("admin_id", $account_id)->pluck("template_id"); // メッセージテンプレートの引継ぎ
-                    $greetingGroupId = GreetingMessagesLink::where("admin_id", $account_id)
-                        ->orderBy('id', 'desc')
-                        ->limit(1)
-                        ->value("greeting_group_id"); // 初回メッセージの引継ぎ
-                        
-                    $insertingData = [];
-
-                    foreach($templateIds as $id){
-
-                        $insertingData[] = [
-                            "admin_id" => $second_line_account->id,
-                            "template_id" => $id
-                        ];
-                    };
-
-                    DB::table("message_templates_links")->insert($insertingData);
-                    GreetingMessagesLink::create(["admin_id"=> $second_line_account->id, "greeting_group_id"=> $greetingGroupId]);
+                    // メッセージテンプレート引継ぎ
+                    MessageTemplatesLink::duplicateTemplatesToAccount($account_id, $second_account_id);
+                    // 初回メッセージ引継ぎ
+                    GreetingMessagesLink::createGreetingMessageLink($account_id, $second_account_id);
                 }
                 $is_success = true;
             // アカウントがない場合は、フロントにfalseを返す

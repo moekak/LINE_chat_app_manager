@@ -39,7 +39,7 @@ abstract class MessageStoreService{
                   // }else{
                   // メッセージグループ作成
                   $messageGroup = $this->createMessageGroup();
-                  $this->createMessageLink($messageGroup->id, $this->userId);
+                  // $this->createMessageLink($messageGroup->id, $this->userId);
                   // コンテンツを処理して保存
                   $responseData = $this->processAndSaveContent($messageGroup->id);
                   // }
