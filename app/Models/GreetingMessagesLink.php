@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class GreetingMessagesLink extends Model
 {
@@ -21,7 +22,11 @@ class GreetingMessagesLink extends Model
 
     static public function createGreetingMessageLink($from_admin_id, $to_admin_id){
         $latestGreetingGroupId = GreetingMessage::getLatestGreetingMessageGroupId($from_admin_id);
-        static::create(["admin_id"=> $to_admin_id, "greeting_group_id" => $latestGreetingGroupId]);
+        Log::debug($latestGreetingGroupId);
+        if($latestGreetingGroupId){
+            static::create(["admin_id"=> $to_admin_id, "greeting_group_id" => $latestGreetingGroupId]);
+        }
+        
     }
 
     static public function getLatestGreetingGroupId($account_id){

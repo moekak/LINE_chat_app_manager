@@ -17,7 +17,14 @@ class MessageTemplatesLink extends Model
 
 
     public static function duplicateTemplatesToAccount($from_admin_id, $to_admin_id){
-        $template_ids = static::where('admin_id', $from_admin_id)->pluck('template_id');
+        $template_ids = static::where('admin_id', $from_admin_id)
+        ->select('template_id')
+        ->union(
+            MessageTemplateContent::where('admin_id', $from_admin_id)
+                ->select('template_id')
+        )
+        ->distinct()
+        ->pluck('template_id');
 
         if ($template_ids->isEmpty()) return;
 

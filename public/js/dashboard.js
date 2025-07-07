@@ -4907,6 +4907,8 @@ var InfiniteScroll = /*#__PURE__*/function () {
     this.fileType = fileType;
     this.accountList = _state_AccountStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].getState();
     this.userAccount = _state_UserStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].getState();
+    console.log(this.parentElement);
+
     // コンストラクタで定義された this を使用するメソッドをイベントリスナーやコールバックとして使用する場合、bind(this) が必要
     this.element.addEventListener("scroll", this.handleScroll.bind(this));
   }
@@ -4923,7 +4925,7 @@ var InfiniteScroll = /*#__PURE__*/function () {
                 _context.next = 26;
                 break;
               }
-              this.dataCount = document.querySelectorAll(".js_chatUser_id").length;
+              this.dataCount = this.fileType == "accountShow" ? document.querySelectorAll(".js_chatUser_id").length : this.parentElement.querySelectorAll(".js_account_id").length;
               _this$element = this.element, scrollTop = _this$element.scrollTop, scrollHeight = _this$element.scrollHeight, clientHeight = _this$element.clientHeight; // 一番下までスクロールしたかを判定
               if (!(scrollTop + clientHeight + 50 >= scrollHeight)) {
                 _context.next = 25;

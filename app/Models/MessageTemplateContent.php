@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class MessageTemplateContent extends Model
 {
@@ -51,9 +52,8 @@ class MessageTemplateContent extends Model
     public static function getMessageTemplatesForAdmin($admin_id){
         return MessageTemplateContent::with([
             'messageTemplate',
-            'messageTemplate.messageTemplatesCategory',
+            'messageTemplate.messageTemplatesCategory', 
             'messageTemplate.messageTemplatesGroup',
-            'messageTemplate.messageTemplatesLinks',
             'cropData'
         ])
         ->where(function ($query) use ($admin_id) {
@@ -61,8 +61,7 @@ class MessageTemplateContent extends Model
                 $q->where('admin_id', $admin_id);
             })
             ->orWhereHas('messageTemplate', function ($q) use ($admin_id) {
-                $q->where('admin_id', $admin_id)
-                  ->whereDoesntHave('messageTemplatesLinks'); // ← links が存在しない場合
+                $q->where('admin_id', $admin_id);
             });
         })
         ->get()
@@ -107,15 +106,14 @@ class MessageTemplateContent extends Model
     public static function getMessageTemplatesByFilter($category_id, $admin_id)
     {
         return MessageTemplateContent::WithFilter($category_id)
-        ->where(function ($query) use ($admin_id) {
-            $query->whereHas('messageTemplate.messageTemplatesLinks', function ($q) use ($admin_id) {
-                $q->where('admin_id', $admin_id);
+            ->where(function ($query) use ($admin_id) {
+                $query->whereHas('messageTemplate.messageTemplatesLinks', function ($q) use ($admin_id) {
+                    $q->where('admin_id', $admin_id);
+                })
+                ->orWhereHas('messageTemplate', function ($q) use ($admin_id) {
+                    $q->where('admin_id', $admin_id);
+                });
             })
-            ->orWhereHas('messageTemplate', function ($q) use ($admin_id) {
-                $q->where('admin_id', $admin_id)
-                  ->whereDoesntHave('messageTemplatesLinks'); // ← links が存在しない場合
-            });
-        })
         ->get()
         ->groupBy("template_id")
         ->map(function ($group) {

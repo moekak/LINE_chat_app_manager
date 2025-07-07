@@ -29,7 +29,9 @@ class InfiniteScroll{
 
       async handleScroll(){
             if(!this.hasNoValue && !this.isFetchFlag){
-                  this.dataCount = document.querySelectorAll(".js_chatUser_id").length
+
+
+                  this.dataCount = this.fileType == "accountShow" ? document.querySelectorAll(".js_chatUser_id").length : this.parentElement.querySelectorAll(".js_account_id").length
 
                   const {scrollTop, scrollHeight, clientHeight} = this.element
                   // 一番下までスクロールしたかを判定
@@ -42,7 +44,7 @@ class InfiniteScroll{
                               "dataCount": this.dataCount,
                               "accountList" : this.fileType == "accountShow" ? this.userAccount : this.accountList
                         }
-
+                        
                         try {
                               const response = await fetchPostOperation(data, this.baseUrl);
                               const hasNoData = response["accountData"] ? response["accountData"].length === 0 : response.length === 0

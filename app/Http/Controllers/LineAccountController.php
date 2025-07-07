@@ -345,7 +345,6 @@ class LineAccountController extends Controller
 
     public function fetchScrollAcocuntData(string $admin_id, string $status_id, Request $request){
         try{
-
             $accountData = LineAccount::query()
                 ->where('user_id', $admin_id)
                 ->whereNotIn('line_accounts.id', $request->input("accountList"))
@@ -385,8 +384,6 @@ class LineAccountController extends Controller
                 ->skip($request->input("dataCount"))
                 ->take(self::MESSAGES_PER_PAGE)
                 ->get();
-                
-
             $categories = Cache::remember('account_status', 60*24, function() {
                 return AccountStatus::all();
             });
