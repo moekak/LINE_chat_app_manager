@@ -32,7 +32,6 @@ class GreetingMessage extends Model
 
     public static  function getLatestGreetingMessage($admin_id){
         $latestGreetingMessageGroupId = static::getLatestGreetingMessageGroupId($admin_id);
-        Log::debug($latestGreetingMessageGroupId);
         return GreetingMessage::withTables()
             ->where('greeting_message_group_id', $latestGreetingMessageGroupId)
             ->orderBy('greeting_messages.message_order', 'asc')
@@ -41,40 +40,24 @@ class GreetingMessage extends Model
 
 
     public static function getLatestGreetingMessageGroupId($id){
-        $latestGreetingMessageGroupId = GreetingMessage::leftJoin("greeting_messages_links", "greeting_messages_links.admin_id", "=", "greeting_messages.admin_id")
-            ->where("greeting_messages.admin_id", $id)
-            ->orderBy('greeting_messages.created_at', 'desc')
-            ->value("greeting_message_group_id");
 
-        if(!$latestGreetingMessageGroupId){
-            $latestGreetingMessageGroupId = GreetingMessagesLink::getLatestGreetingGroupId($id);
-        }
-        
-        return $latestGreetingMessageGroupId;
+        $groupData = collect([
+            GreetingMessagesLink::select("greeting_group_id as group_id", "created_at")
+                ->where("admin_id", $id)
+                ->orderBy("created_at", "desc")
+                ->first(),
+            
+            GreetingMessage::select("greeting_message_group_id as group_id", "created_at")
+                ->where("admin_id", $id)
+                ->orderBy("created_at", "desc")
+                ->first(),
+        ])->filter(); 
+
+        $latestGroup = $groupData->sortByDesc("created_at")->first();
+
+        return $latestGroup?->group_id;
+
     }
 
-
-
-        // public static function getLatestGreetingMessage($admin_id){
-        //     return GreetingMessage::withTables()
-        //         ->where('greeting_message_group_id', function($query) use($admin_id) {
-        //             $query->select('greeting_group_id')
-        //                 ->from('greeting_messages_links')
-        //                 ->where('admin_id', $admin_id)
-        //                 ->orderBy('id', 'desc')
-        //                 ->limit(1);
-        //         })
-        //         ->where(function($query) use($admin_id) {
-        //             $query->whereHas('greetingMessageGroup.greetingMessagesLinks', function($q) use($admin_id){
-        //                 $q->where("admin_id", $admin_id);
-        //             })
-        //             ->orWhere("admin_id", $admin_id);
-        //         })
-        //         ->orderBy('message_order', 'asc')
-        //         ->get();
-        // }
-
-
-    
 
 }
