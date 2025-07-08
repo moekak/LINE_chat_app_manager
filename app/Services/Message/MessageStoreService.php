@@ -2,6 +2,8 @@
 
 namespace App\Services\Message;
 
+use App\Models\GreetingMessage;
+use App\Models\GreetingMessagesLink;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,10 +30,19 @@ abstract class MessageStoreService{
             try{
                   DB::beginTransaction();
 
+                  // if($this->isUpdated($this->userId)){
+                  //       $group_id = GreetingMessagesLink::where("admin_id", $this->userId)->value("greeting_group_id");
+                  //       GreetingMessage::where("greeting_message_group_id", $group_id)->delete();
+                  //       // コンテンツを処理して保存
+                  //       $responseData = $this->processAndSaveContent($group_id);
+
+                  // }else{
                   // メッセージグループ作成
                   $messageGroup = $this->createMessageGroup();
-                   // コンテンツを処理して保存
+                  // $this->createMessageLink($messageGroup->id, $this->userId);
+                  // コンテンツを処理して保存
                   $responseData = $this->processAndSaveContent($messageGroup->id);
+                  // }
 
                   DB::commit();
                   
@@ -235,6 +246,8 @@ abstract class MessageStoreService{
 
       // サブクラスでオーバーライド可能な追加処理
       protected function performAdditionalOperations($data, $userId, $created_at){}
+      protected function createMessageLink($group_id, $admin_id){}
+      protected function isUpdated($admin_id){}
       
 
       // サブクラスで実装する必要があるメソッド

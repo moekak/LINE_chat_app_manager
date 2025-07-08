@@ -5,6 +5,7 @@ namespace App\Services\Message;
 use App\Models\GreetingImagesCropArea;
 use App\Models\GreetingMessage;
 use App\Models\GreetingMessagesGroup;
+use App\Models\GreetingMessagesLink;
 use Illuminate\Http\Request;
 
 
@@ -36,5 +37,12 @@ class GreetingMessageService extends MessageStoreService{
             return response()->json(["success"=> 200]);
       }
 
+      protected function createMessageLink($group_id, $admin_id){
+            GreetingMessagesLink::create(["admin_id"=> $admin_id, "greeting_group_id" => $group_id]);
+      }
+
+      // protected function isUpdated($admin_id){
+      //       return GreetingMessagesLink::where("admin_id", $admin_id)->exists();
+      // }
       
 }

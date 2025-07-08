@@ -21,6 +21,8 @@ export const fetchPostOperation = (data, url) => {
       })
 };
 export const fetchGetOperation = (url) => {
+      console.log(url);
+      
       return fetch(`${url}`, {
                   method: 'GET',
                   headers: {

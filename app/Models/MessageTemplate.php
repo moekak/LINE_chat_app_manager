@@ -13,7 +13,8 @@ class MessageTemplate extends Model
         "category_id",
         "admin_id",
         "group_id",
-        "template_name"
+        "template_name",
+        
     ];
 
 
@@ -23,6 +24,10 @@ class MessageTemplate extends Model
 
     public function messageTemplatesCategory(){
         return $this->belongsTo(MessageTemplatesCategory::class, "category_id", "id");
+    }
+
+    public function messageTemplatesLinks(){
+        return $this->hasMany(MessageTemplatesLink::class, "template_id", "id");
     }
 
     public function messageTemplatesGroup(){

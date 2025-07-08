@@ -74,7 +74,7 @@ class FilterCategory{
       async #fetchTemplateData(){
             this.orderSubmitBtn.classList.add("disabled")
             this.#changeFilterBtnStyle()
-            this.data = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_DATA}/${this.categoryId}`)
+            this.data = await fetchGetOperation(`${API_ENDPOINTS.FETCH_TEMPLATE_DATA}/${this.categoryId}/${document.getElementById("js_account_id").value}`)
 
             if(this.data.length > 0){
                   this.orderSubmitBtn.classList.remove("disabled")

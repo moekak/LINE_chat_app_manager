@@ -7310,7 +7310,7 @@ function _fetchTemplateData2() {
           this.orderSubmitBtn.classList.add("disabled");
           _assertClassBrand(_FilterCategory_brand, this, _changeFilterBtnStyle).call(this);
           _context5.next = 4;
-          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_DATA, "/").concat(this.categoryId));
+          return (0,_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("".concat(_config_apiEndPoint_js__WEBPACK_IMPORTED_MODULE_0__.API_ENDPOINTS.FETCH_TEMPLATE_DATA, "/").concat(this.categoryId, "/").concat(document.getElementById("js_account_id").value));
         case 4:
           this.data = _context5.sent;
           if (this.data.length > 0) {
@@ -11017,6 +11017,8 @@ var InfiniteScroll = /*#__PURE__*/function () {
     this.fileType = fileType;
     this.accountList = _state_AccountStateManager_js__WEBPACK_IMPORTED_MODULE_5__["default"].getState();
     this.userAccount = _state_UserStateManager_js__WEBPACK_IMPORTED_MODULE_6__["default"].getState();
+    console.log(this.parentElement);
+
     // コンストラクタで定義された this を使用するメソッドをイベントリスナーやコールバックとして使用する場合、bind(this) が必要
     this.element.addEventListener("scroll", this.handleScroll.bind(this));
   }
@@ -11033,7 +11035,7 @@ var InfiniteScroll = /*#__PURE__*/function () {
                 _context.next = 26;
                 break;
               }
-              this.dataCount = document.querySelectorAll(".js_chatUser_id").length;
+              this.dataCount = this.fileType == "accountShow" ? document.querySelectorAll(".js_chatUser_id").length : this.parentElement.querySelectorAll(".js_account_id").length;
               _this$element = this.element, scrollTop = _this$element.scrollTop, scrollHeight = _this$element.scrollHeight, clientHeight = _this$element.clientHeight; // 一番下までスクロールしたかを判定
               if (!(scrollTop + clientHeight + 50 >= scrollHeight)) {
                 _context.next = 25;
@@ -11216,7 +11218,6 @@ var Cropper = /*#__PURE__*/function () {
         ready: function ready() {
           // Cropper の初期化が完了したら crop 領域の取得
           var cropperArea = _this2.getCropperArea();
-          console.log("✅ cropperArea:", cropperArea);
         },
         cropend: function cropend() {
           _this2.changeBtn.classList.remove("disabled_btn");
@@ -11587,6 +11588,7 @@ var fetchPostOperation = function fetchPostOperation(data, url) {
   });
 };
 var fetchGetOperation = function fetchGetOperation(url) {
+  console.log(url);
   return fetch("".concat(url), {
     method: 'GET',
     headers: {

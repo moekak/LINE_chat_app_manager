@@ -6,12 +6,14 @@ use App\Http\Requests\CreateLineAccountRequest;
 use App\Http\Requests\UpdateLineAccountRequest;
 use App\Models\AccountStatus;
 use App\Models\ChatUser;
+use App\Models\GreetingMessagesLink;
 use App\Models\LineAccount;
 use App\Models\LineDisplayText;
 use App\Models\LineTestSender;
 use App\Models\MessageTemplate;
 use App\Models\MessageTemplateContent;
 use App\Models\MessageTemplatesCategory;
+use App\Models\MessageTemplatesLink;
 use App\Models\PageTitle;
 use App\Models\SecondAccount;
 use App\Models\UserEntity;
@@ -26,6 +28,7 @@ class LineAccountController extends Controller
 
     const MESSAGES_PER_PAGE = 20;
     public function index(){
+     
         $user = Auth::user();
 
         $accounts = LineAccount::query()
@@ -133,8 +136,9 @@ class LineAccountController extends Controller
         $account_name = LineAccount::where("id", $id)->value("account_name");
         $title = PageTitle::where("admin_id", $id)->first();
         $line_display_text = LineDisplayText::where("admin_id", $id)->select("id", "text", "is_show")->first();
-        $template_categories = MessageTemplatesCategory::select("id", "category_name")->where("admin_id", $id)->get();
-        
+        $template_categories = MessageTemplatesCategory::getTemplateCategories($id);
+
+
         $users = ChatUser::whereNotIn('chat_users.id', function($query) {
             $query->select('chat_user_id')
                 ->from('block_chat_users')
@@ -187,10 +191,9 @@ class LineAccountController extends Controller
 
             // メッセージテンプレートの取得
             $templates = MessageTemplateContent::getMessageTemplatesForAdmin($id);
-            $categories = MessageTemplatesCategory::where("admin_id", $id)->select("id", "category_name")->get();
             $test_sender = LineTestSender::all();
 
-        return view("admin.account_show", ["test_senders" => $test_sender, "template_categories" => $template_categories, "categories" => $categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
+        return view("admin.account_show", ["test_senders" => $test_sender, "template_categories" => $template_categories, "user_uuid" => $user_uuid, "account_name" => $account_name, "chat_users" => $users, "id" => $id, "title" => $title, "line_display_text" => $line_display_text, "templates" => $templates]);
     }
 
     /**
@@ -254,29 +257,41 @@ class LineAccountController extends Controller
 
     public function updateStatus(string $account_id, string $status_id, $current_status_name){
 
-        // ステータスを更新したいアカウントを取得する
-        $line_account = LineAccount::findOrFail($account_id);
-        // フロントに返す文言
-        $is_success = "";
-        // アカウントがあった場合、ステータスを変更する
-        if($line_account){
-            $line_account->update(["account_status" => $status_id]);
+        try{
+            DB::beginTransaction();
+            // ステータスを更新したいアカウントを取得する
+            $line_account = LineAccount::findOrFail($account_id);
+            // フロントに返す文言
+            $is_success = "";
+            // アカウントがあった場合、ステータスを変更する
+            if($line_account){
+                $line_account->update(["account_status" => $status_id]);
 
-            // 使用中以外に切り替える場合、予備アカウントのステータスを使用中に切り替える
-            if($status_id !== "1" && $current_status_name == "使用中"){
-                // 予備アカウントIDを取得する
-                $second_account_id      = SecondAccount::where("current_account_id", $account_id)->value("second_account_id");
-                // 予備アカウントをIDを使用し手取得する
-                $second_line_account    = LineAccount::where("id", $second_account_id)->first();
+                // 使用中以外に切り替える場合、予備アカウントのステータスを使用中に切り替える
+                if($status_id !== "1" && $current_status_name == "使用中"){
+                    // 予備アカウントIDを取得する
+                    $second_account_id      = SecondAccount::where("current_account_id", $account_id)->value("second_account_id");
+                    // 予備アカウントをIDを使用し取得する
+                    $second_line_account    = LineAccount::where("id", $second_account_id)->first();
+                    $second_line_account->update(["account_status" => "1"]);
 
-                $second_line_account->update(["account_status" => "1"]);
+                    // メッセージテンプレート引継ぎ
+                    MessageTemplatesLink::duplicateTemplatesToAccount($account_id, $second_account_id);
+                    // 初回メッセージ引継ぎ
+                    GreetingMessagesLink::createGreetingMessageLink($account_id, $second_account_id);
+                }
+                $is_success = true;
+            // アカウントがない場合は、フロントにfalseを返す
+            }else{
+                $is_success = false;
             }
-            $is_success = true;
-        // アカウントがない場合は、フロントにfalseを返す
-        }else{
-            $is_success = false;
+            DB::commit();
+            return response()->json($is_success);
+        }catch(\Exception $e){
+            Log::error($e);
+            DB::rollBack();
         }
-        return response()->json($is_success);
+        
     }
 
 
@@ -330,7 +345,6 @@ class LineAccountController extends Controller
 
     public function fetchScrollAcocuntData(string $admin_id, string $status_id, Request $request){
         try{
-
             $accountData = LineAccount::query()
                 ->where('user_id', $admin_id)
                 ->whereNotIn('line_accounts.id', $request->input("accountList"))
@@ -370,8 +384,6 @@ class LineAccountController extends Controller
                 ->skip($request->input("dataCount"))
                 ->take(self::MESSAGES_PER_PAGE)
                 ->get();
-                
-
             $categories = Cache::remember('account_status', 60*24, function() {
                 return AccountStatus::all();
             });
