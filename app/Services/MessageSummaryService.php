@@ -26,8 +26,6 @@ class MessageSummaryService{
             ->whereIn('user_id', $notBlockedUserIds)
             ->pluck('user_id');
 
-        Log::debug($existingRecords);
-
         // 3. 更新データを準備
         $updateData = [
             "latest_all_message" => "一斉メッセージを送信しました",
@@ -35,8 +33,7 @@ class MessageSummaryService{
             "latest_all_message_type" => $type
         ];
 
-        Log::debug($updateData);
-        
+
         try{
             // 4. 既存レコードを一括更新
             if ($existingRecords->isNotEmpty()) {

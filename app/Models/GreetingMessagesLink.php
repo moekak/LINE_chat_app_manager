@@ -22,7 +22,6 @@ class GreetingMessagesLink extends Model
 
     static public function createGreetingMessageLink($from_admin_id, $to_admin_id){
         $latestGreetingGroupId = GreetingMessage::getLatestGreetingMessageGroupId($from_admin_id);
-        Log::debug($latestGreetingGroupId);
         if($latestGreetingGroupId){
             static::create(["admin_id"=> $to_admin_id, "greeting_group_id" => $latestGreetingGroupId]);
         }
